@@ -1,0 +1,318 @@
+@import url('https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap');
+
+/* 전체 초기화 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Gamja Flower', cursive;
+}
+
+body {
+    background-color: #f9f9f9;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px; /* 최대 너비 설정 */
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.logo img {
+    height: 50px;
+}
+
+/* 검색창 중앙 정렬 및 스타일 수정 */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #f9f9f9;
+    padding: 10px 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+.menu {
+    display: flex;
+    justify-content: center;
+    flex: 1;
+}
+
+.menu ul {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.menu ul li {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* 검색창 길이 최대로 확장 */
+.search-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    gap: 10px;
+}
+
+.search-bar input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.search-bar button {
+    padding: 10px 20px;
+    background-color: #eaf0f6;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.search-bar button:hover {
+    background-color: #bfc9d3;
+}
+
+/* 사용자 아이콘과 로그인 버튼 */
+.user-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-actions img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+}
+
+/* 상단 로그인 버튼 스타일 */
+.header .user-actions .login-btn {
+    background-color: #8cb7dd;
+    color: #fff;
+    border: none;
+    border-radius: 7px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.header .user-actions .login-btn:hover {
+    background-color: #5a96c5;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.login-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin: 40px 0;
+}
+
+.login-wrapper {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.login-container, .welcome-banner {
+    flex: 1;
+    max-width: 500px;
+    min-height: 400px; /* 동일한 높이 설정 */
+    background: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.welcome-banner img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+/* 탭 스타일 */
+.tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.tab {
+    cursor: pointer;
+    padding: 10px 20px;
+    border: none;
+    background-color: #f2f2f2;
+    font-size: 16px;
+}
+
+.tab.active {
+    background-color: #8cb7dd;
+    color: #fff;
+}
+
+.tab-content {
+    display: none;
+    margin-top: 20px;
+}
+
+.tab-content.active {
+    display: block;
+}
+/* 입력 필드 스타일 */
+form input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+
+.large-btn, .simple-join-btn {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    box-sizing: border-box;
+}
+
+.large-btn {
+    background-color: #8cb7dd;
+    color: white;
+}
+
+.large-btn:hover {
+    background-color: #5a96c5;
+}
+
+/* 간편회원가입 버튼 */
+.simple-join-btn {
+    background-color: #eaf0f6;
+    color: #333;
+}
+
+.simple-join-btn:hover {
+    background-color: #d4e4f1;
+}
+
+/* 도움 링크 스타일 */
+.helper-links {
+    text-align: center; /* 중앙 정렬 */
+    margin-top: 10px;
+}
+
+.helper-link {
+    display: inline-block; /* 인라인 블록으로 설정 */
+    font-size: 14px;
+    color: #5a96c5;
+    text-decoration: none;
+}
+
+.helper-link:hover {
+    text-decoration: underline;
+}
+/* SNS 로그인 영역 */
+.sns-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.sns-buttons img {
+    width: 40px;
+    height: 40px;
+}
+
+.sns-text {
+    text-align: center;
+    margin-top: 10px;
+}
+
+/* 하단 혜택 */
+.benefits {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.benefit-item {
+    background-color: #e6edf5;
+    border-radius: 10px;
+    padding: 15px;
+    flex: 1;
+    text-align: center;
+}
+
+.benefit-item h4 {
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* 푸터 */
+footer {
+    background-color: #f2f5f7;
+    padding: 20px 10%;
+    border-top: 1px solid #e0e4e8;
+}
+
+.footer-links {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.footer-links a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: #555;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.footer-info {
+    color: #555;
+    font-size: 14px;
+}
+
+.footer-buttons button {
+    padding: 10px;
+    background-color: #cfd6de;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    min-width: 120px;
+}
+
+.footer-buttons button:hover {
+    background-color: #bfc9d3;
+}
