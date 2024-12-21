@@ -1,9 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () {
     const couponForm = document.getElementById("coupon-form");
 
-    // 등록 버튼 클릭 이벤트
+
     couponForm.addEventListener("submit", function (event) {
-        event.preventDefault(); // 폼 제출 기본 동작 막기
+        event.preventDefault();
         const couponName = document.getElementById("coupon-name").value;
         const couponPolicy = document.getElementById("coupon-policy").value;
         const recipientType = document.getElementById("recipient-type").value;
@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // 발급 대상 선택 시 팝업 열기
+
     const recipientTypeSelect = document.getElementById("recipient-type");
     recipientTypeSelect.addEventListener("change", function () {
         const value = recipientTypeSelect.value;
@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // 분류 선택 시 팝업 열기
+
     const couponCategorySelect = document.getElementById("coupon-category");
     couponCategorySelect.addEventListener("change", function () {
         const value = couponCategorySelect.value;
@@ -44,7 +44,6 @@ document.addEventListener("DOMContentLoaded", function () {
         openPopup(popupUrl, `${value} 팝업`);
     });
 
-    // 팝업 URL 매핑 함수
     function getPopupUrl(value) {
         switch (value) {
             case "전체":
