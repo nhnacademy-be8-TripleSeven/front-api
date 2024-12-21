@@ -6,6 +6,8 @@ spring:
       retry:
         enabled: true
 
+
+
 management:
   health:
     status:
