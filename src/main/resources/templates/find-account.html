@@ -3,18 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>장바구니</title>
-  <link rel="stylesheet" href="/css/cart-fail.css">
+  <title>아이디/비밀번호 찾기</title>
+  <link rel="stylesheet" href="/css/find-account.css">
 </head>
 <body>
 <header class="header">
   <div class="logo">
-    <a href="/main.html"><img src="/image/logo/nhn24-logo.png" alt="NHN 24 로고"></a>
+    <a href="/templates/main.html/main.html"><img src="/image/logo/nhn24-logo.png" alt="NHN 24 로고"></a>
   </div>
   <div class="header-center">
     <div class="search-bar">
       <input type="text" placeholder="검색어를 입력하세요">
-      <button>🔍</button>
+      <button onclick="location.href='/search-results.html'">🔍</button>
     </div>
     <nav class="menu">
       <ul>
@@ -28,24 +28,30 @@
     </nav>
   </div>
   <div class="user-actions">
-    <button class="logout-btn">Logout</button>
+    <button class="login-btn" onclick="location.href='/login.html'">Login</button>
+    <button class="signup-btn" onclick="location.href='/signup.html'">Join</button>
   </div>
 </header>
 
 <main class="main-content">
-  <section class="cart-section">
+  <section class="find-section">
     <div class="tabs">
-      <button class="tab active" onclick="showTab('cart-tab')">장바구니</button>
-      <button class="tab" onclick="showTab('recent-tab')">오늘 본 상품</button>
+      <button class="tab active" onclick="showTab('id-tab')">아이디 찾기</button>
+      <button class="tab" onclick="showTab('password-tab')">비밀번호 찾기</button>
     </div>
-    <div id="cart-tab" class="tab-content active">
-      <p class="empty-cart-text">장바구니에 담긴 상품이 없습니다.</p>
-      <p class="instruction-text">로그인하시면 장바구니에 저장한 상품을 볼 수 있습니다.</p>
-      <button class="login-btn" onclick="location.href='/login.html'">로그인하기</button>
+    <div id="id-tab" class="tab-content active">
+      <h2>아이디 찾기</h2>
+      <p class="instruction-text">아이디 찾기 방법을 선택해주세요.</p>
+      <button class="action-btn" onclick="location.href='/find-id-phone.html'">휴대폰으로 본인인증</button>
+      <button class="dropdown-btn" onclick="location.href='/find-id-email.html'">등록된 휴대폰 번호로 찾기</button>
+      <button class="dropdown-btn" onclick="location.href='/find-id-email.html'">등록된 이메일 주소로 찾기</button>
     </div>
-    <div id="recent-tab" class="tab-content">
-      <p class="empty-cart-text">오늘 본 상품이 없습니다.</p>
-      <p class="instruction-text">상품을 클릭하면 여기에 표시됩니다.</p>
+    <div id="password-tab" class="tab-content">
+      <h2>비밀번호 찾기</h2>
+      <p class="instruction-text">비밀번호 찾기 방법을 선택해주세요.<br>선택하신 수단으로 비밀번호 재설정이 가능합니다.</p>
+      <button class="action-btn" onclick="location.href='/reset-password-phone.html'">휴대폰으로 본인인증</button>
+      <button class="dropdown-btn" onclick="location.href='/reset-password-phone-number.html'">등록된 휴대폰 번호로 찾기</button>
+      <button class="dropdown-btn" onclick="location.href='/reset-password-email.html'">등록된 이메일 주소로 찾기</button>
     </div>
   </section>
 </main>
@@ -77,14 +83,6 @@
   </div>
 </footer>
 
-<script>
-  function showTab(tabId) {
-    document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-    document.querySelector(`#${tabId}`).classList.add('active');
-
-    document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
-    document.querySelector(`button[onclick="showTab('${tabId}')"]`).classList.add('active');
-  }
-</script>
+<script src="/js/find-pwd.js"></script>
 </body>
 </html>
