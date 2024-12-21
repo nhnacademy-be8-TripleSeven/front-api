@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NHN 24</title>
+    <link rel="stylesheet" href="/css/cart-success.css">
+</head>
+<body>
+<header class="header">
+    <div class="logo">
+        <a href="main.html"><img src="/image/logo/nhn24-logo.png" alt="NHN 24 로고"></a>
+    </div>
+    <div class="header-center">
+        <div class="search-bar">
+            <label>
+                <input type="text" placeholder="검색어를 입력하세요">
+            </label>
+            <button>🔍</button>
+        </div>
+        <nav class="menu">
+            <ul>
+                <li><a href="/recommended-books.html">추천 도서</a></li>
+                <li><a href="/domestic-books.html">국내 도서</a></li>
+                <li><a href="/foreign-books.html">외국 도서</a></li>
+                <li><a href="/bestsellers.html">베스트셀러</a></li>
+                <li><a href="/new-books.html">신간 소개</a></li>
+                <li><a href="/events.html">이벤트</a></li>
+            </ul>
+        </nav>
+    </div>
+    <div class="user-actions">
+        <img src="/image/emoji/person.png" alt="User Icon">
+        <img src="/image/emoji/cart.png" alt="Cart Icon">
+        <a href="login-succes.html">
+            <button class="login-btn">Login</button>
+        </a>
+    </div>
+</header>
+
+
+<!-- 메인 섹션 -->
+<main>
+    <section class="step-container">
+        <div class="step current">카트</div>
+        <div class="step">결제</div>
+        <div class="step">완료</div>
+    </section>
+    <section class="delivery-section">
+        <h2><img src="/image/emoji/ship.png" alt=""> NHN 24 배송</h2>
+        <h6>일반 배송: 5000원</h6>
+    </section>
+    <section class="shipping-info">
+        <div class="flex-box progress-bar"></div>
+        <span class="free-shipping-text">
+            <strong>30,000원</strong> 이상 구매 시 <strong>무료배송</strong>
+        </span>
+        <button class="more-details-btn">더 담으러 가기</button>
+    </section>
+    <section class="item-section">
+        <div class="product-table">
+            <table>
+                <thead>
+                <tr>
+                    <th>상품정보</th>
+                    <th>수량</th>
+                    <th>상품금액</th>
+                    <th>배송정보</th>
+                    <th>주문</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="product-info">
+                        <img src="/image/book.png" alt="책 이미지">
+                        <div>
+                            <p><strong>[국내 도서] 반 고흐, 인생의 그림들</strong></p>
+                            <p>- 어둠을 지나 비로소 빛이 된 불멸의 작품 120</p>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="number-container">
+                            <input type="number" class="number-box" min="1" max="99" value="1"/>
+                        </div>
+                    </td>
+                    <td>정가 : 21,000원<br>판매가 : 18,900원</td>
+                    <td>오늘<br>12/12(목)<br>도착예정</td>
+                    <td>
+                        <div class="cart-button-container">
+                            <button class="order-button">주문하기</button>
+                            <button class="delete-button">삭제</button>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="payment-benefits">
+        <div class="benefit-title">
+            결제 혜택
+        </div>
+        <div class="benefit-list">
+            <div class="benefit">
+                <img src="/image/logo/kakaopay.png" alt="KakaoPay">
+                <p> 월 300만, 5만원 이상</p>
+            </div>
+            <div class="benefit">
+                <img src="/image/logo/paycopay.png" alt="PaycoPay">
+                <p> 페이코 포인트로 결제 시 5% 적립</p>
+            </div>
+            <div class="benefit">
+                <img src="/image/emoji/book.png" alt="NHN 24">
+                <p> 1~3% 포인트 적립</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="delivery-info">
+        <div class="delivery-sidebar">
+            <div class="delivery-title">
+                배송일 안내
+            </div>
+            <button class="delivery-button">배송안내</button>
+        </div>
+        <div class="delivery-details">
+            <p>
+                배송지 : 광주광역시 동구 서석동 조선대
+                <button class="address-change-button">배송지 변경 ></button>
+            </p>
+            <hr class="divider">
+            <p class="info-message">
+                <i class="info-icon">i</i>카트에 상품을 담으시면 도착 예상일을 안내해드립니다.
+            </p>
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    <div class="footer-links">
+        <a href="#">회사소개</a>
+        <a href="#">이용약관</a>
+        <a href="#"><strong>개인정보처리방침</strong></a>
+        <a href="#">청소년 보호정책</a>
+    </div>
+    <div class="footer-container">
+        <div class="footer-info">
+            <p>대표이사 마르코 | 사업자등록번호 123-456-7890</p>
+            <p>통신판매업신고 2024-광주동구-01211</p>
+            <p>이메일: marco@nhn.com | 호스팅 제공자 NHN24</p>
+            <p>© NHN24. All Rights Reserved.</p>
+        </div>
+        <div class="customer-center">
+            <p><strong>고객센터 1544-8282 (발신자 부담)</strong></p>
+            <p>광주광역시 동구 서석동 조선대학교 1층 NHN아카데미</p>
+            <p>Fax 062-1234-5678</p>
+            <div class="footer-buttons">
+                <button>1:1 문의</button>
+                <button>FAQ</button>
+                <button>위치, 영업시간 안내</button>
+            </div>
+        </div>
+    </div>
+</footer>
+<script src="/js/cart-success.js"></script>
+</body>
+</html>

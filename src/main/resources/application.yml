@@ -5,6 +5,9 @@ spring:
     loadbalancer:
       retry:
         enabled: true
+  profiles:
+    active: dev
+
 
 
 
