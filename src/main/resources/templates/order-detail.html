@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NHN 24</title>
-  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/order-detail.css">
 </head>
 <body>
 <header class="header">
@@ -36,23 +36,27 @@
 
 
 <main>
-  <!-- 상품 정보 -->
   <section class="product-info">
-    <img src="/image/book.jpg" alt="도서 이미지">
+    <img src="/image/book2.png" alt="도서 이미지">
     <div class="product-details">
       <h1>모두의 크리스마스</h1>
       <ul>
         <li>저자: 김재니</li>
         <li>출판사: 웅진주니어</li>
         <li>발행일: 2024-11-19</li>
-        <li>정가: <del>18,000원</del></li>
-        <li>판매가: <strong>16,200원</strong> (10% 할인)</li>
+        <li>정가: <span class="original">18,000원</span></li>
+        <li>판매가: <span class="discount">16,200원</span> (10% 할인)</li>
         <li>배송비: 무료배송</li>
-        <li>수령예상일: NHN 배송</li>
+        <li>수령예상일: <span class="highlight">NHN배송</span></li>
       </ul>
+      <div class="rating">
+        <span>★★★★★</span>
+        <span>10.0</span>
+        <span>(100자평)</span>
+      </div>
       <div class="actions">
-        <button class="cart-btn">장바구니 담기</button>
-        <button class="buy-btn">바로구매</button>
+        <a href="#"><button class="cart-btn">장바구니 담기</button></a>
+        <a href="#"><button class="buy-btn">바로구매</button></a>
       </div>
     </div>
   </section>
@@ -127,7 +131,7 @@
           </div>
         </div>
       </div>
-
+    </section>
       <!-- 리뷰 작성 -->
       <div class="review-form">
         <h3>리뷰 작성</h3>
