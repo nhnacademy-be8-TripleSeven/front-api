@@ -16,6 +16,6 @@ public class IndexController {
         }
         model.addAttribute("ip", ip);
         model.addAttribute("url", request.getRequestURI());
-        return "main";
+        return "pay-success-guest";
     }
 }
