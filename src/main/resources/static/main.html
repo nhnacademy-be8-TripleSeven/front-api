@@ -13,9 +13,7 @@
   </div>
   <div class="header-center">
     <div class="search-bar">
-      <label>
-        <input type="text" placeholder="검색어를 입력하세요">
-      </label>
+      <input type="text" placeholder="검색어를 입력하세요">
       <button>🔍</button>
     </div>
     <nav class="menu">
@@ -30,37 +28,45 @@
     </nav>
   </div>
   <div class="user-actions">
-    <img src="/image/emoji/person.png" alt="User Icon">
-    <img src="/image/emoji/cart.png" alt="Cart Icon">
-    <a href="login-succes.html"><button class="login-btn">Login</button></a>
+    <img src="/image/icons/person.png" alt="User Icon">
+    <img src="/image/icons/cart.png" alt="Cart Icon">
+    <a href="join.html"><button class="login-btn">Login</button></a>
   </div>
 </header>
 
 
 <!-- 이달의 베스트 -->
-<section class="best-section">
+<section class="best-section" id="slider1">
   <h2>이 달의 베스트</h2>
   <div class="slider">
-    <button class="arrow left">◀</button>
+    <button class="arrow left" onclick="prevSlide('slider1')">◀</button>
     <div class="slides">
-      <div class="slide"><img src="book1.png" alt="book1"><p>달러구트 꿈 백화점</p></div>
-      <div class="slide"><img src="book2.png" alt="book2"><p>카이로스</p></div>
-      <div class="slide"><img src="book3.png" alt="book3"><p>오! 방울토마토</p></div>
+      <div class="slide"><img src="/image/data/book1.jpeg" alt="book1"><p>달러구트 꿈 백화점</p></div>
+      <div class="slide"><img src="/image/data/book2.jpeg" alt="book2"><p>카이로스</p></div>
+      <div class="slide"><img src="/image/data/book3.jpeg" alt="book3"><p>오! 방울토마토</p></div>
+      <div class="slide"><img src="/image/data/book1.jpeg" alt="book1"><p>달러구트 꿈 백화점</p></div>
+      <div class="slide"><img src="/image/data/book2.jpeg" alt="book2"><p>카이로스</p></div>
+      <div class="slide"><img src="/image/data/book3.jpeg" alt="book3"><p>오! 방울토마토</p></div>
     </div>
-    <button class="arrow right">▶</button>
+    <button class="arrow right" onclick="nextSlide('slider1')">▶</button>
   </div>
 </section>
-
 <!-- 이 도서는 어때요? -->
-<section class="recommended">
+<section class="recommended" id="slider2">
   <h2>이 도서는 어때요?</h2>
-  <div class="book-grid1">
-    <div class="book-item"><img src="book4.png" alt="book4"><p>서론에 읽는 프로이트</p></div>
-    <div class="book-item"><img src="book5.png" alt="book5"><p>푸드 앤 와인 페어링</p></div>
-    <div class="book-item"><img src="book6.png" alt="book6"><p>국어 문법 완벽 세트</p></div>
+  <div class="slider">
+    <button class="arrow left" onclick="prevSlide('slider2')">◀</button>
+    <div class="slides">
+      <div class="slide"><img src="book4.png" alt="book4"><p>서론에 읽는 프로이트</p></div>
+      <div class="slide"><img src="book5.png" alt="book5"><p>푸드 앤 와인 페어링</p></div>
+      <div class="slide"><img src="book6.png" alt="book6"><p>국어 문법 완벽 세트</p></div>
+      <div class="slide"><img src="book4.png" alt="book4"><p>서론에 읽는 프로이트</p></div>
+      <div class="slide"><img src="book5.png" alt="book5"><p>푸드 앤 와인 페어링</p></div>
+      <div class="slide"><img src="book6.png" alt="book6"><p>국어 문법 완벽 세트</p></div>
+    </div>
+    <button class="arrow right" onclick="nextSlide('slider2')">▶</button>
   </div>
 </section>
-
 <!-- 편집자의 선택 섹션 -->
 <section class="editor-choice">
   <div class="choice-header">
@@ -168,5 +174,12 @@
   </div>
 </footer>
 <script src="/js/main.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // 초기화 (슬라이더가 준비됨)
+    slideIndex = 0; // 슬라이드 인덱스를 초기화
+  });
+</script>
+
 </body>
 </html>

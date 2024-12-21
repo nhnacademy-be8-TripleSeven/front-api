@@ -1,0 +1,208 @@
+@import url('https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap');
+
+/* 기본 설정 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Gamja Flower', cursive;
+}
+
+body {
+    background-color: #f9fbfc;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: white;
+    border-bottom: 1px solid #ddd;
+}
+
+.header .logo img {
+    height: 50px;
+}
+
+/* 검색창 */
+.search-bar {
+    padding: 20px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    gap: 10px;
+}
+
+.search-bar input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.search-bar button {
+    padding: 10px 20px;
+    background-color: #eaf0f6;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.menu ul {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+}
+
+.menu ul li a {
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.user-actions button {
+    background-color: #f0f0f0;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 18px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.user-actions .login-btn {
+    background-color: #91b5f3;
+    color: white;
+}
+
+.user-actions .signup-btn {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+/* 메인 내용 */
+.main-content {
+    padding: 40px 20px;
+    margin: 10px 10px;
+}
+
+.find-section {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.tab {
+
+    padding: 10px 20px;
+    border: none;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.tab.active {
+    padding: 20px 20px;
+    background-color: #91b5f3;
+    color: white;
+}
+
+.tab-content {
+    display: none;
+    text-align: center;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.action-btn, .dropdown-btn {
+    width: 80%;
+    padding: 15px;
+    margin: 10px auto;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: white;
+    cursor: pointer;
+}
+
+.action-btn:hover, .dropdown-btn:hover {
+    background-color: #f9f9f9;
+}
+
+/* 푸터 */
+footer {
+    background-color: #f2f5f7;
+    padding: 20px 10%;
+    border-top: 1px solid #e0e4e8;
+    text-align: left;
+    line-height: 1.8;
+}
+
+.footer-links {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.footer-links a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: #555;
+}
+
+.footer-links a:hover {
+    color: #0073e6;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.footer-info {
+    text-align: left;
+    line-height: 1.6;
+    color: #555;
+    font-size: 14px;
+}
+
+.footer-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.footer-buttons button {
+    padding: 6px 10px;
+    background-color: #cfd6de;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    font-size: 14px;
+    width: auto;
+    min-width: 120px;
+}
+
+.footer-buttons button:hover {
+    background-color: #bfc9d3;
+}

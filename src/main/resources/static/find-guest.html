@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>주문 번호/비밀번호 찾기</title>
+  <link rel="stylesheet" href="/css/find-guest.css">
+</head>
+<body>
+<div class="container">
+  <header class="header">
+    <div class="logo">
+      <a href="main.html"><img src="/image/logo/nhn24-logo.png" alt="NHN 24 로고"></a>
+    </div>
+    <div class="header-center">
+      <div class="search-bar">
+        <input type="text" placeholder="검색어를 입력하세요">
+        <button>🔍</button>
+      </div>
+      <nav class="menu">
+        <ul>
+          <li><a href="/recommended-books.html">추천 도서</a></li>
+          <li><a href="/domestic-books.html">국내 도서</a></li>
+          <li><a href="/foreign-books.html">외국 도서</a></li>
+          <li><a href="/bestsellers.html">베스트셀러</a></li>
+          <li><a href="/new-books.html">신간 소개</a></li>
+          <li><a href="/events.html">이벤트</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="user-actions">
+      <button class="login-btn" onclick="location.href='/login.html'">Login</button>
+      <button class="signup-btn" onclick="location.href='/signup.html'">Join</button>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <section class="order-find-section">
+      <div class="tabs">
+        <button class="tab active" onclick="showTab('order-number')">주문 번호 찾기</button>
+        <button class="tab" onclick="showTab('order-password')">주문 비밀번호 찾기</button>
+      </div>
+      <div id="order-number" class="tab-content active">
+        <h2>주문 번호 찾기</h2>
+        <p class="instruction-text">주문 시 입력하셨던 고객님 이름과 휴대폰 번호, 이메일 주소를 입력해주세요.</p>
+        <form>
+          <div class="form-group">
+            <label for="name">이름</label>
+            <input type="text" id="name" placeholder="이름" required>
+          </div>
+          <div class="form-group">
+            <label for="phone">휴대폰 번호</label>
+            <input type="text" id="phone" placeholder="휴대폰 번호 ('-'없이 입력)" required>
+          </div>
+          <div class="form-group">
+            <label for="email">이메일 주소</label>
+            <input type="email" id="email" placeholder="이메일 주소" required>
+          </div>
+          <p class="note">• 최근 3개월 주문번호만 조회 가능합니다.</p>
+          <button class="large-btn">확인</button>
+        </form>
+      </div>
+      <div id="order-password" class="tab-content">
+        <h2>주문 비밀번호 찾기</h2>
+        <p class="instruction-text">주문 비밀번호를 잊으셨나요?<br>휴대폰 번호 또는 이메일 주소로 비밀번호를 찾을 수 있습니다.</p>
+        <form>
+          <div class="form-group">
+            <label for="order-id">주문 번호</label>
+            <input type="text" id="order-id" placeholder="주문 번호" required>
+          </div>
+          <div class="form-group">
+            <label for="name">이름</label>
+            <input type="text" id="phone" placeholder="이름" required>
+          </div>
+          <div class="form-group">
+            <label for="phone">휴대폰 번호</label>
+            <input type="text" id="phone" placeholder="휴대폰 번호 ('-'없이 입력)" required>
+          </div>
+          <div class="form-group">
+            <label for="email">이메일 주소</label>
+            <input type="text" id="phone" placeholder="이메일 주소" required>
+          </div>
+          <p class="note">• 최근 3개월 주문번호만 조회 가능합니다.</p>
+          <button class="large-btn">확인</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-links">
+      <a href="#">회사소개</a>
+      <a href="#">이용약관</a>
+      <a href="#"><strong>개인정보처리방침</strong></a>
+      <a href="#">청소년 보호정책</a>
+    </div>
+    <div class="footer-container">
+      <div class="footer-info">
+        <p>대표이사 마르코 | 사업자등록번호 123-456-7890</p>
+        <p>통신판매업신고 2024-광주동구-01211</p>
+        <p>이메일: marco@nhn.com | 호스팅 제공자 NHN24</p>
+        <p>© NHN24. All Rights Reserved.</p>
+      </div>
+      <div class="customer-center">
+        <p><strong>고객센터 1544-8282 (발신자 부담)</strong></p>
+        <p>광주광역시 동구 서석동 조선대학교 1층 NHN아카데미</p>
+        <p>Fax 062-1234-5678</p>
+        <div class="footer-buttons">
+          <button>1:1 문의</button>
+          <button>FAQ</button>
+          <button>위치, 영업시간 안내</button>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>
+<script>
+  function showTab(tabId) {
+    document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+    document.querySelector(`[onclick="showTab('${tabId}')"]`).classList.add('active');
+    document.getElementById(tabId).classList.add('active');
+  }
+</script>
+</body>
+</html>

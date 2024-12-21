@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>등급별 발급</title>
+    <link rel="stylesheet" href="/css/popup.css">
+</head>
+<body>
+<div class="popup-container">
+    <div class="popup-header">
+        <span class="popup-title">등급별 발급</span>
+    </div>
+    <div class="popup-content">
+        <select id="grade-select">
+            <option value="일반">일반</option>
+            <option value="골드">골드</option>
+            <option value="플래티넘">플래티넘</option>
+        </select>
+        <br><br>
+        <button id="confirm-btn" onclick="selectGrade()">선택</button>
+    </div>
+</div>
+
+<script>
+    function selectGrade() {
+        const selectedGrade = document.getElementById('grade-select').value;
+
+        // 부모 창의 recipient-type select 업데이트
+        if (window.opener && !window.opener.closed) {
+            const parentSelect = window.opener.document.getElementById('recipient-type');
+            if (parentSelect) {
+                const newOption = new Option(selectedGrade, selectedGrade, true, true); // 새 옵션 생성
+                parentSelect.options.length = 0; // 기존 옵션 제거
+                parentSelect.add(newOption); // 새로운 옵션 추가
+                alert(`"${selectedGrade}" 등급이 선택되었습니다.`);
+            }
+        }
+
+        // 팝업 닫기
+        window.close();
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>쿠폰 팝업</title>
+  <link rel="stylesheet" href="/css/coupon-popup.css">
+</head>
+<body>
+<!-- 팝업창 컨테이너 -->
+<div class="popup-container">
+  <div class="popup-header">
+    <span class="popup-title">쿠폰 정책 조회</span>
+  </div>
+  <table class="coupon-table">
+    <tr>
+      <td>쿠폰 정책 이름</td>
+      <td id="coupon-name">신규 가입 혜택 쿠폰</td>
+    </tr>
+    <tr>
+      <td>최저 금액</td>
+      <td id="min-amount">?원</td>
+    </tr>
+    <tr>
+      <td>최고 금액</td>
+      <td id="max-amount">?원</td>
+    </tr>
+    <tr>
+      <td>할인율(%)</td>
+      <td id="discount-rate">?%</td>
+    </tr>
+    <tr>
+      <td>할인 금액</td>
+      <td id="discount-amount">?원</td>
+    </tr>
+    <tr>
+      <td>유효 기간</td>
+      <td id="valid-period">30일</td>
+    </tr>
+  </table>
+  <button id="confirm-btn">확인</button>
+</div>
+
+<!-- JavaScript -->
+<script src="/js/coupon-popup.js"></script>
+</body>
+</html>

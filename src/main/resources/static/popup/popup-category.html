@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>쿠폰 분류</title>
+    <link rel="stylesheet" href="/css/popup.css">
+</head>
+<body>
+<div class="popup-container">
+    <div class="popup-header">쿠폰 분류</div>
+    <div class="select-container">
+        <select id="category-select">
+            <option value="도서 쿠폰">도서 쿠폰</option>
+            <option value="카테고리 쿠폰">카테고리 쿠폰</option>
+            <option value="일반 쿠폰">일반 쿠폰</option>
+        </select>
+        <button onclick="selectCategory()">선택</button>
+    </div>
+    <button class="confirm-btn" onclick="window.close()">확인</button>
+</div>
+
+<script>
+    function selectCategory() {
+        const selectedValue = document.getElementById('category-select').value;
+        // 부모 창의 select 박스 업데이트
+        if (window.opener && !window.opener.closed) {
+            const parentSelect = window.opener.document.getElementById('coupon-category');
+            parentSelect.value = selectedValue;
+        }
+        alert(`"${selectedValue}"가 선택되었습니다.`);
+    }
+</script>
+</body>
+</html>
