@@ -1,0 +1,122 @@
+<!--팝업 css 고쳐야함 ㅜㅜ!-->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>쿠폰 생성 및 발급</title>
+  <link rel="stylesheet" href="/css/create-coupon.css">
+</head>
+<body>
+
+<!-- 헤더 -->
+<header class="top-bar">
+  <div class="logo">
+    <a href="#"><img src="/image/logo/nhn24-logo.png" alt="NHN 24 로고"></a>
+  </div>
+  <div class="search-bar">
+    <input type="text" placeholder="검색">
+    <button>🔍</button>
+  </div>
+  <div class="user-actions">
+    <a href="#"><img src="/image/icons/person.png" alt="User Icon"></a>
+    <a href="#"><img src="/image/icons/cart.png" alt="Cart Icon"></a>
+    <button class="logout-btn">Logout</button>
+  </div>
+</header>
+
+<!-- 메인 레이아웃 -->
+<main>
+  <!-- 사이드바 -->
+  <aside class="sidebar">
+    <h3>📋 관리자 메뉴</h3>
+    <ul>
+      <h3><li>*쿠폰 </li></h3>
+      <li><a href="#">쿠폰 정책 조회</a></li>
+      <li><a href="#">쿠폰 정책 생성, 발급</a></li>
+      <li><a href="#">쿠폰 생성,발급</a></li>
+      <li><a href="#">쿠폰 관리</a></li>
+      <h3><li>*회원 </li></h3>
+      <li><a href="#">회원 조회</a></li>
+      <li><a href="#">등급 조회</a></li>
+      <h3><li>*도서 </li></h3>
+      <li><a href="#">도서 조회</a></li>
+      <li><a href="#">도서 수정</a></li>
+    </ul>
+  </aside>
+
+  <!-- 메인 컨테이너 -->
+  <div class="main-container">
+    <div class="form-container">
+      <h3>쿠폰 생성 및 발급</h3>
+      <form id="coupon-form">
+        <table class="form-table">
+          <tr>
+            <th>쿠폰 이름</th>
+            <td><input type="text" id="coupon-name" placeholder="쿠폰 이름 입력" required></td>
+          </tr>
+          <tr>
+            <th>쿠폰 정책</th>
+            <td><input type="text" id="coupon-policy" placeholder="쿠폰 정책 입력" required></td>
+          </tr>
+          <tr>
+            <th>발급 대상</th>
+            <td>
+              <select id="recipient-type" required>
+                <option value="">선택</option>
+                <option value="전체">전체</option>
+                <option value="등급별">등급별</option>
+                <option value="개인별">개인별</option>
+              </select>
+              <button type="button" id="recipient-popup-btn" style="display: none;">등급 선택</button>
+            </td>
+          </tr>
+
+          <tr>
+            <th>분류</th>
+            <td>
+              <select id="coupon-category" required>
+                <option value="">선택</option>
+                <option value="도서 쿠폰">도서 쿠폰</option>
+                <option value="카테고리 쿠폰">카테고리 쿠폰</option>
+                <option value="일반 쿠폰">일반 쿠폰</option>
+              </select>
+
+            </td>
+          </tr>
+        </table>
+        <button type="submit" class="register-btn" id="register-btn">등록</button>
+      </form>
+    </div>
+  </div>
+</main>
+
+<!-- 푸터 -->
+<footer>
+  <div class="footer-links">
+    <a href="#">회사소개</a>
+    <a href="#">이용약관</a>
+    <a href="#"><strong>개인정보처리방침</strong></a>
+    <a href="#">청소년 보호정책</a>
+  </div>
+  <div class="footer-container">
+    <div class="footer-info">
+      <p>대표이사 마르코 | 사업자등록번호 123-456-7890</p>
+      <p>통신판매업신고 2024-광주동구-01211</p>
+      <p>이메일: marco@nhn.com | 호스팅 제공자 NHN24</p>
+      <p>© NHN24. All Rights Reserved.</p>
+    </div>
+    <div class="customer-center">
+      <p><strong>고객센터 1544-8282 (발신자 부담)</strong></p>
+      <p>광주광역시 동구 서석동 조선대학교 1층 NHN아카데미</p>
+      <p>Fax 062-1234-5678</p>
+      <div>
+        <button>1:1 문의</button>
+        <button>FAQ</button>
+        <button>위치, 영업시간 안내</button>
+      </div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

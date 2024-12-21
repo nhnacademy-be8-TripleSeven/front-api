@@ -1,0 +1,742 @@
+@import url('https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap');
+
+/* 전체 초기화 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Gamja Flower', cursive;
+}
+body {
+    background-color: #f9fbfc;
+    color: #333;
+    line-height: 1.6;
+}
+
+section {
+    margin: 30px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 1200px;
+}
+
+.logo img {
+    height: 50px;
+}
+
+
+/* 검색창 중앙 정렬 및 스타일 수정 */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #f9f9f9;
+    padding: 10px 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+.menu {
+    display: flex;
+    justify-content: center;
+    flex: 1;
+}
+
+.menu ul {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.menu ul li {
+    font-size: 16px;
+    font-weight: bold;
+}
+/* 검색창 길이 최대로 확장 */
+.search-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%; /* 화면 전체 너비에 맞춤 */
+    max-width: 1400px; /* 최대 너비를 더 늘림 */
+    margin: 0 auto;
+    gap: 10px; /* 버튼과 검색창 간격 */
+}
+
+.search-bar input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.search-bar button {
+    padding: 10px 20px; /* 버튼 크기 조정 */
+    background-color: #eaf0f6;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.search-bar button:hover {
+    background-color: #bfc9d3; /* 버튼 호버 색상 */
+}
+
+/* 사용자 아이콘과 로그인 버튼 */
+.user-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-actions img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+}
+
+.login-btn {
+    background-color: #91b5f3;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    height: 40px;
+}
+
+.login-btn:hover {
+    background-color: #699ce2;
+}
+
+
+
+
+.book-overview {
+    display: flex;
+    padding: 20px;
+    background-color: #fff;
+}
+
+.book-overview .book-image img {
+    width: 300px;
+}
+
+.book-overview .book-details {
+    margin-left: 20px;
+}
+
+.book-info, .statistics, .reviews, .return-policy {
+    padding: 20px;
+    background-color: #fff;
+    margin: 20px 0;
+}
+
+
+
+.details {
+    margin: 30px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #fff;
+}
+
+.details h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.details ul {
+    list-style: disc;
+    padding-left: 20px;
+}
+
+
+.book-intro {
+    margin: 30px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #fff;
+}
+
+.book-intro h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+/* 구매자 분포 및 평점 */
+.review-summary {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.purchase-distribution,
+.rating-summary {
+    width: 45%;
+}
+
+.purchase-distribution ul,
+.rating-summary ul {
+    list-style: none;
+    padding: 0;
+}
+
+.purchase-distribution li,
+.rating-summary li {
+    margin-bottom: 5px;
+}
+
+.overall-rating {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+}
+.review-section {
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #fff;
+    width: 90%;
+    max-width: 1200px;
+}
+
+.review-header h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.review-header p {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.review-stats {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+
+.review-list h3 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.review-item {
+    margin-bottom: 15px;
+    border-top: 1px solid #ddd;
+    padding-top: 10px;
+}
+
+.review-item:first-child {
+    border-top: none;
+}
+
+.review-meta {
+    font-size: 0.8rem;
+    color: #666;
+    display: flex;
+    justify-content: space-between;
+}
+
+.review-form h3 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+
+/* 전체 컨테이너 */
+.product-info {
+    display: flex;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* 이미지 스타일 */
+.product-info img {
+    width: 500px;
+    height: 684px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+/* 상세 정보 스타일 */
+.product-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-inside: auto;
+    padding: 100px 100px;
+}
+
+.product-details h1 {
+    font-size: 45px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.product-details ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.product-details ul li {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.product-details ul li .highlight {
+    background-color: #ffd700;
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-weight: bold;
+}
+
+.product-details ul li .discount {
+    color: red;
+    font-weight: bold;
+}
+
+.product-details ul li .original {
+    color: #aaa;
+    text-decoration: line-through;
+}
+
+.product-details ul li .note {
+    font-size: 12px;
+    color: #666;
+}
+
+/* 별점 스타일 */
+.rating {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.rating span {
+    font-size: 1.2rem;
+    color: #f4c150;
+}
+
+/* 버튼 스타일 */
+.actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.actions button {
+    flex: 1;
+    padding: 15px 0;
+    text-align: center;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+}
+
+.cart-btn {
+    background-color: #6f6f77;
+    color: white;
+}
+
+.buy-btn {
+    background-color: #fba9a9;
+    color: white;
+}
+
+ .cart-btn:hover, .buy-btn:hover {
+    background-color: #699ce2;
+    color: white;
+}
+
+
+
+
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .product-info {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .product-info img {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .product-details {
+        align-items: center;
+        text-align: center;
+    }
+
+    .actions {
+        flex-direction: column;
+    }
+}
+
+
+
+
+
+
+.details {
+    margin: 30px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #fff;
+}
+
+.details h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.details ul {
+    list-style: disc;
+    padding-left: 20px;
+}
+
+
+.book-intro {
+    margin: 30px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #fff;
+}
+
+.book-intro h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+/* 구매자 분포 및 평점 */
+.review-summary {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.purchase-distribution,
+.rating-summary {
+    width: 45%;
+}
+
+.purchase-distribution ul,
+.rating-summary ul {
+    list-style: none;
+    padding: 0;
+}
+
+.purchase-distribution li,
+.rating-summary li {
+    margin-bottom: 5px;
+}
+
+.overall-rating {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+}
+.review-section {
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #fff;
+    width: 90%;
+    max-width: 1200px;
+}
+
+.review-header h2 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.review-header p {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.review-stats {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+
+.review-list h3 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.review-item {
+    margin-bottom: 15px;
+    border-top: 1px solid #ddd;
+    padding-top: 10px;
+}
+
+.review-item:first-child {
+    border-top: none;
+}
+
+.review-meta {
+    font-size: 0.8rem;
+    color: #666;
+    display: flex;
+    justify-content: space-between;
+}
+
+.review-form h3 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+/* 리뷰 작성 폼 정렬 및 배치 */
+.review-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: flex-start; /* 왼쪽 정렬 */
+}
+
+.review-form form label {
+    display: flex; /* 수평 정렬 */
+    align-items: center; /* 수직 가운데 정렬 */
+    font-size: 1rem;
+    font-weight: bold;
+    color: #333;
+    gap: 10px; /* 텍스트와 선택창 간격 */
+}
+
+#review-rating {
+    display: inline-block; /* 인라인 블록으로 설정 */
+}
+
+.review-form form textarea {
+    width: 100%;
+    max-width: 1200px; /* 텍스트 영역 최대 크기 */
+    height: 150px; /* 텍스트 영역 고정 높이 */
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    resize: none; /* 크기 조절 비활성화 */
+}
+
+.review-form form button {
+    align-self: center; /* 버튼을 폼의 가운데로 */
+    padding: 10px 20px;
+    background-color: #91b5f3;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.review-form form button:hover {
+    background-color: #699ce2; /* 버튼 호버 색상 */
+}
+
+
+/* 반품/교환 안내 스타일 */
+.return-info {
+    margin: 30px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #fff;
+}
+
+.return-info table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.return-info th,
+.return-info td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+.return-info th {
+    background-color: #f9f9f9;
+    font-weight: bold;
+}
+
+/* 푸터 */
+footer {
+    background-color: #f2f5f7;
+    padding: 20px 10%;
+    border-top: 1px solid #e0e4e8;
+    text-align: left;
+    line-height: 1.8;
+}
+
+.footer-links {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.footer-links a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: #555;
+}
+
+.footer-links a:hover {
+    color: #0073e6;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.footer-info {
+    text-align: left;
+    line-height: 1.6;
+    color: #555;
+    font-size: 14px;
+}
+
+.footer-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.footer-buttons button {
+    padding: 6px 10px;
+    background-color: #cfd6de;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    font-size: 14px;
+    width: auto;
+    min-width: 120px;
+}
+
+.footer-buttons button:hover {
+    background-color: #bfc9d3;
+}
+
+
+
+/* 반품/교환 안내 스타일 */
+.return-info {
+    margin: 30px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #fff;
+}
+
+.return-info table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.return-info th,
+.return-info td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+.return-info th {
+    background-color: #f9f9f9;
+    font-weight: bold;
+}
+
+/* 푸터 */
+footer {
+    background-color: #f2f5f7;
+    padding: 20px 10%;
+    border-top: 1px solid #e0e4e8;
+    text-align: left;
+    line-height: 1.8;
+}
+
+.footer-links {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.footer-links a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: #555;
+}
+
+.footer-links a:hover {
+    color: #0073e6;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.footer-info {
+    text-align: left;
+    line-height: 1.6;
+    color: #555;
+    font-size: 14px;
+}
+
+.footer-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.footer-buttons button {
+    padding: 6px 10px;
+    background-color: #cfd6de;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    font-size: 14px;
+    width: auto;
+    min-width: 120px;
+}
+
+.footer-buttons button:hover {
+    background-color: #bfc9d3;
+}
+
+

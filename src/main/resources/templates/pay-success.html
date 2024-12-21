@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NHN 24</title>
+    <link rel="stylesheet" href="/css/pay-success.css">
+</head>
+<body>
+<header class="header">
+    <div class="logo">
+        <a href="main.html"><img src="/image/logo/nhn24-logo.png" alt="NHN 24 로고"></a>
+    </div>
+    <div class="header-center">
+        <div class="search-bar">
+            <label>
+                <input type="text" placeholder="검색어를 입력하세요">
+            </label>
+            <button>🔍</button>
+        </div>
+        <nav class="menu">
+            <ul>
+                <li><a href="/recommended-books.html">추천 도서</a></li>
+                <li><a href="/domestic-books.html">국내 도서</a></li>
+                <li><a href="/foreign-books.html">외국 도서</a></li>
+                <li><a href="/bestsellers.html">베스트셀러</a></li>
+                <li><a href="/new-books.html">신간 소개</a></li>
+                <li><a href="/events.html">이벤트</a></li>
+            </ul>
+        </nav>
+    </div>
+    <div class="user-actions">
+        <img src="/image/emoji/person.png" alt="User Icon">
+        <img src="/image/emoji/cart.png" alt="Cart Icon">
+        <a href="login-succes.html">
+            <button class="login-btn">Login</button>
+        </a>
+    </div>
+</header>
+
+
+<!-- 메인 섹션 -->
+<main>
+    <section class="step-container">
+        <div class="step active">카트</div>
+        <div class="step current">결제</div>
+        <div class="step">완료</div>
+    </section>
+
+    <section class="order-completion">
+        <p class="thank-you-message">
+            User1 님, 항상 NHN24를 이용해주셔서 감사합니다! <span>♡</span>
+        </p>
+        <p class="order-id">
+            [주문번호] 12345678000981 가 정상 결제 처리 되었습니다.
+        </p>
+    </section>
+    <section class="delivery-confirmation">
+        <p class="confirmation-message">
+            <i class="delivery-icon"></i>
+            <strong>User1 님, 입금 확인 후 배송됩니다.</strong>
+        </p>
+        <p class="confirmation-details">
+            마이페이지 > 주문 내역에서 꼭 확인 부탁드립니다.
+        </p>
+    </section>
+
+    <section class="shipping-info-section">
+        <h2 class="section-title">
+            <img src="/image/emoji/ship.png" alt="배송 아이콘"> 배송 정보
+            <button class="change-address-btn">배송지 변경</button>
+        </h2>
+        <div class="shipping-info-address">
+            <div class="info-row">
+                <span class="info-label">받는 분:</span>
+                <span class="info-value">마르코</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">주소:</span>
+                <div class="address">
+                    <p class="address-item">
+                        <span class="badge road-name">도로명</span>
+                        (62056) 광주광역시 동구 조선대학교
+                    </p>
+                    <p class="address-item">
+                        <span class="badge number">지번</span>
+                        (62056) 광주광역시 동구 조선대학교
+                    </p>
+                </div>
+            </div>
+            <div class="info-row">
+                <span class="info-label">배송 예정일:</span>
+                <span class="info-value">오늘 (12/13) 도착 예정</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="delivery-section">
+        <h2><img src="/image/emoji/ship.png" alt=""> 주문 상품</h2>
+        <h6>일반 배송: 5000원</h6>
+    </section>
+    <section class="shipping-info">
+        <div class="flex-box progress-bar"></div>
+        <span class="free-shipping-text">
+            <strong>30,000원</strong> 이상 구매 시 <strong>무료배송</strong>
+        </span>
+        <button class="more-details-btn">더 담으러 가기</button>
+    </section>
+    <section class="item-section">
+        <div class="product-table">
+            <table>
+                <thead>
+                <tr>
+                    <th>상품정보</th>
+                    <th>수량</th>
+                    <th>상품금액</th>
+                    <th>배송일</th>
+                    <th>합계</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="product-info">
+                        <img src="/image/book.png" alt="책 이미지">
+                        <div>
+                            <p><strong>[국내 도서] 반 고흐, 인생의 그림들</strong></p>
+                            <p>- 어둠을 지나 비로소 빛이 된 불멸의 작품 120</p>
+                        </div>
+                    </td>
+                    <td>1</td>
+                    <td>21,000원</td>
+                    <td>12/12(목)<br>도착(예정)</td>
+                    <td>18,900원<br><span class="discount">(10% 할인)</span></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="payment-summary">
+        <table class="payment-table">
+            <tbody>
+            <tr>
+                <th>총 상품금액<br><strong>18,900원</strong></th>
+                <th>총 추가금액<br><strong>0원</strong></th>
+                <th>총 할인금액<br><strong>0원</strong></th>
+                <th rowspan="2" class="final-amount">최종 결제금액<br><strong class="price">18,900원</strong></th>
+            </tr>
+            <tr>
+                <th class="payment-detail">
+                    상품 1종 (1개) 21,000원<br>
+                    <p class="payment-detail-discount">-> 즉시할인 2,100원</p>
+                </th>
+                <th></th>
+                <th></th>
+            </tr>
+            <tr>
+                <td colspan="3" rowspan="2" class="payment-method">
+                    <div class="method-title-real">
+                        <div class="method-title" style="display: inline; margin-right: 50px" >
+                            <span>* 결제 수단</span>
+                        </div>
+                        <div class="method-title-1" style="display: inline">
+                            <span>TossPay 18,900원</span>
+                        </div>
+                    </div>
+                    <br><br>
+                    <p class="method-note">
+                        <img src="/image/emoji/alert.png" alt="안내 아이콘">
+                        주문 내역은 마이페이지에서 다시 확인할 수 있습니다.
+                    </p>
+                </td>
+                <td rowspan="2" class="point-summary">
+                    <p>기본 적립 포인트: 0원</p>
+                    <p>추가 적립 포인트: 0원</p>
+                    <p>등급별 적립 포인트: 0원</p>
+                    <p><strong>총 예상 포인트: 0원</strong></p>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+
+</main>
+
+<footer>
+    <div class="footer-links">
+        <a href="#">회사소개</a>
+        <a href="#">이용약관</a>
+        <a href="#"><strong>개인정보처리방침</strong></a>
+        <a href="#">청소년 보호정책</a>
+    </div>
+    <div class="footer-container">
+        <div class="footer-info">
+            <p>대표이사 마르코 | 사업자등록번호 123-456-7890</p>
+            <p>통신판매업신고 2024-광주동구-01211</p>
+            <p>이메일: marco@nhn.com | 호스팅 제공자 NHN24</p>
+            <p>© NHN24. All Rights Reserved.</p>
+        </div>
+        <div class="customer-center">
+            <p><strong>고객센터 1544-8282 (발신자 부담)</strong></p>
+            <p>광주광역시 동구 서석동 조선대학교 1층 NHN아카데미</p>
+            <p>Fax 062-1234-5678</p>
+            <div class="footer-buttons">
+                <button>1:1 문의</button>
+                <button>FAQ</button>
+                <button>위치, 영업시간 안내</button>
+            </div>
+        </div>
+    </div>
+</footer>
+<!--<script src="script.js"></script>-->
+</body>
+</html>

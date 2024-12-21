@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>쿠폰 정책 생성 및 발급</title>
+    <link rel="stylesheet" href="/css/coupon-policy-register.css">
+</head>
+<body>
+
+<!-- 헤더 -->
+<header class="top-bar">
+    <div class="logo">
+        <a href="main.html"><img src="/image/logo/nhn24-logo.png" alt="NHN 24 로고"></a>
+    </div>
+    <div class="search-bar">
+        <input type="text" placeholder="검색">
+        <button>🔍</button>
+    </div>
+    <div class="user-actions">
+        <a href="#"><img src="/image/icons/person.png" alt="User Icon"></a>
+        <a href="#"><img src="/image/icons/cart.png" alt="Cart Icon"></a>
+        <button class="logout">Logout</button>
+    </div>
+</header>
+
+<!-- 메인 레이아웃 -->
+<main>
+    <!-- 사이드바 -->
+    <aside class="sidebar">
+        <h3>📋 관리자 메뉴</h3>
+        <ul>
+            <h3><li>*쿠폰 </li></h3>
+            <li><a href="#">쿠폰 정책 조회</a></li>
+            <li><a href="#">쿠폰 정책 생성, 발급</a></li>
+            <li><a href="#">쿠폰 생성,발급</a></li>
+            <li><a href="#">쿠폰 관리</a></li>
+            <h3><li>*회원 </li></h3>
+            <li><a href="#">회원 조회</a></li>
+            <li><a href="#">등급 조회</a></li>
+            <h3><li>*도서 </li></h3>
+            <li><a href="#">도서 조회</a></li>
+            <li><a href="#">도서 수정</a></li>
+        </ul>
+    </aside>
+
+    <div class="form-container">
+        <table class="form-table">
+            <h2 class="form-title">쿠폰 정책 생성 및 발급</h2>
+            <tr>
+                <th>쿠폰 정책 이름</th>
+                <td><input type="text" id="coupon-name" placeholder="정책 이름 입력"></td>
+            </tr>
+            <tr>
+                <th>쿠폰 이름</th>
+                <td><input type="text" id="coupon-title" placeholder="쿠폰 이름 입력"></td>
+            </tr>
+            <tr>
+                <th>최소 금액</th>
+                <td><input type="number" id="min-amount" placeholder="최소 금액 입력"></td>
+            </tr>
+            <tr>
+                <th>최고 금액</th>
+                <td><input type="number" id="max-amount" placeholder="최고 금액 입력"></td>
+            </tr>
+            <tr>
+                <th>할인 금액/할인율(%)</th>
+                <td class="discount-field">
+                    <select id="discount-type">
+                        <option value="금액">할인 금액</option>
+                        <option value="율">할인율</option>
+                    </select>
+                    <input type="number" id="discount-value" placeholder="값 입력">
+                </td>
+            </tr>
+            <tr>
+                <th>유효 기간</th>
+                <td><input type="date" id="validity"></td>
+            </tr>
+        </table>
+
+        <!-- 등록 버튼 -->
+        <button class="register-btn" id="register-btn">등록</button>
+    </div>
+
+
+    <!-- 팝업 오버레이 -->
+    <div class="popup-overlay" id="popup-overlay">
+        <div class="popup-content">
+            <h2>쿠폰 정책 생성 조회</h2>
+            <table class="popup-table">
+                <tr>
+                    <th>쿠폰 정책 이름</th>
+                    <td id="popup-name"></td>
+                </tr>
+                <tr>
+                    <th>최소 금액</th>
+                    <td id="popup-min"></td>
+                </tr>
+                <tr>
+                    <th>최고 금액</th>
+                    <td id="popup-max"></td>
+                </tr>
+                <tr>
+                    <th>할인 금액/할인율</th>
+                    <td id="popup-discount"></td>
+                </tr>
+                <tr>
+                    <th>유효 기간</th>
+                    <td id="popup-validity"></td>
+                </tr>
+            </table>
+            <button id="close-popup">확인</button>
+        </div>
+    </div>
+
+
+
+</main>
+
+
+<!-- 푸터 -->
+<footer>
+    <div class="footer-links">
+        <a href="#">회사소개</a>
+        <a href="#">이용약관</a>
+        <a href="#"><strong>개인정보처리방침</strong></a>
+        <a href="#">청소년 보호정책</a>
+    </div>
+    <div class="footer-container">
+        <div class="footer-info">
+            <p>대표이사 마르코 | 사업자등록번호 123-456-7890</p>
+            <p>통신판매업신고 2024-광주동구-01211</p>
+            <p>이메일: marco@nhn.com | 호스팅 제공자 NHN24</p>
+            <p>© NHN24. All Rights Reserved.</p>
+        </div>
+        <div class="customer-center">
+            <p><strong>고객센터 1544-8282 (발신자 부담)</strong></p>
+            <p>광주광역시 동구 서석동 조선대학교 1층 NHN아카데미</p>
+            <p>Fax 062-1234-5678</p>
+            <div>
+                <button>1:1 문의</button>
+                <button>FAQ</button>
+                <button>위치, 영업시간 안내</button>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="/js/coupon-policy-register.js"></script>
+</body>
+</html>

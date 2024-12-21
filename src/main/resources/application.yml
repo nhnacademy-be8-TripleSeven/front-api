@@ -5,6 +5,11 @@ spring:
     loadbalancer:
       retry:
         enabled: true
+  profiles:
+    active: dev
+
+
+
 
 management:
   health:
