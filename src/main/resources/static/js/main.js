@@ -41,16 +41,16 @@ function initializeSlider(sliderId, apiUrl) {
     }
 
     fetch(apiUrl)
-    .then(response => response.json())
-    .then(data => {
-        sliderCache[sliderId] = data.content;
-        renderSlides(sliderElement, data.content);
-        updateSliderButtons(sliderId, slideIndex);
-    })
-    .catch(error => {
-        console.error('Error loading slider data:', error);
-        sliderElement.innerHTML = '<p>슬라이더 데이터를 불러오는 데 실패했습니다.</p>';
-    });
+        .then(response => response.json())
+        .then(data => {
+            sliderCache[sliderId] = data.content;
+            renderSlides(sliderElement, data.content);
+            updateSliderButtons(sliderId, slideIndex);
+        })
+        .catch(error => {
+            console.error('Error loading slider data:', error);
+            sliderElement.innerHTML = '<p>슬라이더 데이터를 불러오는 데 실패했습니다.</p>';
+        });
 }
 
 // 슬라이더 버튼 상태 업데이트
@@ -84,15 +84,15 @@ function fetchTabContent(type, contentElement) {
     }
 
     fetch(`/books/type/${type}`)
-    .then(response => response.json())
-    .then(data => {
-        tabCache[type] = data.content;
-        renderTabContent(contentElement, data.content);
-    })
-    .catch(error => {
-        console.error('Error loading tab content:', error);
-        contentElement.innerHTML = '<p>탭 데이터를 불러오는 데 실패했습니다.</p>';
-    });
+        .then(response => response.json())
+        .then(data => {
+            tabCache[type] = data.content;
+            renderTabContent(contentElement, data.content);
+        })
+        .catch(error => {
+            console.error('Error loading tab content:', error);
+            contentElement.innerHTML = '<p>탭 데이터를 불러오는 데 실패했습니다.</p>';
+        });
 }
 
 // 탭 콘텐츠 렌더링
