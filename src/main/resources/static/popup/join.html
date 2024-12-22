@@ -1,125 +1,131 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>회원/비회원 로그인</title>
+  <title>회원가입</title>
   <link rel="stylesheet" href="/css/join.css">
 </head>
 <body>
-<div class="container">
-  <header class="header">
-    <div class="logo">
-      <a href="../../templates/main.html"><img src="/image/logo/nhn24-logo.png" alt="NHN 24 로고"></a>
+<header class="header">
+  <div class="logo">
+    <a href="main.html"><img src="/image/logo/nhn24-logo.png" alt="NHN 24 로고"></a>
+  </div>
+  <div class="header-center">
+    <div class="search-bar">
+      <input type="text" placeholder="검색어를 입력하세요">
+      <button>🔍</button>
     </div>
-    <div class="header-center">
-      <div class="search-bar">
-        <input type="text" placeholder="검색어를 입력하세요">
-        <button>🔍</button>
-      </div>
-      <nav class="menu">
-        <ul>
-          <li><a href="/recommended-books.html">추천 도서</a></li>
-          <li><a href="/domestic-books.html">국내 도서</a></li>
-          <li><a href="/foreign-books.html">외국 도서</a></li>
-          <li><a href="/bestsellers.html">베스트셀러</a></li>
-          <li><a href="/new-books.html">신간 소개</a></li>
-          <li><a href="/events.html">이벤트</a></li>
-        </ul>
-      </nav>
-    </div>
-    <div class="user-actions">
-      <button class="login-btn" onclick="location.href='/login.html'">Login</button>
-    </div>
-  </header>
+    <nav class="menu">
+      <ul>
+        <li><a href="/recommended-books.html">추천 도서</a></li>
+        <li><a href="/domestic-books.html">국내 도서</a></li>
+        <li><a href="/foreign-books.html">외국 도서</a></li>
+        <li><a href="/bestsellers.html">베스트셀러</a></li>
+        <li><a href="/new-books.html">신간 소개</a></li>
+        <li><a href="/events.html">이벤트</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="user-actions">
+    <img src="/image/icons/person.png" alt="User Icon">
+    <img src="/image/icons/cart.png" alt="Cart Icon">
+    <a href="login.html"><button class="login-btn">Login</button></a>
+  </div>
+</header>
 
-  <section class="login-section">
-    <div class="login-wrapper">
-      <div class="login-container">
-        <div class="tabs">
-          <button class="tab active" onclick="showTab('member-login')">회원 로그인</button>
-          <button class="tab" onclick="showTab('guest-order')">비회원 주문 조회</button>
-        </div>
-        <div id="member-login" class="tab-content active">
-          <form>
-            <input type="text" placeholder="ID" required>
-            <input type="password" placeholder="비밀번호" required>
-            <button class="large-btn">로그인</button>
-          </form>
-          <a href="../../templates/signup.html"><button class="simple-join-btn">NHN 간편 회원가입</button></a>
-          <div class="helper-links">
-            <a href="../../templates/find-account.html" class="helper-link">계정 찾기</a>
-          </div>
-          <p id="sns-login-text" class="sns-text">SNS 계정으로 로그인</p>
-          <div id="sns-login" class="sns-buttons">
-            <a href="/kakao-login.html"><img src="/image/logo/kakao.png" alt="카카오"></a>
-            <a href="/google-login.html"><img src="/image/logo/google.png" alt="구글"></a>
-            <a href="/naver-login.html"><img src="/image/logo/naver.png" alt="네이버"></a>
-            <a href="/payco-login.html"><img src="/image/logo/payco.png" alt="페이코"></a>
-          </div>
-        </div>
-        <div id="guest-order" class="tab-content">
-          <form>
-            <input type="text" placeholder="주문 번호" required>
-            <input type="text" placeholder="휴대폰 번호" required>
-            <button class="large-btn">조회</button>
-          </form>
-          <div class="helper-links">
-            <a href="../../templates/find-guest.html" class="helper-link">주문 번호 찾기</a>
-            <a href="../../templates/find-guest.html" class="helper-link">주문 비밀번호 찾기</a>
-          </div>
+<main class="main-content">
+  <section class="signup-section">
+    <h1>회원가입</h1>
+    <p><strong><span class="highlight">NHN24 </span></strong>에 가입하여<br>더 많은 혜택을 즐겨보세요!</p>
+    <form class="signup-form">
+      <div class="form-group">
+        <label for="username">아이디</label>
+        <div class="input-container">
+          <input type="text" id="username" placeholder="아이디">
+          <button type="button" class="check-btn">중복 확인</button>
         </div>
       </div>
-      <div class="welcome-banner">
-        <a href="/welcome-coupon.html"><img src="/image/logo/welcou.png" alt="신규회원 웰컴 쿠폰 배너"></a>
+      <div class="form-group">
+        <label for="password">비밀번호</label>
+        <div class="input-container1">
+          <input type="password" id="password" placeholder="비밀번호">
+          <img src="/image/icons/EyeSlash.png" alt="비밀번호 보기" id="toggle-password" class="eye-icon">
+        </div>
       </div>
-    </div>
+      <div class="form-group">
+        <label for="confirm-password">비밀번호 재확인</label>
+        <div class="input-container1">
+          <input type="password" id="confirm-password" placeholder="비밀번호 재확인">
+          <img src="/image/icons/EyeSlash.png" alt="비밀번호 보기" id="toggle-confirm-password" class="eye-icon">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="name">이름</label>
+        <input type="text" id="name" placeholder="이름">
+      </div>
+      <div class="form-group">
+        <label for="email">이메일</label>
+        <input type="email" id="email" placeholder="이메일">
+      </div>
+      <div class="form-group">
+        <label for="birthdate">생일</label>
+        <input type="date" id="birthdate">
+      </div>
+      <div class="form-group">
+        <label for="telecom">통신사 선택</label>
+        <select id="telecom">
+          <option value="skt">SKT</option>
+          <option value="kt">KT</option>
+          <option value="lg">LG U+</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="mobile">휴대 전화번호</label>
+        <input type="tel" id="mobile" placeholder="휴대 전화번호">
+      </div>
+      <div class="form-group">
+        <label for="phone">일반 전화번호</label>
+        <input type="tel" id="phone" placeholder="일반 전화번호">
+      </div>
+      <div class="form-group">
+        <label>성별</label>
+        <input type="radio" id="male" name="gender" value="male">
+        <label for="male">남</label>
+        <input type="radio" id="female" name="gender" value="female">
+        <label for="female">여</label>
+      </div>
+      <button type="submit" class="signup-btn">NHN24 회원가입</button>
+    </form>
   </section>
+</main>
 
-  <footer>
-    <div class="footer-links">
-      <a href="#">회사소개</a>
-      <a href="#">이용약관</a>
-      <a href="#"><strong>개인정보처리방침</strong></a>
-      <a href="#">청소년 보호정책</a>
+<footer>
+  <div class="footer-links">
+    <a href="#">회사소개</a>
+    <a href="#">이용약관</a>
+    <a href="#"><strong>개인정보처리방침</strong></a>
+    <a href="#">청소년 보호정책</a>
+  </div>
+  <div class="footer-container">
+    <div class="footer-info">
+      <p>대표이사 마르코 | 사업자등록번호 123-456-7890</p>
+      <p>통신판매업신고 2024-광주동구-01211</p>
+      <p>이메일: marco@nhn.com | 호스팅 제공자 NHN24</p>
+      <p>© NHN24. All Rights Reserved.</p>
     </div>
-    <div class="footer-container">
-      <div class="footer-info">
-        <p>대표이사 마르코 | 사업자등록번호 123-456-7890</p>
-        <p>통신판매업신고 2024-광주동구-01211</p>
-        <p>이메일: marco@nhn.com | 호스팅 제공자 NHN24</p>
-        <p>© NHN24. All Rights Reserved.</p>
-      </div>
-      <div class="customer-center">
-        <p><strong>고객센터 1544-8282 (발신자 부담)</strong></p>
-        <p>광주광역시 동구 서석동 조선대학교 1층 NHN아카데미</p>
-        <p>Fax 062-1234-5678</p>
-        <div class="footer-buttons">
-          <button>1:1 문의</button>
-          <button>FAQ</button>
-          <button>위치, 영업시간 안내</button>
-        </div>
+    <div class="customer-center">
+      <p><strong>고객센터 1544-8282 (발신자 부담)</strong></p>
+      <p>광주광역시 동구 서석동 조선대학교 1층 NHN아카데미</p>
+      <p>Fax 062-1234-5678</p>
+      <div>
+        <button>1:1 문의</button>
+        <button>FAQ</button>
+        <button>위치, 영업시간 안내</button>
       </div>
     </div>
-  </footer>
-</div>
-<script>
-  function showTab(tabId) {
-    document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
-    document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-    document.querySelector(`[onclick="showTab('${tabId}')"]`).classList.add('active');
-    document.getElementById(tabId).classList.add('active');
-
-    const snsText = document.getElementById('sns-login-text');
-    const snsButtons = document.getElementById('sns-login');
-    if (tabId === 'guest-order') {
-      snsText.style.display = 'none';
-      snsButtons.style.display = 'none';
-    } else {
-      snsText.style.display = 'block';
-      snsButtons.style.display = 'flex';
-    }
-  }
-</script>
+  </div>
+</footer>
+<script src="/js/join.js"></script>
 </body>
 </html>

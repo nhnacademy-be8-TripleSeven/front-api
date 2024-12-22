@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NHN 24</title>
-  <link rel="stylesheet" href="/css/check-user.css">
+  <title>좋아요 내역</title>
+  <link rel="stylesheet" href="/css/like-history.css">
 </head>
 <body>
 <header class="header">
@@ -14,7 +14,7 @@
   <div class="header-center">
     <div class="search-bar">
       <input type="text" placeholder="검색어를 입력하세요">
-      <button>🔍</button>
+      <a href="book-search.html"><button>🔍</button></a>
     </div>
     <nav class="menu">
       <ul>
@@ -34,62 +34,62 @@
   </div>
 </header>
 
-<main class="main-content">
+<main class="my-account-container">
   <aside class="sidebar">
-    <h3>관리자 메뉴</h3>
+    <h3>MY ACCOUNT</h3>
     <ul>
-      <li><a href="#">*쿠폰</a>
-        <ul>
-          <li><a href="#">쿠폰 정책 조회</a></li>
-          <li><a href="#">쿠폰 정책 생성, 발급</a></li>
-          <li><a href="#">쿠폰 생성,발급</a></li>
-          <li><a href="#">쿠폰 관리</a></li>
-        </ul>
-      </li>
-      <li><a href="#">*회원</a>
-        <ul>
-          <li><a href="#">회원 조회</a></li>
-          <li><a href="#">등급 조회</a></li>
-        </ul>
-      </li>
-      <li><a href="#">*도서</a>
-        <ul>
-          <li><a href="#">도서 조회</a></li>
-          <li><a href="#">도서 수정</a></li>
-        </ul>
-      </li>
+      <li>*구매 내역</li>
+      <a href="#"><li>주문 조회/취소</li></a>
+      <a href="#"><li>반품/교환 내역</li></a>
+      <a href="#"><li>취소 주문 내역</li></a>
+      <li>*좋아요</li>
+      <a href="#"><li>좋아요 내역</li></a>
+      <li>*포인트</li>
+      <a href="#"><li>포인트 적립 내역</li></a>
+      <a href="#"><li>포인트 사용 내역</li></a>
+      <li>*쿠폰함</li>
+      <a href="#"><li>쿠폰 내역</li></a>
     </ul>
   </aside>
 
-  <section class="content">
-    <h2>등급 조회</h2>
-    <div class="search-bar">
-      <input type="text" placeholder="검색 조건을 입력하세요" class="search-input">
-      <button class="search-btn">조회</button>
-      <select class="sort-select">
-        <option>정렬: 최신순</option>
-        <option>정렬: 오래된순</option>
-      </select>
+  <section class="like-history">
+    <h2>좋아요 내역</h2>
+    <p class="notice">최근 6개월간 좋아요 내역을 조회할 수 있습니다.</p>
+    <div class="filters">
+      <label for="start-date">시작일</label>
+      <input type="date" id="start-date">
+      <label for="end-date">종료일</label>
+      <input type="date" id="end-date">
+      <label for="book-search">도서 이름</label>
+      <input type="text" id="keyword" placeholder="도서 이름">
+      <button id="search-btn">조회</button>
     </div>
-    <table class="data-table">
+
+    <div class="info-banner">
+      <img src="/image/money.png" alt="Review Points">
+      <div class="banner-text">
+        <p class="highlight">리뷰 글 작성 시 200포인트 지급!</p>
+        <p>이미지 리뷰 작성 시 500포인트 지급!</p>
+      </div>
+    </div>
+
+    <table>
       <thead>
       <tr>
-        <th>ID</th>
-        <th>가입일</th>
-        <th>이름</th>
-        <th>등급</th>
+        <th>좋아요 ID</th>
+        <th>도서 ID</th>
+        <th>도서 이름</th>
+        <th>회원 ID</th>
         <th>비고</th>
-        <th>선택</th>
       </tr>
       </thead>
-      <tbody>
-      <!-- 데이터 로드 -->
+      <tbody id="like-table-body">
+      <tr><td colspan="5">조건에 맞는 데이터가 없습니다.</td></tr>
       </tbody>
     </table>
   </section>
 </main>
 
-<!-- 푸터 -->
 <footer>
   <div class="footer-links">
     <a href="#">회사소개</a>
@@ -107,7 +107,6 @@
     <div class="customer-center">
       <p><strong>고객센터 1544-8282 (발신자 부담)</strong></p>
       <p>광주광역시 동구 서석동 조선대학교 1층 NHN아카데미</p>
-      <p>Fax 062-1234-5678</p>
       <div class="footer-buttons">
         <button>1:1 문의</button>
         <button>FAQ</button>
@@ -116,6 +115,7 @@
     </div>
   </div>
 </footer>
-<script src="/js/find-user.js"></script>
+
+<script src="/js/like-history.js"></script>
 </body>
 </html>
