@@ -1,0 +1,220 @@
+@import url('https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap');
+
+/* 초기화 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Gamja Flower', cursive;
+}
+
+/* Body 스타일 */
+body {
+    background-color: #f9fbfc;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Header 스타일 */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #f9f9f9;
+    border-bottom: 1px solid #ddd;
+}
+
+.header .logo img {
+    height: 50px;
+}
+
+.menu ul {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+}
+
+.menu ul li {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.user-actions {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.user-actions img {
+    width: 40px;
+    height: 40px;
+}
+
+.login-btn {
+    background-color: #91b5f3;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Main 섹션 */
+.guest-order-container {
+    max-width: 1100px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.guest-order-container h2 {
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.order-summary table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.order-summary th,
+.order-summary td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.search-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.search-container input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.search-container button {
+    padding: 10px 20px;
+    background-color: #91b5f3;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+.order-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.order-table th,
+.order-table td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+.main-btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #699ce2;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block;
+    text-align: center;
+    width: 150px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* 전체 선택 체크박스 */
+#select-all {
+    transform: scale(1.2);
+    margin-right: 5px;
+}
+
+/* 취소 버튼 */
+.cancel-btn {
+    padding: 6px 12px;
+    background-color: #ff9191;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.cancel-btn:disabled {
+    background-color: #ddd;
+    cursor: not-allowed;
+}
+
+
+/* 푸터 */
+footer {
+    background-color: #f2f5f7;
+    padding: 20px 10%;
+    border-top: 1px solid #e0e4e8;
+    text-align: left;
+    line-height: 1.8;
+}
+
+.footer-links {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.footer-links a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: #555;
+}
+
+.footer-links a:hover {
+    color: #0073e6;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.footer-info {
+    text-align: left;
+    line-height: 1.6;
+    color: #555;
+    font-size: 14px;
+}
+
+.footer-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.footer-buttons button {
+    padding: 6px 10px;
+    background-color: #cfd6de;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    font-size: 14px;
+    width: auto;
+    min-width: 120px;
+}
+
+.footer-buttons button:hover {
+    background-color: #bfc9d3;
+}
