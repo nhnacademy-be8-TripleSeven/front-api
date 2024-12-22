@@ -40,33 +40,21 @@
   <h2>이 달의 베스트</h2>
   <div class="slider">
     <button class="arrow left" onclick="prevSlide('slider1')">◀</button>
-    <div class="slides">
-      <div class="slide"><a href ="#"><img src="/image/data/book1.jpeg" alt="book1"><p>달러구트 꿈 백화점</p></a></div>
-      <div class="slide"><a href ="#"><img src="/image/data/book2.jpeg" alt="book2"><p>카이로스</p></a></div>
-      <div class="slide"><a href ="#"><img src="/image/data/book3.jpeg" alt="book3"><p>오! 방울토마토</p></a></div>
-      <div class="slide"><a href ="#"><img src="/image/data/book1.jpeg" alt="book1"><p>달러구트 꿈 백화점</p></a></div>
-      <div class="slide"><a href ="#"><img src="/image/data/book2.jpeg" alt="book2"><p>카이로스</p></a></div>
-      <div class="slide"><a href ="#"><img src="/image/data/book3.jpeg" alt="book3"><p>오! 방울토마토</p></a></div>
-    </div>
+    <div class="slides"></div> <!-- 여기에서 슬라이드가 JavaScript로 동적으로 렌더링 -->
     <button class="arrow right" onclick="nextSlide('slider1')">▶</button>
   </div>
 </section>
+
 <!-- 이 도서는 어때요? -->
 <section class="recommended" id="slider2">
   <h2>이 도서는 어때요?</h2>
   <div class="slider">
     <button class="arrow left" onclick="prevSlide('slider2')">◀</button>
-    <div class="slides">
-      <div class="slide"><a href="#"><img src="book4.png" alt="book4"><p>서론에 읽는 프로이트</p></a></div>
-      <div class="slide"><a href="#"><img src="book5.png" alt="book5"><p>푸드 앤 와인 페어링</p></a></div>
-      <div class="slide"><a href="#"><img src="book6.png" alt="book6"><p>국어 문법 완벽 세트</p></a></div>
-      <div class="slide"><a href="#"><img src="book4.png" alt="book4"><p>서론에 읽는 프로이트</p></a></div>
-      <div class="slide"><a href="#"><img src="book5.png" alt="book5"><p>푸드 앤 와인 페어링</p></a></div>
-      <div class="slide"><a href="#"><img src="book6.png" alt="book6"><p>국어 문법 완벽 세트</p></a></div>
-    </div>
+    <div class="slides"></div> <!-- 여기에서 슬라이드가 JavaScript로 동적으로 렌더링 -->
     <button class="arrow right" onclick="nextSlide('slider2')">▶</button>
   </div>
 </section>
+
 <section class="editor-choice">
   <div class="choice-header">
     <div class="tabs">
@@ -75,64 +63,17 @@
       <button class="tab" data-tab="tab3">외국도서</button>
     </div>
   </div>
-  <div class="tab-content active" id="tab1">
-    <div class="book-grid">
-      <div class="book-item">
-        <a href="#"><img src="book1.png" alt="book1"></a>
-        <a href="#"><p class="title">타임 셸터</p></a>
-        <p>시간은 폭력일 수 있다.</p>
-      </div>
-      <div class="book-item">
-        <a href="#"><img src="book2.png" alt="book2"></a>
-        <a href="#"><p class="title">무의식은 어떻게 나를 설계하는가</p></a>
-        <p>마음을 움직이는 주인은 따로 있다.</p>
-      </div>
-      <div class="book-item">
-        <a href="#"><img src="book3.png" alt="book3"></a>
-        <a href="#"><p class="title">베아</p></a>
-        <p>두려움은 도전의 증거.</p>
-      </div>
-    </div>
+  <div class="tab-content active" id="ITEMEDITORCHOICE">
+    <div class="book-grid"></div> <!-- JavaScript가 내용을 동적으로 렌더링 -->
   </div>
-  <div class="tab-content" id="tab2">
-    <div class="book-grid">
-      <div class="book-item">
-        <a href="#"><img src="book1.png" alt="book1"></a>
-        <a href="#"><p class="title">타임 셸터</p></a>
-        <p>시간은 폭력일 수 있다.</p>
-      </div>
-      <div class="book-item">
-        <a href="#"><img src="book2.png" alt="book2"></a>
-        <a href="#"><p class="title">무의식은 어떻게 나를 설계하는가</p></a>
-        <p>마음을 움직이는 주인은 따로 있다.</p>
-      </div>
-      <div class="book-item">
-        <a href="#"><img src="book3.png" alt="book3"></a>
-        <a href="#"> <p class="title">베아</p></a>
-        <p>두려움은 도전의 증거.</p>
-      </div>
-    </div>
+  <div class="tab-content" id="EBOOK">
+    <div class="book-grid"></div> <!-- JavaScript가 내용을 동적으로 렌더링 -->
   </div>
-  <div class="tab-content" id="tab3">
-    <div class="book-grid">
-      <div class="book-item">
-        <a href="#"><img src="book1.png" alt="book1"></a>
-        <a href="#"><p class="title">타임 셸터</p></a>
-        <p>시간은 폭력일 수 있다.</p>
-      </div>
-      <div class="book-item">
-        <a href="#"><img src="book2.png" alt="book2"></a>
-        <a href="#"><p class="title">무의식은 어떻게 나를 설계하는가</p></a>
-        <p>마음을 움직이는 주인은 따로 있다.</p>
-      </div>
-      <div class="book-item">
-        <a href="#"><img src="book3.png" alt="book3"></a>
-        <a href="#"><p class="title">베아</p></a>
-        <p>두려움은 도전의 증거.</p>
-      </div>
-    </div>
+  <div class="tab-content" id="FOREIGN">
+    <div class="book-grid"></div> <!-- JavaScript가 내용을 동적으로 렌더링 -->
   </div>
 </section>
+
 
 <!-- 공지사항, 검색, 빠른 서비스 -->
 <section class="info-section">
@@ -214,10 +155,104 @@
 </footer>
 <script src="/js/main.js"></script>
 <script>
+
+  // 슬라이더 캐싱 데이터
+  const sliderCache = {};
+  const tabCache = {};
+
   document.addEventListener('DOMContentLoaded', () => {
-    // 초기화 (슬라이더가 준비됨)
-    slideIndex = 0; // 슬라이드 인덱스를 초기화
+    // 초기 슬라이더 로드
+    initializeSlider('slider1', '/books/monthly');
+    initializeSlider('slider2', '/books/recommendations');
+
+    // 초기 활성 탭 로드
+    const activeTabButton = document.querySelector('.tab.active');
+    if (activeTabButton) {
+      const type = getTypeFromTab(activeTabButton.dataset.tab);
+      const contentElement = document.querySelector(`#${type}`);
+      if (contentElement) {
+        fetch(`/books/type/${type}`)
+        .then(response => response.json())
+        .then(data => {
+          tabCache[type] = data.content; // 캐싱
+          renderTabContent(contentElement, data.content);
+        })
+        .catch(error => console.error('Error loading tab content:', error));
+      }
+    }
   });
+
+  function getTypeFromTab(tabId) {
+    const typeIdMap = {
+      tab1: 'ITEMEDITORCHOICE',
+      tab2: 'EBOOK',
+      tab3: 'FOREIGN'
+    };
+    return typeIdMap[tabId] || '';
+  }
+
+  function initializeSlider(sliderId, apiUrl) {
+    const sliderElement = document.querySelector(`#${sliderId} .slides`);
+    if (!sliderElement) return;
+
+    if (sliderCache[sliderId]) {
+      renderSlides(sliderElement, sliderCache[sliderId]);
+      updateSliderButtons(sliderId);
+      return;
+    }
+
+    fetch(apiUrl)
+    .then(response => response.json())
+    .then(data => {
+      sliderCache[sliderId] = data.content;
+      renderSlides(sliderElement, data.content);
+      updateSliderButtons(sliderId);
+    })
+    .catch(error => console.error('Error loading slider data:', error));
+  }
+
+  function updateSliderButtons(sliderId) {
+    const slides = document.querySelectorAll(`#${sliderId} .slide`);
+    const prevButton = document.querySelector(`#${sliderId} .arrow.left`);
+    const nextButton = document.querySelector(`#${sliderId} .arrow.right`);
+    const disable = slides.length <= 1;
+
+    prevButton.disabled = disable;
+    nextButton.disabled = disable;
+  }
+
+  function renderSlides(sliderElement, books) {
+    sliderElement.innerHTML = '';
+    books.forEach(book => {
+      const slide = document.createElement('div');
+      slide.classList.add('slide');
+      slide.innerHTML = `
+      <a href="#"><img src="${book.coverUrl}" alt="${book.title}" onerror="this.src='/image/default-book-cover.png'"></a>
+      <p>${book.title}</p>
+      <p>출판사: ${book.publisher}</p>
+      <p>가격: <span style="text-decoration: line-through;">${book.regularPrice.toLocaleString()}원</span>
+      <strong>${book.salePrice.toLocaleString()}원</strong></p>
+    `;
+      sliderElement.appendChild(slide);
+    });
+  }
+
+  function renderTabContent(contentElement, books) {
+    contentElement.innerHTML = '';
+    books.forEach(book => {
+      const bookItem = document.createElement('div');
+      bookItem.classList.add('book-item');
+      bookItem.innerHTML = `
+      <a href="#"><img src="${book.coverUrl}" alt="${book.title}" onerror="this.src='/image/default-book-cover.png'"></a>
+      <p class="title">${book.title}</p>
+      <p>${book.publisher}</p>
+      <p>가격: <span style="text-decoration: line-through;">${book.regularPrice.toLocaleString()}원</span>
+      <strong>${book.salePrice.toLocaleString()}원</strong></p>
+    `;
+      contentElement.appendChild(bookItem);
+    });
+  }
+
 </script>
 </body>
 </html>
