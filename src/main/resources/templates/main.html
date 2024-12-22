@@ -160,67 +160,6 @@
   const sliderCache = {};
   const tabCache = {};
 
-  document.addEventListener('DOMContentLoaded', () => {
-    // 슬라이더 초기화
-    initializeSlider('slider1', '/books/monthly'); // 이 달의 베스트
-    initializeSlider('slider2', '/books/recommendations'); // 이 도서는 어때요?
-
-    // API 응답을 받아 슬라이더를 렌더링
-    function initializeSlider(sliderId, apiUrl) {
-      const sliderElement = document.querySelector(`#${sliderId} .slides`);
-      if (!sliderElement) return;
-
-      fetch(apiUrl)
-      .then(response => {
-        if (!response.ok) throw new Error('API 요청 실패');
-        return response.json();
-      })
-      .then(data => {
-        const books = data.content; // API에서 책 데이터를 가져옴
-        renderSlides(sliderElement, books);
-      })
-      .catch(error => {
-        console.error('슬라이더 초기화 중 오류:', error);
-        sliderElement.innerHTML = '<p>데이터를 불러오지 못했습니다.</p>';
-      });
-    }
-
-    // 슬라이더 항목 렌더링
-    function renderSlides(sliderElement, books) {
-      sliderElement.innerHTML = ''; // 기존 슬라이더 초기화
-      books.forEach(book => {
-        const slide = document.createElement('div');
-        slide.classList.add('slide');
-        slide.innerHTML = `
-        <a href="#"><img src="${book.coverUrl}" alt="${book.title}" onerror="this.src='/image/default-book-cover.png'"></a>
-        <p>${book.title}</p>
-        <p>출판사: ${book.publisher}</p>
-        <p>가격: <span style="text-decoration: line-through;">${book.regularPrice.toLocaleString()}원</span>
-        <strong>${book.salePrice.toLocaleString()}원</strong></p>
-      `;
-        sliderElement.appendChild(slide);
-      });
-    }
-
-    // 슬라이더 버튼 제어
-    function prevSlide(sliderId) {
-      const slider = document.querySelector(`#${sliderId} .slides`);
-      if (slider.children.length > 1) {
-        slider.insertBefore(slider.lastElementChild, slider.firstElementChild);
-      }
-    }
-
-    function nextSlide(sliderId) {
-      const slider = document.querySelector(`#${sliderId} .slides`);
-      if (slider.children.length > 1) {
-        slider.appendChild(slider.firstElementChild);
-      }
-    }
-
-    // 슬라이더 버튼 이벤트 연결
-    window.prevSlide = prevSlide;
-    window.nextSlide = nextSlide;
-  });
 
 </script>
 </body>
