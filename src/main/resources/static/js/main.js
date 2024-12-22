@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     // 초기 슬라이더 로드
-    initializeSlider('slider1', '/books/monthly');
-    initializeSlider('slider2', '/books/recommendations');
+    initializeSlider('slider1', '/api/books/monthly');
+    initializeSlider('slider2', '/api/books/recommendations');
 
     // 초기 활성 탭 로드
     const activeTabButton = document.querySelector('.tab.active');
