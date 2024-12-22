@@ -161,97 +161,66 @@
   const tabCache = {};
 
   document.addEventListener('DOMContentLoaded', () => {
-    // 초기 슬라이더 로드
-    initializeSlider('slider1', '/books/monthly');
-    initializeSlider('slider2', '/books/recommendations');
+    // 슬라이더 초기화
+    initializeSlider('slider1', '/books/monthly'); // 이 달의 베스트
+    initializeSlider('slider2', '/books/recommendations'); // 이 도서는 어때요?
 
-    // 초기 활성 탭 로드
-    const activeTabButton = document.querySelector('.tab.active');
-    if (activeTabButton) {
-      const type = getTypeFromTab(activeTabButton.dataset.tab);
-      const contentElement = document.querySelector(`#${type}`);
-      if (contentElement) {
-        fetch(`/books/type/${type}`)
-        .then(response => response.json())
-        .then(data => {
-          tabCache[type] = data.content; // 캐싱
-          renderTabContent(contentElement, data.content);
-        })
-        .catch(error => console.error('Error loading tab content:', error));
+    // API 응답을 받아 슬라이더를 렌더링
+    function initializeSlider(sliderId, apiUrl) {
+      const sliderElement = document.querySelector(`#${sliderId} .slides`);
+      if (!sliderElement) return;
+
+      fetch(apiUrl)
+      .then(response => {
+        if (!response.ok) throw new Error('API 요청 실패');
+        return response.json();
+      })
+      .then(data => {
+        const books = data.content; // API에서 책 데이터를 가져옴
+        renderSlides(sliderElement, books);
+      })
+      .catch(error => {
+        console.error('슬라이더 초기화 중 오류:', error);
+        sliderElement.innerHTML = '<p>데이터를 불러오지 못했습니다.</p>';
+      });
+    }
+
+    // 슬라이더 항목 렌더링
+    function renderSlides(sliderElement, books) {
+      sliderElement.innerHTML = ''; // 기존 슬라이더 초기화
+      books.forEach(book => {
+        const slide = document.createElement('div');
+        slide.classList.add('slide');
+        slide.innerHTML = `
+        <a href="#"><img src="${book.coverUrl}" alt="${book.title}" onerror="this.src='/image/default-book-cover.png'"></a>
+        <p>${book.title}</p>
+        <p>출판사: ${book.publisher}</p>
+        <p>가격: <span style="text-decoration: line-through;">${book.regularPrice.toLocaleString()}원</span>
+        <strong>${book.salePrice.toLocaleString()}원</strong></p>
+      `;
+        sliderElement.appendChild(slide);
+      });
+    }
+
+    // 슬라이더 버튼 제어
+    function prevSlide(sliderId) {
+      const slider = document.querySelector(`#${sliderId} .slides`);
+      if (slider.children.length > 1) {
+        slider.insertBefore(slider.lastElementChild, slider.firstElementChild);
       }
     }
-  });
 
-  function getTypeFromTab(tabId) {
-    const typeIdMap = {
-      tab1: 'ITEMEDITORCHOICE',
-      tab2: 'EBOOK',
-      tab3: 'FOREIGN'
-    };
-    return typeIdMap[tabId] || '';
-  }
-
-  function initializeSlider(sliderId, apiUrl) {
-    const sliderElement = document.querySelector(`#${sliderId} .slides`);
-    if (!sliderElement) return;
-
-    if (sliderCache[sliderId]) {
-      renderSlides(sliderElement, sliderCache[sliderId]);
-      updateSliderButtons(sliderId);
-      return;
+    function nextSlide(sliderId) {
+      const slider = document.querySelector(`#${sliderId} .slides`);
+      if (slider.children.length > 1) {
+        slider.appendChild(slider.firstElementChild);
+      }
     }
 
-    fetch(apiUrl)
-    .then(response => response.json())
-    .then(data => {
-      sliderCache[sliderId] = data.content;
-      renderSlides(sliderElement, data.content);
-      updateSliderButtons(sliderId);
-    })
-    .catch(error => console.error('Error loading slider data:', error));
-  }
-
-  function updateSliderButtons(sliderId) {
-    const slides = document.querySelectorAll(`#${sliderId} .slide`);
-    const prevButton = document.querySelector(`#${sliderId} .arrow.left`);
-    const nextButton = document.querySelector(`#${sliderId} .arrow.right`);
-    const disable = slides.length <= 1;
-
-    prevButton.disabled = disable;
-    nextButton.disabled = disable;
-  }
-
-  function renderSlides(sliderElement, books) {
-    sliderElement.innerHTML = '';
-    books.forEach(book => {
-      const slide = document.createElement('div');
-      slide.classList.add('slide');
-      slide.innerHTML = `
-      <a href="#"><img src="${book.coverUrl}" alt="${book.title}" onerror="this.src='/image/default-book-cover.png'"></a>
-      <p>${book.title}</p>
-      <p>출판사: ${book.publisher}</p>
-      <p>가격: <span style="text-decoration: line-through;">${book.regularPrice.toLocaleString()}원</span>
-      <strong>${book.salePrice.toLocaleString()}원</strong></p>
-    `;
-      sliderElement.appendChild(slide);
-    });
-  }
-
-  function renderTabContent(contentElement, books) {
-    contentElement.innerHTML = '';
-    books.forEach(book => {
-      const bookItem = document.createElement('div');
-      bookItem.classList.add('book-item');
-      bookItem.innerHTML = `
-      <a href="#"><img src="${book.coverUrl}" alt="${book.title}" onerror="this.src='/image/default-book-cover.png'"></a>
-      <p class="title">${book.title}</p>
-      <p>${book.publisher}</p>
-      <p>가격: <span style="text-decoration: line-through;">${book.regularPrice.toLocaleString()}원</span>
-      <strong>${book.salePrice.toLocaleString()}원</strong></p>
-    `;
-      contentElement.appendChild(bookItem);
-    });
-  }
+    // 슬라이더 버튼 이벤트 연결
+    window.prevSlide = prevSlide;
+    window.nextSlide = nextSlide;
+  });
 
 </script>
 </body>
