@@ -41,16 +41,21 @@ function initializeSlider(sliderId, apiUrl) {
     }
 
     fetch(apiUrl)
-        .then(response => response.json())
-        .then(data => {
-            sliderCache[sliderId] = data.content;
-            renderSlides(sliderElement, data.content);
-            updateSliderButtons(sliderId, slideIndex);
-        })
-        .catch(error => {
-            console.error('Error loading slider data:', error);
-            sliderElement.innerHTML = '<p>슬라이더 데이터를 불러오는 데 실패했습니다.</p>';
-        });
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        sliderCache[sliderId] = data; // data는 배열로 반환됨
+        renderSlides(sliderElement, data);
+        updateSliderButtons(sliderId, slideIndex);
+    })
+    .catch(error => {
+        console.error(`Error loading slider data from ${apiUrl}:`, error);
+        sliderElement.innerHTML = '<p>슬라이더 데이터를 불러오는 데 실패했습니다.</p>';
+    });
 }
 
 // 슬라이더 버튼 상태 업데이트
@@ -84,15 +89,20 @@ function fetchTabContent(type, contentElement) {
     }
 
     fetch(`/books/type/${type}`)
-        .then(response => response.json())
-        .then(data => {
-            tabCache[type] = data.content;
-            renderTabContent(contentElement, data.content);
-        })
-        .catch(error => {
-            console.error('Error loading tab content:', error);
-            contentElement.innerHTML = '<p>탭 데이터를 불러오는 데 실패했습니다.</p>';
-        });
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        tabCache[type] = data; // data는 배열로 반환됨
+        renderTabContent(contentElement, data);
+    })
+    .catch(error => {
+        console.error(`Error loading tab content for type ${type}:`, error);
+        contentElement.innerHTML = '<p>탭 데이터를 불러오는 데 실패했습니다.</p>';
+    });
 }
 
 // 탭 콘텐츠 렌더링
@@ -131,5 +141,6 @@ function createBookHTML(book) {
         <p>출판사: ${book.publisher}</p>
         <p>가격: <span style="text-decoration: line-through;">${book.regularPrice.toLocaleString()}원</span>
         <strong>${book.salePrice.toLocaleString()}원</strong></p>
+        <p>저자: ${book.creator.join(', ')}</p>
     `;
 }
