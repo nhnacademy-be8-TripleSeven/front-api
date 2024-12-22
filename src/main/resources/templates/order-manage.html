@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NHN 24</title>
-  <link rel="stylesheet" href="/css/check-user.css">
+  <title>주문 조회/변경/취소</title>
+  <link rel="stylesheet" href="/css/cancel-history.css">
 </head>
 <body>
 <header class="header">
@@ -14,7 +14,7 @@
   <div class="header-center">
     <div class="search-bar">
       <input type="text" placeholder="검색어를 입력하세요">
-      <button>🔍</button>
+      <a href="book-search.html"><button>🔍</button></a>
     </div>
     <nav class="menu">
       <ul>
@@ -34,62 +34,75 @@
   </div>
 </header>
 
-<main class="main-content">
+<main class="my-account-container">
   <aside class="sidebar">
-    <h3>관리자 메뉴</h3>
+    <h3>MY ACCOUNT</h3>
     <ul>
-      <li><a href="#">*쿠폰</a>
-        <ul>
-          <li><a href="#">쿠폰 정책 조회</a></li>
-          <li><a href="#">쿠폰 정책 생성, 발급</a></li>
-          <li><a href="#">쿠폰 생성,발급</a></li>
-          <li><a href="#">쿠폰 관리</a></li>
-        </ul>
-      </li>
-      <li><a href="#">*회원</a>
-        <ul>
-          <li><a href="#">회원 조회</a></li>
-          <li><a href="#">등급 조회</a></li>
-        </ul>
-      </li>
-      <li><a href="#">*도서</a>
-        <ul>
-          <li><a href="#">도서 조회</a></li>
-          <li><a href="#">도서 수정</a></li>
-        </ul>
-      </li>
+      <li>*구매 내역</li>
+      <a href="#"><li>주문 조회/변경/취소</li></a>
+      <a href="#"><li>반품/교환 내역</li></a>
+      <a href="#"><li>취소 주문 내역</li></a>
+      <li>*좋아요</li>
+      <a href="#"><li>좋아요 내역</li></a>
+      <li>*포인트</li>
+      <a href="#"><li>포인트 적립 내역</li></a>
+      <a href="#"><li>포인트 사용 내역</li></a>
+      <li>*쿠폰함</li>
+      <a href="#"><li>쿠폰 내역</li></a>
     </ul>
   </aside>
 
-  <section class="content">
-    <h2>등급 조회</h2>
-    <div class="search-bar">
-      <input type="text" placeholder="검색 조건을 입력하세요" class="search-input">
-      <button class="search-btn">조회</button>
-      <select class="sort-select">
-        <option>정렬: 최신순</option>
-        <option>정렬: 오래된순</option>
-      </select>
+  <section class="order-history">
+    <h2>주문 조회/변경/취소</h2>
+    <p class="notice">최근 5년간 주문내역을 조회할 수 있습니다.</p>
+    <div class="filters">
+      <div class="filter-item">
+        <label for="start-date">시작일</label>
+        <input type="date" id="start-date">
+      </div>
+      <div class="filter-item">
+        <label for="end-date">종료일</label>
+        <input type="date" id="end-date">
+      </div>
+      <div class="filter-item">
+        <label for="filter-status">상태</label>
+        <select id="filter-status">
+          <option value="all">전체</option>
+          <option value="결제 완료">결제 완료</option>
+          <option value="결제 대기">결제 대기</option>
+          <option value="취소 완료">취소 완료</option>
+        </select>
+      </div>
+      <button class="filter-btn" id="search-btn">조회</button>
     </div>
-    <table class="data-table">
+
+    <div class="info-banner">
+      <img src="/image/money.png" alt="Info">
+      <div class="banner-text">
+        <p>주문 조회 후 상세 정보 및 상태를 확인하세요.</p>
+      </div>
+    </div>
+    <table>
       <thead>
       <tr>
-        <th>ID</th>
-        <th>가입일</th>
-        <th>이름</th>
-        <th>등급</th>
-        <th>비고</th>
-        <th>선택</th>
+        <th>주문 번호</th>
+        <th>주문 일자</th>
+        <th>주문 내역</th>
+        <th>주문 금액</th>
+        <th>주문 상태</th>
+        <th>수령자</th>
       </tr>
       </thead>
-      <tbody>
-      <!-- 데이터 로드 -->
+      <tbody id="order-table-body">
+      <tr>
+        <td colspan="6">조건에 맞는 데이터가 없습니다.</td>
+      </tr>
       </tbody>
     </table>
+
   </section>
 </main>
 
-<!-- 푸터 -->
 <footer>
   <div class="footer-links">
     <a href="#">회사소개</a>
@@ -116,6 +129,6 @@
     </div>
   </div>
 </footer>
-<script src="/js/find-user.js"></script>
+<script src="/js/order-manage.js"></script>
 </body>
 </html>
