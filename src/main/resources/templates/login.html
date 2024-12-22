@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>회원/비회원 로그인</title>
+  <link rel="stylesheet" href="/css/login.css">
+</head>
+<body>
+<div class="container">
+  <header class="header">
+    <div class="logo">
+      <a href="main.html"><img src="/image/logo/nhn24-logo.png" alt="NHN 24 로고"></a>
+    </div>
+    <div class="header-center">
+      <div class="search-bar">
+        <input type="text" placeholder="검색어를 입력하세요">
+        <button>🔍</button>
+      </div>
+      <nav class="menu">
+        <ul>
+          <li><a href="/recommended-books.html">추천 도서</a></li>
+          <li><a href="/domestic-books.html">국내 도서</a></li>
+          <li><a href="/foreign-books.html">외국 도서</a></li>
+          <li><a href="/bestsellers.html">베스트셀러</a></li>
+          <li><a href="/new-books.html">신간 소개</a></li>
+          <li><a href="/events.html">이벤트</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="user-actions">
+      <button class="login-btn" onclick="location.href='/login.html'">Login</button>
+    </div>
+  </header>
+
+  <section class="login-section">
+    <div class="login-wrapper">
+      <div class="login-container">
+        <div class="tabs">
+          <button class="tab active" onclick="showTab('member-login')">회원 로그인</button>
+          <button class="tab" onclick="showTab('guest-order')">비회원 주문 조회</button>
+        </div>
+        <div id="member-login" class="tab-content active">
+          <form>
+            <input type="text" placeholder="ID" required>
+            <input type="password" placeholder="비밀번호" required>
+            <button type="submit" class="large-btn">로그인</button>
+          </form>
+          <a href="join.html"><button class="simple-join-btn">NHN 간편 회원가입</button></a>
+          <div class="helper-links">
+            <a href="find-account.html" class="helper-link">계정 찾기</a>
+          </div>
+          <p id="sns-login-text" class="sns-text">SNS 계정으로 로그인</p>
+          <div id="sns-login" class="sns-buttons">
+            <a href="/kakao-login.html"><img src="/image/logo/kakao.png" alt="카카오"></a>
+            <a href="/google-login.html"><img src="/image/logo/google.png" alt="구글"></a>
+            <a href="/naver-login.html"><img src="/image/logo/naver.png" alt="네이버"></a>
+            <a href="/payco-login.html"><img src="/image/logo/payco.png" alt="페이코"></a>
+          </div>
+        </div>
+        <div id="guest-order" class="tab-content">
+          <form>
+            <input type="text" placeholder="주문 번호" required>
+            <input type="text" placeholder="휴대폰 번호" required>
+            <button class="large-btn">조회</button>
+          </form>
+          <div class="helper-links">
+            <a href="find-guest.html" class="helper-link">주문 번호 찾기</a>
+            <a href="find-guest.html" class="helper-link">주문 비밀번호 찾기</a>
+          </div>
+        </div>
+      </div>
+      <div class="welcome-banner">
+      <img src="/image/logo/welcou.png" alt="신규회원 웰컴 쿠폰 배너">
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-links">
+      <a href="#">회사소개</a>
+      <a href="#">이용약관</a>
+      <a href="#"><strong>개인정보처리방침</strong></a>
+      <a href="#">청소년 보호정책</a>
+    </div>
+    <div class="footer-container">
+      <div class="footer-info">
+        <p>대표이사 마르코 | 사업자등록번호 123-456-7890</p>
+        <p>통신판매업신고 2024-광주동구-01211</p>
+        <p>이메일: marco@nhn.com | 호스팅 제공자 NHN24</p>
+        <p>© NHN24. All Rights Reserved.</p>
+      </div>
+      <div class="customer-center">
+        <p><strong>고객센터 1544-8282 (발신자 부담)</strong></p>
+        <p>광주광역시 동구 서석동 조선대학교 1층 NHN아카데미</p>
+        <p>Fax 062-1234-5678</p>
+        <div class="footer-buttons">
+          <button>1:1 문의</button>
+          <button>FAQ</button>
+          <button>위치, 영업시간 안내</button>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>
+<script>
+  let isAuthenticated = false;
+
+  function showTab(tabId) {
+    document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+    document.querySelector(`[onclick="showTab('${tabId}')"]`).classList.add('active');
+    document.getElementById(tabId).classList.add('active');
+
+    const snsText = document.getElementById('sns-login-text');
+    const snsButtons = document.getElementById('sns-login');
+    if (tabId === 'guest-order') {
+      snsText.style.display = 'none';
+      snsButtons.style.display = 'none';
+    } else {
+      snsText.style.display = 'block';
+      snsButtons.style.display = 'flex';
+    }
+  }
+
+  document.getElementById('auth-btn').addEventListener('click', function () {
+    if (isAuthenticated) {
+      // Logout logic
+      isAuthenticated = false;
+      alert('로그아웃되었습니다.');
+      this.textContent = 'Login';
+      location.href = 'main.html';
+    } else {
+      location.href = 'login.html';
+    }
+  });
+
+  document.getElementById('login-form')?.addEventListener('submit', function (e) {
+    e.preventDefault();
+    const userId = document.getElementById('user-id').value;
+    const userPassword = document.getElementById('user-password').value;
+
+    if (userId && userPassword) {
+      isAuthenticated = true;
+      alert(`${userId}님, 로그인 성공`);
+      document.getElementById('auth-btn').textContent = 'Logout';
+      location.href = 'main.html';
+    } else {
+      alert('ID와 비밀번호를 입력해주세요.');
+    }
+  });
+
+  document.getElementById('guest-order-form')?.addEventListener('submit', function (e) {
+    e.preventDefault();
+    const orderId = document.getElementById('guest-order-id').value;
+    const phone = document.getElementById('guest-phone').value;
+
+    if (orderId && phone) {
+      alert('주문 조회 성공');
+      location.href = 'guest-order-details.html';
+    } else {
+      alert('주문 번호와 휴대폰 번호를 입력해주세요.');
+    }
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>도서 검색</title>
+  <link rel="stylesheet" href="/css/book-search.css">
+</head>
+<body>
+<header class="header">
+  <div class="logo">
+    <a href="main.html"><img src="/image/logo/nhn24-logo.png" alt="NHN 24 로고"></a>
+  </div>
+  <div class="header-center">
+    <div class="search-bar">
+      <input type="text" id="search-keyword" placeholder="제목, 저자, 출판사, ISBN 검색">
+      <button id="search-button">🔍</button>
+    </div>
+    <nav class="menu">
+      <ul>
+        <li><a href="/recommended-books.html">추천 도서</a></li>
+        <li><a href="/domestic-books.html">국내 도서</a></li>
+        <li><a href="/foreign-books.html">외국 도서</a></li>
+        <li><a href="/bestsellers.html">베스트셀러</a></li>
+        <li><a href="/new-books.html">신간 소개</a></li>
+        <li><a href="/events.html">이벤트</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="user-actions">
+    <a href="mypage.html"><img src="/image/icons/person.png" alt="User Icon"></a>
+    <a href="cart.html"><img src="/image/icons/cart.png" alt="Cart Icon"></a>
+    <a href="login.html"><button class="login-btn">Login</button></a>
+  </div>
+</header>
+
+<main>
+  <aside class="filter-sidebar">
+    <h3>검색 조건</h3>
+    <ul>
+      <li><label><input type="checkbox" class="filter" value="국내 도서"> 국내 도서</label></li>
+      <li><label><input type="checkbox" class="filter" value="경제/경영"> 경제/경영</label></li>
+      <li><label><input type="checkbox" class="filter" value="자기계발"> 자기계발</label></li>
+      <li><label><input type="checkbox" class="filter" value="소설"> 소설</label></li>
+    </ul>
+    <h3>목차에서 검색</h3>
+    <div class="search-box1">
+      <input type="text" id="category-keyword" placeholder="카테고리를 입력하세요" />
+      <button id="category-search-button">조회</button>
+    </div>
+    <h3>*분야별 보기</h3>
+    <ul>
+      <li><label><input type="checkbox" value="국내 도서"> 국내 도서</label></li>
+      <li><label><input type="checkbox" value="건강/취미"> 건강/취미</label></li>
+      <li><label><input type="checkbox" value="경제/경영"> 경제/경영</label></li>
+      <li><label><input type="checkbox" value="고등학교 참고서"> 고등학교 참고서</label></li>
+      <li><label><input type="checkbox" value="고전"> 고전</label></li>
+      <li><label><input type="checkbox" value="과학"> 과학</label></li>
+      <li><label><input type="checkbox" value="달력/기타"> 달력/기타</label></li>
+      <li><label><input type="checkbox" value="대학교재/전문서적"> 대학교재/전문서적</label></li>
+      <li><label><input type="checkbox" value="만화"> 만화</label></li>
+      <li><label><input type="checkbox" value="사회과학"> 사회과학</label></li>
+      <li><label><input type="checkbox" value="소설/시/희곡"> 소설/시/희곡</label></li>
+    </ul>
+  </aside>
+
+  <section class="book-results">
+    <h2>검색 결과</h2>
+    <div class="result-controls">
+      <p id="result-count" style="display: none;">총 0권의 검색 결과</p> <!-- 초기에는 숨김 -->
+      <select id="sort-order">
+        <option value="newest">최신순</option>
+        <option value="oldest">오래된순</option>
+      </select>
+    </div>
+    <div class="book-list" id="book-list">
+      <!-- 검색 결과 렌더링-->
+    </div>
+    <div class="pagination">
+      <!-- 페이지네이션 버튼 -->
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-links">
+    <a href="#">회사소개</a>
+    <a href="#">이용약관</a>
+    <a href="#"><strong>개인정보처리방침</strong></a>
+    <a href="#">청소년 보호정책</a>
+  </div>
+  <div class="footer-container">
+    <div class="footer-info">
+      <p>대표이사 마르코 | 사업자등록번호 123-456-7890</p>
+      <p>통신판매업신고 2024-광주동구-01211</p>
+      <p>이메일: marco@nhn.com | 호스팅 제공자 NHN24</p>
+      <p>© NHN24. All Rights Reserved.</p>
+    </div>
+    <div class="customer-center">
+      <p><strong>고객센터 1544-8282 (발신자 부담)</strong></p>
+      <p>광주광역시 동구 서석동 조선대학교 1층 NHN아카데미</p>
+      <div class="footer-buttons">
+        <button>1:1 문의</button>
+        <button>FAQ</button>
+        <button>위치, 영업시간 안내</button>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="/js/book-search.js"></script>
+</body>
+</html>

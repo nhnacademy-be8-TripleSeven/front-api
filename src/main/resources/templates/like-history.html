@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>주문 조회/변경/취소</title>
-  <link rel="stylesheet" href="/css/cancel-check.css">
+  <title>좋아요 내역</title>
+  <link rel="stylesheet" href="/css/like-history.css">
 </head>
 <body>
 <header class="header">
@@ -30,7 +30,7 @@
   <div class="user-actions">
     <a href="mypage.html"><img src="/image/icons/person.png" alt="User Icon"></a>
     <a href="cart-success.html"><img src="/image/icons/cart.png" alt="Cart Icon"></a>
-    <a href="join.html"><button class="login-btn">Login</button></a>
+    <a href="login.html"><button class="login-btn">Login</button></a>
   </div>
 </header>
 
@@ -39,7 +39,7 @@
     <h3>MY ACCOUNT</h3>
     <ul>
       <li>*구매 내역</li>
-      <a href="#"><li>주문 조회/변경/취소</li></a>
+      <a href="#"><li>주문 조회/취소</li></a>
       <a href="#"><li>반품/교환 내역</li></a>
       <a href="#"><li>취소 주문 내역</li></a>
       <li>*좋아요</li>
@@ -52,54 +52,41 @@
     </ul>
   </aside>
 
-  <section class="order-history">
-    <h2>주문 조회/변경/취소</h2>
-    <p class="notice">최근 5년간 주문내역을 조회할 수 있습니다.</p>
+  <section class="like-history">
+    <h2>좋아요 내역</h2>
+    <p class="notice">최근 6개월간 좋아요 내역을 조회할 수 있습니다.</p>
     <div class="filters">
-      <div class="filter-item">
-        <label for="start-date">시작일</label>
-        <input type="date" id="start-date">
-      </div>
-      <div class="filter-item">
-        <label for="end-date">종료일</label>
-        <input type="date" id="end-date">
-      </div>
-      <div class="filter-item">
-        <label for="filter-status">상태</label>
-        <select id="filter-status">
-          <option value="all">전체</option>
-          <option value="결제 완료">결제 완료</option>
-          <option value="결제 대기">결제 대기</option>
-          <option value="취소 완료">취소 완료</option>
-        </select>
-      </div>
-      <button class="filter-btn" id="search-btn">조회</button>
+      <label for="start-date">시작일</label>
+      <input type="date" id="start-date">
+      <label for="end-date">종료일</label>
+      <input type="date" id="end-date">
+      <label for="book-search">도서 이름</label>
+      <input type="text" id="keyword" placeholder="도서 이름">
+      <button id="search-btn">조회</button>
     </div>
 
     <div class="info-banner">
-      <img src="/image/money.png" alt="Info">
+      <img src="/image/money.png" alt="Review Points">
       <div class="banner-text">
-        <p>주문 조회 후 상세 정보 및 상태를 확인하세요.</p>
+        <p class="highlight">리뷰 글 작성 시 200포인트 지급!</p>
+        <p>이미지 리뷰 작성 시 500포인트 지급!</p>
       </div>
     </div>
+
     <table>
       <thead>
       <tr>
-        <th>주문 번호</th>
-        <th>주문 일자</th>
-        <th>주문 내역</th>
-        <th>주문 금액</th>
-        <th>주문 상태</th>
-        <th>수령자</th>
+        <th>좋아요 ID</th>
+        <th>도서 ID</th>
+        <th>도서 이름</th>
+        <th>회원 ID</th>
+        <th>비고</th>
       </tr>
       </thead>
-      <tbody id="order-table-body">
-      <tr>
-        <td colspan="6">조건에 맞는 데이터가 없습니다.</td>
-      </tr>
+      <tbody id="like-table-body">
+      <tr><td colspan="5">조건에 맞는 데이터가 없습니다.</td></tr>
       </tbody>
     </table>
-
   </section>
 </main>
 
@@ -120,7 +107,6 @@
     <div class="customer-center">
       <p><strong>고객센터 1544-8282 (발신자 부담)</strong></p>
       <p>광주광역시 동구 서석동 조선대학교 1층 NHN아카데미</p>
-      <p>Fax 062-1234-5678</p>
       <div class="footer-buttons">
         <button>1:1 문의</button>
         <button>FAQ</button>
@@ -129,6 +115,7 @@
     </div>
   </div>
 </footer>
-<script src="/js/order-manage.js"></script>
+
+<script src="/js/like-history.js"></script>
 </body>
 </html>
