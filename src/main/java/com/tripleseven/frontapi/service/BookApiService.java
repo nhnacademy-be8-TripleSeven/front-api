@@ -5,6 +5,7 @@ import com.tripleseven.frontapi.dto.BookDetailResponseDTO;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Service
 @RequiredArgsConstructor
@@ -17,10 +18,6 @@ public class BookApiService {
 
     public List<BookDetailResponseDTO> fetchBooksByType(String type) {
         List<BookDetailResponseDTO> booksByType = bookFeignClient.getBooksByType(type);
-        BookDetailResponseDTO bookDetailResponseDTO = booksByType.get(0);
-        BookDetailResponseDTO bookDetailResponseDTO1 = booksByType.get(1);
-
-
         return bookFeignClient.getBooksByType(type);
     }
 }

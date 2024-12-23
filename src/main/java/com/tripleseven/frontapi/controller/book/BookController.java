@@ -6,6 +6,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,6 +20,13 @@ public class BookController {
     public ResponseEntity<List<BookDetailResponseDTO>> getMonthlyBooks() {
         List<BookDetailResponseDTO> dto = bookApiService.fetchMonthlyBooks();
 
+        return ResponseEntity.ok(dto);
+    }
+
+
+    @GetMapping("/books/type/{type}")
+    public ResponseEntity<List<BookDetailResponseDTO>> getBooksByType(@PathVariable String type) {
+        List<BookDetailResponseDTO> dto = bookApiService.fetchBooksByType(type);
         return ResponseEntity.ok(dto);
     }
 }
