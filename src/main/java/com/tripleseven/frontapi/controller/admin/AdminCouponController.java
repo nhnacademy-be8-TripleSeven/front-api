@@ -10,7 +10,7 @@ public class AdminCouponController {
 
     @GetMapping("/coupon-policy/create")
     public String createCouponPolicy() {
-        return "/admin/coupon-policy/create";
+        return "/admin/coupon-policy-create";
     }
 
     @GetMapping("/coupon-policy/detail")
