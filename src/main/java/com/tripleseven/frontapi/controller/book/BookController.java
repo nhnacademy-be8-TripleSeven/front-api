@@ -9,14 +9,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-//@RestController
-//@RequestMapping("/api")
-//@RequiredArgsConstructor
-//public class BookController {
-//    private final BookApiService bookApiService;
-//
-//    @GetMapping("/books/monthly")
-//    public ResponseEntity<List<BookDetailResponseDTO>> getMonthlyBooks() {
-//        return ResponseEntity.ok(bookApiService.fetchMonthlyBooks());
-//    }
-//}
+@RestController
+@RequestMapping("/api")
+@RequiredArgsConstructor
+public class BookController {
+    private final BookApiService bookApiService;
+
+    @GetMapping("/books/monthly")
+    public ResponseEntity<List<BookDetailResponseDTO>> getMonthlyBooks() {
+        List<BookDetailResponseDTO> dto = bookApiService.fetchMonthlyBooks();
+
+        return ResponseEntity.ok(dto);
+    }
+}

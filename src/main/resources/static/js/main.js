@@ -88,7 +88,7 @@ function fetchTabContent(type, contentElement) {
         return;
     }
 
-    fetch(`/books/type/${type}`)
+    fetch(`/api/books/type/${type}`)
     .then(response => {
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
