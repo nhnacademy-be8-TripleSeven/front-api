@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     // 초기 슬라이더 로드
     initializeSlider('slider1', '/api/books/monthly');
-    initializeSlider('slider2', '/api/books/recommendations');
+    initializeSlider('slider2', '/api/books/type/BLOGBEST');
 
     // 초기 활성 탭 로드
     const activeTabButton = document.querySelector('.tab.active');
@@ -88,7 +88,7 @@ function fetchTabContent(type, contentElement) {
         return;
     }
 
-    fetch(`/books/type/${type}`)
+    fetch(`/api/books/type/${type}`)
     .then(response => {
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
