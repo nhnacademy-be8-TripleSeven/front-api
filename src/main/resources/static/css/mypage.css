@@ -1,0 +1,459 @@
+@import url('https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap');
+
+/* 전체 초기화 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Gamja Flower', cursive;
+}
+/*body {
+    background-color: #f9fbfc;
+    color: #333;
+    line-height: 1.6;
+}*/
+
+main {
+    padding-bottom: 50px; /* 푸터가 콘텐츠를 덮지 않도록 여백 추가 */
+}
+
+/* 전체 섹션 스타일 */
+section {
+    margin: 30px auto;
+    width: 90%;
+    background-color: rgba(210, 222, 235, 0.3);
+    border: 2px dotted #9A9FB1;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+
+.logo img {
+    height: 50px;
+}
+
+
+/* 검색창 중앙 정렬 및 스타일 수정 */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #f9f9f9;
+    padding: 10px 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+.menu {
+    display: flex;
+    justify-content: center;
+    flex: 1;
+}
+
+.menu ul {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.menu ul li {
+    font-size: 16px;
+    font-weight: bold;
+}
+/* 검색창 길이 최대로 확장 */
+.search-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%; /* 화면 전체 너비에 맞춤 */
+    max-width: 1400px; /* 최대 너비를 더 늘림 */
+    margin: 0 auto;
+    gap: 10px; /* 버튼과 검색창 간격 */
+}
+
+.search-bar input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.search-bar button {
+    padding: 10px 20px; /* 버튼 크기 조정 */
+    background-color: #eaf0f6;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.search-bar button:hover {
+    background-color: #bfc9d3; /* 버튼 호버 색상 */
+}
+
+/* 사용자 아이콘과 로그인 버튼 */
+.user-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-actions img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+}
+
+.login-btn {
+    background-color: #91b5f3;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    height: 40px;
+}
+
+.login-btn:hover {
+    background-color: #699ce2;
+}
+
+body {
+    background-color: #f9fbfc;
+    color: #333;
+    line-height: 1.6;
+}
+
+.my-account-container {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 30px auto;
+    background-color: #f9fbfc;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar {
+    background-color: #f1f5f9;
+    padding: 30px 20px;
+    border-right: 1px solid #ddd;
+    border-radius: 10px;
+}
+
+.sidebar h3 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #4a5568;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    font-size: 16px;
+    margin-bottom: 15px;
+    color: #4a5568;
+}
+
+.account-info {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.membership-section {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+    background-color: #f5f8fa;
+    border-radius: 10px;
+    padding: 20px;
+    border: 1px solid #e0e4e8;
+}
+
+.membership-description {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
+    padding: 20px;
+}
+
+.membership-description h4 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #2d3748;
+}
+
+.membership-description ul {
+    list-style: disc;
+    padding-left: 20px;
+}
+
+.membership-description ul li {
+    font-size: 14px;
+    color: #4a5568;
+    margin-bottom: 5px;
+}
+
+.membership-images img {
+    width: 70px; /* 너비 조절 */
+    height: 70px; /* 높이 조절 */
+    border-radius: 5px; /* 둥근 모서리 */
+    object-fit: cover; /* 이미지 비율 유지 */
+
+}
+
+.summary-box-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.summary-box {
+    background-color: #fff;
+    border-radius: 10px;
+    border: 1px solid #e0e4e8;
+    text-align: center;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.summary-box h4 {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #2d3748;
+}
+
+.summary-box p {
+    font-size: 24px;
+    font-weight: bold;
+    color: #1a202c;
+}
+
+.filters {
+    display: flex;
+    flex-direction: column; /* 세트를 수직 정렬 */
+    gap: 20px; /* 세트 간 간격 */
+    background-color: #f5f8fa;
+    border-radius: 10px;
+    border: 1px solid #e0e4e8;
+    padding: 20px;
+}
+
+.filter-row {
+    display: flex;
+    justify-content: space-between; /* 세트를 좌우로 정렬 */
+    align-items: center; /* 요소 수직 정렬 */
+    gap: 30px; /* 세트 간격 */
+    width: 100%; /* 가로를 꽉 채움 */
+}
+
+.filter-item {
+    display: flex;
+    align-items: center; /* 글씨와 입력창 수직 정렬 */
+    gap: 10px; /* 글씨와 입력창 간 간격 */
+    flex: 1; /* 모든 세트가 동일한 너비 */
+    min-width: 150px; /* 최소 너비 */
+}
+
+.filter-item label {
+    font-size: 14px;
+    white-space: nowrap; /* 글씨 한 줄로 유지 */
+    color: #333;
+}
+
+.filter-item input[type="date"],
+.filter-item select {
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 100%; /* 선택창 크기 */
+}
+
+.search-row {
+    display: flex;
+    justify-content: flex-end; /* 오른쪽 정렬 */
+    gap: 10px; /* 검색창과 버튼 간 간격 */
+    width: 100%; /* 가로를 꽉 채움 */
+}
+
+.search-row input[type="text"] {
+    flex: 1; /* 검색창의 너비 */
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    max-width:165px;
+}
+
+.search-row button {
+    padding: 8px 16px;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    background-color: #edf2f7;
+    color: #2d3748;
+    cursor: pointer;
+}
+
+.search-row button:hover {
+    background-color: #e2e8f0;
+}
+
+
+.order-section {
+    background-color: #fff;
+    border-radius: 10px;
+    border: 1px solid #e0e4e8;
+    padding: 20px;
+}
+
+.order-list {
+    margin-top: 20px;
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #e0e4e8;
+}
+
+
+.order-list th,
+.order-list td {
+    border: 1px solid #e0e4e8;
+    padding: 10px;
+    text-align: center;
+}
+
+.order-list th {
+    background-color: #f7f9fc;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.order-list td {
+    font-size: 14px;
+    color: #4a5568;
+}
+.filter-row button:hover {
+    background-color: #e2e8f0;
+}
+
+.date-picker {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.date-picker label {
+    font-size: 14px;
+    color: #4a5568;
+}
+
+.date-picker input[type="date"] {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    color: #333;
+    cursor: pointer;
+}
+
+.date-picker input[type="date"]:focus {
+    outline: none;
+    border-color: #91b5f3;
+    box-shadow: 0 0 5px rgba(145, 181, 243, 0.5);
+}
+
+/* 반응형 처리 */
+@media (max-width: 768px) {
+    .membership-section {
+        grid-template-columns: 1fr;
+    }
+
+    .summary-box-container {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .filters {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+/* 푸터 */
+footer {
+    background-color: #f2f5f7;
+    padding: 20px 10%;
+    border-top: 1px solid #e0e4e8;
+    text-align: left;
+    line-height: 1.8;
+}
+
+.footer-links {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.footer-links a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: #555;
+}
+
+.footer-links a:hover {
+    color: #0073e6;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.footer-info {
+    text-align: left;
+    line-height: 1.6;
+    color: #555;
+    font-size: 14px;
+}
+
+.footer-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.footer-buttons button {
+    padding: 6px 10px;
+    background-color: #cfd6de;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    font-size: 14px;
+    width: auto;
+    min-width: 120px;
+}
+
+.footer-buttons button:hover {
+    background-color: #bfc9d3;
+}

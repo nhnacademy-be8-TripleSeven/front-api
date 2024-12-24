@@ -1,0 +1,139 @@
+@import url('https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap');
+
+/* 전체 화면 스타일 */
+body {
+    font-family: 'Gamja Flower', cursive;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f8f8f8;
+}
+
+/* 팝업창 스타일 */
+.popup-container {
+    width: 500px; /* 팝업 너비 */
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    padding: 30px 25px; /* 내부 여백 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px; /* 내부 요소 간 간격 */
+}
+
+/* 헤더 스타일 */
+.popup-header {
+    background-color: #f4f4f4;
+    padding: 15px;
+    font-weight: bold;
+    font-size: 22px;
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid #ccc;
+}
+
+/* 입력 필드 스타일 */
+input[type="text"] {
+    width: 70%; /* 입력창 너비 */
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+/* 선택 및 조회 버튼 스타일 */
+button {
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    min-width: 80px; /* 버튼 최소 너비 */
+}
+
+button:hover {
+    background-color: #555;
+}
+
+/* 선택 버튼 위치 */
+.select-btn {
+    margin-top: 20px; /* 위 요소와 간격 */
+    align-self: center; /* 버튼을 중앙 정렬 */
+}
+
+/* 조회 버튼 및 입력창 위치 */
+.search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px; /* 입력창과 조회 버튼 간격 */
+    width: 100%;
+}
+
+/* 선택 창 스타일 */
+select {
+    width: 70%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+
+/* 헤더 스타일 */
+.popup-header {
+    background-color: #f4f4f4;
+    padding: 15px;
+    font-weight: bold;
+    font-size: 20px;
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid #ccc;
+}
+
+/* 선택창과 선택 버튼 컨테이너 스타일 */
+.select-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 10px;
+}
+
+/* 선택 버튼 스타일 */
+.select-container button {
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.select-container button:hover {
+    background-color: #555;
+}
+
+/* 확인 버튼 스타일 */
+.confirm-btn {
+    margin-top: 20px;
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.confirm-btn:hover {
+    background-color: #555;
+}

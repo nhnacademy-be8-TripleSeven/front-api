@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NHN 24</title>
+  <link rel="stylesheet" href="/css/mypage.css">
+</head>
+<body>
+<header class="header">
+  <div class="logo">
+    <a href="main.html"><img src="/image/logo/nhn24-logo.png" alt="NHN 24 로고"></a>
+  </div>
+  <div class="header-center">
+    <div class="search-bar">
+      <input type="text" placeholder="검색어를 입력하세요">
+      <a href="book-search.html"><button>🔍</button></a>
+    </div>
+    <nav class="menu">
+      <ul>
+        <li><a href="/recommended-books.html">추천 도서</a></li>
+        <li><a href="/domestic-books.html">국내 도서</a></li>
+        <li><a href="/foreign-books.html">외국 도서</a></li>
+        <li><a href="/bestsellers.html">베스트셀러</a></li>
+        <li><a href="/new-books.html">신간 소개</a></li>
+        <li><a href="/events.html">이벤트</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="user-actions">
+    <a href ="mypage.html"><img src="/image/icons/person.png" alt="User Icon"></a>
+    <a href ="cart-success.html"><img src="/image/icons/cart.png" alt="Cart Icon"></a>
+    <a href="login.html"><button class="login-btn">Login</button></a>
+  </div>
+</header>
+
+<main class="my-account-container">
+  <aside class="sidebar">
+    <h3>MY ACCOUNT</h3>
+    <ul>
+      <li>*구매 내역</li>
+      <a href="#"><li>주문 조회/취소</li></a>
+      <a href="#"><li>반품/교환 내역</li></a>
+      <a href="#"><li>취소 주문 내역</li></a>
+      <li>*좋아요</li>
+      <a href="#"><li>좋아요 내역</li></a>
+      <li>*포인트</li>
+      <a href="#"><li>포인트 적립 내역</li></a>
+      <a href="#"><li>포인트 사용 내역</li></a>
+      <li>*쿠폰함</li>
+        <a href="#"><li>쿠폰 내역</li></a>
+    </ul>
+  </aside>
+
+  <section class="account-info">
+    <!-- 멤버십과 포인트 섹션 -->
+    <div class="membership-section">
+      <!-- 왼쪽: 멤버십 설명 -->
+      <div class="membership-description">
+        <h4>*멤버십 등급*</h4>
+        <ul>
+          <div class="membership-images">
+            <img src="/image/general.png" alt="일반">
+            <img src="/image/royal.png" alt="로얄">
+            <img src="/image/gold.png" alt="골드">
+            <img src="/image/platinum.png" alt="플래티넘">
+          </div>
+          <li>멤버십 등급은 총 4단계로 구성됩니다.</li>
+          <li>(일반, 로얄, 골드, 플래티넘)</li>
+          <li>등급 혜택은 주문, 할인, 특별 쿠폰 제공.</li>
+          <li>회원 활동에 따라 등급이 변경됩니다.</li>
+        </ul>
+      </div>
+
+      <!-- 오른쪽: 포인트 및 멤버십 박스 -->
+      <div class="summary-box-container">
+        <div class="summary-box">
+          <h4>포인트</h4>
+          <p>4,010 PT</p>
+        </div>
+        <div class="summary-box">
+          <h4>멤버십 등급</h4>
+          <p>골드</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="filters">
+      <!-- 세트 1: 날짜 선택 -->
+      <div class="filter-row">
+        <div class="filter-item">
+          <label for="date">날짜 선택:</label>
+          <input type="date" id="date">
+        </div>
+
+        <!-- 세트 2: 기간 선택 -->
+        <div class="filter-item">
+          <label for="period">기간 선택:</label>
+          <select id="period">
+            <option value="all">전체 보기</option>
+            <option value="3months">3개월</option>
+            <option value="6months">6개월</option>
+            <option value="1year">1년</option>
+          </select>
+        </div>
+
+        <!-- 세트 3: 배송 상태 선택 -->
+        <div class="filter-item">
+          <label for="status">배송 상태 선택:</label>
+          <select id="status">
+            <option value="all">전체 보기</option>
+            <option value="pending">결제 대기</option>
+            <option value="completed">결제 완료</option>
+            <option value="shipped">배송 중</option>
+            <option value="delivered">배송 완료</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- 검색 입력창 및 버튼 -->
+      <div class="search-row">
+        <input type="text" placeholder="주문 검색">
+        <button>찾기</button>
+      </div>
+    </div>
+
+    <table class="order-list">
+      <thead>
+      <tr>
+        <th>주문일</th>
+        <th>주문번호</th>
+        <th>수령인</th>
+        <th>주문 상품</th>
+        <th>조회</th>
+        <th>비고</th>
+      </tr>
+      </thead>
+      <tbody id="order-table-body">
+      <!-- 데이터가 JavaScript로 추가될 예정 -->
+      <tr>
+        <td colspan="6">조회된 내역이 없습니다.</td>
+      </tr>
+      </tbody>
+    </table>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-links">
+    <a href="#">회사소개</a>
+    <a href="#">이용약관</a>
+    <a href="#"><strong>개인정보처리방침</strong></a>
+    <a href="#">청소년 보호정책</a>
+  </div>
+  <div class="footer-container">
+    <div class="footer-info">
+      <p>대표이사 마르코 | 사업자등록번호 123-456-7890</p>
+      <p>통신판매업신고 2024-광주동구-01211</p>
+      <p>이메일: marco@nhn.com | 호스팅 제공자 NHN24</p>
+      <p>© NHN24. All Rights Reserved.</p>
+    </div>
+    <div class="customer-center">
+      <p><strong>고객센터 1544-8282 (발신자 부담)</strong></p>
+      <p>광주광역시 동구 서석동 조선대학교 1층 NHN아카데미</p>
+      <p>Fax 062-1234-5678</p>
+      <div class="footer-buttons">
+        <button>1:1 문의</button>
+        <button>FAQ</button>
+        <button>위치, 영업시간 안내</button>
+      </div>
+    </div>
+  </div>
+</footer>
+<script src="/js/mypage.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const dateInput = document.getElementById("date");
+    const today = new Date().toISOString().split("T")[0];
+    dateInput.setAttribute("max", today);
+  });
+</script>
+</body>
+</html>

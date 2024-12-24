@@ -13,10 +13,8 @@
   </div>
   <div class="header-center">
     <div class="search-bar">
-      <label>
-        <input type="text" placeholder="검색어를 입력하세요">
-      </label>
-      <button>🔍</button>
+      <input type="text" placeholder="검색어를 입력하세요">
+      <a href="book-search.html"><button>🔍</button></a>
     </div>
     <nav class="menu">
       <ul>
@@ -30,38 +28,33 @@
     </nav>
   </div>
   <div class="user-actions">
-    <img src="/image/emoji/person.png" alt="User Icon">
-    <img src="/image/emoji/cart.png" alt="Cart Icon">
-    <a href="login-succes.html"><button class="login-btn">Login</button></a>
+    <a href ="mypage.html"><img src="/image/icons/person.png" alt="User Icon"></a>
+    <a href ="cart-success.html"><img src="/image/icons/cart.png" alt="Cart Icon"></a>
+    <a href="login.html"><button class="login-btn">Login</button></a>
   </div>
 </header>
 
 
 <!-- 이달의 베스트 -->
-<section class="best-section">
+<section class="best-section" id="slider1">
   <h2>이 달의 베스트</h2>
   <div class="slider">
-    <button class="arrow left">◀</button>
-    <div class="slides">
-      <div class="slide"><img src="book1.png" alt="book1"><p>달러구트 꿈 백화점</p></div>
-      <div class="slide"><img src="book2.png" alt="book2"><p>카이로스</p></div>
-      <div class="slide"><img src="book3.png" alt="book3"><p>오! 방울토마토</p></div>
-    </div>
-    <button class="arrow right">▶</button>
+    <button class="arrow left" onclick="prevSlide('slider1')">◀</button>
+    <div class="slides"></div> <!-- 여기에서 슬라이드가 JavaScript로 동적으로 렌더링 -->
+    <button class="arrow right" onclick="nextSlide('slider1')">▶</button>
   </div>
 </section>
 
 <!-- 이 도서는 어때요? -->
-<section class="recommended">
+<section class="recommended" id="slider2">
   <h2>이 도서는 어때요?</h2>
-  <div class="book-grid1">
-    <div class="book-item"><img src="book4.png" alt="book4"><p>서론에 읽는 프로이트</p></div>
-    <div class="book-item"><img src="book5.png" alt="book5"><p>푸드 앤 와인 페어링</p></div>
-    <div class="book-item"><img src="book6.png" alt="book6"><p>국어 문법 완벽 세트</p></div>
+  <div class="slider">
+    <button class="arrow left" onclick="prevSlide('slider2')">◀</button>
+    <div class="slides"></div> <!-- 여기에서 슬라이드가 JavaScript로 동적으로 렌더링 -->
+    <button class="arrow right" onclick="nextSlide('slider2')">▶</button>
   </div>
 </section>
 
-<!-- 편집자의 선택 섹션 -->
 <section class="editor-choice">
   <div class="choice-header">
     <div class="tabs">
@@ -70,24 +63,17 @@
       <button class="tab" data-tab="tab3">외국도서</button>
     </div>
   </div>
-  <div class="book-grid">
-    <div class="book-item">
-      <img src="book1.png" alt="book1">
-      <p class="title">타임 셸터</p>
-      <p>시간은 폭력일 수 있다.</p>
-    </div>
-    <div class="book-item">
-      <img src="book2.png" alt="book2">
-      <p class="title">무의식은 어떻게 나를 설계하는가</p>
-      <p>마음을 움직이는 주인은 따로 있다.</p>
-    </div>
-    <div class="book-item">
-      <img src="book3.png" alt="book3">
-      <p class="title">베아</p>
-      <p>두려움은 도전의 증거.</p>
-    </div>
+  <div class="tab-content active" id="ITEMEDITORCHOICE">
+    <div class="book-grid"></div> <!-- JavaScript가 내용을 동적으로 렌더링 -->
+  </div>
+  <div class="tab-content" id="EBOOK">
+    <div class="book-grid"></div> <!-- JavaScript가 내용을 동적으로 렌더링 -->
+  </div>
+  <div class="tab-content" id="FOREIGN">
+    <div class="book-grid"></div> <!-- JavaScript가 내용을 동적으로 렌더링 -->
   </div>
 </section>
+
 
 <!-- 공지사항, 검색, 빠른 서비스 -->
 <section class="info-section">
@@ -95,8 +81,8 @@
     <h3>공지사항</h3>
     <ul>
       <li><a href="#">NHN24 '청소년 보호정책' 일부 개정 안내</a></li>
-      <li>12월 할인 이벤트 안내</li>
-      <li>전자책 PC뷰어 설정 안내</li>
+      <li><a href="#">12월 할인 이벤트 안내</a></li>
+      <li><a href="#">전자책 PC뷰어 설정 안내</a></li>
     </ul>
   </div>
   <div class="search">
@@ -168,5 +154,8 @@
   </div>
 </footer>
 <script src="/js/main.js"></script>
+<script>
+
+</script>
 </body>
 </html>

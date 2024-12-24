@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>비회원 주문 조회</title>
+  <link rel="stylesheet" href="/css/guest-history.css">
+</head>
+<body>
+<header class="header">
+  <div class="logo">
+    <a href="main.html"><img src="/image/logo/nhn24-logo.png" alt="NHN 24 로고"></a>
+  </div>
+  <nav class="menu">
+    <ul>
+      <li><a href="#">추천 도서</a></li>
+      <li><a href="#">국내 도서</a></li>
+      <li><a href="#">외국 도서</a></li>
+      <li><a href="#">베스트셀러</a></li>
+      <li><a href="#">신간 소개</a></li>
+      <li><a href="#">이벤트</a></li>
+    </ul>
+  </nav>
+  <div class="user-actions">
+    <a href="mypage.html"><img src="/image/icons/person.png" alt="User"></a>
+    <a href="cart-success.html"><img src="/image/icons/cart.png" alt="Cart"></a>
+    <a href="login.html"><button class="login-btn">로그인</button></a>
+  </div>
+</header>
+
+<main>
+  <section class="guest-order-container">
+    <h2>* 주문 번호: Y0364352474</h2>
+    <div class="order-summary">
+      <h3>주문, 배송, 결제 정보</h3>
+      <table>
+        <tbody>
+        <tr>
+          <th>받는 분</th>
+          <td>홍길동</td>
+        </tr>
+        <tr>
+          <th>배송지</th>
+          <td>광주광역시 동구 서석동 조선대학교 NHN 아카데미</td>
+        </tr>
+        <tr>
+          <th>결제 금액</th>
+          <td>18,900원</td>
+        </tr>
+        <tr>
+          <th>결제 방법</th>
+          <td>신용카드 결제</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="search-container">
+      <input type="text" placeholder="주문 상태, 상품명 검색">
+      <button>찾기</button>
+    </div>
+
+    <table class="order-table">
+      <thead>
+      <tr>
+        <th><input type="checkbox" id="select-all"> 전체 선택</th>
+        <th>주문 상태</th>
+        <th>상품명</th>
+        <th>가격</th>
+        <th>포인트</th>
+        <th>선택</th>
+      </tr>
+      </thead>
+      <tbody id="order-list">
+      <tr>
+        <td><input type="checkbox" class="row-checkbox"></td>
+        <td>배송 전</td>
+        <td>도서명: 고흐 인생의 그림들</td>
+        <td>18,900원</td>
+        <td>0</td>
+        <td><button class="cancel-btn" data-status="배송 전">취소</button></td>
+      </tr>
+      <tr>
+        <td><input type="checkbox" class="row-checkbox"></td>
+        <td>배송 완료</td>
+        <td>도서명: 나무</td>
+        <td>12,000원</td>
+        <td>0</td>
+        <td><button class="cancel-btn" data-status="배송 완료" disabled>취소</button></td>
+      </tr>
+      </tbody>
+    </table>
+   <a href="main.html"><button class="main-btn">메인으로 이동</button></a>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-links">
+    <a href="#">회사소개</a>
+    <a href="#">이용약관</a>
+    <a href="#"><strong>개인정보처리방침</strong></a>
+    <a href="#">청소년 보호정책</a>
+  </div>
+  <div class="footer-container">
+    <p>대표이사 마르코 | 사업자등록번호 123-456-7890</p>
+    <p>통신판매업신고 2024-광주동구-01211 | 호스팅 제공자 NHN24</p>
+    <p>고객센터: 1544-8282</p>
+  </div>
+</footer>
+<script src="/js/guest-history.js"></script>
+</body>
+</html>
