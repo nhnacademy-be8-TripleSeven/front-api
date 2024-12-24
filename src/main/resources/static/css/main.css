@@ -249,18 +249,18 @@ section {
 
 /* 추천 도서 */
 .book-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 20px;
-    padding: 20px;
+    display: flex; /* Flexbox를 사용 */
+    flex-wrap: nowrap; /* 줄바꿈 없이 한 줄에 출력 */
+    overflow-x: auto; /* 내용이 길어지면 가로 스크롤 가능 */
+    gap: 20px; /* 항목 간 간격 */
+    padding: 10px; /* 내부 여백 추가 */
+    justify-content: flex-start; /* 왼쪽 정렬 */
 }
 
 .book-item {
-    text-align: center;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    padding: 10px;
+    flex: 0 0 200px; /* 고정된 너비 설정 */
+    box-sizing: border-box; /* 패딩 포함 크기 계산 */
+    text-align: center; /* 텍스트 중앙 정렬 */
 }
 
 
@@ -345,6 +345,7 @@ section {
     color: #fff;
 }
 
+/* 탭 콘텐츠 */
 .tab-content {
     display: none;
 }
@@ -352,6 +353,7 @@ section {
 .tab-content.active {
     display: block;
 }
+
 
 
 
