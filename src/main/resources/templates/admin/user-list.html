@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원 조회</title>
+    <link rel="stylesheet" th:href="@{/css/check-user.css}">
+    <link rel="stylesheet" th:href="@{/css/global.css}">
+</head>
+<body>
+<div class="container">
+
+    <div th:replace="header :: header"></div>
+
+    <main class="main-content">
+        <aside class="sidebar">
+            <h3>관리자 메뉴</h3>
+            <ul>
+                <li><h3>*쿠폰</h3>
+                    <ul>
+                        <li><a th:href="@{/check-coupon}">쿠폰 정책 조회</a></li>
+                        <li><a th:href="@{/coupon-policy-create}">쿠폰 정책 생성, 발급</a></li>
+                        <li><a th:href="@{/coupon-create}">쿠폰 생성, 발급</a></li>
+                    </ul>
+                </li>
+                <li><h3>*회원</h3>
+                    <ul>
+                        <li><a th:href="@{/user-list}">회원 조회</a></li>
+                        <li><a th:href="@{/user-rank}">등급 조회</a></li>
+                    </ul>
+                </li>
+                <li><h3>*도서</h3>
+                    <ul>
+                        <li><a th:href="@{/book-list}">도서 조회</a></li>
+                        <li><a th:href="@{/book-edit}">도서 수정</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </aside>
+
+        <section class="content">
+            <h2>회원 조회</h2>
+            <div class="search-bar">
+                <input type="text" placeholder="검색 조건을 입력하세요" class="search-input">
+                <a th:href="@{/user-search}" class="search-btn">
+                    <button>조회</button>
+                </a>
+                <select class="sort-select">
+                    <option value="joinDate">정렬: 가입일순</option>
+                    <option value="name">정렬: 가나다순</option>
+                </select>
+            </div>
+            <table class="data-table">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>가입일</th>
+                    <th>이름</th>
+                    <th>등급</th>
+                    <th>비고</th>
+                    <th>선택</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="user : ${users}">
+                    <td th:text="${user.id}">1</td>
+                    <td th:text="${user.joinDate}">2024-01-01</td>
+                    <td th:text="${user.name}">홍길동</td>
+                    <td th:text="${user.rank}">VIP</td>
+                    <td th:text="${user.note}">활성</td>
+                    <td>
+                        <input type="checkbox" th:id="'user-check' + ${user.id}">
+                        <label th:for="'user-check' + ${user.id}"></label>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <div th:replace="footer :: footer"></div>
+
+</div>
+<script th:src="@{/js/find-user.js}"></script>
+</body>
+</html>

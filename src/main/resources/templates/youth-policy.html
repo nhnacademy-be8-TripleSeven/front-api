@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>청소년 보호정책 - NHN24</title>
-    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="stylesheet" th:href="@{/css/global.css}">
 </head>
 <body>
 
-<div id="header-placeholder"></div>
+<div th:replace="fragments/header :: header"></div>
 
 <main class="youth-protection-policy">
     <section>
@@ -42,9 +43,9 @@
             <li>청소년 유해매체물로 확인되는 경우 매체물 등록자에게 경고조치 또는 위법성을 검토하여 삭제 등의 조치를 취합니다.</li>
             <li>이용자는 원활한 피해구제를 위해 아래의 기관에 상담 등을 신청할 수 있습니다.</li>
             <ul>
-                <li>A. <strong>방송통신심의위원회 불법·유해정보 / 디지털성범죄 신고센터</strong>: (국번 없이) 1377 / <a href="http://www.kocsc.or.kr">www.kocsc.or.kr</a></li>
-                <li>B. <strong>디지털 성범죄 피해자 지원센터</strong>: 02-735-8994 / <a href="http://e4u.stop.or.kr">e4u.stop.or.kr</a></li>
-                <li>C. <strong>경찰청</strong>: (국번 없이) 182 / <a href="http://ecrm.cyber.go.kr">ecrm.cyber.go.kr</a></li>
+                <li>A. <strong>방송통신심의위원회 불법·유해정보 / 디지털성범죄 신고센터</strong>: (국번 없이) 1377 / <a th:href="@{http://www.kocsc.or.kr}">www.kocsc.or.kr</a></li>
+                <li>B. <strong>디지털 성범죄 피해자 지원센터</strong>: 02-735-8994 / <a th:href="@{http://e4u.stop.or.kr}">e4u.stop.or.kr</a></li>
+                <li>C. <strong>경찰청</strong>: (국번 없이) 182 / <a th:href="@{http://ecrm.cyber.go.kr}">ecrm.cyber.go.kr</a></li>
             </ul>
         </ol>
     </section>
@@ -80,10 +81,7 @@
     </section>
 </main>
 
+<div th:replace="footer :: footer"></div>
 
-<div id="footer-placeholder"></div>
-
-
-<script src="/js/global.js"></script>
 </body>
 </html>

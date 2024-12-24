@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>도서 수정</title>
+  <link rel="stylesheet" th:href="@{/css/check-user.css}">
+  <link rel="stylesheet" th:href="@{/css/global.css}">
+</head>
+<body>
+
+<div th:replace="header :: header"></div>
+
+<main class="main-content">
+  <aside class="sidebar">
+    <h3>관리자 메뉴</h3>
+    <ul>
+      <li><a href="#">*쿠폰</a>
+        <ul>
+          <li><a th:href="@{/check-coupon}">쿠폰 정책 조회</a></li>
+          <li><a th:href="@{/coupon-policy-create}">쿠폰 정책 생성, 발급</a></li>
+          <li><a th:href="@{/coupon-create}">쿠폰 생성, 발급</a></li>
+        </ul>
+      </li>
+      <li><a href="#">*회원</a>
+        <ul>
+          <li><a th:href="@{/user-list}">회원 조회</a></li>
+          <li><a th:href="@{/user-rank}">등급 조회</a></li>
+        </ul>
+      </li>
+      <li><a href="#">*도서</a>
+        <ul>
+          <li><a th:href="@{/book-list}">도서 조회</a></li>
+          <li><a th:href="@{/book-edit}">도서 수정</a></li>
+        </ul>
+      </li>
+    </ul>
+  </aside>
+
+  <section class="content">
+    <h2>도서 수정</h2>
+    <div class="search-bar">
+      <input type="text" placeholder="검색 조건을 입력하세요" class="search-input">
+      <button class="search-btn" onclick="searchBooks()">조회</button>
+      <select class="sort-select" onchange="sortBooks()">
+        <option>정렬: 최신순</option>
+        <option>정렬: 오래된순</option>
+      </select>
+    </div>
+    <div class="data-table-wrapper">
+      <table class="data-table">
+        <thead>
+        <tr>
+          <th>도서 ID</th>
+          <th>도서 이름</th>
+          <th>카테고리</th>
+          <th>등록일</th>
+          <th>선택</th>
+        </tr>
+        </thead>
+        <tbody id="book-list">
+        <tr>
+          <td colspan="5">조회된 데이터가 없습니다.</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <form class="book-edit-form">
+      <div class="form-group">
+        <label for="book-name">도서 이름</label>
+        <input type="text" id="book-name" placeholder="도서 이름">
+      </div>
+      <div class="form-group">
+        <label for="book-id">도서 ID</label>
+        <input type="text" id="book-id" placeholder="도서 ID">
+      </div>
+      <div class="form-group">
+        <label for="category">카테고리</label>
+        <input type="text" id="category" placeholder="카테고리">
+      </div>
+      <div class="form-group">
+        <label for="registration-date">등록일</label>
+        <input type="date" id="registration-date">
+      </div>
+      <div class="form-group">
+        <label for="author">저자 이름</label>
+        <input type="text" id="author" placeholder="저자 이름">
+      </div>
+      <div class="form-group">
+        <label for="price">판매가</label>
+        <input type="number" id="price" placeholder="판매가">
+      </div>
+      <div class="update-btn-wrapper">
+        <button type="submit" class="update-btn">확인</button>
+      </div>
+    </form>
+  </section>
+</main>
+
+<div th:replace="footer :: footer"></div>
+
+<script>
+  function searchBooks() {
+    console.log("도서 검색 로직 실행");
+  }
+
+  function sortBooks() {
+    console.log("도서 정렬 로직 실행");
+  }
+</script>
+</body>
+</html>

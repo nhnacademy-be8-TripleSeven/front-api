@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>쿠폰 생성 및 발급</title>
+  <link rel="stylesheet" th:href="@{/css/create-coupon.css}">
+  <link rel="stylesheet" th:href="@{/css/global.css}">
+</head>
+<body>
+<div class="container">
+
+  <div th:replace="header :: header"></div>
+
+  <main>
+    <aside class="sidebar">
+      <h3>📋 관리자 메뉴</h3>
+      <ul>
+        <li><h3>*쿠폰</h3>
+          <ul>
+            <li><a th:href="@{/check-coupon}">쿠폰 정책 조회</a></li>
+            <li><a th:href="@{/coupon-policy-create}">쿠폰 정책 생성, 발급</a></li>
+            <li><a th:href="@{/coupon-create}">쿠폰 생성, 발급</a></li>
+          </ul>
+        </li>
+        <li><h3>*회원</h3>
+          <ul>
+            <li><a th:href="@{/user-list}">회원 조회</a></li>
+            <li><a th:href="@{/user-rank}">등급 조회</a></li>
+          </ul>
+        </li>
+        <li><h3>*도서</h3>
+          <ul>
+            <li><a th:href="@{/book-list}">도서 조회</a></li>
+            <li><a th:href="@{/book-edit}">도서 수정</a></li>
+          </ul>
+        </li>
+      </ul>
+    </aside>
+
+    <div class="main-container">
+      <div class="form-container">
+        <h3>쿠폰 생성 및 발급</h3>
+        <form th:action="@{/create-coupon}" th:method="post" id="coupon-form">
+          <table class="form-table">
+            <tr>
+              <th>쿠폰 이름</th>
+              <td><input type="text" id="coupon-name" name="couponName" placeholder="쿠폰 이름 입력" required></td>
+            </tr>
+            <tr>
+              <th>쿠폰 정책</th>
+              <td><input type="text" id="coupon-policy" name="couponPolicy" placeholder="쿠폰 정책 입력" required></td>
+            </tr>
+            <tr>
+              <th>발급 대상</th>
+              <td>
+                <select id="recipient-type" name="recipientType" required>
+                  <option value="">선택</option>
+                  <option value="전체">전체</option>
+                  <option value="등급별">등급별</option>
+                  <option value="개인별">개인별</option>
+                </select>
+                <button type="button" id="recipient-popup-btn" style="display: none;">등급 선택</button>
+              </td>
+            </tr>
+            <tr>
+              <th>분류</th>
+              <td>
+                <select id="coupon-category" name="couponCategory" required>
+                  <option value="">선택</option>
+                  <option value="도서 쿠폰">도서 쿠폰</option>
+                  <option value="카테고리 쿠폰">카테고리 쿠폰</option>
+                  <option value="일반 쿠폰">일반 쿠폰</option>
+                </select>
+              </td>
+            </tr>
+          </table>
+          <button type="submit" class="register-btn" id="register-btn">등록</button>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <div th:replace="footer :: footer"></div>
+
+</div>
+</body>
+</html>
