@@ -1,131 +1,85 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>취소 주문 내역</title>
-  <link rel="stylesheet" href="/css/cancel-history.css">
+  <link rel="stylesheet" th:href="@{/css/cancel-history.css}">
+  <link rel="stylesheet" th:href="@{/css/global.css}">
 </head>
 <body>
-<header class="header">
-  <div class="logo">
-    <a href="main.html"><img src="/image/logo/nhn24-logo.png" alt="NHN 24 로고"></a>
-  </div>
-  <div class="header-center">
-    <div class="search-bar">
-      <input type="text" placeholder="검색어를 입력하세요">
-      <a href="book-search.html"><button>🔍</button></a>
-    </div>
-    <nav class="menu">
+<div class="container">
+
+  <div th:replace="header :: header"></div>
+
+  <main class="my-account-container">
+    <aside class="sidebar">
+      <h3>MY ACCOUNT</h3>
       <ul>
-        <li><a href="/recommended-books.html">추천 도서</a></li>
-        <li><a href="/domestic-books.html">국내 도서</a></li>
-        <li><a href="/foreign-books.html">외국 도서</a></li>
-        <li><a href="/bestsellers.html">베스트셀러</a></li>
-        <li><a href="/new-books.html">신간 소개</a></li>
-        <li><a href="/events.html">이벤트</a></li>
+        <li>*구매 내역</li>
+        <a th:href="@{/order-manage}"><li>주문 조회/변경/취소</li></a>
+        <a th:href="@{/refund-history}"><li>반품/교환 내역</li></a>
+        <a th:href="@{cancel-history}"><li>취소 주문 내역</li></a>
+        <li>*좋아요</li>
+        <a th:href="@{/like-history}"><li>좋아요 내역</li></a>
+        <li>*포인트</li>
+        <a th:href="@{/points/earned}"><li>포인트 적립 내역</li></a>
+        <a th:href="@{/points/used}"><li>포인트 사용 내역</li></a>
+        <li>*쿠폰함</li>
+        <a th:href="@{/coupon-history}"><li>쿠폰 내역</li></a>
       </ul>
-    </nav>
-  </div>
-  <div class="user-actions">
-    <a href="mypage.html"><img src="/image/icons/person.png" alt="User Icon"></a>
-    <a href="cart-success.html"><img src="/image/icons/cart.png" alt="Cart Icon"></a>
-    <a href="login.html"><button class="login-btn">Login</button></a>
-  </div>
-</header>
+    </aside>
 
-<main class="my-account-container">
-  <aside class="sidebar">
-    <h3>MY ACCOUNT</h3>
-    <ul>
-      <li>*구매 내역</li>
-      <a href="#"><li>주문 조회/취소</li></a>
-      <a href="#"><li>반품/교환 내역</li></a>
-      <a href="#"><li>취소 주문 내역</li></a>
-      <li>*좋아요</li>
-      <a href="#"><li>좋아요 내역</li></a>
-      <li>*포인트</li>
-      <a href="#"><li>포인트 적립 내역</li></a>
-      <a href="#"><li>포인트 사용 내역</li></a>
-      <li>*쿠폰함</li>
-      <a href="#"><li>쿠폰 내역</li></a>
-    </ul>
-  </aside>
-
-  <section class="return-history">
-    <h2>취소 주문 내역</h2>
-    <p class="notice">최근 5년간 주문내역을 조회할 수 있습니다.</p>
-    <div class="filters">
-      <div class="filter-item">
-        <select id="order-status">
-          <option value="all">주문전체</option>
-          <option value="completed">결제 완료</option>
-          <option value="pending">결제 대기</option>
-        </select>
+    <section class="return-history">
+      <h2>취소 주문 내역</h2>
+      <p class="notice">최근 5년간 주문내역을 조회할 수 있습니다.</p>
+      <div class="filters">
+        <div class="filter-item">
+          <select id="order-status">
+            <option value="all">주문전체</option>
+            <option value="completed">결제 완료</option>
+            <option value="pending">결제 대기</option>
+          </select>
+        </div>
+        <div class="filter-item">
+          <input type="date" id="start-date">
+          <span class="date-separator">~</span>
+          <input type="date" id="end-date">
+        </div>
+        <button class="filter-btn" id="search-btn">조회</button>
       </div>
-      <div class="filter-item">
-        <input type="date" id="start-date">
-        <span class="date-separator">~</span>
-        <input type="date" id="end-date">
+
+      <div class="info-banner">
+        <img th:src="@{/image/money.png}" alt="Review Points">
+        <div class="banner-text">
+          <p class="highlight">리뷰 글 작성 시 200포인트 지급!</p>
+          <p>이미지 리뷰 작성 시 500포인트 지급!</p>
+        </div>
       </div>
-      <button class="filter-btn" id="search-btn">조회</button>
-    </div>
 
-    <div class="info-banner">
-      <img src="/image/money.png" alt="Review Points">
-      <div class="banner-text">
-        <p class="highlight">리뷰 글 작성 시 200포인트 지급!</p>
-        <p>이미지 리뷰 작성 시 500포인트 지급!</p>
-      </div>
-    </div>
+      <table>
+        <thead>
+        <tr>
+          <th>주문 번호</th>
+          <th>주문 일자</th>
+          <th>주문 내역</th>
+          <th>주문 금액</th>
+          <th>주문 상태</th>
+          <th>수령자</th>
+        </tr>
+        </thead>
+        <tbody id="order-table-body">
+        <tr>
+          <td colspan="6">조건에 맞는 데이터가 없습니다.</td>
+        </tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+  <div th:replace="footer :: footer"></div>
 
+</div>
 
-    <table>
-      <thead>
-      <tr>
-        <th>주문 번호</th>
-        <th>주문 일자</th>
-        <th>주문 내역</th>
-        <th>주문 금액</th>
-        <th>주문 상태</th>
-        <th>수령자</th>
-      </tr>
-      </thead>
-      <tbody id="order-table-body">
-      <tr>
-        <td colspan="6">조건에 맞는 데이터가 없습니다.</td>
-      </tr>
-      </tbody>
-    </table>
-  </section>
-</main>
-
-<footer>
-  <div class="footer-links">
-    <a href="#">회사소개</a>
-    <a href="#">이용약관</a>
-    <a href="#"><strong>개인정보처리방침</strong></a>
-    <a href="#">청소년 보호정책</a>
-  </div>
-  <div class="footer-container">
-    <div class="footer-info">
-      <p>대표이사 마르코 | 사업자등록번호 123-456-7890</p>
-      <p>통신판매업신고 2024-광주동구-01211</p>
-      <p>이메일: marco@nhn.com | 호스팅 제공자 NHN24</p>
-      <p>© NHN24. All Rights Reserved.</p>
-    </div>
-    <div class="customer-center">
-      <p><strong>고객센터 1544-8282 (발신자 부담)</strong></p>
-      <p>광주광역시 동구 서석동 조선대학교 1층 NHN아카데미</p>
-      <p>Fax 062-1234-5678</p>
-      <div class="footer-buttons">
-        <button>1:1 문의</button>
-        <button>FAQ</button>
-        <button>위치, 영업시간 안내</button>
-      </div>
-    </div>
-  </div>
-</footer>
-<script src="/js/cancel-history.js"></script>
+<script th:src="@{/js/cancel-history.js}"></script>
 </body>
 </html>

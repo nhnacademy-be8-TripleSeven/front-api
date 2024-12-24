@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>청소년 보호정책 - NHN24</title>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <link rel="stylesheet" th:href="@{/css/global.css}">
+</head>
+<body>
+
+<div th:replace="fragments/header :: header"></div>
+
+<main class="youth-protection-policy">
+    <section>
+        <h1>청소년 보호정책</h1>
+        <p>
+            NHN24(이하 "회사")는 불건전한 유해매체들로부터 청소년을 보호하기 위하여,
+            <strong>‘청소년보호법’</strong>, <strong>‘정보통신망 이용촉진 및 정보보호 등에 관한 법률’</strong> 등에 근거하여 청소년보호책임자를 지정하고 청소년보호정책을 시행하고 있습니다.
+        </p>
+        <p>
+            또한 회사는 정보통신윤리위원회 심의규정 및 청소년유해매체물 기준에 따라, 19세 미만의 청소년들이 유해매체물에 접근할 수 없도록 방지하고 있습니다.
+        </p>
+    </section>
+    <section>
+        <h2>제1조 (유해정보에 대한 청소년 접근제한 및 관리조치)</h2>
+        <ol>
+            <li>회사는 청소년이 불법, 유해한 매체물 유통 등으로 인한 피해를 입지 않도록 청소년 유해매체물에 대해 별도의 성인인증 장치를 적용하며, 청소년 유해정보가 노출되지 않도록 예방합니다.</li>
+            <li>회사는 게시물을 포함하여 회사가 제공하는 서비스의 금칙어 및 청소년 보호와 관련된 모니터링을 실시하며 주기적으로 관리하고 있습니다.</li>
+        </ol>
+    </section>
+    <section>
+        <h2>제2조 (청소년보호 관련 업무 담당자 교육)</h2>
+        <p>
+            회사는 정보통신업무 종사자를 대상으로 청소년 보호와 관련된 법령 및 제재기준, 유해정보 발견 시 대처방법, 위반사항 처리에 대한 보고절차 등을 교육하고 있으며, 하단의 제4조 청소년보호 관련 민원창구 운영에 명시되어 있는 담당자 또는 외부 전문기관이 교육을 시행하고 있습니다.
+        </p>
+    </section>
+    <section>
+        <h2>제3조 (유해정보로 인한 피해상담 및 고충처리)</h2>
+        <ol>
+            <li>회사는 청소년 유해매체물의 유통으로 인한 피해신고 및 처리를 위하여 신고센터를 통해 신고를 접수받고 있습니다.</li>
+            <li>청소년 유해매체물 신고센터 메일주소는 '청소년 보호정책'에 명시되어 언제든지 확인할 수 있습니다.</li>
+            <li>청소년 유해매체물로 확인되는 경우 매체물 등록자에게 경고조치 또는 위법성을 검토하여 삭제 등의 조치를 취합니다.</li>
+            <li>이용자는 원활한 피해구제를 위해 아래의 기관에 상담 등을 신청할 수 있습니다.</li>
+            <ul>
+                <li>A. <strong>방송통신심의위원회 불법·유해정보 / 디지털성범죄 신고센터</strong>: (국번 없이) 1377 / <a th:href="@{http://www.kocsc.or.kr}">www.kocsc.or.kr</a></li>
+                <li>B. <strong>디지털 성범죄 피해자 지원센터</strong>: 02-735-8994 / <a th:href="@{http://e4u.stop.or.kr}">e4u.stop.or.kr</a></li>
+                <li>C. <strong>경찰청</strong>: (국번 없이) 182 / <a th:href="@{http://ecrm.cyber.go.kr}">ecrm.cyber.go.kr</a></li>
+            </ul>
+        </ol>
+    </section>
+    <section>
+        <h2>제4조 (청소년보호 관련 민원창구 운영)</h2>
+        <p>회사는 청소년 유해정보로 인한 피해상담 및 고충처리를 위하여 별도의 민원창구를 운영하고 있으며, 관련 담당자(책임자 및 관리자)를 지정하고 있습니다. 하기의 담당자 연락처로 청소년보호 관련 의견접수, 피해상담 및 고충처리를 요청하실 수 있습니다.</p>
+        <h3>청소년 보호책임자</h3>
+        <ul>
+            <li>성명: woojin park</li>
+            <li>소속부서: 정보보안팀</li>
+            <li>직위: 대리</li>
+            <li>전화번호: 1544-8282</li>
+            <li>이메일: security@nhn24.com</li>
+        </ul>
+        <h3>청소년 보호담당자</h3>
+        <ul>
+            <li>성명: eunhwa choi</li>
+            <li>소속부서: 정보보호팀</li>
+            <li>직위: 사원</li>
+            <li>전화번호: 1544-8282</li>
+            <li>이메일: security@nhn24.com</li>
+        </ul>
+    </section>
+    <section>
+        <h2>제5조 (청소년 보호정책 변경에 관한 사항)</h2>
+        <p>
+            NHN24는 본 청소년 보호정책을 변경하는 경우에는 그 이유 및 변경 내용을 인터넷 홈페이지 공지사항란 또는 별도의 창을 통하는 등의 방법으로 즉시 공지하겠습니다.
+        </p>
+        <ul>
+            <li>- 공고 일자: 2024년 12월 23일</li>
+            <li>- 시행 일자: 2024년 12월 23일</li>
+        </ul>
+    </section>
+</main>
+
+<div th:replace="footer :: footer"></div>
+
+</body>
+</html>

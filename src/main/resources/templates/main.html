@@ -1,56 +1,40 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NHN 24</title>
-  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" th:href="@{/css/main.css}">
+  <link rel="stylesheet" th:href="@{/css/global.css}">
 </head>
 <body>
-<header class="header">
-  <div class="logo">
-    <a href="main.html"><img src="/image/logo/nhn24-logo.png" alt="NHN 24 로고"></a>
-  </div>
-  <div class="header-center">
-    <div class="search-bar">
-      <input type="text" placeholder="검색어를 입력하세요">
-      <a href="book-search.html"><button>🔍</button></a>
-    </div>
-    <nav class="menu">
-      <ul>
-        <li><a href="/recommended-books.html">추천 도서</a></li>
-        <li><a href="/domestic-books.html">국내 도서</a></li>
-        <li><a href="/foreign-books.html">외국 도서</a></li>
-        <li><a href="/bestsellers.html">베스트셀러</a></li>
-        <li><a href="/new-books.html">신간 소개</a></li>
-        <li><a href="/events.html">이벤트</a></li>
-      </ul>
-    </nav>
-  </div>
-  <div class="user-actions">
-    <a href ="mypage.html"><img src="/image/icons/person.png" alt="User Icon"></a>
-    <a href ="cart-success.html"><img src="/image/icons/cart.png" alt="Cart Icon"></a>
-    <a href="login.html"><button class="login-btn">Login</button></a>
-  </div>
-</header>
 
+<div th:replace="header :: header"></div>
 
-<!-- 이달의 베스트 -->
 <section class="best-section" id="slider1">
   <h2>이 달의 베스트</h2>
   <div class="slider">
     <button class="arrow left" onclick="prevSlide('slider1')">◀</button>
-    <div class="slides"></div> <!-- 여기에서 슬라이드가 JavaScript로 동적으로 렌더링 -->
+    <div class="slides">
+      <div th:each="book : ${bestBooks}" class="slide">
+        <img th:src="@{${book.image}}" th:alt="${book.title}">
+        <p th:text="${book.title}"></p>
+      </div>
+    </div>
     <button class="arrow right" onclick="nextSlide('slider1')">▶</button>
   </div>
 </section>
 
-<!-- 이 도서는 어때요? -->
 <section class="recommended" id="slider2">
   <h2>이 도서는 어때요?</h2>
   <div class="slider">
     <button class="arrow left" onclick="prevSlide('slider2')">◀</button>
-    <div class="slides"></div> <!-- 여기에서 슬라이드가 JavaScript로 동적으로 렌더링 -->
+    <div class="slides">
+      <div th:each="book : ${recommendedBooks}" class="slide">
+        <img th:src="@{${book.image}}" th:alt="${book.title}">
+        <p th:text="${book.title}"></p>
+      </div>
+    </div>
     <button class="arrow right" onclick="nextSlide('slider2')">▶</button>
   </div>
 </section>
@@ -64,25 +48,38 @@
     </div>
   </div>
   <div class="tab-content active" id="ITEMEDITORCHOICE">
-    <div class="book-grid"></div> <!-- JavaScript가 내용을 동적으로 렌더링 -->
+    <div class="book-grid">
+      <div th:each="book : ${editorChoiceBooks}" class="book-item">
+        <img th:src="@{${book.image}}" th:alt="${book.title}">
+        <p th:text="${book.title}"></p>
+      </div>
+    </div>
   </div>
   <div class="tab-content" id="EBOOK">
-    <div class="book-grid"></div> <!-- JavaScript가 내용을 동적으로 렌더링 -->
+    <div class="book-grid">
+      <div th:each="book : ${eBooks}" class="book-item">
+        <img th:src="@{${book.image}}" th:alt="${book.title}">
+        <p th:text="${book.title}"></p>
+      </div>
+    </div>
   </div>
   <div class="tab-content" id="FOREIGN">
-    <div class="book-grid"></div> <!-- JavaScript가 내용을 동적으로 렌더링 -->
+    <div class="book-grid">
+      <div th:each="book : ${foreignBooks}" class="book-item">
+        <img th:src="@{${book.image}}" th:alt="${book.title}">
+        <p th:text="${book.title}"></p>
+      </div>
+    </div>
   </div>
 </section>
 
-
-<!-- 공지사항, 검색, 빠른 서비스 -->
 <section class="info-section">
   <div class="notice">
     <h3>공지사항</h3>
     <ul>
-      <li><a href="#">NHN24 '청소년 보호정책' 일부 개정 안내</a></li>
-      <li><a href="#">12월 할인 이벤트 안내</a></li>
-      <li><a href="#">전자책 PC뷰어 설정 안내</a></li>
+      <li th:each="notice : ${notices}">
+        <a th:href="@{/notices/{id}(id=${notice.id})}" th:text="${notice.title}"></a>
+      </li>
     </ul>
   </div>
   <div class="search">
@@ -108,7 +105,6 @@
   </div>
 </section>
 
-<!-- 하단 혜택 -->
 <section class="benefits">
   <div class="benefit-item">
     <h4>스페셜 서비스</h4>
@@ -126,36 +122,8 @@
   </div>
 </section>
 
-<!-- 푸터 -->
-<footer>
-  <div class="footer-links">
-    <a href="#">회사소개</a>
-    <a href="#">이용약관</a>
-    <a href="#"><strong>개인정보처리방침</strong></a>
-    <a href="#">청소년 보호정책</a>
-  </div>
-  <div class="footer-container">
-    <div class="footer-info">
-      <p>대표이사 마르코 | 사업자등록번호 123-456-7890</p>
-      <p>통신판매업신고 2024-광주동구-01211</p>
-      <p>이메일: marco@nhn.com | 호스팅 제공자 NHN24</p>
-      <p>© NHN24. All Rights Reserved.</p>
-    </div>
-    <div class="customer-center">
-      <p><strong>고객센터 1544-8282 (발신자 부담)</strong></p>
-      <p>광주광역시 동구 서석동 조선대학교 1층 NHN아카데미</p>
-      <p>Fax 062-1234-5678</p>
-      <div class="footer-buttons">
-        <button>1:1 문의</button>
-        <button>FAQ</button>
-        <button>위치, 영업시간 안내</button>
-      </div>
-    </div>
-  </div>
-</footer>
-<script src="/js/main.js"></script>
-<script>
+<div th:replace="footer :: footer"></div>
 
-</script>
+<script th:src="@{/js/main.js}"></script>
 </body>
 </html>

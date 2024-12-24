@@ -52,14 +52,14 @@ document.addEventListener("DOMContentLoaded", () => {
             const bookItem = document.createElement("div");
             bookItem.className = "book-item";
             bookItem.innerHTML = `
-                <a href="${book.detailsUrl}">
-                    <img src="${book.img}" alt="${book.title}">
+                <a th:href="@{${book.detailsUrl}}">
+                    <img th:src="@{${book.img}}" alt="${book.title}">
                     <h4>${book.title}</h4>
                 </a>
                 <p>${book.price}</p>
                 <div class="actions">
-                    <img class="icon like-icon" src="/image/icons/like.png" alt="Like" data-id="${book.id}">
-                    <img class="icon cart-icon" src="/image/icons/cart.png" alt="Cart" data-id="${book.id}">
+                    <img class="icon like-icon" th:src="@{/image/icons/like.png}" alt="Like" data-id="${book.id}">
+                    <img class="icon cart-icon" th:src="@{/image/icons/cart.png}" alt="Cart" data-id="${book.id}">
                 </div>
             `;
             bookList.appendChild(bookItem);

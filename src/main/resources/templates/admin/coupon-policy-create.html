@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>쿠폰 정책 생성 및 발급</title>
+    <link rel="stylesheet" th:href="@{/css/coupon-policy-register.css}">
+    <link rel="stylesheet" th:href="@{/css/global.css}">
+</head>
+<body>
+<div class="container">
+
+    <div th:replace="header :: header"></div>
+
+    <main>
+        <aside class="sidebar">
+            <h3>📋 관리자 메뉴</h3>
+            <ul>
+                <li><h3>*쿠폰</h3>
+                    <ul>
+                        <li><a th:href="@{/check-coupon}">쿠폰 정책 조회</a></li>
+                        <li><a th:href="@{/coupon-policy-create}">쿠폰 정책 생성, 발급</a></li>
+                        <li><a th:href="@{/coupon-create}">쿠폰 생성, 발급</a></li>
+                    </ul>
+                </li>
+                <li><h3>*회원</h3>
+                    <ul>
+                        <li><a th:href="@{/user-list}">회원 조회</a></li>
+                        <li><a th:href="@{/user-rank}">등급 조회</a></li>
+                    </ul>
+                </li>
+                <li><h3>*도서</h3>
+                    <ul>
+                        <li><a th:href="@{/book-list}">도서 조회</a></li>
+                        <li><a th:href="@{/book-edit}">도서 수정</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </aside>
+
+
+        <div class="form-container">
+            <table class="form-table">
+                <h2 class="form-title">쿠폰 정책 생성 및 발급</h2>
+                <tr>
+                    <th>쿠폰 정책 이름</th>
+                    <td><input type="text" id="coupon-name" placeholder="정책 이름 입력"></td>
+                </tr>
+                <tr>
+                    <th>쿠폰 이름</th>
+                    <td><input type="text" id="coupon-title" placeholder="쿠폰 이름 입력"></td>
+                </tr>
+                <tr>
+                    <th>최소 금액</th>
+                    <td><input type="number" id="min-amount" placeholder="최소 금액 입력"></td>
+                </tr>
+                <tr>
+                    <th>최고 금액</th>
+                    <td><input type="number" id="max-amount" placeholder="최고 금액 입력"></td>
+                </tr>
+                <tr>
+                    <th>할인 금액/할인율(%)</th>
+                    <td class="discount-field">
+                        <select id="discount-type">
+                            <option value="금액">할인 금액</option>
+                            <option value="율">할인율</option>
+                        </select>
+                        <input type="number" id="discount-value" placeholder="값 입력">
+                    </td>
+                </tr>
+                <tr>
+                    <th>유효 기간</th>
+                    <td><input type="date" id="validity"></td>
+                </tr>
+            </table>
+
+            <button class="register-btn" id="register-btn">등록</button>
+        </div>
+
+        <div class="popup-overlay" id="popup-overlay">
+            <div class="popup-content">
+                <h2>쿠폰 정책 생성 조회</h2>
+                <table class="popup-table">
+                    <tr>
+                        <th>쿠폰 정책 이름</th>
+                        <td id="popup-name"></td>
+                    </tr>
+                    <tr>
+                        <th>최소 금액</th>
+                        <td id="popup-min"></td>
+                    </tr>
+                    <tr>
+                        <th>최고 금액</th>
+                        <td id="popup-max"></td>
+                    </tr>
+                    <tr>
+                        <th>할인 금액/할인율</th>
+                        <td id="popup-discount"></td>
+                    </tr>
+                    <tr>
+                        <th>유효 기간</th>
+                        <td id="popup-validity"></td>
+                    </tr>
+                </table>
+                <button id="close-popup">확인</button>
+            </div>
+        </div>
+    </main>
+
+    <div th:replace="footer :: footer"></div>
+
+</div>
+
+<script th:src="@{/js/coupon-policy-register.js}"></script>
+</body>
+</html>

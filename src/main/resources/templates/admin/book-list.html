@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NHN 24 관리자</title>
+  <link rel="stylesheet" th:href="@{/css/check-user.css}">
+  <link rel="stylesheet" th:href="@{/css/global.css}">
+</head>
+<body>
+<div class="container">
+
+
+  <div th:replace="header :: header"></div>
+
+
+  <main class="main-content">
+    <aside class="sidebar">
+      <h3>관리자 메뉴</h3>
+      <ul>
+        <li><a href="#">*쿠폰</a>
+          <ul>
+            <li><a th:href="@{/check-coupon}">쿠폰 정책 조회</a></li>
+            <li><a th:href="@{/coupon-policy-create}">쿠폰 정책 생성, 발급</a></li>
+            <li><a th:href="@{/coupon-create}">쿠폰 생성, 발급</a></li>
+          </ul>
+        </li>
+        <li><a href="#">*회원</a>
+          <ul>
+            <li><a th:href="@{/user-list}">회원 조회</a></li>
+            <li><a th:href="@{/user-rank}">등급 조회</a></li>
+          </ul>
+        </li>
+        <li><a href="#">*도서</a>
+          <ul>
+            <li><a th:href="@{/book-list}">도서 조회</a></li>
+            <li><a th:href="@{/book-edit}">도서 수정</a></li>
+          </ul>
+        </li>
+      </ul>
+    </aside>
+
+    <section class="content">
+      <h2>도서 조회</h2>
+      <div class="search-bar">
+        <input type="text" placeholder="검색 조건을 입력하세요" class="search-input">
+        <button class="search-btn">조회</button>
+        <select class="sort-select">
+          <option value="newest">정렬: 최신순</option>
+          <option value="oldest">정렬: 오래된순</option>
+        </select>
+      </div>
+      <table class="data-table">
+        <thead>
+        <tr>
+          <th>도서 ID</th>
+          <th>도서 이름</th>
+          <th>카테고리</th>
+          <th>등록일</th>
+          <th>비고</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="book : ${books}">
+          <td th:text="${book.id}">1</td>
+          <td th:text="${book.name}">책 제목</td>
+          <td th:text="${book.category}">카테고리</td>
+          <td th:text="${book.createdDate}">2024-01-01</td>
+          <td>
+            <a th:href="@{/book-detail/{id}(id=${book.id})}">상세 보기</a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <div th:replace="footer :: footer"></div>
+
+</div>
+</body>
+</html>

@@ -1,62 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NHN 24</title>
-  <link rel="stylesheet" href="/css/pay-guest.css">
+  <title th:text="'NHN 24 - 결제'">NHN 24</title>
+  <link rel="stylesheet" th:href="@{/css/pay-guest.css}">
+  <link rel="stylesheet" th:href="@{/css/global.css}">
 </head>
 <body>
-<header class="header">
-  <div class="logo">
-    <a href="main.html"><img src="/image/logo/nhn24-logo.png" alt="NHN 24 로고"></a>
-  </div>
-  <div class="header-center">
-    <div class="search-bar">
-      <label>
-        <input type="text" placeholder="검색어를 입력하세요">
-      </label>
-      <button>🔍</button>
-    </div>
-    <nav class="menu">
-      <ul>
-        <li><a href="/recommended-books.html">추천 도서</a></li>
-        <li><a href="/domestic-books.html">국내 도서</a></li>
-        <li><a href="/foreign-books.html">외국 도서</a></li>
-        <li><a href="/bestsellers.html">베스트셀러</a></li>
-        <li><a href="/new-books.html">신간 소개</a></li>
-        <li><a href="/events.html">이벤트</a></li>
-      </ul>
-    </nav>
-  </div>
-  <div class="user-actions">
-    <a href="mypage.html"><img src="/image/emoji/person.png" alt="User Icon"></a>
-    <a href="cart-success.html"><img src="/image/emoji/cart.png" alt="Cart Icon"></a>
-    <a href="login.html">
-      <button class="login-btn">Login</button>
-    </a>
-  </div>
-</header>
+<div th:replace="header :: header"></div>
 
-
-<!-- 메인 섹션 -->
 <main>
   <section class="step-container">
-    <div class="step active">카트</div>
-    <div class="step current">결제</div>
-    <div class="step">완료</div>
+    <div class="step" th:classappend="${currentStep == 'cart' ? 'active' : ''}">카트</div>
+    <div class="step" th:classappend="${currentStep == 'payment' ? 'current' : ''}">결제</div>
+    <div class="step" th:classappend="${currentStep == 'complete' ? 'active' : ''}">완료</div>
   </section>
+
   <section class="delivery-section">
-    <h2><img src="/image/emoji/ship.png" alt=""> NHN 24 배송</h2>
+    <h2><img th:src="@{/image/emoji/ship.png}" alt=""> NHN 24 배송</h2>
     <h6>일반 배송: 5000원</h6>
   </section>
+
   <section class="shipping-info">
     <div class="flex-box progress-bar"></div>
     <span class="free-shipping-text">
-            <strong>30,000원</strong> 이상 구매 시 <strong>무료배송</strong>
-        </span>
-    <button class="more-details-btn">더 담으러 가기</button>
+      <strong>30,000원</strong> 이상 구매 시 <strong>무료배송</strong>
+    </span>
+    <button th:onclick="location.href='@{/browse}'" class="more-details-btn">더 담으러 가기</button>
   </section>
+
   <section class="item-section">
     <div class="product-table">
       <table>
@@ -70,294 +43,42 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
+        <tr th:each="product : ${products}">
           <td class="product-info">
-            <img src="/image/book.png" alt="책 이미지">
+            <img th:src="@{/image/{product.image}(product.image=${product.image})}" alt="책 이미지">
             <div>
-              <p><strong>[국내 도서] 반 고흐, 인생의 그림들</strong></p>
-              <p>- 어둠을 지나 비로소 빛이 된 불멸의 작품 120</p>
+              <p><strong th:text="${product.name}">[국내 도서] 반 고흐, 인생의 그림들</strong></p>
+              <p th:text="${product.description}">- 어둠을 지나 비로소 빛이 된 불멸의 작품 120</p>
             </div>
           </td>
-          <td>1</td>
-          <td>21,000원</td>
-          <td>12/12(목)<br>도착(예정)</td>
-          <td>18,900원<br><span class="discount">(10% 할인)</span></td>
+          <td th:text="${product.quantity}">1</td>
+          <td th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA') + '원'}">21,000원</td>
+          <td th:text="${product.deliveryDate}">12/12(목)<br>도착(예정)</td>
+          <td>
+            <span th:text="${#numbers.formatDecimal(product.discountedPrice, 0, 'COMMA') + '원'}">18,900원</span><br>
+            <span class="discount">(10% 할인)</span>
+          </td>
         </tr>
         </tbody>
       </table>
     </div>
   </section>
-  <section class="delivery-date-container">
-    <div class="delivery-date-label">배송일</div>
-
-    <div class="date active">12/15(일)</div>
-    <div class="date">12/16(월)</div>
-    <div class="date">12/17(화)</div>
-    <div class="date">12/18(수)</div>
-    <div class="date">12/19(목)</div>
-  </section>
-
-  <!-- 배송 주소 -->
-  <section class="shipping-container">
-    <h3><img src="/image/emoji/ship.png" alt=""> 배송 주소</h3>
-    <div class="shipping-content">
-      <!-- 왼쪽 섹션 -->
-      <div class="shipping-left">
-        <!-- 배송 방법 -->
-        <div class="section shipping-method">
-          <h4>배송 방법</h4>
-          <div class="shipping-method-class">
-            <label>
-              <input type="radio" name="shipping" value="default" checked>
-              <span>일반 택배</span>
-            </label>
-            <label>
-              <input type="radio" name="shipping" value="world">
-              <span>해외 배송</span>
-            </label>
-            <label>
-              <input type="radio" name="shipping" value="convenient">
-              <span>편의점 택배</span>
-            </label>
-          </div>
-        </div>
-
-        <!-- 이름 -->
-        <div class="section name">
-          <label for="name">이름 </label>
-          <input type="text" id="name" placeholder="이름 입력">
-        </div>
-
-        <!-- 배송 주소 -->
-        <div class="section address">
-          <label>배송주소</label>
-          <div>
-            <input type="text" id="road-address" placeholder="도로명 주소">
-            <input type="text" id="zone-address" placeholder="지번 주소">
-            <input type="text" id="detail-address" placeholder="상세 주소">
-          </div>
-        </div>
-
-        <!-- 휴대폰 -->
-        <div class="section mobile-phone">
-          <label>휴대폰</label>
-          <div class="phone-group">
-            <input type="text" id="mobile-phone1" maxlength="3"> -
-            <input type="text" id="mobile-phone2" maxlength="4"> -
-            <input type="text" id="mobile-phone3" maxlength="4">
-          </div>
-        </div>
-
-        <!-- 일반 전화 -->
-        <div class="section landline-phone">
-          <label>일반 전화</label>
-          <div class="phone-group">
-            <input type="text" id="landline-phone1" maxlength="3"> -
-            <input type="text" id="landline-phone2" maxlength="4"> -
-            <input type="text" id="landline-phone3" maxlength="4">
-          </div>
-        </div>
-      </div>
-
-      <div class="shipping-right">
-        <h3>주문 고객</h3>
-        <p>
-          회원가입 하시면 NHN 24 포인트 5000원 적립되며,<br>
-          쿠폰/추가적립/이벤트 등의 혜택이 있습니다. 지금 바로 가입하시고 보다 많은 혜택 누려보세요.
-        </p>
-        <button class="signup-btn">회원가입하기</button>
-
-        <form>
-          <div class="radio-group">
-            <label><input type="radio" name="customer-info" checked> 새로입력</label>
-            <label><input type="radio" name="customer-info"> 배송정보와 동일</label>
-          </div>
-          <div class="section name">
-            <label for="customer-name">이름</label>
-            <input type="text" id="customer-name" placeholder="이름 입력">
-          </div>
-          <!-- 휴대폰 -->
-          <div class="section mobile-phone">
-            <label>휴대폰</label>
-            <div class="phone-group">
-              <input type="text" id="customer-mobile1" maxlength="3"> -
-              <input type="text" id="customer-mobile2" maxlength="4"> -
-              <input type="text" id="customer-mobile3" maxlength="4">
-            </div>
-          </div>
-          <!-- 일반 전화 -->
-          <div class="section landline-phone">
-            <label>일반 전화</label>
-            <div class="phone-group">
-              <input type="text" id="customer-landline1" maxlength="3"> -
-              <input type="text" id="customer-landline2" maxlength="4"> -
-              <input type="text" id="customer-landline3" maxlength="4">
-            </div>
-          </div>
-          <!-- 이메일 -->
-          <div class="section email">
-            <label for="customer-email">이메일</label>
-            <input type="email" id="customer-email" placeholder="이메일 입력">
-          </div>
-
-          <!-- 비밀번호 -->
-          <div class="section password">
-            <label for="customer-password">비밀번호</label>
-            <input type="password" id="customer-password" placeholder="비밀번호 입력">
-          </div>
-        </form>
-        <p class="info-text">비밀번호는 "주문 확인"시 필수기재사항으로 반드시 기입하셔야 합니다.</p>
-        <p class="info-text">비밀번호는 숫자 + 영문 조합하여 4자리 이상으로 입력해주세요.</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="payment-info">
-    <h3 class="payment-info-title">결제 정보</h3>
-    <div class="payment-grid">
-      <div class="payment-item">상품 금액<br><strong>21,000 원</strong></div>
-      <div class="payment-item">총 추가금액<br><strong>0 원</strong></div>
-      <div class="payment-item">할인금액<br><strong>2,100 원</strong></div>
-      <div class="payment-total">
-        최종 결제금액<br>
-        <strong class="final-amount">18,900 원</strong>
-        <p><strong>상품</strong> 1종 (1개) 21,000 원</p>
-        <p><span class="discount">-> 즉시할인 2,100 원</span></p>
-      </div>
-
-      <div class="payment-item">쿠폰 적용<br><strong>0 원</strong></div>
-      <div class="payment-item">포인트 사용<br><strong>0 원</strong></div>
-      <div class="payment-detail">
-        <ul>
-          <li>포인트 사용시 결제 금액: 18,900 원</li>
-          <li>쿠폰 적용 후 결제 금액: 18,900 원</li>
-          <li>사용 가능한 포인트: 4,010 PT</li>
-        </ul>
-      </div>
-    </div>
-  </section>
 
   <section class="payment-method">
-    <h3 class="section-title"><img src="/image/emoji/card.png" alt="">결제 방법</h3>
+    <h3><img th:src="@{/image/emoji/card.png}" alt=""> 결제 방법</h3>
     <div class="payment-container">
-      <!-- Left Side -->
       <div class="payment-options">
-        <div class="payment-header">
+        <div th:each="method : ${paymentMethods}">
           <label>
-            <input type="radio" name="payment-method" checked/>
-            결제 수단
+            <input type="radio" name="payment-method" th:value="${method.value}" th:checked="${method.selected}">
+            <span th:text="${method.name}">신용카드</span>
           </label>
         </div>
-        <div class="payment-buttons">
-          <div class="button">
-            <img src="/image/logo/tosspay-logo.png" alt="Toss Pay"/>
-          </div>
-          <div class="button">
-            <img src="/image/logo/naverpay-logo.png" alt="NPay"/>
-          </div>
-          <div class="button">
-            <img src="/image/logo/kakaopay-logo.png" alt="KakaoPay"/>
-          </div>
-          <div class="button">
-            <img src="/image/logo/payco-logo.png" alt="Payco"/>
-          </div>
-          <div class="button">
-            <span>신용카드</span>
-          </div>
-          <div class="button">
-            <span>계좌 이체</span>
-          </div>
-          <div class="button">
-            <span>무통장 입금</span>
-          </div>
-          <div class="button">
-            <span>추가 예정</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="payment-section">
-    <div class="payment-left">
-      <div class="card-selection">
-        <p>카드 선택</p>
-        <select>
-          <option value="">카드 선택</option>
-        </select>
-      </div>
-      <div class="payment-benefit">
-        <p><strong>KakaoPay</strong> 최대 5,000원 즉시할인</p>
-        <p>결제 시, 할인 적용됩니다.</p>
-      </div>
-      <section class="review-box">
-        <img src="/image/emoji/stackmoney.png" alt="포인트 이미지" class="review-image">
-        <div class="review-text">
-          <p>리뷰 글 작성시 200포인트 지급</p>
-          <p>이미지 리뷰 작성시 500포인트 지급</p>
-          <p><strong>지금 참여해보세요! 🎁</strong></p>
-        </div>
-      </section>
-    </div>
-    <div class="payment-right">
-      <div class="gift-wrapping-section">
-        <div class="gift-option">
-          <p>선물포장</p>
-          <label>
-            <input type="radio" name="gift-wrap" value="include"> 포함
-          </label>
-          <label>
-            <input type="radio" name="gift-wrap" value="exclude" checked> 포함 안함
-          </label>
-          <a href="#" class="info-icon">ℹ️</a>
-        </div>
-        <div class="receipt-option">
-          <p>영수증</p>
-          <label>
-            <input type="radio" name="receipt" value="show" checked> 가격 표시
-          </label>
-          <label>
-            <input type="radio" name="receipt" value="hide"> 가격 표시 안함
-          </label>
-        </div>
-      </div>
-      <div class="final-payment-info">
-        <div class="final-amount">
-          <p>최종 결제금액</p>
-          <p><strong>18,900 원</strong></p>
-        </div>
-        <button>결제하기</button>
       </div>
     </div>
   </section>
 </main>
 
-<footer>
-  <div class="footer-links">
-    <a href="#">회사소개</a>
-    <a href="#">이용약관</a>
-    <a href="#"><strong>개인정보처리방침</strong></a>
-    <a href="#">청소년 보호정책</a>
-  </div>
-  <div class="footer-container">
-    <div class="footer-info">
-      <p>대표이사 마르코 | 사업자등록번호 123-456-7890</p>
-      <p>통신판매업신고 2024-광주동구-01211</p>
-      <p>이메일: marco@nhn.com | 호스팅 제공자 NHN24</p>
-      <p>© NHN24. All Rights Reserved.</p>
-    </div>
-    <div class="customer-center">
-      <p><strong>고객센터 1544-8282 (발신자 부담)</strong></p>
-      <p>광주광역시 동구 서석동 조선대학교 1층 NHN아카데미</p>
-      <p>Fax 062-1234-5678</p>
-      <div class="footer-buttons">
-        <button>1:1 문의</button>
-        <button>FAQ</button>
-        <button>위치, 영업시간 안내</button>
-      </div>
-    </div>
-  </div>
-</footer>
-<!--<script src="script.js"></script>-->
+<div th:replace="footer :: footer"></div>
 </body>
 </html>

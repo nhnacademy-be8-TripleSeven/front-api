@@ -1,29 +1,26 @@
-
 <header class="header">
   <div class="logo">
-    <a href="main.html"><img src="/image/logo/nhn24-logo.png" alt="NHN 24 로고"></a>
+    <a th:href="@{/main}"><img th:src="@{/image/logo/nhn24-logo.png}" alt="NHN 24 로고"></a>
   </div>
   <div class="header-center">
     <div class="search-bar">
       <input type="text" placeholder="검색어를 입력하세요">
-      <a href="book-search.html"><button>🔍</button></a>
+      <a th:href="@{/book-search}"><button>🔍</button></a>
     </div>
     <nav class="menu">
       <ul>
-        <li><a href="/recommended-books.html">추천 도서</a></li>
-        <li><a href="/domestic-books.html">국내 도서</a></li>
-        <li><a href="/foreign-books.html">외국 도서</a></li>
-        <li><a href="/bestsellers.html">베스트셀러</a></li>
-        <li><a href="/new-books.html">신간 소개</a></li>
-        <li><a href="/events.html">이벤트</a></li>
+        <li><a th:href="@{/recommended-books}">추천 도서</a></li>
+        <li><a th:href="@{/domestic-books}">국내 도서</a></li>
+        <li><a th:href="@{/foreign-books}">외국 도서</a></li>
+        <li><a th:href="@{/bestsellers}">베스트셀러</a></li>
+        <li><a th:href="@{/new-books}">신간 소개</a></li>
+        <li><a th:href="@{/events}">이벤트</a></li>
       </ul>
     </nav>
   </div>
   <div class="user-actions">
-    <a href ="mypage.html"><img src="/image/icons/person.png" alt="User Icon"></a>
-    <a href ="cart-success.html"><img src="/image/icons/cart.png" alt="Cart Icon"></a>
-    <a href="login.html"><button class="login-btn">Login</button></a>
+    <a th:href="@{/mypage}"><img th:src="@{/image/icons/person.png}" alt="User Icon"></a>
+    <a th:href="@{/cart-success}"><img th:src="@{/image/icons/cart.png}" alt="Cart Icon"></a>
+    <a th:href="@{/login}"><button class="login-btn">Login</button></a>
   </div>
 </header>
-
-
