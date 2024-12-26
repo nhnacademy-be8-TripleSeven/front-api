@@ -17,7 +17,7 @@
     <button class="arrow left" onclick="prevSlide('slider1')">◀</button>
     <div class="slides">
       <div th:each="book : ${bestBooks}" class="slide">
-        <img th:src="@{${book.image}}" th:alt="${book.title}">
+        <img th:src="${book.coverUrl}" th:alt="${book.title}" th:href="@{/bookDetail/${book.id}">
         <p th:text="${book.title}"></p>
       </div>
     </div>
@@ -30,8 +30,8 @@
   <div class="slider">
     <button class="arrow left" onclick="prevSlide('slider2')">◀</button>
     <div class="slides">
-      <div th:each="book : ${recommendedBooks}" class="slide">
-        <img th:src="@{${book.image}}" th:alt="${book.title}">
+      <div th:each="book : ${blogBest}" class="slide">
+        <img th:src="${book.coverUrl}" th:alt="${book.title}">
         <p th:text="${book.title}"></p>
       </div>
     </div>
@@ -49,24 +49,24 @@
   </div>
   <div class="tab-content active" id="ITEMEDITORCHOICE">
     <div class="book-grid">
-      <div th:each="book : ${editorChoiceBooks}" class="book-item">
-        <img th:src="@{${book.image}}" th:alt="${book.title}">
+      <div th:each="book : ${itemEditorChoice}" class="book-item">
+        <img th:src="${book.coverUrl}" th:alt="${book.title}">
         <p th:text="${book.title}"></p>
       </div>
     </div>
   </div>
   <div class="tab-content" id="EBOOK">
     <div class="book-grid">
-      <div th:each="book : ${eBooks}" class="book-item">
-        <img th:src="@{${book.image}}" th:alt="${book.title}">
+      <div th:each="book : ${ebook}" class="book-item">
+        <img th:src="${book.coverUrl}" th:alt="${book.title}">
         <p th:text="${book.title}"></p>
       </div>
     </div>
   </div>
   <div class="tab-content" id="FOREIGN">
     <div class="book-grid">
-      <div th:each="book : ${foreignBooks}" class="book-item">
-        <img th:src="@{${book.image}}" th:alt="${book.title}">
+      <div th:each="book : ${foreign}" class="book-item">
+        <img th:src="${book.coverUrl}" th:alt="${book.title}" >
         <p th:text="${book.title}"></p>
       </div>
     </div>
