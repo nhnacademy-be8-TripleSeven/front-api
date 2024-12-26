@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @FeignClient(name = "book-coupon-api")
 public interface BookFeignClient {
-    @GetMapping("/api/books/monthly")
+    @GetMapping("/books/monthly")
     List<BookDetailResponseDTO> getMonthlyBooks();
 
-    @GetMapping("/api/books/type/{type}")
+    @GetMapping("/books/type/{type}")
     List<BookDetailResponseDTO> getBooksByType(@PathVariable("type") String type);
 
-    @GetMapping("books/{bookId}")
+      @GetMapping("books/{bookId}")
     SearchBookDetailDTO getBookDetail(@PathVariable Long bookId);
 
     @GetMapping("/api/reviews/{bookId}/paged")
