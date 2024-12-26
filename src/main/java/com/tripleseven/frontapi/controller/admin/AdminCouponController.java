@@ -4,12 +4,16 @@ package com.tripleseven.frontapi.controller.admin;
 import com.tripleseven.frontapi.client.BookFeignClient;
 import com.tripleseven.frontapi.dto.coupon.CouponPolicyRequestDTO;
 import com.tripleseven.frontapi.dto.coupon.CouponPolicyResponseDTO;
+import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Controller
@@ -42,56 +46,65 @@ public class AdminCouponController {
 
 
 
-    // 테스트용 쿠폰 정책 조회 화면
-    @GetMapping("/check-coupon-policy")
-    public String showCouponPolicyList(Model model) {
-        // 전체 쿠폰 정책을 불러와 모델에 추가
-        List<CouponPolicyResponseDTO> mockPolicies = List.of(
-                new CouponPolicyResponseDTO(1L, "Test Coupon 1", 1000L, 5000L, BigDecimal.valueOf(15), null, 30),
-                new CouponPolicyResponseDTO(2L, "Test Coupon 2", 2000L, 8000L, null, 2000L, 60)
-        );
-        model.addAttribute("policies", mockPolicies);
-        return "/admin/check-coupon-policy";
-    }
-
-    // 모든 쿠폰 정책 조회 페이지
+    // 쿠폰 정책 조회 (검색 포함)
     @GetMapping("/coupon-policy/list")
-    public String listCouponPolicies(Model model) {
-        List<CouponPolicyResponseDTO> policies = bookFeignClient.getAllCouponPolicies();
+    public String listCouponPolicies(@RequestParam(required = false) String query, Model model) {
+        List<CouponPolicyResponseDTO> policies;
+        try {
+            // 검색어가 없으면 전체 조회, 있으면 검색
+            policies = (query == null || query.isBlank())
+                    ? bookFeignClient.getAllCouponPolicies()
+                    : bookFeignClient.searchCouponPoliciesByName(query);
+        } catch (FeignException.NotFound e) {
+            // 쿠폰 정책이 없을 때 빈 리스트 반환
+            policies = Collections.emptyList();
+        }
+
         model.addAttribute("policies", policies);
+        model.addAttribute("query", query); // 검색어 유지
         return "/admin/check-coupon-policy";
     }
 
-    // 쿠폰 정책 검색
-    @GetMapping("/coupon-policy/search")
+
+    // 쿠폰 정책 수정 데이터 조회
+    @GetMapping("/coupon-policy/update/{id}")
     @ResponseBody
-    public List<CouponPolicyResponseDTO> searchCouponPolicies(@RequestParam(required = false) String query) {
-        return query == null || query.isBlank()
-                ? bookFeignClient.getAllCouponPolicies() // 전체 조회
-                : bookFeignClient.searchCouponPoliciesByName(query); // 검색 결과
+    public CouponPolicyResponseDTO getCouponPolicy(@PathVariable("id") Long id) {
+        return bookFeignClient.getCouponPolicyById(id);
     }
 
-    // 쿠폰 정책 수정 페이지
-    @GetMapping("/coupon-policy/update/{id}")
-    public String showUpdatePage(@PathVariable Long id, Model model) {
-        CouponPolicyResponseDTO policy = bookFeignClient.getCouponPolicyById(id);
-        model.addAttribute("policy", policy);
-        return "/admin/coupon-policy-update";
-    }
 
     // 쿠폰 정책 수정 처리
     @PostMapping("/coupon-policy/update/{id}")
-    public String updateCouponPolicy(@PathVariable Long id, @ModelAttribute CouponPolicyRequestDTO request) {
+    @ResponseBody
+    public String updateCouponPolicy(@PathVariable Long id, @RequestBody CouponPolicyRequestDTO request) {
+        if (request.getCouponDiscountRate() != null && request.getCouponDiscountRate().compareTo(BigDecimal.ZERO) > 0) {
+            request.setCouponDiscountRate(
+                    request.getCouponDiscountRate().setScale(2, RoundingMode.HALF_UP)
+            ); // 소수점 2자리 반올림
+            request.setCouponDiscountAmount(null);
+        } else if (request.getCouponDiscountAmount() != null && request.getCouponDiscountAmount() > 0) {
+            request.setCouponDiscountRate(null);
+        } else {
+            throw new IllegalArgumentException("할인 금액 또는 할인율이 올바르지 않습니다.");
+        }
+
         bookFeignClient.updateCouponPolicy(id, request);
-        return "redirect:/admin/frontend/coupon-policy/list";
+        return "쿠폰 정책이 성공적으로 수정되었습니다.";
     }
 
-    // 쿠폰 정책 삭제
+
+
+    // 쿠폰 정책 삭제 처리
     @PostMapping("/coupon-policy/delete/{id}")
-    public String deleteCouponPolicy(@PathVariable Long id) {
+    @ResponseBody
+    public String deleteCouponPolicy(@PathVariable("id") Long id) {
         bookFeignClient.deleteCouponPolicy(id);
-        return "redirect:/admin/frontend/coupon-policy/list";
+        return "쿠폰 정책이 성공적으로 삭제되었습니다.";
     }
+
+
+
 
 
 
