@@ -17,7 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AdminCouponController {
 
-    private final BookFeignClient couponPolicyFeignClient;
+    private final BookFeignClient bookFeignClient;
 
 //    @GetMapping("/coupon-policy/create")
 //    public String createCouponPolicy() {
@@ -57,24 +57,9 @@ public class AdminCouponController {
     // 모든 쿠폰 정책 조회 페이지
     @GetMapping("/coupon-policy/list")
     public String listCouponPolicies(Model model) {
-        List<CouponPolicyResponseDTO> policies = couponPolicyFeignClient.getAllCouponPolicies();
+        List<CouponPolicyResponseDTO> policies = bookFeignClient.getAllCouponPolicies();
         model.addAttribute("policies", policies);
         return "/admin/check-coupon-policy";
-    }
-
-    // 쿠폰 정책 생성 페이지
-    @GetMapping("/coupon-policy/register")
-    public String showChockCouponPolicyPage(Model model) {
-        model.addAttribute("couponPolicy", new CouponPolicyRequestDTO());
-        return "/admin/coupon-policy-create";
-    }
-
-    // 쿠폰 정책 등록
-    @PostMapping("/coupon-policy/register")
-    public String createCouponPolicy(@ModelAttribute CouponPolicyRequestDTO couponPolicy, Model model) {
-        CouponPolicyResponseDTO response = couponPolicyFeignClient.createCouponPolicy(couponPolicy);
-        model.addAttribute("response", response);
-        return "redirect:/admin/frontend/coupon-policy/success";
     }
 
     // 쿠폰 정책 검색
@@ -82,14 +67,14 @@ public class AdminCouponController {
     @ResponseBody
     public List<CouponPolicyResponseDTO> searchCouponPolicies(@RequestParam(required = false) String query) {
         return query == null || query.isBlank()
-                ? couponPolicyFeignClient.getAllCouponPolicies() // 전체 조회
-                : couponPolicyFeignClient.searchCouponPoliciesByName(query); // 검색 결과
+                ? bookFeignClient.getAllCouponPolicies() // 전체 조회
+                : bookFeignClient.searchCouponPoliciesByName(query); // 검색 결과
     }
 
     // 쿠폰 정책 수정 페이지
     @GetMapping("/coupon-policy/update/{id}")
     public String showUpdatePage(@PathVariable Long id, Model model) {
-        CouponPolicyResponseDTO policy = couponPolicyFeignClient.getCouponPolicyById(id);
+        CouponPolicyResponseDTO policy = bookFeignClient.getCouponPolicyById(id);
         model.addAttribute("policy", policy);
         return "/admin/coupon-policy-update";
     }
@@ -97,15 +82,54 @@ public class AdminCouponController {
     // 쿠폰 정책 수정 처리
     @PostMapping("/coupon-policy/update/{id}")
     public String updateCouponPolicy(@PathVariable Long id, @ModelAttribute CouponPolicyRequestDTO request) {
-        couponPolicyFeignClient.updateCouponPolicy(id, request);
+        bookFeignClient.updateCouponPolicy(id, request);
         return "redirect:/admin/frontend/coupon-policy/list";
     }
 
     // 쿠폰 정책 삭제
     @PostMapping("/coupon-policy/delete/{id}")
     public String deleteCouponPolicy(@PathVariable Long id) {
-        couponPolicyFeignClient.deleteCouponPolicy(id);
+        bookFeignClient.deleteCouponPolicy(id);
         return "redirect:/admin/frontend/coupon-policy/list";
     }
+
+
+
+
+
+    /**
+     * 쿠폰 정책 생성 페이지로 이동
+     */
+    @GetMapping("/coupon-policy/register")
+    public String showCouponPolicyRegisterPage(Model model) {
+        // 새로운 쿠폰 정책 DTO를 모델에 추가하여 폼과 연동
+        model.addAttribute("couponPolicy", new CouponPolicyRequestDTO());
+        return "/admin/coupon-policy-create";
+    }
+
+    /**
+     * 쿠폰 정책 생성 요청 처리
+     */
+    @PostMapping("/coupon-policy/register")
+    @ResponseBody
+    public String createCouponPolicy(@ModelAttribute CouponPolicyRequestDTO couponPolicy) {
+        // 할인율 또는 할인 금액 처리
+        if (couponPolicy.getCouponDiscountRate() != null && couponPolicy.getCouponDiscountRate().compareTo(BigDecimal.ZERO) > 0) {
+            // 할인율 설정 (0.25 -> 25% 변환)
+            couponPolicy.setCouponDiscountRate(couponPolicy.getCouponDiscountRate().divide(new BigDecimal(100)));
+            couponPolicy.setCouponDiscountAmount(null); // 금액은 null로 설정
+        } else if (couponPolicy.getCouponDiscountAmount() != null && couponPolicy.getCouponDiscountAmount() > 0) {
+            // 할인 금액 설정
+            couponPolicy.setCouponDiscountRate(null); // 할인율은 null로 설정
+        } else {
+            throw new IllegalArgumentException("할인 금액 또는 할인율이 올바르지 않습니다.");
+        }
+
+        bookFeignClient.createCouponPolicy(couponPolicy);
+
+        // 성공 메시지를 반환
+        return "쿠폰 정책이 성공적으로 등록되었습니다.";
+    }
+
 
 }
