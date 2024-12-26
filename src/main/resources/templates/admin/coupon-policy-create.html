@@ -103,10 +103,18 @@
                         <td id="popup-validity"></td>
                     </tr>
                 </table>
-                <div id="popup-success-message" style="color: green; font-weight: bold;"></div>
                 <button id="close-popup">확인</button>
             </div>
         </div>
+
+        <div class="popup-overlay" id="success-popup-overlay">
+            <div class="popup-content">
+                <h2>등록 성공</h2>
+                <p id="success-message"></p>
+                <button id="close-success-popup">확인</button>
+            </div>
+        </div>
+
     </main>
 
     <div th:replace="footer :: footer"></div>

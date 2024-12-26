@@ -47,16 +47,38 @@ document.addEventListener('DOMContentLoaded', function () {
                 throw new Error('쿠폰 정책 등록 실패');
             }
         }).then(message => {
-            document.getElementById('popup-success-message').innerText = message;
-            document.getElementById('popup-overlay').style.display = 'flex';
+            showSuccessPopup(message); // 성공 팝업 호출
         }).catch(error => {
             console.error('Error:', error);
             alert('오류가 발생했습니다: ' + error.message);
         });
     });
 
+    // 성공 팝업 표시 함수
+    function showSuccessPopup(message) {
+        const successPopup = document.getElementById('success-popup-overlay');
+        document.getElementById('success-message').innerText = message;
+        successPopup.style.display = 'flex';
+    }
+
+    // 성공 팝업 닫기 이벤트
+    document.getElementById('close-success-popup').addEventListener('click', function () {
+        document.getElementById('success-popup-overlay').style.display = 'none';
+        resetPopupContent(); // 팝업 내용 초기화
+    });
+
     // 팝업 닫기 버튼 이벤트
     document.getElementById('close-popup').addEventListener('click', function () {
         document.getElementById('popup-overlay').style.display = 'none';
+        resetPopupContent(); // 팝업 내용 초기화
     });
+
+    // 팝업 내용 초기화 함수
+    function resetPopupContent() {
+        document.getElementById('popup-name').innerText = '';
+        document.getElementById('popup-min').innerText = '';
+        document.getElementById('popup-max').innerText = '';
+        document.getElementById('popup-discount').innerText = '';
+        document.getElementById('popup-validity').innerText = '';
+    }
 });
