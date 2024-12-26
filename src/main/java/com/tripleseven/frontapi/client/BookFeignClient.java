@@ -8,9 +8,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @FeignClient(name = "book-coupon-api")
 public interface BookFeignClient {
-    @GetMapping("/api/books/monthly")
+    @GetMapping("/books/monthly")
     List<BookDetailResponseDTO> getMonthlyBooks();
 
-    @GetMapping("/api/books/type/{type}")
+    @GetMapping("/books/type/{type}")
     List<BookDetailResponseDTO> getBooksByType(@PathVariable("type") String type);
+
+
 }
