@@ -17,7 +17,7 @@
     <button class="arrow left" onclick="prevSlide('slider1')">◀</button>
     <div class="slides">
       <div th:each="book : ${bestBooks}" class="slide">
-        <img th:src="${book.coverUrl}" th:alt="${book.title}" th:href="@{/bookDetail/${book.id}">
+        <img th:src="${book.coverUrl}" th:alt="${book.title}">
         <p th:text="${book.title}"></p>
       </div>
     </div>
