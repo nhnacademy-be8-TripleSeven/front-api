@@ -1,6 +1,7 @@
 package com.tripleseven.frontapi.client;
 
 import com.tripleseven.frontapi.dto.BookDetailResponseDTO;
+import com.tripleseven.frontapi.dto.BookSearchResponseDTO;
 import java.util.List;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,5 +15,7 @@ public interface BookFeignClient {
     @GetMapping("/books/type/{type}")
     List<BookDetailResponseDTO> getBooksByType(@PathVariable("type") String type);
 
+    @GetMapping("/books/term/{term}")
+    List<BookSearchResponseDTO> getBooksByTerm(@PathVariable("term") String term);
 
 }
