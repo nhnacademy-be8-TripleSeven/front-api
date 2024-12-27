@@ -1,6 +1,7 @@
 package com.tripleseven.frontapi.client;
 
 import com.tripleseven.frontapi.dto.BookDetailResponseDTO;
+import com.tripleseven.frontapi.dto.BookSearchResponseDTO;
 import java.util.List;
 import com.tripleseven.frontapi.dto.coupon.CouponPolicyRequestDTO;
 import com.tripleseven.frontapi.dto.coupon.CouponPolicyResponseDTO;
@@ -22,12 +23,15 @@ public interface BookFeignClient {
     @GetMapping("/books/type/{type}")
     List<BookDetailResponseDTO> getBooksByType(@PathVariable("type") String type);
 
+    @GetMapping("/books/term/{term}")
+    List<BookSearchResponseDTO> getBooksByTerm(@PathVariable("term") String term);
+
       @GetMapping("books/{bookId}")
     SearchBookDetailDTO getBookDetail(@PathVariable Long bookId);
 
   
 
-  
+
     @PostMapping("/admin/coupon-policies")
     CouponPolicyResponseDTO createCouponPolicy(@RequestBody CouponPolicyRequestDTO request);
 
@@ -48,11 +52,11 @@ public interface BookFeignClient {
 
   
   
-  
     @GetMapping("/api/reviews/{bookId}/paged")
     Page<ReviewResponseDTO> getPagedReviewsByBookId(
             @PathVariable Long bookId,
             @RequestParam("page") int page,
             @RequestParam("size") int size);
+
 
 }
