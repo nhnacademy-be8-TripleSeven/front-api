@@ -56,6 +56,7 @@ section {
     font-size: 16px;
     font-weight: bold;
 }
+
 /* 검색창 길이 최대로 확장 */
 .search-bar {
     display: flex;
@@ -398,4 +399,57 @@ footer {
 
 .footer-buttons button:hover {
     background-color: #bfc9d3;
+}
+
+.coupon-history table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    border: 1px solid #ddd;
+}
+
+.coupon-history table thead {
+    background-color: #f7f9fc;
+}
+
+.coupon-history table th,
+.coupon-history table td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    color: #4a5568;
+}
+
+.coupon-history table tbody {
+    display: block; /* 스크롤 기능을 위해 block 설정 */
+    max-height: 300px; /* 테이블 최대 높이 설정 */
+    overflow-y: scroll; /* 항상 스크롤바가 표시되도록 설정 */
+    width: calc(100% + 8px); /* 스크롤바 여백 보정 */
+}
+
+.coupon-history table thead,
+.coupon-history table tbody tr {
+    display: table; /* 테이블 레이아웃 유지 */
+    width: 100%; /* thead와 tbody의 동일한 너비 유지 */
+    table-layout: fixed; /* 고정된 테이블 레이아웃 */
+}
+
+.coupon-history table th {
+    position: sticky; /* 헤더 고정 */
+    top: 0;
+    z-index: 2; /* 헤더가 다른 요소 위로 보이도록 설정 */
+}
+
+.coupon-history table tbody::-webkit-scrollbar {
+    width: 8px; /* 스크롤바 너비 */
+}
+
+.coupon-history table tbody::-webkit-scrollbar-thumb {
+    background-color: #cfd6de; /* 스크롤바 색상 */
+    border-radius: 4px; /* 스크롤바 모서리 둥글게 */
+}
+
+.coupon-history table tbody::-webkit-scrollbar-track {
+    background-color: #f1f5f9; /* 스크롤바 트랙 색상 */
 }
