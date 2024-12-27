@@ -1,6 +1,7 @@
 package com.tripleseven.frontapi.client;
 
 import com.tripleseven.frontapi.dto.BookDetailResponseDTO;
+import com.tripleseven.frontapi.dto.BookSearchResponseDTO;
 import java.util.List;
 
 import com.tripleseven.frontapi.dto.coupon.CouponDetailsDTO;
@@ -24,12 +25,15 @@ public interface BookFeignClient {
     @GetMapping("/books/type/{type}")
     List<BookDetailResponseDTO> getBooksByType(@PathVariable("type") String type);
 
-      @GetMapping("books/{bookId}")
+    @GetMapping("/books/term/{term}")
+    List<BookSearchResponseDTO> getBooksByTerm(@PathVariable("term") String term);
+
+    @GetMapping("/books/{bookId}")
     SearchBookDetailDTO getBookDetail(@PathVariable Long bookId);
 
-
-
-
+  
+  
+  
     @PostMapping("/admin/coupon-policies")
     CouponPolicyResponseDTO createCouponPolicy(@RequestBody CouponPolicyRequestDTO request);
 
@@ -48,8 +52,6 @@ public interface BookFeignClient {
     @DeleteMapping("/admin/coupon-policies/{id}")
     void deleteCouponPolicy(@PathVariable Long id);
 
-
-
     @GetMapping("/api/coupons")
     List<CouponDetailsDTO> getAllCoupons(@RequestHeader("X-User") Long userId,
                                          @RequestParam(required = false) String keyword,
@@ -62,13 +64,15 @@ public interface BookFeignClient {
                                           @RequestParam(required = false) String startDate,
                                           @RequestParam(required = false) String endDate);
 
-
-
-
+  
+  
+  
     @GetMapping("/api/reviews/{bookId}/paged")
     Page<ReviewResponseDTO> getPagedReviewsByBookId(
             @PathVariable Long bookId,
             @RequestParam("page") int page,
             @RequestParam("size") int size);
 
+      @GetMapping("/api/reviews/{bookId}/all")
+    List<ReviewResponseDTO> getAllReviewByBookId(@PathVariable Long bookId);
 }

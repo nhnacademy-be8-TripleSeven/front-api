@@ -2,6 +2,7 @@ package com.tripleseven.frontapi.service;
 
 import com.tripleseven.frontapi.client.BookFeignClient;
 import com.tripleseven.frontapi.dto.BookDetailResponseDTO;
+import com.tripleseven.frontapi.dto.BookSearchResponseDTO;
 import java.util.List;
 
 import com.tripleseven.frontapi.dto.ReviewResponseDTO;
@@ -23,7 +24,14 @@ public class BookApiService {
 
     public List<BookDetailResponseDTO> fetchBooksByType(String type) {
         List<BookDetailResponseDTO> booksByType = bookFeignClient.getBooksByType(type);
-        return bookFeignClient.getBooksByType(type);
+        return booksByType;
+    }
+
+    public List<BookSearchResponseDTO> searchBooks(String term) {
+        List<BookSearchResponseDTO> books = bookFeignClient.getBooksByTerm(term);
+        BookSearchResponseDTO bookSearchResponseDTO = books.get(0);
+
+        return books;
     }
 
     public SearchBookDetailDTO getBookDetail(Long bookId) {
@@ -32,5 +40,9 @@ public class BookApiService {
 
     public Page<ReviewResponseDTO> getPagedReviewsByBookId(Long bookId, Pageable pageable) {
         return bookFeignClient.getPagedReviewsByBookId(bookId, pageable.getPageNumber(), pageable.getPageSize());
+    }
+
+    public List<ReviewResponseDTO> getAllReviewsByBookId(Long bookId) {
+        return bookFeignClient.getAllReviewByBookId(bookId);
     }
 }

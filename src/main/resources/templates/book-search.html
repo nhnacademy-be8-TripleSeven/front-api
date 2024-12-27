@@ -15,10 +15,10 @@
     <h3>검색 조건</h3>
     <form method="get" action="/books/search">
       <ul>
-        <li><label><input type="checkbox" name="category" value="국내 도서" th:checked="${selectedCategories.contains('국내 도서')}"> 국내 도서</label></li>
-        <li><label><input type="checkbox" name="category" value="경제/경영" th:checked="${selectedCategories.contains('경제/경영')}"> 경제/경영</label></li>
-        <li><label><input type="checkbox" name="category" value="자기계발" th:checked="${selectedCategories.contains('자기계발')}"> 자기계발</label></li>
-        <li><label><input type="checkbox" name="category" value="소설" th:checked="${selectedCategories.contains('소설')}"> 소설</label></li>
+<!--        <li><label><input type="checkbox" name="category" value="국내 도서" th:checked="${selectedCategories.contains('국내 도서')}"> 국내 도서</label></li>-->
+<!--        <li><label><input type="checkbox" name="category" value="경제/경영" th:checked="${selectedCategories.contains('경제/경영')}"> 경제/경영</label></li>-->
+<!--        <li><label><input type="checkbox" name="category" value="자기계발" th:checked="${selectedCategories.contains('자기계발')}"> 자기계발</label></li>-->
+<!--        <li><label><input type="checkbox" name="category" value="소설" th:checked="${selectedCategories.contains('소설')}"> 소설</label></li>-->
       </ul>
       <h3>목차에서 검색</h3>
       <div class="search-box1">
@@ -27,11 +27,11 @@
       </div>
       <h3>*분야별 보기</h3>
       <ul>
-        <li><label><input type="checkbox" name="category" value="국내 도서" th:checked="${selectedCategories.contains('국내 도서')}"> 국내 도서</label></li>
-        <li><label><input type="checkbox" name="category" value="건강/취미" th:checked="${selectedCategories.contains('건강/취미')}"> 건강/취미</label></li>
-        <li><label><input type="checkbox" name="category" value="경제/경영" th:checked="${selectedCategories.contains('경제/경영')}"> 경제/경영</label></li>
-        <li><label><input type="checkbox" name="category" value="고등학교 참고서" th:checked="${selectedCategories.contains('고등학교 참고서')}"> 고등학교 참고서</label></li>
-        <li><label><input type="checkbox" name="category" value="고전" th:checked="${selectedCategories.contains('고전')}"> 고전</label></li>
+<!--        <li><label><input type="checkbox" name="category" value="국내 도서" th:checked="${selectedCategories.contains('국내 도서')}"> 국내 도서</label></li>-->
+<!--        <li><label><input type="checkbox" name="category" value="건강/취미" th:checked="${selectedCategories.contains('건강/취미')}"> 건강/취미</label></li>-->
+<!--        <li><label><input type="checkbox" name="category" value="경제/경영" th:checked="${selectedCategories.contains('경제/경영')}"> 경제/경영</label></li>-->
+<!--        <li><label><input type="checkbox" name="category" value="고등학교 참고서" th:checked="${selectedCategories.contains('고등학교 참고서')}"> 고등학교 참고서</label></li>-->
+<!--        <li><label><input type="checkbox" name="category" value="고전" th:checked="${selectedCategories.contains('고전')}"> 고전</label></li>-->
       </ul>
     </form>
   </aside>
@@ -39,25 +39,25 @@
   <section class="book-results">
     <h2>검색 결과</h2>
     <div class="result-controls">
-      <p th:if="${books.size() > 0}" th:text="'총 ' + ${books.size()} + '권의 검색 결과'"></p>
-      <select name="sortOrder" th:onchange="|location.href='?keyword=${keyword}&category=${selectedCategories}&sortOrder=' + this.value|">
-        <option value="newest" th:selected="${sortOrder == 'newest'}">최신순</option>
-        <option value="oldest" th:selected="${sortOrder == 'oldest'}">오래된순</option>
+      <p th:if="${searchBooks.size() > 0}" th:text="'총 ' + ${searchBooks.size()} + '권의 검색 결과'"></p>
+      <select name="sortOrder" th:onchange="|location.href='?keyword='${keyword}'&category='${selectedCategories}'&sortOrder=' + this.value|">
+<!--        <option value="newest" th:selected="${sortOrder == 'newest'}">최신순</option>-->
+<!--        <option value="oldest" th:selected="${sortOrder == 'oldest'}">오래된순</option>-->
       </select>
     </div>
     <div class="book-list">
-      <div th:each="book : ${books}" class="book-item">
+      <div th:each="book : ${searchBooks}" class="book-item">
         <a th:href="@{/details/{id}(id=${book.id})}">
-          <img th:src="@{${book.img}}" th:alt="${book.title}">
+          <img th:href="${book.coverUrl}" th:alt="${book.title}">
           <h4 th:text="${book.title}">도서 제목</h4>
         </a>
-        <p th:text="${book.price}">가격</p>
+        <p th:text="${book.salePrice}">판매가</p>
       </div>
     </div>
     <div class="pagination">
-      <a th:if="${currentPage > 1}" th:href="@{/books/search(page=${currentPage - 1})}">이전</a>
-      <span th:text="'페이지 ' + ${currentPage} + ' / ' + ${totalPages}"></span>
-      <a th:if="${currentPage < totalPages}" th:href="@{/books/search(page=${currentPage + 1})}">다음</a>
+<!--      <a th:if="${currentPage > 1}" th:href="@{/books/search(page=${currentPage - 1})}">이전</a>-->
+<!--      <span th:text="'페이지 ' + ${currentPage} + ' / ' + ${totalPages}"></span>-->
+<!--      <a th:if="${currentPage < totalPages}" th:href="@{/books/search(page=${currentPage + 1})}">다음</a>-->
     </div>
   </section>
 </main>
