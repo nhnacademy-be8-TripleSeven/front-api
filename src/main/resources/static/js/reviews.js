@@ -28,13 +28,26 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         reviews.forEach((review) => {
+            const ratingStars = '★'.repeat(review.rating) + '☆'.repeat(5 - review.rating);
+            const createdAt = new Date(review.createdAt).toLocaleString('ko-KR', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+            });
+
             const reviewItem = document.createElement('div');
             reviewItem.classList.add('review-item');
             reviewItem.innerHTML = `
-        <p><strong>평점:</strong> ${review.rating}</p>
-        <p><strong>내용:</strong> ${review.text}</p>
-        <p><strong>작성일:</strong> ${new Date(review.createdAt).toLocaleDateString()}</p>
-      `;
+            <p>
+                <strong>평점:</strong> 
+                <span class="rating-stars">${ratingStars}</span>
+            </p>
+            <p><strong>내용:</strong> ${review.text}</p>
+            <p><strong>작성일:</strong> ${createdAt}</p>
+        `;
             reviewList.appendChild(reviewItem);
         });
     };

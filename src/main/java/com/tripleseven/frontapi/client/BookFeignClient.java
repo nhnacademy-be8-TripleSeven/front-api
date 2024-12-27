@@ -58,5 +58,6 @@ public interface BookFeignClient {
             @RequestParam("page") int page,
             @RequestParam("size") int size);
 
-
+      @GetMapping("/api/reviews/{bookId}/all")
+    List<ReviewResponseDTO> getAllReviewByBookId(@PathVariable Long bookId);
 }
