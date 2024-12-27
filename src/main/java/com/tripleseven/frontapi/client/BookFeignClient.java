@@ -26,7 +26,7 @@ public interface BookFeignClient {
     @GetMapping("/books/term/{term}")
     List<BookSearchResponseDTO> getBooksByTerm(@PathVariable("term") String term);
 
-      @GetMapping("books/{bookId}")
+    @GetMapping("/books/{bookId}")
     SearchBookDetailDTO getBookDetail(@PathVariable Long bookId);
 
   
