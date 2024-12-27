@@ -10,6 +10,7 @@
 <body>
 <div class="container">
 
+  <!-- 헤더 -->
   <div th:replace="header :: header"></div>
 
   <main class="my-account-container">
@@ -26,93 +27,89 @@
         <a th:href="@{/point-earned-history}"><li>포인트 적립 내역</li></a>
         <a th:href="@{/point-used-history}"><li>포인트 사용 내역</li></a>
         <li>*쿠폰함</li>
-        <a th:href="@{/coupon-history}"><li>쿠폰 내역</li></a>
+        <a th:href="@{/api/coupon-history-test}"><li>쿠폰 내역</li></a>
       </ul>
     </aside>
 
+    <!-- 쿠폰 내역 -->
     <section class="coupon-history">
       <h2>쿠폰 내역</h2>
       <p class="notice">최근 5년간 쿠폰 내역을 조회할 수 있습니다.</p>
 
-      <div class="filters">
+      <!-- 필터 -->
+<!--      <form th:action="@{/api/coupon-history}" method="get" class="filters">-->
+        <form th:action="@{/api/coupon-history-test}" method="get" class="filters">
         <div class="filter-item">
           <label for="start-date">시작일</label>
-          <input type="date" id="start-date">
+          <input type="date" id="start-date" name="startDate" th:value="${startDate}">
         </div>
         <div class="filter-item">
           <label for="end-date">종료일</label>
-          <input type="date" id="end-date">
+          <input type="date" id="end-date" name="endDate" th:value="${endDate}">
         </div>
         <div class="filter-item">
-          <label for="filter-status">상태</label>
-          <select id="filter-status">
-            <option value="all">전체</option>
-            <option value="unused">미사용</option>
-            <option value="used">사용 완료</option>
-          </select>
+          <label for="keyword">검색어</label>
+          <input type="text" id="keyword" name="keyword" placeholder="쿠폰 이름" th:value="${keyword}">
         </div>
-        <div class="filter-item">
-          <label for="keyword">검색</label>
-          <input type="text" id="keyword" placeholder="키워드 입력">
-        </div>
-        <button class="filter-btn" id="search-btn">조회</button>
-      </div>
+        <button type="submit" class="filter-btn">조회</button>
+      </form>
 
-      <div class="info-banner">
-        <img th:src="@{/image/money.png}" alt="Review Points">
-        <div class="banner-text">
-          <p class="highlight">리뷰 글 작성 시 200포인트 지급!</p>
-          <p>이미지 리뷰 작성 시 500포인트 지급!</p>
-        </div>
-      </div>
-
+      <!-- 발급 내역 -->
       <h3>발급 내역</h3>
       <table>
         <thead>
         <tr>
-          <th>쿠폰 번호</th>
+          <th>쿠폰 이름</th>
           <th>발급 일자</th>
           <th>만료일</th>
-          <th>할인율</th>
-          <th>비고</th>
+          <th>할인율/금액</th>
+          <th>쿠폰 상태</th>
+          <th>사용 대상</th>
         </tr>
         </thead>
-        <tbody id="issued-coupons">
+        <tbody>
         <tr th:each="coupon : ${issuedCoupons}">
-          <td th:text="${coupon.number}">쿠폰 번호</td>
-          <td th:text="${coupon.issueDate}">2024-01-01</td>
-          <td th:text="${coupon.expiryDate}">2024-12-31</td>
-          <td th:text="${coupon.discountRate}">10%</td>
-          <td th:text="${coupon.note}">사용 가능</td>
+          <td th:text="${coupon.name}">쿠폰 이름</td>
+          <td th:text="${coupon.issueDate}">발급 일자</td>
+          <td th:text="${coupon.expiryDate}">만료 일자</td>
+          <td th:text="${coupon.discountRate != null ? coupon.discountRate + '%' : coupon.discountAmount + ' 원'}">할인율/금액</td>
+          <td th:text="${coupon.status}">쿠폰 상태</td>
+          <td th:text="${coupon.bookTitle != null ? coupon.bookTitle : (coupon.categoryName != null ? coupon.categoryName : '없음')}">사용 대상</td>
+
         </tr>
         </tbody>
       </table>
-
+      <br>
+      <!-- 사용 내역 -->
       <h3>사용 내역</h3>
       <table>
         <thead>
         <tr>
-          <th>쿠폰 번호</th>
+          <th>쿠폰 이름</th>
           <th>발급 일자</th>
-          <th>사용일</th>
-          <th>비고</th>
+          <th>사용 일자</th>
+          <th>할인율/금액</th>
+          <th>쿠폰 상태</th>
+          <th>사용 대상</th>
         </tr>
         </thead>
-        <tbody id="used-coupons">
+        <tbody>
         <tr th:each="coupon : ${usedCoupons}">
-          <td th:text="${coupon.number}">쿠폰 번호</td>
-          <td th:text="${coupon.issueDate}">2024-01-01</td>
-          <td th:text="${coupon.usedDate}">2024-02-01</td>
-          <td th:text="${coupon.note}">사용 완료</td>
+          <td th:text="${coupon.name}">쿠폰 이름</td>
+          <td th:text="${coupon.issueDate}">발급 일자</td>
+          <td th:text="${coupon.usedAt}">사용 일자</td>
+          <td th:text="${coupon.discountRate != null ? coupon.discountRate + '%' : coupon.discountAmount + ' 원'}">할인율/금액</td>
+          <td th:text="${coupon.status}">쿠폰 상태</td>
+          <td th:text="${coupon.bookTitle != null ? coupon.bookTitle : (coupon.categoryName != null ? coupon.categoryName : '없음')}">사용 대상</td>
         </tr>
         </tbody>
       </table>
     </section>
   </main>
 
+  <!-- 푸터 -->
   <div th:replace="footer :: footer"></div>
 
 </div>
-<script th:src="@{/js/coupon-history.js}"></script>
 </body>
 </html>

@@ -3,6 +3,8 @@ package com.tripleseven.frontapi.client;
 import com.tripleseven.frontapi.dto.BookDetailResponseDTO;
 import com.tripleseven.frontapi.dto.BookSearchResponseDTO;
 import java.util.List;
+
+import com.tripleseven.frontapi.dto.coupon.CouponDetailsDTO;
 import com.tripleseven.frontapi.dto.coupon.CouponPolicyRequestDTO;
 import com.tripleseven.frontapi.dto.coupon.CouponPolicyResponseDTO;
 import org.springframework.web.bind.annotation.*;
@@ -30,8 +32,8 @@ public interface BookFeignClient {
     SearchBookDetailDTO getBookDetail(@PathVariable Long bookId);
 
   
-
-
+  
+  
     @PostMapping("/admin/coupon-policies")
     CouponPolicyResponseDTO createCouponPolicy(@RequestBody CouponPolicyRequestDTO request);
 
@@ -50,6 +52,19 @@ public interface BookFeignClient {
     @DeleteMapping("/admin/coupon-policies/{id}")
     void deleteCouponPolicy(@PathVariable Long id);
 
+    @GetMapping("/api/coupons")
+    List<CouponDetailsDTO> getAllCoupons(@RequestHeader("X-User") Long userId,
+                                         @RequestParam(required = false) String keyword,
+                                         @RequestParam(required = false) String startDate,
+                                         @RequestParam(required = false) String endDate);
+
+    @GetMapping("/api/coupons/used")
+    List<CouponDetailsDTO> getUsedCoupons(@RequestHeader("X-User") Long userId,
+                                          @RequestParam(required = false) String keyword,
+                                          @RequestParam(required = false) String startDate,
+                                          @RequestParam(required = false) String endDate);
+
+  
   
   
     @GetMapping("/api/reviews/{bookId}/paged")
