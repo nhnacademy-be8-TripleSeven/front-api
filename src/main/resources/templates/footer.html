@@ -1,10 +1,9 @@
-
 <footer>
   <div class="footer-links">
-    <a href="#">회사소개</a>
-    <a href="#">이용약관</a>
-    <a href="#"><strong>개인정보처리방침</strong></a>
-    <a href="#">청소년 보호정책</a>
+    <a th:href="@{'https://www.nhnacademy.com/about'}">회사소개</a>
+    <a th:href="@{'https://www.nhnacademy.com/about'}">이용약관</a>
+    <a th:href="@{'https://www.nhnacademy.com/terms'}"><strong>개인정보처리방침</strong></a>
+    <a th:href="@{/youth-policy}">청소년 보호정책</a>
   </div>
   <div class="footer-container">
     <div class="footer-info">
@@ -18,9 +17,15 @@
       <p>광주광역시 동구 서석동 조선대학교 1층 NHN아카데미</p>
       <p>Fax 062-1234-5678</p>
       <div class="footer-buttons">
-        <a href="#"><button>1:1 문의</button></a>
-        <a href="#"> <button>FAQ</button></a>
-        <a href="#"><button>위치, 영업시간 안내</button></a>
+        <a th:href="@{'https://www.nhnacademy.com/faq'}">
+          <button>1:1 문의</button>
+        </a>
+        <a th:href="@{/faq}">
+          <button>FAQ</button>
+        </a>
+        <a th:href="@{'https://www.nhnacademy.com/about'}">
+          <button>위치, 영업시간 안내</button>
+        </a>
       </div>
     </div>
   </div>

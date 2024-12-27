@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NHN 24</title>
+  <title>NHN 24 - 도서 상세</title>
   <link rel="stylesheet" href="/css/order-detail.css">
 </head>
 <body>
@@ -34,25 +34,26 @@
   </div>
 </header>
 
-
 <main>
   <section class="product-info">
-    <img src="/image/book2.png" alt="도서 이미지">
+    <img th:src="${book.coverUrl}" alt="도서 이미지">
     <div class="product-details">
-      <h1>모두의 크리스마스</h1>
+      <h1 th:text="${book.title}">도서 제목</h1>
       <ul>
-        <li>저자: 김재니</li>
-        <li>출판사: 웅진주니어</li>
-        <li>발행일: 2024-11-19</li>
-        <li>정가: <span class="original">18,000원</span></li>
-        <li>판매가: <span class="discount">16,200원</span> (10% 할인)</li>
-        <li>배송비: 무료배송</li>
-        <li>수령예상일: <span class="highlight">NHN배송</span></li>
+        <li>저자:
+          <span th:if="${#lists.isEmpty(book.bookCreators)}">저자 정보 없음</span>
+          <span th:if="${!#lists.isEmpty(book.bookCreators)}" th:text="${book.bookCreators[0].name}">저자명</span>
+        </li>
+        <li>출판사: <span th:text="${book.publisher}">출판사명</span></li>
+        <li>발행일: <span th:text="${formattedPublishedDate}">발행일</span></li>
+        <li>정가: <span class="original" th:text="${book.regularPrice} + '원'">정가</span></li>
+        <li>판매가: <span class="discount" th:text="${book.salePrice} + '원'">판매가</span> (할인)</li>
+        <li>재고: <span th:text="${book.stock}">재고수량</span> 권</li>
       </ul>
       <div class="rating">
         <span>★★★★★</span>
         <span>10.0</span>
-        <span>(100자평)</span>
+        <span>(리뷰 없음)</span>
       </div>
       <div class="actions">
         <a href="#"><button class="cart-btn">장바구니 담기</button></a>
@@ -61,116 +62,57 @@
     </div>
   </section>
 
-  <!-- 기본 정보 -->
   <section class="details">
     <h2>기본정보</h2>
     <ul>
-      <li>양장본 | 52쪽 | 170x235mm | 295g | ISBN: 9788901290157</li>
-      <li>주제 분류: 신간그림책</li>
-      <li>국내도서 > 유아 > 그림책 > 나라별 그림책 > 한국 그림책</li>
+      <li>ISBN: <span th:text="${book.isbn13}">ISBN 번호</span></li>
+      <li>페이지: <span th:text="${book.page}">페이지 수</span> 쪽</li>
+      <li>카테고리:
+        <span th:if="${#lists.isEmpty(book.categories)}">카테고리 정보 없음</span>
+        <span th:if="${!#lists.isEmpty(book.categories)}" th:text="${book.categories}">카테고리 정보</span>
+      </li>
+      <li>태그: <span th:text="${book.tags}">태그 정보</span></li>
+      <li>도서 유형: <span th:text="${book.bookTypes}">도서 유형</span></li>
     </ul>
   </section>
 
-  <!-- 책 소개 -->
+  <section class="book-index">
+    <h2>목차</h2>
+    <p th:text="${book.bookIndex}">도서 목차</p>
+  </section>
+
   <section class="book-intro">
     <h2>책 소개</h2>
-    <p>
-      여기, 누구보다 크리스마스를 특별하게 보내는 한 아이가 있다...<br>
-      가장 중요한 건 선물을 받을 어린 찾기! 듀정을 부여받을 사람이 없다면...
-    </p>
+    <p th:text="${book.description}">책 소개 내용</p>
+
+    <!-- 상세 이미지 추가 -->
+    <div class="book-detail-images">
+      <div class="detail-images">
+        <div th:each="image : ${book.detailImages}" class="detail-image-container">
+          <img th:src="${image}" alt="상세 이미지">
+        </div>
+      </div>
+    </div>
   </section>
+
   <section class="review-section">
+    <input type="hidden" id="bookId" th:value="${book.id}" />
+
     <div class="review-header">
       <h2>구매자 리뷰</h2>
-      <p>배송 음이나 육식 및 인신공격성 글은 상품 페이지에서 노출 제재처리됩니다.</p>
+      <p>배송 음이나 욕설 및 인신공격성 글은 상품 페이지에서 노출 제재 처리됩니다.</p>
     </div>
-    <section class="review-section">
-      <!-- 리뷰 통계 -->
-      <div class="review-header">
-        <h2>구매자 리뷰</h2>
-        <p>배송 음이나 욕설 및 인신공격성 글은 상품 페이지에서 노출 제재처리됩니다.</p>
-      </div>
 
-      <div class="review-stats">
-        <div class="purchase-distribution">
-          <h3>구매자 분포</h3>
-          <ul>
-            <li>10대: <span>0.7%</span></li>
-            <li>20대: <span>6.7%</span></li>
-            <li>30대: <span>36.4%</span></li>
-            <li>40대: <span>34.7%</span></li>
-            <li>50대: <span>8.4%</span></li>
-            <li>60대 이상: <span>3.6%</span></li>
-          </ul>
-        </div>
-        <div class="rating-distribution">
-          <h3>평점 분포</h3>
-          <ul>
-            <li>★★★★★: <span>100%</span></li>
-            <li>★★★★☆: <span>0%</span></li>
-            <li>★★★☆☆: <span>0%</span></li>
-            <li>★★☆☆☆: <span>0%</span></li>
-            <li>★☆☆☆☆: <span>0%</span></li>
-          </ul>
-          <p class="overall-rating">평점: <strong>10.0</strong></p>
-        </div>
-      </div>
+    <div id="reviewList"></div>
 
-      <!-- 리뷰 리스트 -->
-      <div class="review-list">
-        <h3>구매자 리뷰 (1)</h3>
-        <div class="review-item">
-          <p>★★★★★</p>
-          <p>
-            여기 조금 이상하고 특별한 '썸머'라는 아이가 있다. 이 아이는 크리스마스에 산타에게 선물을 기다리는 아이가 아니고...
-          </p>
-          <div class="review-meta">
-            <span>user22</span>
-            <span>2024-11-30</span>
-            <span>도움됨 9</span>
-          </div>
-        </div>
-      </div>
-    </section>
-      <!-- 리뷰 작성 -->
-      <div class="review-form">
-        <h3>리뷰 작성</h3>
-        <form>
-          <label for="review-rating">평점:</label>
-          <select id="review-rating" name="rating">
-            <option value="5">★★★★★</option>
-            <option value="4">★★★★☆</option>
-            <option value="3">★★★☆☆</option>
-            <option value="2">★★☆☆☆</option>
-            <option value="1">★☆☆☆☆</option>
-          </select>
-          <textarea name="review-content" placeholder="리뷰를 작성하세요..."></textarea>
-          <button type="submit">등록</button>
-        </form>
-      </div>
-    </section>
-  <!-- 반품/교환 안내 -->
-  <section class="return-info">
-    <h2>반품/교환 안내</h2>
-    <table>
-      <tr>
-        <th>반품/교환 방법</th>
-        <td>“내계좌>주문조회>반품/교환신청”</td>
-      </tr>
-      <tr>
-        <th>반품/교환 가능기간</th>
-        <td>상품 수령 후 20일 이내</td>
-      </tr>
-      <tr>
-        <th>반품/교환 비용</th>
-        <td>고객 부담</td>
-      </tr>
-    </table>
+    <div class="pagination">
+      <button id="prevPage" disabled>이전</button>
+      <span id="currentPageDisplay"></span> / <span id="totalPagesDisplay"></span>
+      <button id="nextPage" disabled>다음</button>
+    </div>
   </section>
 </main>
 
-
-<!-- 푸터 -->
 <footer>
   <div class="footer-links">
     <a href="#">회사소개</a>
@@ -198,5 +140,6 @@
   </div>
 </footer>
 
+<script src="/js/reviews.js"></script>
 </body>
 </html>

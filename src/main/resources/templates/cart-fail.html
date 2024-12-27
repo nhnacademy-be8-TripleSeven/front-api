@@ -1,83 +1,41 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>장바구니</title>
-  <link rel="stylesheet" href="/css/cart-fail.css">
+  <link rel="stylesheet" th:href="@{/css/cart-fail.css}">
+  <link rel="stylesheet" th:href="@{/css/global.css}">
 </head>
 <body>
-<header class="header">
-  <div class="logo">
-    <a href="/templates/main.html/main.html"><img src="/image/logo/nhn24-logo.png" alt="NHN 24 로고"></a>
-  </div>
-  <div class="header-center">
-    <div class="search-bar">
-      <input type="text" placeholder="검색어를 입력하세요">
-      <button>🔍</button>
-    </div>
-    <nav class="menu">
-      <ul>
-        <li><a href="/recommended-books.html">추천 도서</a></li>
-        <li><a href="/domestic-books.html">국내 도서</a></li>
-        <li><a href="/foreign-books.html">외국 도서</a></li>
-        <li><a href="/bestsellers.html">베스트셀러</a></li>
-        <li><a href="/new-books.html">신간 소개</a></li>
-        <li><a href="/events.html">이벤트</a></li>
-      </ul>
-    </nav>
-  </div>
-  <div class="user-actions">
-    <button class="logout-btn">Logout</button>
-  </div>
-</header>
+<div class="container">
 
-<main class="main-content">
-  <section class="cart-section">
-    <div class="tabs">
-      <button class="tab active" onclick="showTab('cart-tab')">장바구니</button>
-      <button class="tab" onclick="showTab('recent-tab')">오늘 본 상품</button>
-    </div>
-    <div id="cart-tab" class="tab-content active">
-      <p class="empty-cart-text">장바구니에 담긴 상품이 없습니다.</p>
-      <p class="instruction-text">로그인하시면 장바구니에 저장한 상품을 볼 수 있습니다.</p>
-      <button class="login-btn" onclick="location.href='/login.html'">로그인하기</button>
-    </div>
-    <div id="recent-tab" class="tab-content">
-      <p class="empty-cart-text">오늘 본 상품이 없습니다.</p>
-      <p class="instruction-text">상품을 클릭하면 여기에 표시됩니다.</p>
-    </div>
-  </section>
-</main>
 
-<footer>
-  <div class="footer-links">
-    <a href="/about.html">회사소개</a>
-    <a href="/terms.html">이용약관</a>
-    <a href="/privacy-policy.html"><strong>개인정보처리방침</strong></a>
-    <a href="/youth-policy.html">청소년 보호정책</a>
-  </div>
-  <div class="footer-container">
-    <div class="footer-info">
-      <p>대표이사 마르코 | 사업자등록번호 123-456-7890</p>
-      <p>통신판매업신고 2024-광주동구-01211</p>
-      <p>이메일: marco@nhn.com | 호스팅 제공자 NHN24</p>
-      <p>© NHN24. All Rights Reserved.</p>
-    </div>
-    <div class="customer-center">
-      <p><strong>고객센터 1544-8282 (발신자 부담)</strong></p>
-      <p>광주광역시 동구 서석동 조선대학교 1층 NHN아카데미</p>
-      <p>Fax 062-1234-5678</p>
-      <div>
-        <button onclick="location.href='/contact-us.html'">1:1 문의</button>
-        <button onclick="location.href='/faq.html'">FAQ</button>
-        <button onclick="location.href='/location-hours.html'">위치, 영업시간 안내</button>
+  <div th:replace="header :: header"></div>
+
+  <main class="main-content">
+    <section class="cart-section">
+      <div class="tabs">
+        <button class="tab active" onclick="showTab('cart-tab')">장바구니</button>
+        <button class="tab" onclick="showTab('recent-tab')">오늘 본 상품</button>
       </div>
-    </div>
-  </div>
-</footer>
+      <div id="cart-tab" class="tab-content active">
+        <p class="empty-cart-text">장바구니에 담긴 상품이 없습니다.</p>
+        <p class="instruction-text">로그인하시면 장바구니에 저장한 상품을 볼 수 있습니다.</p>
+        <button class="login-btn" th:onclick="|location.href='@{/login}'|">로그인하기</button>
+      </div>
+      <div id="recent-tab" class="tab-content">
+        <p class="empty-cart-text">오늘 본 상품이 없습니다.</p>
+        <p class="instruction-text">상품을 클릭하면 여기에 표시됩니다.</p>
+      </div>
+    </section>
+  </main>
 
-<script>
+  <div th:replace="footer :: footer"></div>
+
+</div>
+
+<script th:inline="javascript">
   function showTab(tabId) {
     document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
     document.querySelector(`#${tabId}`).classList.add('active');
