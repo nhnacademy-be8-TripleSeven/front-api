@@ -33,4 +33,8 @@ public class BookApiService {
     public Page<ReviewResponseDTO> getPagedReviewsByBookId(Long bookId, Pageable pageable) {
         return bookFeignClient.getPagedReviewsByBookId(bookId, pageable.getPageNumber(), pageable.getPageSize());
     }
+
+    public List<ReviewResponseDTO> getAllReviewsByBookId(Long bookId) {
+        return bookFeignClient.getAllReviewByBookId(bookId);
+    }
 }

@@ -51,9 +51,9 @@
         <li>재고: <span th:text="${book.stock}">재고수량</span> 권</li>
       </ul>
       <div class="rating">
-        <span>★★★★★</span>
-        <span>10.0</span>
-        <span>(리뷰 없음)</span>
+        <span th:text="${ratingStars}"></span>
+        <span th:text="${avgRating}">평균 평점</span>
+        <span th:text="'(' + ${totalReviews} + ' 리뷰)'"></span>
       </div>
       <div class="actions">
         <a href="#"><button class="cart-btn">장바구니 담기</button></a>
@@ -103,7 +103,17 @@
       <p>배송 음이나 욕설 및 인신공격성 글은 상품 페이지에서 노출 제재 처리됩니다.</p>
     </div>
 
-    <div id="reviewList"></div>
+    <div id="reviewList">
+      <div class="review-item">
+        <p>
+          <strong>평점:</strong>
+          <span class="rating-stars">★★★★☆</span>
+        </p>
+        <p><strong>내용:</strong> 리뷰 내용</p>
+        <p><strong>작성일:</strong> 2024-12-26 17:30:45</p>
+      </div>
+    </div>
+
 
     <div class="pagination">
       <button id="prevPage" disabled>이전</button>
