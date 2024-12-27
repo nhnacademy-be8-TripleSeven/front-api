@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -27,10 +28,25 @@ public class BookDetailController {
             @PathVariable Long bookId,
             Model model) {
         SearchBookDetailDTO book = bookApiService.getBookDetail(bookId);
+        List<ReviewResponseDTO> reviews = bookApiService.getAllReviewsByBookId(bookId);
+        int sum = 0;
+        double avg = 0.0;
+        if (!reviews.isEmpty()) {
+            for (ReviewResponseDTO review : reviews) {
+                sum += review.getRating();
+            }
+            avg = (double) sum / reviews.size();
+        }
+        int avgInt = (int) Math.round(avg);
+        String stars = "★".repeat(avgInt) + "☆".repeat(5 - avgInt);
+
         book.setId(bookId);
         model.addAttribute("book", book);
         model.addAttribute("formattedPublishedDate",
                 book.getPublishedDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        model.addAttribute("totalReviews", reviews.size());
+        model.addAttribute("avgRating", avg);
+        model.addAttribute("ratingStars", stars);
         return "order-detail"; // HTML 페이지 렌더링
     }
 

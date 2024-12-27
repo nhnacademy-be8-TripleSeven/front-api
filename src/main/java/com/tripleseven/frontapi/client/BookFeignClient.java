@@ -26,7 +26,7 @@ public interface BookFeignClient {
     @GetMapping("/books/term/{term}")
     List<BookSearchResponseDTO> getBooksByTerm(@PathVariable("term") String term);
 
-      @GetMapping("books/{bookId}")
+    @GetMapping("/books/{bookId}")
     SearchBookDetailDTO getBookDetail(@PathVariable Long bookId);
 
   
@@ -58,5 +58,6 @@ public interface BookFeignClient {
             @RequestParam("page") int page,
             @RequestParam("size") int size);
 
-
+      @GetMapping("/api/reviews/{bookId}/all")
+    List<ReviewResponseDTO> getAllReviewByBookId(@PathVariable Long bookId);
 }
