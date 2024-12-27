@@ -3,10 +3,12 @@
     <a th:href="@{/main}"><img th:src="@{/image/logo/nhn24-logo.png}" alt="NHN 24 로고"></a>
   </div>
   <div class="header-center">
-    <div class="search-bar">
-      <input type="text" placeholder="검색어를 입력하세요">
-      <a th:href="@{/book-search}"><button>🔍</button></a>
-    </div>
+    <form th:action="@{/searchBook}" method="get">
+      <div class="search-bar">
+        <input type="text" name="searchTerm" placeholder="검색어 입력">
+        <button type="submit">🔍</button>
+      </div>
+    </form>
     <nav class="menu">
       <ul>
         <li><a th:href="@{/recommended-books}">추천 도서</a></li>
