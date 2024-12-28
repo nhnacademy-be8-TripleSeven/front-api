@@ -1,10 +1,12 @@
 package com.tripleseven.frontapi.client;
 
 import com.tripleseven.frontapi.dto.BookDetailResponseDTO;
+import com.tripleseven.frontapi.dto.BookPageResponseDTO;
 import com.tripleseven.frontapi.dto.BookSearchResponseDTO;
 import java.util.List;
 import com.tripleseven.frontapi.dto.coupon.CouponPolicyRequestDTO;
 import com.tripleseven.frontapi.dto.coupon.CouponPolicyResponseDTO;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 import com.tripleseven.frontapi.dto.ReviewResponseDTO;
 import com.tripleseven.frontapi.dto.SearchBookDetailDTO;
@@ -24,12 +26,29 @@ public interface BookFeignClient {
     List<BookDetailResponseDTO> getBooksByType(@PathVariable("type") String type);
 
     @GetMapping("/books/term/{term}")
-    List<BookSearchResponseDTO> getBooksByTerm(@PathVariable("term") String term);
+    BookPageResponseDTO getBooksByTerm(
+        @PathVariable("term") String term,
+        @RequestParam("page") int page,
+        @RequestParam("size") int size
+    );
 
     @GetMapping("/books/{bookId}")
     SearchBookDetailDTO getBookDetail(@PathVariable Long bookId);
 
-  
+    @GetMapping("/books/category")
+    BookPageResponseDTO getCategoryBooks(
+        @RequestParam String keyword,
+        @RequestParam List<String> categories,
+        @RequestParam int page,
+        @RequestParam int size
+    );
+
+    @GetMapping("/books/typeSearch/{type}")
+    BookPageResponseDTO getTypeSearchBooks(
+        @PathVariable("type") String type,
+        @RequestParam("page") int page,
+        @RequestParam("size") int size
+    );
 
 
     @PostMapping("/admin/coupon-policies")

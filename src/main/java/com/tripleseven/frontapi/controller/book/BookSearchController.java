@@ -3,11 +3,9 @@ package com.tripleseven.frontapi.controller.book;
 
 import com.tripleseven.frontapi.dto.BookSearchResponseDTO;
 import com.tripleseven.frontapi.service.BookApiService;
-import jakarta.servlet.http.HttpServletRequest;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,14 +19,52 @@ public class BookSearchController {
     private final BookApiService bookApiService;
 
     @GetMapping("/searchBook")
-    public String bookSearch(@RequestParam(value = "searchTerm", required = false) String term, Model model) {
-        List<BookSearchResponseDTO> searchBooks = bookApiService.searchBooks(term);
-        model.addAttribute("searchBooks", searchBooks);
+    public String bookSearch(
+        @RequestParam(value = "searchTerm", required = false) String term,
+        @RequestParam(value = "page", defaultValue = "0") int page,
+        @RequestParam(defaultValue = "10") int size,
+        @RequestParam(value = "sortField", defaultValue = "publishDate") String sortField,
+        @RequestParam(value = "sortDir", defaultValue = "desc") String sortDir,
+        Model model) {
 
-        for (BookSearchResponseDTO searchBook : searchBooks) {
-            String bookCreators = searchBook.getBookcreator();
+        term = (term == null || term.trim().isEmpty()) ? "default" : term;
 
-        }
+
+
+        Page<BookSearchResponseDTO> searchBooksPage = bookApiService.searchBooks(term, page, size);
+
+        model.addAttribute("path", "searchBook");
+        model.addAttribute("searchBooks", searchBooksPage.getContent());
+        model.addAttribute("currentPage", searchBooksPage.getNumber());
+        model.addAttribute("totalPages", searchBooksPage.getTotalPages());
+        model.addAttribute("searchTerm", term);
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortDir", sortDir);
+
+        return "book-search";
+    }
+
+
+    @GetMapping("/typeBook")
+    public String typeBookSearch(
+        @RequestParam String type,
+        @RequestParam(value = "page", defaultValue = "0") int page,
+        @RequestParam(defaultValue = "10") int size,
+        @RequestParam(value = "sortField", defaultValue = "publishDate") String sortField,
+        @RequestParam(value = "sortDir", defaultValue = "desc") String sortDir,
+        Model model) {
+
+        Page<BookSearchResponseDTO> bookDetailResponseDTOS = bookApiService.getTypeBookSearch(type, page, size);
+
+        model.addAttribute("type", type);
+        model.addAttribute("path", "typeBook");
+        model.addAttribute("searchBooks", bookDetailResponseDTOS.getContent());
+        model.addAttribute("currentPage", bookDetailResponseDTOS.getNumber());
+        model.addAttribute("totalPages", bookDetailResponseDTOS.getTotalPages());
+        model.addAttribute("sortField", sortField);
+        model.addAttribute("sortDir", sortDir);
+
+
         return "book-search";
     }
 }
