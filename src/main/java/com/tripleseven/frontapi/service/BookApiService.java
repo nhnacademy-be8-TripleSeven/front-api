@@ -1,6 +1,7 @@
 package com.tripleseven.frontapi.service;
 
 import com.tripleseven.frontapi.client.BookFeignClient;
+import com.tripleseven.frontapi.client.OrderFeignClient;
 import com.tripleseven.frontapi.dto.BookDetailResponseDTO;
 import com.tripleseven.frontapi.dto.BookPageResponseDTO;
 import com.tripleseven.frontapi.dto.BookSearchResponseDTO;
@@ -10,7 +11,8 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-import com.tripleseven.frontapi.dto.ReviewResponseDTO;
+import com.tripleseven.frontapi.dto.review.ReviewRequestDTO;
+import com.tripleseven.frontapi.dto.review.ReviewResponseDTO;
 import com.tripleseven.frontapi.dto.SearchBookDetailDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -20,12 +22,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 @Service
 @RequiredArgsConstructor
 public class BookApiService {
     private final BookFeignClient bookFeignClient;
+    private final OrderFeignClient orderFeignClient;
 
     public List<BookDetailResponseDTO> fetchMonthlyBooks() {
         return bookFeignClient.getMonthlyBooks();
@@ -64,6 +66,22 @@ public class BookApiService {
         return bookFeignClient.getAllReviewByBookId(bookId);
     }
 
+    public ReviewResponseDTO getUserReviewForBook(Long bookId, Long userId) {
+        try {
+            return bookFeignClient.getUserReviewForBook(bookId, userId);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public void submitReview(Long userId, ReviewRequestDTO reviewRequestDTO) {
+        bookFeignClient.addReview(userId, reviewRequestDTO);
+    }
+
+    public boolean checkUserPurchase(Long userId, Long bookId) {
+        return orderFeignClient.checkUserPurchase(userId, bookId);
+    }
+  
     public Page<BookDetailResponseDTO> getTypeBookSearch(String type, int page, int pageSize, String sortField, String sortDir) {
         Sort.Direction direction = Sort.Direction.fromString(sortDir);
         Sort sort = Sort.by(direction, sortField);

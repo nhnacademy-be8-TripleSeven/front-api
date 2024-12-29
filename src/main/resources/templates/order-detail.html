@@ -52,7 +52,7 @@
       </ul>
       <div class="rating">
         <span th:text="${ratingStars}"></span>
-        <span th:text="${avgRating}">평균 평점</span>
+        <span th:text="${avgRating != null ? avgRating : '평점 없음'}">평균 평점</span>
         <span th:text="'(' + ${totalReviews} + ' 리뷰)'"></span>
       </div>
       <div class="actions">
@@ -100,9 +100,31 @@
 
     <div class="review-header">
       <h2>구매자 리뷰</h2>
-      <p>배송 음이나 욕설 및 인신공격성 글은 상품 페이지에서 노출 제재 처리됩니다.</p>
+      <p>욕설 및 인신공격성 글은 상품 페이지에서 노출 제재 처리됩니다.</p>
     </div>
 
+    <!-- 리뷰 작성 폼 -->
+    <div class="review-form">
+      <h3>리뷰 작성</h3>
+      <form action="/api/reviews" method="post" enctype="multipart/form-data">
+        <label for="review-rating">평점:</label>
+        <select name="rating" id="review-rating">
+          <option value="5">★★★★★</option>
+          <option value="4">★★★★☆</option>
+          <option value="3">★★★☆☆</option>
+          <option value="2">★★☆☆☆</option>
+          <option value="1">★☆☆☆☆</option>
+        </select>
+        <label for="review-text">내용:</label>
+        <textarea name="text" id="review-text" rows="5" required></textarea>
+        <label for="review-image">이미지 업로드</label>
+        <input type="file" name="image" id="review-image" accept="image/*"></input>
+        <input type="hidden" name="bookId" th:value="${book.id}" />
+        <button type="submit">리뷰 등록</button>
+      </form>
+    </div>
+
+    <!-- 리뷰 목록 -->
     <div id="reviewList">
       <div class="review-item">
         <p>
@@ -113,7 +135,6 @@
         <p><strong>작성일:</strong> 2024-12-26 17:30:45</p>
       </div>
     </div>
-
 
     <div class="pagination">
       <button id="prevPage" disabled>이전</button>

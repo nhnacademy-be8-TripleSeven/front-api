@@ -1,8 +1,6 @@
-package com.tripleseven.frontapi.dto;
+package com.tripleseven.frontapi.dto.review;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
