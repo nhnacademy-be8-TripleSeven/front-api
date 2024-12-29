@@ -39,14 +39,27 @@
   <section class="book-results">
     <h2>검색 결과</h2>
     <div class="result-controls">
-      <p th:if="${searchBooks.size() > 0}" th:text="'총 ' + ${searchBooks.size()} + '권의 검색 결과'"></p>
-      <form th:action="@{/searchBook}" method="get">
-        <input type="hidden" name="searchTerm" th:value="${searchTerm}"/>
-        <select name="sortOrder" onchange="this.form.submit()">
-          <option value="newest" th:selected="${sortOrder == 'newest'}">최신순</option>
-          <option value="oldest" th:selected="${sortOrder == 'oldest'}">오래된순</option>
+      <p th:if="${searchBooks.size() > 0}" th:text="'총 ' + ${searchBooks.size()} + '권의 검색 결과'"></p><!-- searchBook 경로 -->
+      <form th:if="${path == 'searchBook'}" th:action="@{/searchBook}" method="get">
+        <input type="hidden" name="searchTerm" th:value="${searchTerm}" />
+        <input type="hidden" name="page" th:value="${currentPage}" />
+        <select name="sortDir" onchange="this.form.submit()">
+          <option value="desc" th:selected="${sortDir == 'desc'}">최신순</option>
+          <option value="asc" th:selected="${sortDir == 'asc'}">오래된순</option>
         </select>
       </form>
+
+      <!-- typeBook 경로 -->
+      <form th:if="${path == 'typeBook'}" th:action="@{/typeBook}" method="get">
+        <input type="hidden" name="type" th:value="${type}" />
+        <input type="hidden" name="page" th:value="${currentPage}" />
+        <select name="sortDir" onchange="this.form.submit()">
+          <option value="desc" th:selected="${sortDir == 'desc'}">최신순</option>
+          <option value="asc" th:selected="${sortDir == 'asc'}">오래된순</option>
+        </select>
+      </form>
+
+
 
     </div>
     <div class="book-list">

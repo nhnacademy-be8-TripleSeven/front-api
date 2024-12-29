@@ -4,6 +4,10 @@ import com.tripleseven.frontapi.client.BookFeignClient;
 import com.tripleseven.frontapi.dto.BookDetailResponseDTO;
 import com.tripleseven.frontapi.dto.BookPageResponseDTO;
 import com.tripleseven.frontapi.dto.BookSearchResponseDTO;
+import com.tripleseven.frontapi.dto.coupon.BookPageDetailResponseDTO;
+import com.tripleseven.frontapi.util.SortUtil;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 import com.tripleseven.frontapi.dto.ReviewResponseDTO;
@@ -14,6 +18,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -31,13 +36,16 @@ public class BookApiService {
         return booksByType;
     }
 
-    public Page<BookSearchResponseDTO> searchBooks(String term, int page, int pageSize) {
+    public Page<BookSearchResponseDTO> searchBooks(String term, int page, int pageSize, String sortField, String sortDir) {
+        Sort.Direction direction = Sort.Direction.fromString(sortDir);
+        Sort sort = Sort.by(direction, sortField);
+        Pageable pageable = PageRequest.of(page, pageSize, sort);
 
-        BookPageResponseDTO booksByTerm = bookFeignClient.getBooksByTerm(term, page, pageSize);
+        BookPageResponseDTO booksByTerm = bookFeignClient.getBooksByTerm(term, page, pageSize, sortField + "," + sortDir);
 
         return new PageImpl<>(
             booksByTerm.getContent(),
-            PageRequest.of(booksByTerm.getNumber(),booksByTerm.getSize()),
+            PageRequest.of(booksByTerm.getNumber(),booksByTerm.getSize(), Sort.by(Sort.Direction.fromString(sortDir), sortField)),
             booksByTerm.getTotalElements());
     }
 
@@ -56,12 +64,16 @@ public class BookApiService {
         return bookFeignClient.getAllReviewByBookId(bookId);
     }
 
-    public Page<BookSearchResponseDTO> getTypeBookSearch(String type, int page, int pageSize) {
-        BookPageResponseDTO typeSearchBooks = bookFeignClient.getTypeSearchBooks(type, page, pageSize);
+    public Page<BookDetailResponseDTO> getTypeBookSearch(String type, int page, int pageSize, String sortField, String sortDir) {
+        Sort.Direction direction = Sort.Direction.fromString(sortDir);
+        Sort sort = Sort.by(direction, sortField);
+        Pageable pageable = PageRequest.of(page, pageSize, sort);
+
+        BookPageDetailResponseDTO typeSearchBooks = bookFeignClient.getTypeSearchBooks(type, page, pageSize, sortField + "," + sortDir);
 
         return new PageImpl<>(
             typeSearchBooks.getContent(),
-            PageRequest.of(typeSearchBooks.getNumber(), typeSearchBooks.getSize()),
+            PageRequest.of(page, pageSize, sort),
             typeSearchBooks.getTotalElements()
         );
     }
