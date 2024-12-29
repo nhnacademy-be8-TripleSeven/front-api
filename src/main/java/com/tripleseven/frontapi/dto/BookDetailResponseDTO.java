@@ -1,6 +1,7 @@
 package com.tripleseven.frontapi.dto;
 
 
+import java.time.LocalDate;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,4 +24,6 @@ public class BookDetailResponseDTO {
     private String coverUrl;
 
     private List<String> creator;
+
+    private LocalDate publishDate;
 }

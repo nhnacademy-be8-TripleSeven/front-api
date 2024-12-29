@@ -1,11 +1,13 @@
 package com.tripleseven.frontapi.controller.book;
 
 
+import com.tripleseven.frontapi.dto.BookDetailResponseDTO;
 import com.tripleseven.frontapi.dto.BookSearchResponseDTO;
 import com.tripleseven.frontapi.service.BookApiService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,7 +33,7 @@ public class BookSearchController {
 
 
 
-        Page<BookSearchResponseDTO> searchBooksPage = bookApiService.searchBooks(term, page, size);
+        Page<BookSearchResponseDTO> searchBooksPage = bookApiService.searchBooks(term, page, size, sortField, sortDir);
 
         model.addAttribute("path", "searchBook");
         model.addAttribute("searchBooks", searchBooksPage.getContent());
@@ -51,10 +53,10 @@ public class BookSearchController {
         @RequestParam(value = "page", defaultValue = "0") int page,
         @RequestParam(defaultValue = "10") int size,
         @RequestParam(value = "sortField", defaultValue = "publishDate") String sortField,
-        @RequestParam(value = "sortDir", defaultValue = "desc") String sortDir,
+        @RequestParam(value = "sortDir", defaultValue = "asc") String sortDir,
         Model model) {
+        Page<BookDetailResponseDTO> bookDetailResponseDTOS = bookApiService.getTypeBookSearch(type, page, size, sortField, sortDir);
 
-        Page<BookSearchResponseDTO> bookDetailResponseDTOS = bookApiService.getTypeBookSearch(type, page, size);
 
         model.addAttribute("type", type);
         model.addAttribute("path", "typeBook");
