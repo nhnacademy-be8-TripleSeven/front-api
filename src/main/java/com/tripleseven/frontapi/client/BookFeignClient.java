@@ -2,11 +2,14 @@ package com.tripleseven.frontapi.client;
 
 import com.tripleseven.frontapi.dto.BookDetailResponseDTO;
 import com.tripleseven.frontapi.dto.BookSearchResponseDTO;
+
 import java.util.List;
+
 import com.tripleseven.frontapi.dto.coupon.CouponPolicyRequestDTO;
 import com.tripleseven.frontapi.dto.coupon.CouponPolicyResponseDTO;
+import com.tripleseven.frontapi.dto.review.ReviewRequestDTO;
 import org.springframework.web.bind.annotation.*;
-import com.tripleseven.frontapi.dto.ReviewResponseDTO;
+import com.tripleseven.frontapi.dto.review.ReviewResponseDTO;
 import com.tripleseven.frontapi.dto.SearchBookDetailDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.data.domain.Page;
@@ -26,10 +29,8 @@ public interface BookFeignClient {
     @GetMapping("/books/term/{term}")
     List<BookSearchResponseDTO> getBooksByTerm(@PathVariable("term") String term);
 
-      @GetMapping("books/{bookId}")
+    @GetMapping("books/{bookId}")
     SearchBookDetailDTO getBookDetail(@PathVariable Long bookId);
-
-  
 
 
     @PostMapping("/admin/coupon-policies")
@@ -50,14 +51,19 @@ public interface BookFeignClient {
     @DeleteMapping("/admin/coupon-policies/{id}")
     void deleteCouponPolicy(@PathVariable Long id);
 
-  
-  
+
     @GetMapping("/api/reviews/{bookId}/paged")
     Page<ReviewResponseDTO> getPagedReviewsByBookId(
             @PathVariable Long bookId,
             @RequestParam("page") int page,
             @RequestParam("size") int size);
 
-      @GetMapping("/api/reviews/{bookId}/all")
+    @GetMapping("/api/reviews/{bookId}/all")
     List<ReviewResponseDTO> getAllReviewByBookId(@PathVariable Long bookId);
+
+    @GetMapping("/api/reviews/{bookId}/user")
+    ReviewResponseDTO getUserReviewForBook(@PathVariable("bookId") Long bookId, @RequestHeader("X-User") Long userId);
+
+    @PostMapping("/api/reviews")
+    void addReview(@RequestHeader("X-User") Long userId, @RequestBody ReviewRequestDTO requestDto);
 }
