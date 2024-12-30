@@ -793,4 +793,249 @@ footer {
     background-color: #bfc9d3;
 }
 
+@media (max-width: 768px) {
+    /* 전체 레이아웃 조정 */
+    .product-info {
+        flex-direction: column; /* 세로 배치 */
+        align-items: center; /* 중앙 정렬 */
+        text-align: center;
+        padding: 15px;
+        gap: 15px;
+    }
+
+    /* 이미지 스타일 */
+    .product-info img {
+        width: 80%; /* 이미지 너비 축소 */
+        max-width: 250px; /* 최대 너비 제한 */
+        height: auto; /* 비율 유지 */
+        margin-bottom: 15px; /* 이미지와 텍스트 간 간격 추가 */
+        border-radius: 10px;
+    }
+
+    /* 상세 정보 스타일 */
+    .product-details {
+        width: 100%; /* 전체 화면 너비 */
+        padding: 10px;
+    }
+
+    .product-details h1 {
+        font-size: 1.8rem; /* 제목 크기 축소 */
+        margin-bottom: 10px;
+        word-break: keep-all; /* 텍스트 단어 분리 방지 */
+    }
+
+    .product-details ul {
+        list-style: none; /* 리스트 스타일 제거 */
+        padding: 0;
+        margin: 10px 0;
+    }
+
+    .product-details ul li {
+        font-size: 14px; /* 텍스트 크기 축소 */
+        margin-bottom: 5px;
+    }
+
+    .product-details ul li span {
+        font-weight: bold; /* 강조 */
+    }
+
+    /* 별점 및 리뷰 스타일 */
+    .rating {
+        justify-content: center;
+        margin-top: 10px;
+        gap: 5px;
+    }
+
+    .rating span {
+        font-size: 1rem; /* 별점 크기 조정 */
+    }
+
+    /* 버튼 스타일 */
+    .actions {
+        flex-direction: column; /* 버튼 세로 배치 */
+        gap: 10px; /* 버튼 간 간격 */
+    }
+
+    .actions button {
+        width: 90%; /* 버튼 너비 축소 */
+        max-width: 250px; /* 최대 너비 제한 */
+        font-size: 1rem; /* 버튼 텍스트 크기 축소 */
+        padding: 10px;
+        border-radius: 5px;
+    }
+
+    /* 기본 정보 섹션 */
+    .details {
+        width: 100%; /* 전체 화면 너비 */
+        padding: 15px;
+    }
+
+    .details h2 {
+        font-size: 1.4rem; /* 제목 크기 축소 */
+        margin-bottom: 10px;
+    }
+
+    .details ul {
+        list-style: disc;
+        padding-left: 20px; /* 디스크 리스트 안쪽 여백 */
+        font-size: 14px;
+    }
+
+    .details ul li {
+        margin-bottom: 5px;
+    }
+
+    /* 목차, 책 소개 섹션 */
+    .book-index, .book-intro {
+        width: 100%; /* 전체 화면 너비 */
+        padding: 15px;
+        text-align: left;
+    }
+
+    .book-index h2, .book-intro h2 {
+        font-size: 1.4rem;
+        margin-bottom: 10px;
+    }
+
+    .book-index p, .book-intro p {
+        font-size: 14px; /* 텍스트 크기 축소 */
+        line-height: 1.5; /* 줄 간격 */
+    }
+
+    /* 리뷰 섹션 */
+    .review-section {
+        width: 100%; /* 전체 화면 너비 */
+        padding: 15px;
+    }
+
+    .review-header h2 {
+        font-size: 1.4rem;
+    }
+
+    .review-header p {
+        font-size: 12px; /* 설명 텍스트 크기 축소 */
+        color: #666;
+    }
+
+    .review-form {
+        padding: 10px;
+    }
+
+    .review-form form label {
+        font-size: 14px; /* 라벨 크기 축소 */
+    }
+
+    .review-form form textarea {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .review-form form button {
+        font-size: 1rem;
+        padding: 10px;
+    }
+
+    /* 푸터 조정 */
+    footer {
+        padding: 10px;
+        text-align: center;
+    }
+
+    .footer-links {
+        margin-bottom: 10px;
+    }
+
+    .footer-container {
+        flex-direction: column; /* 세로 정렬 */
+        gap: 10px;
+    }
+
+    .footer-info, .customer-center {
+        font-size: 12px; /* 텍스트 크기 축소 */
+        line-height: 1.4;
+    }
+
+    /* 헤더 컨테이너 */
+    .header {
+        display: flex; /* Flexbox 사용 */
+        flex-direction: column; /* 기본적으로 세로 정렬 */
+        align-items: center; /* 중앙 정렬 */
+        padding: 10px;
+        gap: 10px; /* 요소 간 간격 */
+    }
+
+    /* 로고 및 검색 */
+    .header-logo-search {
+        display: flex; /* Flexbox 사용 */
+        flex-direction: row; /* 가로 정렬 */
+        justify-content: space-between;
+        align-items: center;
+        width: 100%; /* 가로 공간 채우기 */
+        max-width: 500px; /* 최대 너비 제한 */
+    }
+
+    .header-logo {
+        flex: 1; /* 로고는 왼쪽에 위치 */
+        text-align: left;
+    }
+
+    .search-bar {
+        flex: 3; /* 검색창은 넓게 차지 */
+        display: flex;
+        gap: 5px; /* 검색창과 버튼 간 간격 */
+    }
+
+    .search-bar input {
+        flex: 1;
+        padding: 10px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .search-bar button {
+        padding: 10px;
+        font-size: 14px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    /* 내비게이션 메뉴 */
+    .menu {
+        display: flex; /* Flexbox 사용 */
+        flex-wrap: nowrap; /* 줄바꿈 없이 한 줄로 정렬 */
+        justify-content: space-between; /* 요소 간 간격 조정 */
+        gap: 5px; /* 항목 간 간격 */
+        overflow-x: auto; /* 가로 스크롤 가능 */
+        padding: 10px 0;
+    }
+
+    .menu a {
+        font-size: 12px; /* 텍스트 크기 축소 */
+        text-decoration: none;
+        padding: 5px 3px; /* 여백 조정 */
+        border-radius: 5px;
+        text-align: center;
+        white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+    }
+
+
+    /* 사용자 아이콘 */
+    .user-icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .user-icon img {
+        width: 30px; /* 아이콘 크기 */
+        height: 30px;
+        border-radius: 50%; /* 아이콘을 원형으로 */
+    }
+}
 

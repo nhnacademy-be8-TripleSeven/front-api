@@ -343,3 +343,107 @@ footer {
 .footer-buttons button:hover {
     background-color: #bfc9d3;
 }
+
+
+@media (max-width: 768px) {
+    /* 검색 결과 레이아웃 */
+    .book-list {
+        display: flex; /* Flexbox 사용 */
+        flex-direction: column; /* 세로 정렬 */
+        align-items: center; /* 중앙 정렬 */
+        gap: 20px; /* 각 책 간 간격 */
+        padding: 10px;
+    }
+
+    .book-item {
+        width: 90%; /* 화면 너비의 90%로 설정 */
+        max-width: 280px; /* 최대 크기 제한 */
+        text-align: center; /* 텍스트 중앙 정렬 */
+        padding: 15px;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        margin: 0 auto; /* 가운데 정렬 */
+    }
+
+    .book-item img {
+        width: 70%; /* 이미지 크기를 부모의 70%로 축소 */
+        height: auto; /* 비율 유지 */
+        margin-bottom: 10px;
+        border-radius: 5px; /* 모서리 둥글게 */
+    }
+
+    .book-item h4 {
+        font-size: 16px; /* 제목 크기 약간 확대 */
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis; /* 긴 제목 말줄임표 처리 */
+        margin-bottom: 8px; /* 텍스트 간격 조정 */
+    }
+
+    .book-item p {
+        font-size: 14px; /* 텍스트 크기 자연스럽게 설정 */
+        color: #666;
+    }
+
+    /* 검색 필터 사이드바 */
+    .filter-sidebar {
+        width: 100%; /* 화면 너비를 채우도록 설정 */
+        margin-bottom: 20px; /* 검색 결과와의 간격 추가 */
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: #f9f9f9;
+    }
+
+    .filter-sidebar h3 {
+        font-size: 16px;
+        text-align: center;
+    }
+
+    .filter-sidebar ul {
+        display: flex; /* 필터 항목 가로 정렬 */
+        flex-wrap: wrap; /* 줄바꿈 허용 */
+        gap: 10px;
+        justify-content: center; /* 중앙 정렬 */
+    }
+
+    .filter-sidebar button {
+        width: 100%; /* 버튼을 화면 너비에 맞춤 */
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    /* 페이지네이션 */
+    .pagination {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .page-btn {
+        padding: 10px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f7f7f7;
+    }
+
+    .page-btn:disabled {
+        background-color: #eee;
+        color: #999;
+    }
+    /* 검색 조건 부분 숨기기 */
+    .filter-sidebar {
+        display: none; /* 모바일 화면에서 검색 조건 숨기기 */
+    }
+
+    /* 검색 결과 영역 확장 */
+    .book-results {
+        width: 100%; /* 전체 화면 너비를 사용하도록 확장 */
+        margin: 0 auto; /* 중앙 정렬 */
+        padding: 20px; /* 내부 여백 추가 */
+    }
+}

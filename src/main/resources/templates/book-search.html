@@ -86,7 +86,7 @@
 
       <!-- categorySearch 경로 -->
       <form th:if="${searchBook.path == 'categorySearch'}" th:action="@{/categorySearch}" method="get">
-        <input type="hidden" name="categories" th:each="category : ${searchBook.categories}" th:value="${searchBook.category}" />
+        <input type="hidden" name="categories" th:each="category : ${searchBook.categories}" th:value="${searchBook.categories}" />
         <input type="hidden" name="keyword" th:value="${searchBook.keyword}">
         <input type="hidden" name="page" th:value="${searchBook.page}" />
         <select name="sortDir" onchange="this.form.submit()">
