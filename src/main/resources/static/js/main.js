@@ -1,3 +1,6 @@
+
+
+
 // document.addEventListener('DOMContentLoaded', () => {
 //     // 초기 슬라이더 로드
 //     initializeSlider('slider1', '/api/books/monthly');

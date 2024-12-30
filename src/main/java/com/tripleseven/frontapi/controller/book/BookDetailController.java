@@ -2,8 +2,8 @@ package com.tripleseven.frontapi.controller.book;
 
 import com.tripleseven.frontapi.dto.review.ReviewRequestDTO;
 import com.tripleseven.frontapi.dto.review.ReviewResponseDTO;
-import com.tripleseven.frontapi.dto.SearchBookDetailDTO;
-import com.tripleseven.frontapi.service.BookApiService;
+import com.tripleseven.frontapi.dto.BookDetailViewDTO;
+import com.tripleseven.frontapi.service.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,14 +21,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BookDetailController {
 
-    private final BookApiService bookApiService;
+    private final BookService bookApiService;
 
     @GetMapping("/books/{bookId}")
     public String bookDetail(
             @PathVariable Long bookId,
             @RequestHeader(value = "X-User", required = false) Long userId,
             Model model) {
-        SearchBookDetailDTO book = bookApiService.getBookDetail(bookId);
+        BookDetailViewDTO book = bookApiService.getBookDetail(bookId);
         List<ReviewResponseDTO> reviews = bookApiService.getAllReviewsByBookId(bookId);
 
         int sum = 0;
