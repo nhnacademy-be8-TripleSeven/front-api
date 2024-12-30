@@ -118,6 +118,16 @@ body {
     cursor: pointer;
 }
 
+.logout-btn {
+    background-color: #91b5f3;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 12px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
 @media (max-width: 768px) {
     .header {
         flex-direction: column;

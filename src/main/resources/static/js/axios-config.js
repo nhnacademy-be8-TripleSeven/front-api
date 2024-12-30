@@ -11,6 +11,7 @@ export function setToken(token) {
 // Axios 요청 인터셉터
 axios.interceptors.request.use(
     function(config) {
+        console.log("test")
         const token = getToken(); // JWT 토큰 가져오기
         if (token) {
             config.headers['Authorization'] = `Bearer ${token}`; // Authorization 헤더에 토큰 추가
