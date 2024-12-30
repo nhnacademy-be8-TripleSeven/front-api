@@ -13,13 +13,13 @@
 <main>
   <aside class="filter-sidebar">
   <h3>검색 조건</h3>
-    <form method="get" action="/categorySearch">
+    <form method="get" th:action="@{/categorySearch}">
       <input type="text" name="keyword" placeholder="검색어 입력" />
       <h3>카테고리 선택</h3>
       <ul>
-        <li><label><input type="checkbox" name="categories" value="경제/경영"> 경제/경영</label></li>
-        <li><label><input type="checkbox" name="categories" value="소설"> 소설</label></li>
-        <li><label><input type="checkbox" name="categories" value="자기계발"> 자기계발</label></li>
+        <li><label><input type="checkbox" name="categories" value="국내도서"> 국내도서</label></li>
+        <li><label><input type="checkbox" name="categories" value="외국도서"> 외국도서</label></li>
+        <li><label><input type="checkbox" name="categories" value="한국소설"> 한국소설</label></li>
       </ul>
       <button type="submit">검색</button>
     </form>
@@ -39,31 +39,68 @@
   <section class="book-results">
     <h2>검색 결과</h2>
     <div class="result-controls">
-      <p th:if="${searchBooks.size() > 0}" th:text="'총 ' + ${searchBooks.size()} + '권의 검색 결과'"></p><!-- searchBook 경로 -->
-      <form th:if="${path == 'searchBook'}" th:action="@{/searchBook}" method="get">
-        <input type="hidden" name="searchTerm" th:value="${searchTerm}" />
-        <input type="hidden" name="page" th:value="${currentPage}" />
-        <select name="sortDir" onchange="this.form.submit()">
-          <option value="desc" th:selected="${sortDir == 'desc'}">최신순</option>
-          <option value="asc" th:selected="${sortDir == 'asc'}">오래된순</option>
+      <p th:if="${searchBook.contents.size() > 0}" th:text="'총 ' + ${searchBook.contents.size()} + '권의 검색 결과'"></p><!-- searchBook 경로 -->
+      <!-- searchBook 경로 -->
+      <form th:if="${searchBook.path == 'searchBook'}"
+            th:action="@{/searchBook}"
+            method="get">
+
+        <!-- 검색어(Controller 파라미터: searchTerm) -->
+        <input type="hidden" name="keyword" th:value="${searchBook.keyword}">
+
+        <!-- 현재 페이지, 페이지네이션 로직에 따라 page=0으로 초기화할 수도 있음 -->
+        <input type="hidden" name="page" th:value="${searchBook.page}" />
+
+        <!-- sortField 파라미터, 자바스크립트로 설정될 예정 -->
+        <input type="hidden" id="sortField" name="sortField"
+               th:value="${searchBook.sortField != null ? searchBook.sortField : 'publishDate'}" />
+
+        <!-- 정렬 방향 -->
+        <select name="sortDir" onchange="updateSortField(this)">
+          <!-- 최신순: sortDir='desc', sortField='publishDate' -->
+          <option value="desc"
+                  th:selected="${searchBook.sortDir == 'desc'}">최신순
+          </option>
+          <option value="asc"
+                  th:selected="${searchBook.sortDir == 'asc'}">오래된순
+          </option>
+          <option value="desc"
+                  th:selected="${searchBook.sortDir == 'popularity'}">인기순
+          </option>
         </select>
       </form>
 
+
+
+
       <!-- typeBook 경로 -->
-      <form th:if="${path == 'typeBook'}" th:action="@{/typeBook}" method="get">
-        <input type="hidden" name="type" th:value="${type}" />
-        <input type="hidden" name="page" th:value="${currentPage}" />
+      <form th:if="${searchBook.path == 'typeBook'}" th:action="@{/typeBook}" method="get">
+        <input type="hidden" name="type" th:value="${searchBook.type}" />
+        <input type="hidden" name="page" th:value="${searchBook.page}" />
         <select name="sortDir" onchange="this.form.submit()">
-          <option value="desc" th:selected="${sortDir == 'desc'}">최신순</option>
-          <option value="asc" th:selected="${sortDir == 'asc'}">오래된순</option>
+          <option value="desc" th:selected="${searchBook.sortDir == 'desc'}">최신순</option>
+          <option value="asc" th:selected="${searchBook.sortDir == 'asc'}">오래된순</option>
+
         </select>
       </form>
+
+      <!-- categorySearch 경로 -->
+      <form th:if="${searchBook.path == 'categorySearch'}" th:action="@{/categorySearch}" method="get">
+        <input type="hidden" name="categories" th:each="category : ${searchBook.categories}" th:value="${searchBook.category}" />
+        <input type="hidden" name="keyword" th:value="${searchBook.keyword}">
+        <input type="hidden" name="page" th:value="${searchBook.page}" />
+        <select name="sortDir" onchange="this.form.submit()">
+          <option value="desc" th:selected="${searchBook.sortDir == 'desc'}">최신순</option>
+          <option value="asc" th:selected="${searchBook.sortDir == 'asc'}">오래된순</option>
+        </select>
+      </form>
+
 
 
 
     </div>
     <div class="book-list">
-      <div th:each="book : ${searchBooks}" class="book-item">
+      <div th:each="book : ${searchBook.contents}" class="book-item">
         <a th:href="@{/details/{id}(id=${book.id})}">
           <img th:src="${book.coverUrl}" th:alt="${book.title}">
           <h4 th:text="${book.title}">도서 제목</h4>
@@ -71,27 +108,102 @@
         <p th:text="'판매가: ' + ${book.salePrice}">판매가</p>
       </div>
     </div>
+
     <div class="pagination">
 
-
       <!-- searchBook -->
-      <a th:if="${path == 'searchBook' and currentPage > 0}"
-         th:href="@{/searchBook(searchTerm=${searchTerm}, sortOrder=${sortOrder}, page=${currentPage - 1})}">이전</a>
-      <a th:if="${path == 'searchBook' and currentPage < totalPages - 1}"
-         th:href="@{/searchBook(searchTerm=${searchTerm}, sortOrder=${sortOrder}, page=${currentPage + 1})}">다음</a>
+      <div th:if="${searchBook.path == 'searchBook'}">
+        <!-- 이전 페이지 -->
+        <a th:if="${searchBook.page > 0}"
+           th:href="@{/searchBook(
+               searchTerm=${searchBook.searchTerm},
+               sortField=${searchBook.sortField},
+               sortDir=${searchBook.sortDir},
+               page=${searchBook.page - 1},
+               size=${searchBook.size}
+           )}">
+          이전
+        </a>
+
+        <!-- 현재 페이지 정보 표시 (예: 페이지 X) -->
+        <span th:text="'페이지 ' + (${searchBook.page + 1})"></span>
+
+        <!-- 다음 페이지 -->
+        <!-- 만약 전체 페이지 수 대신, 현재 목록 길이가 size와 같으면 '다음 페이지가 있다'고 가정 -->
+        <a th:if="${#lists.size(searchBook.contents) == searchBook.size}"
+           th:href="@{/searchBook(
+               searchTerm=${searchBook.searchTerm},
+               sortField=${searchBook.sortField},
+               sortDir=${searchBook.sortDir},
+               page=${searchBook.page + 1},
+               size=${searchBook.size}
+           )}">
+          다음
+        </a>
+      </div>
+
 
       <!-- typeBook -->
-      <a th:if="${path == 'typeBook' and currentPage > 0}"
-         th:href="@{/typeBook(type=${type}, sortOrder=${sortOrder}, page=${currentPage - 1})}">이전</a>
-      <span th:if="${path == 'typeBook'}"
-            th:text="'페이지 ' + (${currentPage + 1}) + ' / ' + ${totalPages}"></span>
-      <a th:if="${path == 'typeBook' and currentPage < totalPages - 1}"
-         th:href="@{/typeBook(type=${type}, sortOrder=${sortOrder}, page=${currentPage + 1})}">다음</a>
+      <div th:if="${searchBook.path == 'typeBook'}">
+        <a th:if="${searchBook.page > 0}"
+           th:href="@{/typeBook(
+               type=${searchBook.type},
+               sortField=${searchBook.sortField},
+               sortDir=${searchBook.sortDir},
+               page=${searchBook.page - 1},
+               size=${searchBook.size}
+           )}">
+          이전
+        </a>
+        <span th:text="'페이지 ' + (${searchBook.page + 1})"></span>
+        <a th:if="${#lists.size(searchBook.contents) == searchBook.size}"
+           th:href="@{/typeBook(
+               type=${searchBook.type},
+               sortField=${searchBook.sortField},
+               sortDir=${searchBook.sortDir},
+               page=${searchBook.page + 1},
+               size=${searchBook.size}
+           )}">
+          다음
+        </a>
+      </div>
+
+
+      <!-- categorySearch -->
+      <div th:if="${searchBook.path == 'categorySearch'}">
+        <a th:if="${searchBook.page > 0}"
+           th:href="@{/categorySearch(
+               categories=${searchBook.categories},
+               keyword=${searchBook.keyword},
+               sortField=${searchBook.sortField},
+               sortDir=${searchBook.sortDir},
+               page=${searchBook.page - 1},
+               size=${searchBook.size}
+           )}">
+          이전
+        </a>
+        <span th:text="'페이지 ' + (${searchBook.page + 1})"></span>
+        <a th:if="${#lists.size(searchBook.contents) == searchBook.size}"
+           th:href="@{/categorySearch(
+               categories=${searchBook.categories},
+               keyword=${searchBook.keyword},
+               sortField=${searchBook.sortField},
+               sortDir=${searchBook.sortDir},
+               page=${searchBook.page + 1},
+               size=${searchBook.size}
+           )}">
+          다음
+        </a>
+      </div>
 
     </div>
+
   </section>
 </main>
 
 <div th:replace="footer :: footer"></div>
+
+<script th:src="@{/js/book-search.js}"></script>
+
 </body>
 </html>

@@ -8,7 +8,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class SearchBookDetailDTO {
+public class BookDetailViewDTO {
 
     private Long id;
     private String title;
@@ -29,9 +29,9 @@ public class SearchBookDetailDTO {
     private StringBuilder tags;
     private StringBuilder bookTypes;
     private List<String> detailImages;
-    public SearchBookDetailDTO() {}
+    public BookDetailViewDTO() {}
 
-    public SearchBookDetailDTO(String title, String description, LocalDate localDate,
+    public BookDetailViewDTO(String title, String description, LocalDate localDate,
                             int regularPrice, int salePrice, String isbn13, int stock,
                             int page, String coverUrl, String publisher, List<BookCreatorDetailDTO> bookCreators,
                             StringBuilder categories, String bookIndex, StringBuilder tags, StringBuilder bookTypes
