@@ -5,13 +5,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/frontend/auth")
 public class AuthController {
 
-    @GetMapping("/join")
+    @GetMapping("/popup/join")
     public String join() {
 
-        return "/auth/join";
+        return "/popup/join";
     }
 
     @GetMapping("/login")

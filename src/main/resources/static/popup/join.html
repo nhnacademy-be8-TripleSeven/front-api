@@ -1,10 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
+<script type="module" src="/js/join.js"></script>  <!-- type="module" 추가 -->
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>회원가입</title>
   <link rel="stylesheet" href="/css/join.css">
+  <style>
+    /* 이메일 필드와 인증번호 필드 크기 일치 */
+    .form-group input {
+      height: 40px;  /* 입력 필드 높이를 설정하여 크기 맞추기 */
+      padding: 0 10px;
+    }
+
+    .form-group .input-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* 인증번호 버튼 크기 조정 */
+    .form-group .check-btn {
+      height: 40px;
+      padding: 0 15px;
+    }
+
+    /* 추가 스타일링 */
+    .form-group label {
+      font-size: 14px;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    /* 이메일 필드 버튼 위치 조정 */
+    #send-verification-btn {
+      height: 40px;
+      margin-left: 10px;
+    }
+
+    /* 인증번호 필드 크기 맞추기 */
+    #verification-code {
+      width: 100%;
+      height: 40px;
+    }
+  </style>
 </head>
 <body>
 <header class="header">
@@ -38,43 +77,53 @@
   <section class="signup-section">
     <h1>회원가입</h1>
     <p><strong><span class="highlight">NHN24 </span></strong>에 가입하여<br>더 많은 혜택을 즐겨보세요!</p>
-    <form class="signup-form">
+    <form class="signup-form" action="/signup" method="POST">
       <div class="form-group">
         <label for="username">아이디</label>
         <div class="input-container">
-          <input type="text" id="username" placeholder="아이디">
-          <button type="button" class="check-btn">중복 확인</button>
+          <input type="text" id="username" name="username" placeholder="아이디" required>
+          <button type="button" class="check-btn" id="check-username-btn">중복 확인</button>
         </div>
       </div>
       <div class="form-group">
         <label for="password">비밀번호</label>
         <div class="input-container1">
-          <input type="password" id="password" placeholder="비밀번호">
+          <input type="password" id="password" name="password" placeholder="비밀번호" required>
           <img src="/image/icons/EyeSlash.png" alt="비밀번호 보기" id="toggle-password" class="eye-icon">
         </div>
       </div>
       <div class="form-group">
         <label for="confirm-password">비밀번호 재확인</label>
         <div class="input-container1">
-          <input type="password" id="confirm-password" placeholder="비밀번호 재확인">
+          <input type="password" id="confirm-password" name="confirm-password" placeholder="비밀번호 재확인" required>
           <img src="/image/icons/EyeSlash.png" alt="비밀번호 보기" id="toggle-confirm-password" class="eye-icon">
         </div>
       </div>
       <div class="form-group">
         <label for="name">이름</label>
-        <input type="text" id="name" placeholder="이름">
+        <input type="text" id="name" name="name" placeholder="이름" required>
       </div>
       <div class="form-group">
         <label for="email">이메일</label>
-        <input type="email" id="email" placeholder="이메일">
+        <div class="input-container">
+          <input type="email" id="email" name="email" placeholder="이메일" required>
+          <button type="button" id="send-verification-btn" class="check-btn">이메일 인증번호 발송</button>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="verification-code">인증번호</label>
+        <div class="input-container">
+          <input type="text" id="verification-code" name="verification-code" placeholder="인증번호" maxlength="6" required>
+          <button type="button" id="verify-btn" class="check-btn">인증 확인</button>
+        </div>
       </div>
       <div class="form-group">
         <label for="birthdate">생일</label>
-        <input type="date" id="birthdate">
+        <input type="date" id="birthdate" name="birthdate" required>
       </div>
       <div class="form-group">
         <label for="telecom">통신사 선택</label>
-        <select id="telecom">
+        <select id="telecom" name="telecom" required>
           <option value="skt">SKT</option>
           <option value="kt">KT</option>
           <option value="lg">LG U+</option>
@@ -82,17 +131,13 @@
       </div>
       <div class="form-group">
         <label for="mobile">휴대 전화번호</label>
-        <input type="tel" id="mobile" placeholder="휴대 전화번호">
-      </div>
-      <div class="form-group">
-        <label for="phone">일반 전화번호</label>
-        <input type="tel" id="phone" placeholder="일반 전화번호">
+        <input type="tel" id="mobile" name="mobile" placeholder="휴대 전화번호" required>
       </div>
       <div class="form-group">
         <label>성별</label>
-        <input type="radio" id="male" name="gender" value="male">
+        <input type="radio" id="male" name="gender" value="male" required>
         <label for="male">남</label>
-        <input type="radio" id="female" name="gender" value="female">
+        <input type="radio" id="female" name="gender" value="female" required>
         <label for="female">여</label>
       </div>
       <button type="submit" class="signup-btn">NHN24 회원가입</button>
@@ -126,6 +171,7 @@
     </div>
   </div>
 </footer>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>  <!-- axios CDN 추가 -->
 <script src="/js/join.js"></script>
 </body>
 </html>
