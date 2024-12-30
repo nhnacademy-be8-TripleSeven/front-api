@@ -10,12 +10,12 @@ public class AuthController {
     @GetMapping("/join")
     public String join() {
 
-        return "/auth/join";
+        return "auth/join";
     }
 
     @GetMapping("/login")
     public String login() {
-        return "/auth/login";
+        return "auth/login";
     }
 
     @GetMapping("/account/find")
