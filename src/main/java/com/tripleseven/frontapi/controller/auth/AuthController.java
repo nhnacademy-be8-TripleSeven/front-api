@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class AuthController {
 
-    @GetMapping("/popup/join")
+    @GetMapping("/join")
     public String join() {
 
-        return "/popup/join";
+        return "/auth/join";
     }
 
     @GetMapping("/login")

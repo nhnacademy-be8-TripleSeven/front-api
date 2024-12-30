@@ -6,6 +6,9 @@
   <title>회원/비회원 로그인</title>
   <link rel="stylesheet" th:href="@{/css/login.css}">
   <link rel="stylesheet" th:href="@{/css/global.css}">
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script type="module" src="/js/axios-config.js"></script>
+  <script type="module" src="/js/login.js"></script>
 </head>
 <body>
 <div class="container">
@@ -21,12 +24,10 @@
         </div>
 
         <div id="member-login" class="tab-content active">
-          <form th:action="@{/login}" method="post">
-            <input type="text" id="user-id" name="userId" placeholder="ID" required>
-            <input type="password" id="user-password" name="password" placeholder="비밀번호" required>
-            <button type="submit" class="large-btn">로그인</button>
-          </form>
-          <a th:href="@{/join}">
+          <input type="text" id="user-id" name="loginId" placeholder="ID" required>
+          <input type="password" id="user-password" name="password" placeholder="비밀번호" required>
+          <button type="button" class="large-btn" id="login-btn">로그인</button>
+          <a href="/join">
             <button class="simple-join-btn">NHN 간편 회원가입</button>
           </a>
           <div class="helper-links">
@@ -60,11 +61,10 @@
     </div>
   </section>
 
-
   <div th:replace="footer :: footer"></div>
 
 </div>
 
-<script th:src="@{/js/login.js}"></script>
+
 </body>
 </html>
