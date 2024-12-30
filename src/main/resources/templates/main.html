@@ -90,6 +90,7 @@
             <li th:each="notice : ${notices}">
                 <a th:href="@{/notices/{id}(id=${notice.id})}" th:text="${notice.title}"></a>
             </li>
+
         </ul>
     </div>
     <div class="search">
