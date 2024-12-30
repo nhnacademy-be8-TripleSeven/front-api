@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -67,7 +68,7 @@ public class BookDetailController {
 
         return "order-detail"; // HTML 페이지 렌더링
     }
-
+    // 리뷰 페이징 처리
     @ResponseBody
     @GetMapping("/api/reviews/{bookId}")
     public Page<ReviewResponseDTO> getPagedReviews(
@@ -77,16 +78,17 @@ public class BookDetailController {
         Pageable pageable = PageRequest.of(page, size);
         return bookApiService.getPagedReviewsByBookId(bookId, pageable);
     }
-
+    // 도서 상세 페이지에서 리뷰 등록하는 메소드
+    //@RequestHeader("X-User")
     @PostMapping("/api/reviews")
-    public ResponseEntity<Void> submitReview(@RequestHeader("X-User") Long userId,
-                                             @RequestBody ReviewRequestDTO reviewRequestDTO) {
+    public RedirectView submitReview(@ModelAttribute ReviewRequestDTO reviewRequestDTO) {
         // 유저가 해당 도서를 구매했는지 확인
-        boolean hasPurchased = bookApiService.checkUserPurchase(userId, reviewRequestDTO.getBookId());
-        if (!hasPurchased) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        }
-        bookApiService.submitReview(userId, reviewRequestDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+//        boolean hasPurchased = bookApiService.checkUserPurchase(userId, reviewRequestDTO.getBookId());
+//        if (!hasPurchased) {
+//            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+//        }
+        Long randUserId = (long) (Math.random() * 1000) + 1;
+        bookApiService.submitReview(randUserId, reviewRequestDTO);
+        return new RedirectView("/books/" + reviewRequestDTO.getBookId());
     }
 }
