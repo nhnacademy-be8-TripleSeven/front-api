@@ -8,9 +8,6 @@ spring:
   profiles:
     active: dev
 
-
-
-
 management:
   health:
     status:
@@ -26,13 +23,4 @@ management:
     env:
       enabled: true
 
-eureka:
-  instance:
-    instance-id: front-api
-    hostname: localhost
-    prefer-ip-address: true
-  client:
-    fetch-registry: true
-    register-with-eureka: true
-    serviceUrl:
-      defaultZone: http://admin:1234@eureka-server:8761/eureka
+
