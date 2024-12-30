@@ -42,6 +42,9 @@ document.addEventListener('DOMContentLoaded', () => {
             reviewItem.classList.add('review-item');
             reviewItem.innerHTML = `
             <p>
+                <strong>작성자:</strong>${review.userId} <!-- userId 표시 -->
+            </p>
+            <p>
                 <strong>평점:</strong> 
                 <span class="rating-stars">${ratingStars}</span>
             </p>

@@ -2,22 +2,22 @@ package com.tripleseven.frontapi.client;
 
 import com.tripleseven.frontapi.dto.BookDetailResponseDTO;
 import com.tripleseven.frontapi.dto.BookPageResponseDTO;
-import com.tripleseven.frontapi.dto.BookSearchResponseDTO;
-import java.util.List;
-
+import com.tripleseven.frontapi.dto.review.ReviewRequestDTO;
 import com.tripleseven.frontapi.dto.coupon.CouponDetailsDTO;
+
+import org.springframework.data.domain.Pageable;
 import com.tripleseven.frontapi.dto.coupon.CouponPolicyRequestDTO;
 import com.tripleseven.frontapi.dto.coupon.CouponPolicyResponseDTO;
-import org.springframework.data.domain.Pageable;
+import com.tripleseven.frontapi.dto.coupon.BookPageDetailResponseDTO;
 import org.springframework.web.bind.annotation.*;
-import com.tripleseven.frontapi.dto.ReviewResponseDTO;
-import com.tripleseven.frontapi.dto.SearchBookDetailDTO;
+import com.tripleseven.frontapi.dto.review.ReviewResponseDTO;
+import com.tripleseven.frontapi.dto.BookDetailViewDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import java.util.List;
 
 @FeignClient(name = "book-coupon-api")
 public interface BookFeignClient {
@@ -31,12 +31,13 @@ public interface BookFeignClient {
     BookPageResponseDTO getBooksByTerm(
         @PathVariable("term") String term,
         @RequestParam("page") int page,
-        @RequestParam("size") int size
+        @RequestParam("size") int size,
+        @RequestParam("sort") String sort
     );
-
+  
     @GetMapping("/books/{bookId}")
-    SearchBookDetailDTO getBookDetail(@PathVariable Long bookId);
-
+    BookDetailViewDTO getBookDetail(@PathVariable Long bookId);
+  
     @GetMapping("/books/category")
     BookPageResponseDTO getCategoryBooks(
         @RequestParam String keyword,
@@ -44,14 +45,20 @@ public interface BookFeignClient {
         @RequestParam int page,
         @RequestParam int size
     );
-
+  
     @GetMapping("/books/typeSearch/{type}")
-    BookPageResponseDTO getTypeSearchBooks(
+    BookPageDetailResponseDTO getTypeSearchBooks(
         @PathVariable("type") String type,
-        @RequestParam("page") int page,
-        @RequestParam("size") int size
+        Pageable pageable
     );
-
+    @GetMapping("/books/categories/{categories}/keyword/{keyword}")
+    BookPageDetailResponseDTO getCategoriesSearchBooks(
+        @RequestParam("categories") List<String> categories,
+        @RequestParam("keyword") String keyword,
+        @RequestParam("page") int page,
+        @RequestParam("size") int size,
+        @RequestParam("sort") String sort
+    );
 
     @PostMapping("/admin/coupon-policies")
     CouponPolicyResponseDTO createCouponPolicy(@RequestBody CouponPolicyRequestDTO request);
@@ -71,6 +78,7 @@ public interface BookFeignClient {
     @DeleteMapping("/admin/coupon-policies/{id}")
     void deleteCouponPolicy(@PathVariable Long id);
 
+
     @GetMapping("/api/coupons")
     List<CouponDetailsDTO> getAllCoupons(@RequestHeader("X-User") Long userId,
                                          @RequestParam(required = false) String keyword,
@@ -83,15 +91,18 @@ public interface BookFeignClient {
                                           @RequestParam(required = false) String startDate,
                                           @RequestParam(required = false) String endDate);
 
-  
-  
-  
     @GetMapping("/api/reviews/{bookId}/paged")
     Page<ReviewResponseDTO> getPagedReviewsByBookId(
             @PathVariable Long bookId,
             @RequestParam("page") int page,
             @RequestParam("size") int size);
 
-      @GetMapping("/api/reviews/{bookId}/all")
+    @GetMapping("/api/reviews/{bookId}/all")
     List<ReviewResponseDTO> getAllReviewByBookId(@PathVariable Long bookId);
+
+    @GetMapping("/api/reviews/{bookId}/user")
+    ReviewResponseDTO getUserReviewForBook(@PathVariable("bookId") Long bookId, @RequestHeader("X-User") Long userId);
+
+    @PostMapping("/api/reviews")
+    void addReview(@RequestHeader("X-User") Long userId, @RequestBody ReviewRequestDTO requestDto);
 }
