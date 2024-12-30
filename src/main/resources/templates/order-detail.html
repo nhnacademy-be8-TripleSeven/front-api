@@ -117,8 +117,6 @@
         </select>
         <label for="review-text">내용:</label>
         <textarea name="text" id="review-text" rows="5" required></textarea>
-        <label for="review-image">이미지 업로드</label>
-        <input type="file" name="image" id="review-image" accept="image/*"></input>
         <input type="hidden" name="bookId" th:value="${book.id}" />
         <button type="submit">리뷰 등록</button>
       </form>
@@ -127,6 +125,7 @@
     <!-- 리뷰 목록 -->
     <div id="reviewList">
       <div class="review-item">
+        <p><strong>작성자:</strong> 사용자 ID 12345</p>
         <p>
           <strong>평점:</strong>
           <span class="rating-stars">★★★★☆</span>
