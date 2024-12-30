@@ -1,4 +1,9 @@
-document.getElementById('login-btn').addEventListener('click', handleLogin);
+document.addEventListener('DOMContentLoaded', function () {
+    const loginBtn = document.getElementById('login-post-btn');
+    if (loginBtn) {
+        loginBtn.addEventListener('click', handleLogin);
+    }
+});
 
 // JWT 토큰 저장 함수
 function setToken(token) {
@@ -7,6 +12,8 @@ function setToken(token) {
 
 function handleLogin(event) {
     event.preventDefault();  // 기본 폼 제출을 막음
+
+    console.log("test");
 
     const loginId = document.getElementById('user-id').value;
     const password = document.getElementById('user-password').value;
