@@ -42,6 +42,7 @@ public class AuthController {
         String authorizationUri = "https://id.payco.com/oauth2.0/authorize"
                 + "?response_type=code"
                 + "&client_id=" + paycoClientId
+                + "&serviceProviderCode=FRIENDS"
                 + "&redirect_uri=" + encodedRedirectUri
                 + "&userLocale=ko_KR";
 
