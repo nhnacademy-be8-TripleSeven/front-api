@@ -4,8 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const clientId = clientIdElement.getAttribute('data-login-id');
 
     if (clientId) {
-        const url = `/backend/auth/payco/login/` + clientId;
-        axios.post(url)
+        axios.post(`/backend/auth/payco/login/`, {clientId : clientId})
             .then(response => {
                 const tokenInfo = response.data;
 
