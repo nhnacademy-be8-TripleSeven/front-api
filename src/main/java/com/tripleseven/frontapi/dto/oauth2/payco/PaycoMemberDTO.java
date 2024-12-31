@@ -8,7 +8,7 @@ import lombok.Getter;
 public class PaycoMemberDTO {
 
     private Header header;
-    private Body body;
+    private Data data;
 
     @Getter
     @AllArgsConstructor
@@ -20,7 +20,7 @@ public class PaycoMemberDTO {
 
     @Getter
     @AllArgsConstructor
-    public static class Body {
+    public static class Data {
 
         private PaycoMember member;
 

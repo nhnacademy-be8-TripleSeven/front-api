@@ -10,5 +10,5 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface MemberFeignClient {
 
     @PostMapping("/members/oauth2/payco")
-    MemberAccountDto savePaycoMember(@RequestBody PaycoMemberDTO.Body.PaycoMember paycoMember);
+    MemberAccountDto savePaycoMember(@RequestBody PaycoMemberDTO.Data.PaycoMember paycoMember);
 }

@@ -35,8 +35,8 @@ public class AfterPaycoLoginService {
 
         log.info("accessToken : {}", accessToken);
         PaycoMemberDTO paycoMember = paycoApiFeignClient.getPaycoMember(paycoClientId, accessToken.getAccessToken());
-        log.info("paycoMember Id : {}", paycoMember.getBody().getMember().getIdNo());
-        MemberAccountDto memberAccountDto = memberFeignClient.savePaycoMember(paycoMember.getBody().getMember());
+        log.info("paycoMember Id : {}", paycoMember.getData().getMember().getIdNo());
+        MemberAccountDto memberAccountDto = memberFeignClient.savePaycoMember(paycoMember.getData().getMember());
         log.info("memberAccountDto Id : {}", memberAccountDto.getLoginId());
         return memberAccountDto;
     }
