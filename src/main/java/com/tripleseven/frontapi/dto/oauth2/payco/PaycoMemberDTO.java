@@ -28,7 +28,7 @@ public class PaycoMemberDTO {
         @AllArgsConstructor
         public static class PaycoMember {
 
-            private int idNo;
+            private String idNo;
             private String email;
             private String mobile;
             private String name;
