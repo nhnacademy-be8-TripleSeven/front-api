@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (loginBtn) {
         loginBtn.addEventListener('click', handleLogin);
     }
+
 });
 
 // JWT 토큰 저장 함수

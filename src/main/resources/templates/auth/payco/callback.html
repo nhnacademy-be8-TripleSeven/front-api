@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>페이코 로그인 처리</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script type="module" src="/js/axios-config.js"></script>
+    <script type="module" src="/js/payco-callback.js" defer></script>
+</head>
+<body>
+<p>로그인 처리 중입니다. 잠시만 기다려주세요...</p>
+
+<!-- 로그인 아이디를 숨긴 상태로 전달 -->
+<div id="loginId" data-login-id="${loginId}" style="display: none;"></div>
+</body>
+</html>

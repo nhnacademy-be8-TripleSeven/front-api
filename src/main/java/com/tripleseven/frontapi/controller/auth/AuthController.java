@@ -1,12 +1,12 @@
 package com.tripleseven.frontapi.controller.auth;
 
 import com.tripleseven.frontapi.annotations.secure.SecureKey;
+import com.tripleseven.frontapi.dto.member.MemberAccountDto;
 import com.tripleseven.frontapi.service.oauth2.AfterPaycoLoginService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.UnsupportedEncodingException;
@@ -54,8 +54,12 @@ public class AuthController {
     }
 
     @GetMapping("/payco/callback")
-    public String afterPaycoLogin(@RequestParam String code, @RequestParam String serviceExtra) {
-        return null;
+    public ModelAndView callbackPaycoLogin(@RequestParam String code, ModelAndView modelAndView) {
+        MemberAccountDto memberAccountDto = afterPaycoLoginService.savePaycoMemberDetail(code);
+        modelAndView.addObject(memberAccountDto.getLoginId());
+        modelAndView.setViewName("auth/payco/callback");
+
+        return modelAndView;
     }
 
     @GetMapping("/account/find")

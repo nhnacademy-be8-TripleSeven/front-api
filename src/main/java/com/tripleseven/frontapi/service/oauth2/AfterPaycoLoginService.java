@@ -4,6 +4,7 @@ import com.tripleseven.frontapi.annotations.secure.SecureKey;
 import com.tripleseven.frontapi.client.MemberFeignClient;
 import com.tripleseven.frontapi.client.PaycoApiFeignClient;
 import com.tripleseven.frontapi.client.PaycoAuthFeignClient;
+import com.tripleseven.frontapi.dto.member.MemberAccountDto;
 import com.tripleseven.frontapi.dto.oauth2.payco.PaycoAuthTokenResponseDTO;
 import com.tripleseven.frontapi.dto.oauth2.payco.PaycoMemberDTO;
 import lombok.RequiredArgsConstructor;
@@ -27,14 +28,21 @@ public class AfterPaycoLoginService {
     private final PaycoAuthFeignClient paycoAuthFeignClient;
     private final PaycoApiFeignClient paycoApiFeignClient;
 
-    public void savePaycoMemberDetail(String code) {
+    public MemberAccountDto savePaycoMemberDetail(String code) {
         PaycoAuthTokenResponseDTO accessToken = paycoAuthFeignClient.getAccessToken(
                 PAYCO_GRANT_TYPE, paycoClientId, paycoClientSecret, code
         );
 
         log.info("accessToken : {}", accessToken);
-
         PaycoMemberDTO paycoMember = paycoApiFeignClient.getPaycoMember(paycoClientId, accessToken.getAccessToken());
-        memberFeignClient.savePaycoMember(paycoMember.getBody().getMember());
+        log.info("paycoMember Id : {}", paycoMember.getBody().getMember().getIdNo());
+        MemberAccountDto memberAccountDto = memberFeignClient.savePaycoMember(paycoMember.getBody().getMember());
+        log.info("memberAccountDto Id : {}", memberAccountDto.getLoginId());
+        return memberAccountDto;
     }
+
+    public void getJwt() {
+
+    }
+
 }

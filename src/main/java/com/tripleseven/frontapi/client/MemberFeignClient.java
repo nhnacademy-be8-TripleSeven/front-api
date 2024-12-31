@@ -1,8 +1,8 @@
 package com.tripleseven.frontapi.client;
 
+import com.tripleseven.frontapi.dto.member.MemberAccountDto;
 import com.tripleseven.frontapi.dto.oauth2.payco.PaycoMemberDTO;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -10,5 +10,5 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface MemberFeignClient {
 
     @PostMapping("/members/oauth2/payco")
-    ResponseEntity<Void> savePaycoMember(@RequestBody PaycoMemberDTO.Body.PaycoMember paycoMember);
+    MemberAccountDto savePaycoMember(@RequestBody PaycoMemberDTO.Body.PaycoMember paycoMember);
 }
