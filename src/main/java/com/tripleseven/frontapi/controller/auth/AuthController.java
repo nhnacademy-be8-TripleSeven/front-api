@@ -56,7 +56,7 @@ public class AuthController {
     @GetMapping("/payco/callback")
     public ModelAndView callbackPaycoLogin(@RequestParam String code, ModelAndView modelAndView) {
         MemberAccountDto memberAccountDto = afterPaycoLoginService.savePaycoMemberDetail(code);
-        modelAndView.addObject(memberAccountDto.getLoginId());
+        modelAndView.addObject("loginId", memberAccountDto.getLoginId());
         modelAndView.setViewName("auth/payco/callback");
 
         return modelAndView;
