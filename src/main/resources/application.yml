@@ -8,9 +8,6 @@ spring:
   profiles:
     active: dev
 
-
-
-
 management:
   health:
     status:

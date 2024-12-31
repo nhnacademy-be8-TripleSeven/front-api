@@ -15,22 +15,13 @@
   <main class="main-content">
     <section class="find-section">
       <div class="tabs">
-        <button class="tab active" onclick="showTab('id-tab')">아이디 찾기</button>
-        <button class="tab" onclick="showTab('password-tab')">비밀번호 찾기</button>
+        <button class="tab active" onclick="showTab('id-tab')">계정 찾기</button>
       </div>
       <div id="id-tab" class="tab-content active">
         <h2>아이디 찾기</h2>
         <p class="instruction-text">아이디 찾기 방법을 선택해주세요.</p>
-        <button class="action-btn" th:onclick="|location.href='@{/find-id-phone}'|">휴대폰으로 본인인증</button>
-        <button class="dropdown-btn" th:onclick="|location.href='@{/find-id-phone}'|">등록된 휴대폰 번호로 찾기</button>
-        <button class="dropdown-btn" th:onclick="|location.href='@{/find-id-email}'|">등록된 이메일 주소로 찾기</button>
-      </div>
-      <div id="password-tab" class="tab-content">
-        <h2>비밀번호 찾기</h2>
-        <p class="instruction-text">비밀번호 찾기 방법을 선택해주세요.<br>선택하신 수단으로 비밀번호 재설정이 가능합니다.</p>
-        <button class="action-btn" th:onclick="|location.href='@{/reset-password-phone}'|">휴대폰으로 본인인증</button>
-        <button class="dropdown-btn" th:onclick="|location.href='@{/reset-password-phone-number}'|">등록된 휴대폰 번호로 찾기</button>
-        <button class="dropdown-btn" th:onclick="|location.href='@{/reset-password-email}'|">등록된 이메일 주소로 찾기</button>
+        <button class="dropdown-btn" th:onclick="|location.href='@{/account/find/phone}'|">등록된 휴대폰 번호로 찾기</button>
+        <button class="dropdown-btn" th:onclick="|location.href='@{/account/find/email}'|">등록된 이메일 주소로 찾기</button>
       </div>
     </section>
   </main>

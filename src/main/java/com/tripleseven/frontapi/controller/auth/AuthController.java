@@ -18,10 +18,10 @@ public class AuthController {
         return "auth/login";
     }
 
-    @GetMapping("/account/find")
+    @GetMapping("/find-account")
     public String findAccount() {
 
-        return "/auth/find-account";
+        return "auth/find-account";
     }
 
     @GetMapping("/account/find/email")
