@@ -4,8 +4,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const clientId = clientIdElement.getAttribute('data-login-id');
 
     if (clientId) {
-        // 서버로 clientId를 보내 토큰 요청
-        axios.post(`/backend/auth/payco/login/${clientId}`)
+        const url = `/backend/auth/payco/login/` + clientId;
+        axios.post(url)
             .then(response => {
                 const tokenInfo = response.data;
 
