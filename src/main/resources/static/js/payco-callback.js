@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (clientId) {
         // 서버로 clientId를 보내 토큰 요청
-        axios.post(`/payco/login/${clientId}`)
+        axios.post(`/backend/auth/payco/login/${clientId}`)
             .then(response => {
                 const tokenInfo = response.data;
 
@@ -13,16 +13,16 @@ document.addEventListener('DOMContentLoaded', function () {
                 setToken(tokenInfo.accessToken);
                 alert('success');
                 // 메인 페이지로 리디렉션
-                // window.location.href = '/main';
+                window.location.href = '/main';
             })
             .catch(error => {
                 console.error('로그인 요청 중 오류 발생:', error);
                 alert('로그인에 실패했습니다. 다시 시도해주세요.');
-                // window.location.href = '/login'; // 실패 시 로그인 페이지로 리디렉션
+                window.location.href = '/login'; // 실패 시 로그인 페이지로 리디렉션
             });
     } else {
         alert('클라이언트 ID가 제공되지 않았습니다. 로그인 페이지로 돌아갑니다.');
-        // window.location.href = '/login';
+        window.location.href = '/login';
     }
 });
 
