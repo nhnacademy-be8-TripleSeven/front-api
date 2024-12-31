@@ -439,3 +439,122 @@ footer {
 .footer-buttons button:hover {
     background-color: #bfc9d3;
 }
+
+
+/* 모바일에서 슬라이드 크기 및 텍스트 스크롤 추가 */
+@media (max-width: 768px) {
+    .slider {
+        width: 100%; /* 슬라이더가 화면 너비에 맞도록 */
+        overflow: hidden; /* 넘치는 내용 숨김 */
+        margin: 0; /* 위아래 공백 제거 */
+        position: relative; /* 버튼 배치를 위해 상대 위치 설정 */
+    }
+
+    .slides {
+        display: flex;
+        transition: transform 0.5s ease-in-out;
+        will-change: transform;
+        gap: 0; /* 슬라이드 간격 제거 */
+    }
+
+    .slide {
+        min-width: calc(100% / 3); /* 한 화면에 3개의 슬라이드 표시 */
+        box-sizing: border-box;
+        text-align: center;
+        margin: 0; /* 슬라이드 개별 공백 제거 */
+    }
+
+    .slide img {
+        width: 80px; /* 이미지 크기 축소 */
+        height: auto; /* 이미지 비율 유지 */
+        border-radius: 5px; /* 모서리 둥글게 유지 */
+    }
+
+    .slide p {
+        max-height: 40px; /* 텍스트 최대 높이 설정 */
+        overflow: hidden; /* 넘치는 텍스트 숨김 */
+        text-overflow: ellipsis; /* 말줄임표 처리 */
+        white-space: nowrap; /* 한 줄로 표시 */
+        margin-top: 5px; /* 이미지와 텍스트 간격 */
+        font-size: 12px; /* 텍스트 크기 축소 */
+    }
+
+    /* 제목이 긴 경우 스크롤 추가 */
+    .slide:hover p {
+        white-space: normal; /* 여러 줄로 변경 */
+        overflow-y: auto; /* 스크롤 추가 */
+        text-overflow: clip; /* 말줄임표 제거 */
+        max-height: 60px; /* 스크롤 높이 제한 */
+    }
+
+    /* 슬라이더 화살표 버튼 */
+    .arrow {
+        display: block; /* 화살표 버튼 표시 */
+        position: absolute;
+        top: 50%; /* 슬라이더 중앙에 배치 */
+        transform: translateY(-50%);
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        padding: 10px;
+        cursor: pointer;
+        z-index: 10;
+    }
+
+    .arrow.left {
+        left: 10px; /* 왼쪽 화살표 위치 */
+    }
+
+    .arrow.right {
+        right: 10px; /* 오른쪽 화살표 위치 */
+    }
+
+    .arrow:hover {
+        background-color: rgba(0, 0, 0, 0.8); /* 버튼 호버 효과 */
+    }
+
+    .book-grid {
+        display: flex; /* Flexbox를 사용 */
+        flex-wrap: nowrap; /* 한 줄로 유지 */
+        overflow-x: auto; /* 가로 스크롤 활성화 */
+        gap: 10px; /* 책 간 간격 */
+        padding: 10px; /* 내부 여백 추가 */
+    }
+
+    .book-item {
+        flex: 0 0 calc(100% / 3 - 10px); /* 한 줄에 3개의 책이 보이도록 설정 */
+        max-width: calc(100% / 3 - 10px); /* 동일한 크기 */
+        text-align: center; /* 텍스트 중앙 정렬 */
+    }
+
+    .book-item img {
+        width: 100%; /* 이미지가 부모 컨테이너를 채우도록 */
+        height: auto; /* 비율 유지 */
+        border-radius: 5px; /* 모서리 둥글게 */
+    }
+
+    .book-item p {
+        max-height: 40px; /* 텍스트 최대 높이 제한 */
+        overflow: hidden; /* 넘치는 텍스트 숨김 */
+        text-overflow: ellipsis; /* 말줄임표 처리 */
+        white-space: nowrap; /* 한 줄로 표시 */
+        font-size: 12px; /* 텍스트 크기 축소 */
+        margin-top: 5px; /* 이미지와 텍스트 간격 */
+    }
+
+    .book-grid::-webkit-scrollbar {
+        height: 8px; /* 스크롤바 높이 설정 */
+    }
+
+    .book-grid::-webkit-scrollbar-thumb {
+        background-color: #ccc; /* 스크롤바 색상 */
+        border-radius: 4px; /* 스크롤바 모서리 둥글게 */
+    }
+
+    .book-grid::-webkit-scrollbar-track {
+        background-color: #f5f5f5; /* 스크롤바 배경색 */
+    }
+
+}
+

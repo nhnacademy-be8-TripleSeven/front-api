@@ -1,7 +1,7 @@
 package com.tripleseven.frontapi.controller.book;
 
 import com.tripleseven.frontapi.dto.BookDetailResponseDTO;
-import com.tripleseven.frontapi.service.BookApiService;
+import com.tripleseven.frontapi.service.BookService;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 @RequiredArgsConstructor
 public class BookMainController {
-    private final BookApiService bookApiService;
+    private final BookService bookApiService;
 
     private final String BLOG_BEST = "blogBest";
     private final String ITEM_EDITOR_CHOICE = "itemEditorChoice";
@@ -42,6 +42,7 @@ public class BookMainController {
         model.addAttribute("itemEditorChoice", itemEditorChoice);
         model.addAttribute("ebook", ebook);
         model.addAttribute("foreign", foreign);
+
 
         return "main";
     }

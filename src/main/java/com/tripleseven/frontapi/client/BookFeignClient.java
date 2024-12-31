@@ -8,13 +8,12 @@ import com.tripleseven.frontapi.dto.review.ReviewRequestDTO;
 import com.tripleseven.frontapi.dto.coupon.CouponDetailsDTO;
 
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import com.tripleseven.frontapi.dto.coupon.CouponPolicyRequestDTO;
 import com.tripleseven.frontapi.dto.coupon.CouponPolicyResponseDTO;
 import com.tripleseven.frontapi.dto.coupon.BookPageDetailResponseDTO;
 import org.springframework.web.bind.annotation.*;
 import com.tripleseven.frontapi.dto.review.ReviewResponseDTO;
-import com.tripleseven.frontapi.dto.SearchBookDetailDTO;
+import com.tripleseven.frontapi.dto.BookDetailViewDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,7 +38,7 @@ public interface BookFeignClient {
     );
   
     @GetMapping("/books/{bookId}")
-    SearchBookDetailDTO getBookDetail(@PathVariable Long bookId);
+    BookDetailViewDTO getBookDetail(@PathVariable Long bookId);
   
     @GetMapping("/books/category")
     BookPageResponseDTO getCategoryBooks(
@@ -52,11 +51,17 @@ public interface BookFeignClient {
     @GetMapping("/books/typeSearch/{type}")
     BookPageDetailResponseDTO getTypeSearchBooks(
         @PathVariable("type") String type,
+        Pageable pageable
+    );
+    @GetMapping("/books/categories/{categories}/keyword/{keyword}")
+    BookPageDetailResponseDTO getCategoriesSearchBooks(
+        @RequestParam("categories") List<String> categories,
+        @RequestParam("keyword") String keyword,
         @RequestParam("page") int page,
         @RequestParam("size") int size,
         @RequestParam("sort") String sort
     );
-  
+
     @PostMapping("/admin/coupon-policies")
     CouponPolicyResponseDTO createCouponPolicy(@RequestBody CouponPolicyRequestDTO request);
 

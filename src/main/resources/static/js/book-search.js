@@ -1,3 +1,19 @@
+function updateSortField(selectElement) {
+  const sortFieldInput = document.getElementById('sortField');
+  const selectedOption = selectElement.options[selectElement.selectedIndex].text;
+
+  if (selectedOption === '인기순') {
+    sortFieldInput.value = 'popularity';
+  } else {
+    sortFieldInput.value = 'publishDate'; // 기본값 설정 (최신순, 오래된순)
+  }
+
+  // 폼 제출
+  selectElement.form.submit();
+}
+
+
+
 // document.addEventListener("DOMContentLoaded", () => {
 //     const books = [
 //         { id: 1, title: "창의적인 사고", category: "국내 도서", img: "/image/book.png", price: "22,000원", detailsUrl: "/details/1" },
