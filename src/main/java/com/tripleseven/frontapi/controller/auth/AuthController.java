@@ -43,7 +43,7 @@ public class AuthController {
                 + "?response_type=code"
                 + "&client_id=" + paycoClientId
                 + "&redirect_uri=" + encodedRedirectUri
-                + "&scope=profile";
+                + "&userLocale=ko_KR";
 
         return "redirect:" + authorizationUri;
     }
