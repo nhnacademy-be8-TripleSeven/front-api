@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     // HTML에서 clientId를 읽어옴
-    const clientIdElement = document.getElementById('clientId');
-    const clientId = clientIdElement.getAttribute('data-client-id');
+    const clientIdElement = document.getElementById('loginId');
+    const clientId = clientIdElement.getAttribute('data-login-id');
 
     if (clientId) {
         // 서버로 clientId를 보내 토큰 요청
