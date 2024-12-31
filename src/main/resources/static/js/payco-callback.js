@@ -4,7 +4,11 @@ document.addEventListener('DOMContentLoaded', function () {
     const clientId = clientIdElement.getAttribute('data-login-id');
 
     if (clientId) {
+
+        console.log(clientId);
+
         axios.post(`/backend/auth/payco/login`, null, {
+
             params: {
                 clientId : clientId
             }
