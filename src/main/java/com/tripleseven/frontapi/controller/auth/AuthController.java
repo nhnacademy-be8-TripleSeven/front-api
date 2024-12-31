@@ -1,21 +1,25 @@
 package com.tripleseven.frontapi.controller.auth;
 
 import com.tripleseven.frontapi.annotations.secure.SecureKey;
+import com.tripleseven.frontapi.service.oauth2.AfterPaycoLoginService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 @Controller
+@RequiredArgsConstructor
 public class AuthController {
 
     @SecureKey("secret.keys.payco.client-id")
     private String paycoClientId;
-    @SecureKey("secret.keys.payco.client-secret")
-    private String paycoClientSecret;
+
+    private final AfterPaycoLoginService afterPaycoLoginService;
 
     @GetMapping("/join")
     public String join() {
@@ -32,7 +36,7 @@ public class AuthController {
 
     @GetMapping("/oauth2/authorization/payco")
     public String paycoLoginRedirect() {
-        String redirectUri = "https://nhn24.store/backend/auth/payco/callback";
+        String redirectUri = "https://nhn24.store/payco/callback";
         String encodedRedirectUri;
         try {
             encodedRedirectUri = URLEncoder.encode(redirectUri, "UTF-8");
@@ -47,6 +51,11 @@ public class AuthController {
                 + "&userLocale=ko_KR";
 
         return "redirect:" + authorizationUri;
+    }
+
+    @GetMapping("/payco/callback")
+    public String afterPaycoLogin(@RequestParam String code, @RequestParam String serviceExtra) {
+        return null;
     }
 
     @GetMapping("/account/find")
