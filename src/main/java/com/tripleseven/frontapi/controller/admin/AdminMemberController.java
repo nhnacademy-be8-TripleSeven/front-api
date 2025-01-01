@@ -5,12 +5,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/admin/frontend")
+@RequestMapping("/admin")
 public class AdminMemberController {
 
     @GetMapping("/members")
-    public String getMemberNameSearchPage() {
-        return "/admin/member/search/name";
+    public String getMemberSearchPage() {
+        return "admin/user-list";
     }
 
     @GetMapping("/members/grade")
