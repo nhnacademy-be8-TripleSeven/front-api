@@ -64,7 +64,7 @@ public class BookSearchController {
     @GetMapping("/categorySearch")
     public String categorySearch(
         @RequestParam(value = "categories", required = false) List<String> categories,
-        @RequestParam(value = "keyword", defaultValue = "") String keyword,
+        @RequestParam(value = "keyword", defaultValue = " ") String keyword,
         @RequestParam(value = "page", defaultValue = "0") int page,
         @RequestParam(defaultValue = "10") int size,
         @RequestParam(value = "sortField", defaultValue = "publishDate") String sortField,

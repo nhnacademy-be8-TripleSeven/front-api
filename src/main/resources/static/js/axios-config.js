@@ -11,6 +11,7 @@ export function setToken(token) {
 // Axios 요청 인터셉터
 axios.interceptors.request.use(
     function(config) {
+        console.log("test")
         const token = getToken(); // JWT 토큰 가져오기
         if (token) {
             config.headers['Authorization'] = `Bearer ${token}`; // Authorization 헤더에 토큰 추가
@@ -43,11 +44,13 @@ axios.interceptors.response.use(
     },
     function(error) {
 
+        console.log(error)
+
         console.log("test")
         const originalRequest = error.config;
 
         // 토큰 만료 처리
-        if (error.response && error.response.status === 401 &&
+        if (error.response && error.response.data.status === 401 &&
             error.response.data.message.includes("TOKEN_EXPIRED") && !originalRequest._retry) {
             if (isRefreshing) {
                 return new Promise((resolve, reject) => {
@@ -83,7 +86,7 @@ axios.interceptors.response.use(
         }
 
         // 기타 에러 처리
-        if (error.response.status === 401) {
+        if (error.response.data.status === 401) {
             if (getToken()) {
                 alert("다시 로그인 해주세요.");
             } else {
