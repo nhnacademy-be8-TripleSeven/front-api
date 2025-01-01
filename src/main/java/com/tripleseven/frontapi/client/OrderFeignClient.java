@@ -8,12 +8,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @FeignClient(name = "order-api")
 public interface OrderFeignClient {
     @PostMapping("/api/orders/order-groups/period")
-    Page<OrderManageResponseDTO> getOrderList(
-            @RequestBody OrderManageRequestDTO orderManageRequestDTO,
-            Pageable pageable
-    );
+    Page<OrderManageResponseDTO> getOrderList(@RequestBody OrderManageRequestDTO orderManageRequestDTO,
+                                              Pageable pageable);
+
+    @GetMapping("/order-details/check-purchase")
+    boolean checkUserPurchase(@RequestParam("userId") Long userId,
+                              @RequestParam("bookId") Long bookId);
 }

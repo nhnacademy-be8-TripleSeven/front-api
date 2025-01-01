@@ -38,13 +38,14 @@ public class OrderManageController {
 
         Pageable pageable = PageRequest.of(page, size);
 
-        model.addAttribute("filterCriteria", filterCriteriaDTO);
         Page<OrderManageResponseDTO> orderPages = orderApiService.getOrderHistories(filterCriteriaDTO, pageable);
         List<OrderManageResponseDTO> orders = orderPages.getContent();
 
+        model.addAttribute("filterCriteria", filterCriteriaDTO);
         model.addAttribute("orders", orders);
         model.addAttribute("page", pageable);
         model.addAttribute("totalPage", orderPages.getTotalPages());
+
         return "order-manage";
     }
 
@@ -64,13 +65,14 @@ public class OrderManageController {
 
         Pageable pageable = PageRequest.of(page, size);
 
-        model.addAttribute("filterCriteria", filterCriteriaDTO);
         Page<OrderManageResponseDTO> orderPages = orderApiService.getOrderHistories(filterCriteriaDTO, pageable);
         List<OrderManageResponseDTO> orders = orderPages.getContent();
 
+        model.addAttribute("filterCriteria", filterCriteriaDTO);
         model.addAttribute("orders", orders);
         model.addAttribute("page", pageable);
         model.addAttribute("totalPage", orderPages.getTotalPages());
+
         return "refund-history";
     }
 
@@ -90,13 +92,14 @@ public class OrderManageController {
 
         Pageable pageable = PageRequest.of(page, size);
 
-        model.addAttribute("filterCriteria", filterCriteriaDTO);
         Page<OrderManageResponseDTO> orderPages = orderApiService.getOrderHistories(filterCriteriaDTO, pageable);
         List<OrderManageResponseDTO> orders = orderPages.getContent();
 
+        model.addAttribute("filterCriteria", filterCriteriaDTO);
         model.addAttribute("orders", orders);
         model.addAttribute("page", pageable);
         model.addAttribute("totalPage", orderPages.getTotalPages());
+
         return "cancel-history";
     }
 }
