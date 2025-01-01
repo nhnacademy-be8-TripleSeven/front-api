@@ -20,7 +20,7 @@
       <li><a th:href="@{/return-history}">반품/교환 내역</a></li>
       <li><a th:href="@{/cancel-history}">취소 주문 내역</a></li>
       <li>*좋아요</li>
-      <li><a th:href="@{/like-history}">좋아요 내역</a></li>
+      <li><a th:href="@{/likes-history}">좋아요 내역</a></li>
       <li>*포인트</li>
       <li><a th:href="@{/points-earned}">포인트 적립 내역</a></li>
       <li><a th:href="@{/points-used}">포인트 사용 내역</a></li>
@@ -31,17 +31,15 @@
 
   <section class="like-history">
     <h2>좋아요 내역</h2>
-    <p class="notice">최근 6개월간 좋아요 내역을 조회할 수 있습니다.</p>
 
-    <div class="filters">
-      <label for="start-date">시작일</label>
-      <input type="date" id="start-date" th:value="${startDate}">
-      <label for="end-date">종료일</label>
-      <input type="date" id="end-date" th:value="${endDate}">
-      <label for="book-search">도서 이름</label>
-      <input type="text" id="keyword" placeholder="도서 이름" th:value="${keyword}">
-      <button id="search-btn" th:onclick="|location.href='@{/like-history}?startDate=' + ${startDate} + '&endDate=' + ${endDate} + '&keyword=' + ${keyword}|">조회</button>
-    </div>
+    <!-- 검색 필터 -->
+    <form action="/likes-history" method="get">
+      <div class="filters">
+        <label for="book-search">도서 이름</label>
+        <input type="text" id="keyword" name="keyword" placeholder="도서 이름" th:value="${keyword}">
+        <button type="submit">조회</button>
+      </div>
+    </form>
 
     <div class="info-banner">
       <img th:src="@{/image/money.png}" alt="Review Points">
@@ -54,31 +52,39 @@
     <table>
       <thead>
       <tr>
-        <th>좋아요 ID</th>
         <th>도서 ID</th>
         <th>도서 이름</th>
-        <th>회원 ID</th>
-        <th>비고</th>
+        <th>좋아요 등록일</th>
       </tr>
       </thead>
       <tbody>
       <tr th:each="like : ${likeHistory}">
-        <td th:text="${like.id}">좋아요 ID</td>
-        <td th:text="${like.bookId}">도서 ID</td>
-        <td th:text="${like.bookName}">도서 이름</td>
-        <td th:text="${like.memberId}">회원 ID</td>
-        <td>-</td>
+        <td><a th:href="@{/books/{bookId}(bookId=${like.bookId})}" th:text="${like.bookId}"></a></td>
+        <td th:text="${like.bookTitle}">도서 이름</td>
+        <td th:text="${#temporals.format(like.createdAt, 'yyyy-MM-dd HH:mm:ss')}">좋아요 등록일</td>
       </tr>
+
       <tr th:if="${#lists.isEmpty(likeHistory)}">
         <td colspan="5">조건에 맞는 데이터가 없습니다.</td>
       </tr>
       </tbody>
     </table>
+
+    <!-- 페이징 -->
+    <div class="pagination">
+      <a th:href="@{/likes-history(page=${currentPage - 1}, size=${pageSize}, keyword=${keyword})}"
+         th:if="${currentPage > 0}">이전</a>
+
+      <span>Page <span th:text="${currentPage + 1}"></span></span>
+
+      <a th:href="@{/likes-history(page=${currentPage + 1}, size=${pageSize}, keyword=${keyword})}"
+         th:if="${likeHistory.size()} == ${pageSize}">다음</a>
+    </div>
+
   </section>
 </main>
 
 <div th:replace="footer :: footer"></div>
 
-<script th:src="@{/js/like-history.js}"></script>
 </body>
 </html>
