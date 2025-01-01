@@ -132,7 +132,7 @@
         <!-- 만약 전체 페이지 수 대신, 현재 목록 길이가 size와 같으면 '다음 페이지가 있다'고 가정 -->
         <a th:if="${#lists.size(searchBook.contents) == searchBook.size}"
            th:href="@{/searchBook(
-               searchTerm=${searchBook.searchTerm},
+               searchTerm=${searchBook.keyword},
                sortField=${searchBook.sortField},
                sortDir=${searchBook.sortDir},
                page=${searchBook.page + 1},

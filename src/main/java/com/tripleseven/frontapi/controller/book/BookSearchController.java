@@ -24,7 +24,7 @@ public class BookSearchController {
 
     @GetMapping("/searchBook")
     public String bookSearch(
-        @RequestParam(value = "keyword", required = false) String term,
+        @RequestParam(value = "keyword", defaultValue = "없음") String term,
         @RequestParam(value = "page", defaultValue = "0") int page,
         @RequestParam(defaultValue = "10") int size,
         @RequestParam(value = "sortField", defaultValue = "publishDate") String sortField,
@@ -63,7 +63,7 @@ public class BookSearchController {
 
     @GetMapping("/categorySearch")
     public String categorySearch(
-        @RequestParam(value = "categories", required = false) List<String> categories,
+        @RequestParam(value = "categories", defaultValue = "국내도서") List<String> categories,
         @RequestParam(value = "keyword", defaultValue = " ") String keyword,
         @RequestParam(value = "page", defaultValue = "0") int page,
         @RequestParam(defaultValue = "10") int size,
