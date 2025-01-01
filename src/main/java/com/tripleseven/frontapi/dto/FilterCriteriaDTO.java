@@ -1,5 +1,6 @@
 package com.tripleseven.frontapi.dto;
 
+import com.tripleseven.frontapi.dto.order.Status;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,11 +13,11 @@ public class FilterCriteriaDTO {
 
     private LocalDate endDate;
 
-    private String status;
+    private Status status;
 
     public FilterCriteriaDTO() {
         this.startDate = LocalDate.now().minusMonths(1);
         this.endDate = LocalDate.now();
-        this.status = "all";
+        this.status = Status.ALL;
     }
 }

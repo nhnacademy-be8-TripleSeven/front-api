@@ -14,17 +14,31 @@
   <aside class="sidebar">
     <h3>MY ACCOUNT</h3>
     <ul>
-      <li>*구매 내역</li>
-      <a th:href="@{/order/history}"><li>주문 조회/취소</li></a>
-      <a th:href="@{/order/returns}"><li>반품/교환 내역</li></a>
-      <a th:href="@{/order/cancellations}"><li>취소 주문 내역</li></a>
-      <li>*좋아요</li>
-      <a th:href="@{/likes/history}"><li>좋아요 내역</li></a>
-      <li>*포인트</li>
-      <a th:href="@{/points/earnings}"><li>포인트 적립 내역</li></a>
-      <a th:href="@{/points/spendings}"><li>포인트 사용 내역</li></a>
-      <li>*쿠폰함</li>
-      <a th:href="@{/coupons/history}"><li>쿠폰 내역</li></a>
+      <li>* 구매 내역</li>
+      <a th:href="@{/orders/manage}">
+        <li>주문 조회/변경/취소</li>
+      </a>
+      <a th:href="@{/orders/refund}">
+        <li>반품 내역</li>
+      </a>
+      <a th:href="@{/orders/canceled}">
+        <li>취소 주문 내역</li>
+      </a>
+      <li>* 좋아요</li>
+      <a th:href="@{/books/like}">
+        <li>좋아요 내역</li>
+      </a>
+      <li>* 포인트</li>
+      <a th:href="@{/points/earned}">
+        <li>포인트 적립 내역</li>
+      </a>
+      <a th:href="@{/points/used}">
+        <li>포인트 사용 내역</li>
+      </a>
+      <li>* 쿠폰함</li>
+      <a th:href="@{/coupons}">
+        <li>쿠폰 내역</li>
+      </a>
     </ul>
   </aside>
 
@@ -110,7 +124,7 @@
         <td><a th:href="@{/order/details/{id}(id=${order.id})}">상세 조회</a></td>
         <td th:text="${order.note}">비고</td>
       </tr>
-      <tr th:if="${orders.empty}">
+      <tr th:if="${orders.isEmpty()}">
         <td colspan="6">조회된 내역이 없습니다.</td>
       </tr>
       </tbody>

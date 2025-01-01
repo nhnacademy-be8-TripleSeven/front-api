@@ -7,6 +7,7 @@
     box-sizing: border-box;
     font-family: 'Gamja Flower', cursive;
 }
+
 body {
     background-color: #f9fbfc;
     color: #333;
@@ -56,6 +57,7 @@ section {
     font-size: 16px;
     font-weight: bold;
 }
+
 /* 검색창 길이 최대로 확장 */
 .search-bar {
     display: flex;
@@ -251,7 +253,6 @@ td {
 }
 
 
-
 .info-banner {
     display: flex;
     align-items: center;
@@ -273,6 +274,7 @@ td {
     height: 50px;
     object-fit: cover;
 }
+
 .info-banner p {
     margin: 0;
     font-size: 14px; /* 텍스트 크기 축소 */
@@ -286,11 +288,17 @@ td {
     gap: 5px;
 }
 
-.banner-text p , p.highlight{
+.banner-text p, p.highlight {
     margin: 0;
     font-size: 16px;
     color: #333;
     line-height: 1.6;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
 }
 
 
@@ -316,6 +324,7 @@ td {
     .return-history {
         padding: 20px;
     }
+
 }
 
 /* 푸터 */

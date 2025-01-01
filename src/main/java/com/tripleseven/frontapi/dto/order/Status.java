@@ -12,8 +12,8 @@ public enum Status {
     DELIVERED("배송완료"),
     RETURNED("반품"),
     ORDER_CANCELED("주문취소"),
-    ERROR("오류");
-
+    ERROR("오류"),
+    ALL("전체");
     private final String korean;
 
     Status(String korean) {
