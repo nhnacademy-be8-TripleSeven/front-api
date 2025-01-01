@@ -16,9 +16,9 @@
         <section class="find-section">
             <h2>휴대폰 번호로 아이디 찾기</h2>
             <p class="instruction-text">등록된 휴대폰 번호를 입력해주세요.</p>
-            <form th:action="@{/backend/members/account/phone}" method="get">
+            <form id="emailFindForm" method="get">
                 <label for="phoneNumber">휴대폰 번호</label>
-                <input type="text" id="phoneNumber" name="phone" placeholder="010-1234-5678" required>
+                <input type="text" id="phoneNumber" name="phone" placeholder="01012345678" required>
                 <button type="submit" class="submit-btn">아이디 찾기</button>
             </form>
         </section>
@@ -27,7 +27,8 @@
     <div th:replace="footer :: footer"></div>
 
 </div>
-
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script type="module" src="/js/axios-config.js"></script>
 <script th:src="@{/js/find-pwd.js}"></script>
 </body>
 </html>

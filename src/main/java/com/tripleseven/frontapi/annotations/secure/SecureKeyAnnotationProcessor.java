@@ -29,7 +29,6 @@ public class SecureKeyAnnotationProcessor implements BeanPostProcessor {
                     throw new IllegalArgumentException("No key found in environment for path: " + envPath);
                 }
 
-                System.out.println("key = " + key);
                 String value = secureKeyManagerService.fetchSecretFromKeyManager(key);
 
                 if (value == null) {

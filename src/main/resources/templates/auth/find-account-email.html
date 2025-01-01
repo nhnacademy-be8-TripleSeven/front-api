@@ -16,7 +16,7 @@
         <section class="find-section">
             <h2>이메일로 아이디 찾기</h2>
             <p class="instruction-text">등록된 이메일 주소를 입력해주세요.</p>
-            <form th:action="@{/account/find/}" method="post">
+            <form id="findForm" method="get">
                 <label for="email">이메일 주소</label>
                 <input type="email" id="email" name="email" placeholder="example@example.com" required>
                 <button type="submit" class="submit-btn">아이디 찾기</button>
@@ -27,7 +27,8 @@
     <div th:replace="footer :: footer"></div>
 
 </div>
-
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script type="module" src="/js/axios-config.js"></script>
 <script th:src="@{/js/find-pwd.js}"></script>
 </body>
 </html>

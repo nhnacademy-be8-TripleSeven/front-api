@@ -62,10 +62,10 @@ public class AuthController {
         return modelAndView;
     }
 
-    @GetMapping("/account/find")
+    @GetMapping("/find-account")
     public String findAccount() {
 
-        return "/auth/find-account";
+        return "auth/find-account";
     }
 
     @GetMapping("/account/find/email")
