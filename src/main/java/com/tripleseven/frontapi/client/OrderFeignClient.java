@@ -19,4 +19,7 @@ public interface OrderFeignClient {
     @GetMapping("/order-details/check-purchase")
     boolean checkUserPurchase(@RequestParam("userId") Long userId,
                               @RequestParam("bookId") Long bookId);
+
+    @GetMapping("/user/point-histories/point")
+    Integer getTotalPoint();
 }

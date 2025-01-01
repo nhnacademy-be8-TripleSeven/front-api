@@ -197,6 +197,10 @@ section {
     align-items: center; /* 입력창과 버튼의 세로 정렬 */
 }
 
+.filter-item label {
+    padding: 0 10px;
+}
+
 .filter-item input,
 .filter-item select {
     padding: 8px 10px; /* 상하 여백과 좌우 여백 */

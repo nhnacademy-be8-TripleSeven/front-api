@@ -1,9 +1,9 @@
-package com.tripleseven.frontapi.controller.order;
+package com.tripleseven.frontapi.controller.mypage;
 
 import com.tripleseven.frontapi.dto.FilterCriteriaDTO;
 import com.tripleseven.frontapi.dto.order.OrderManageResponseDTO;
 import com.tripleseven.frontapi.dto.order.Status;
-import com.tripleseven.frontapi.service.OrderApiService;
+import com.tripleseven.frontapi.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,10 +20,10 @@ import java.util.Objects;
 @Controller
 @RequiredArgsConstructor
 public class OrderManageController {
-    private final OrderApiService orderApiService;
+    private final OrderService orderService;
 
-    @GetMapping("/orders/manage")
-    public String orderHistories(
+    @GetMapping("/orders/history")
+    public String getOrderHistories(
             @ModelAttribute FilterCriteriaDTO updateFilter,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
@@ -38,7 +38,7 @@ public class OrderManageController {
 
         Pageable pageable = PageRequest.of(page, size);
 
-        Page<OrderManageResponseDTO> orderPages = orderApiService.getOrderHistories(filterCriteriaDTO, pageable);
+        Page<OrderManageResponseDTO> orderPages = orderService.getOrderHistories(filterCriteriaDTO, pageable);
         List<OrderManageResponseDTO> orders = orderPages.getContent();
 
         model.addAttribute("filterCriteria", filterCriteriaDTO);
@@ -46,11 +46,18 @@ public class OrderManageController {
         model.addAttribute("page", pageable);
         model.addAttribute("totalPage", orderPages.getTotalPages());
 
-        return "order-manage";
+        return "order-history";
     }
 
+    @GetMapping("/orders/history/{orderId}")
+    public String getOrderHistory(@RequestParam("orderId") Long orderId) {
+
+        return "order-history-detail";
+    }
+
+
     @GetMapping("/orders/refund")
-    public String refundHistories(
+    public String getRefundHistories(
             @ModelAttribute FilterCriteriaDTO updateFilter,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
@@ -65,7 +72,7 @@ public class OrderManageController {
 
         Pageable pageable = PageRequest.of(page, size);
 
-        Page<OrderManageResponseDTO> orderPages = orderApiService.getOrderHistories(filterCriteriaDTO, pageable);
+        Page<OrderManageResponseDTO> orderPages = orderService.getOrderHistories(filterCriteriaDTO, pageable);
         List<OrderManageResponseDTO> orders = orderPages.getContent();
 
         model.addAttribute("filterCriteria", filterCriteriaDTO);
@@ -77,7 +84,7 @@ public class OrderManageController {
     }
 
     @GetMapping("/orders/canceled")
-    public String canceledHistories(
+    public String getCanceledHistories(
             @ModelAttribute FilterCriteriaDTO updateFilter,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
@@ -92,7 +99,7 @@ public class OrderManageController {
 
         Pageable pageable = PageRequest.of(page, size);
 
-        Page<OrderManageResponseDTO> orderPages = orderApiService.getOrderHistories(filterCriteriaDTO, pageable);
+        Page<OrderManageResponseDTO> orderPages = orderService.getOrderHistories(filterCriteriaDTO, pageable);
         List<OrderManageResponseDTO> orders = orderPages.getContent();
 
         model.addAttribute("filterCriteria", filterCriteriaDTO);

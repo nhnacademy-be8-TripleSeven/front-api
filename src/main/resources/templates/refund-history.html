@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>반품 내역</title>
-    <link rel="stylesheet" th:href="@{/css/cancel-history.css}">
+    <link rel="stylesheet" th:href="@{/css/order-history.css}">
     <link rel="stylesheet" th:href="@{/css/global.css}">
 </head>
 <body>
@@ -15,7 +15,7 @@
         <h3>MY ACCOUNT</h3>
         <ul>
             <li>* 구매 내역</li>
-            <a th:href="@{/orders/manage}">
+            <a th:href="@{/orders/history}">
                 <li>주문 조회/변경/취소</li>
             </a>
             <a th:href="@{/orders/refund}">
@@ -44,7 +44,7 @@
 
     <section class="cancel-history">
         <h2>반품 내역</h2>
-        <p class="notice">최근 6개월간 내역만 조회할 수 있습니다.</p>
+        <p class="notice">최근 5년간 주문내역을 조회할 수 있습니다.</p>
 
         <form id="filterForm" th:action="@{/orders/refund}" method="get" th:object="${filterCriteria}">
             <div class="filters">

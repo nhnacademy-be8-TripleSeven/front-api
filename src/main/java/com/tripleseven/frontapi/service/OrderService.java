@@ -2,6 +2,7 @@ package com.tripleseven.frontapi.service;
 
 import com.tripleseven.frontapi.client.OrderFeignClient;
 import com.tripleseven.frontapi.dto.FilterCriteriaDTO;
+import com.tripleseven.frontapi.dto.order.OrderDetailDTO;
 import com.tripleseven.frontapi.dto.order.OrderManageRequestDTO;
 import com.tripleseven.frontapi.dto.order.OrderManageResponseDTO;
 import com.tripleseven.frontapi.dto.order.Status;
@@ -10,9 +11,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
-public class OrderApiService {
+public class OrderService {
     private final OrderFeignClient orderFeignClient;
 
     public Page<OrderManageResponseDTO> getOrderHistories(FilterCriteriaDTO filterCriteriaDTO, Pageable pageable) {
@@ -26,6 +29,16 @@ public class OrderApiService {
                 status
         );
         return orderFeignClient.getOrderList(requestDTO, pageable);
+    }
+
+    public List<OrderDetailDTO> getOrderHistory() {
+
+
+        return List.of();
+    }
+
+    public int getPoints() {
+        return orderFeignClient.getTotalPoint();
     }
 
 }

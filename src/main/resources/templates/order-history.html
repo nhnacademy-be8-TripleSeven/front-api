@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="'주문 조회/변경/취소 - NHN 24'">주문 조회/변경/취소</title>
-    <link rel="stylesheet" th:href="@{/css/cancel-history.css}">
+    <link rel="stylesheet" th:href="@{/css/order-history.css}">
     <link rel="stylesheet" th:href="@{/css/global.css}">
 </head>
 <body>
@@ -16,7 +16,7 @@
         <h3>MY ACCOUNT</h3>
         <ul>
             <li>* 구매 내역</li>
-            <a th:href="@{/orders/manage}">
+            <a th:href="@{/orders/history}">
                 <li>주문 조회/변경/취소</li>
             </a>
             <a th:href="@{/orders/refund}">
@@ -47,7 +47,7 @@
         <h2>주문 조회/변경/취소</h2>
         <p class="notice">최근 5년간 주문내역을 조회할 수 있습니다.</p>
 
-        <form id="filterForm" th:action="@{/orders/manage}" method="get" th:object="${filterCriteria}">
+        <form id="filterForm" th:action="@{/orders/history}" method="get" th:object="${filterCriteria}">
             <div class="filters">
                 <div class="filter-item">
                     <label for="start-date">시작일</label>
@@ -88,7 +88,7 @@
                 <td colspan="7">조회된 데이터가 없습니다.</td>
             </tr>
             <tr th:each="order : ${orders}">
-                <td><a th:text="${order.orderId}" th:href="@{/order/history/{orderId}(orderId=${order.orderId})}">123456789</a>
+                <td><a th:text="${order.orderId}" th:href="@{/orders/history/{orderId}(orderId=${order.orderId})}">123456789</a>
                 </td>
                 <td th:text="${order.orderDate}">2024-01-01</td>
                 <td th:text="${order.orderContent}">도서 3권</td>
@@ -103,10 +103,10 @@
         </table>
         <div class="pagination" th:if="${!orders.isEmpty()}">
             <a th:if="${page.getPageNumber() > 0}"
-               th:href="@{/order/history(page=${page.pageNumber - 1}, size=${10})}">&laquo; 이전</a>
+               th:href="@{/orders/history(page=${page.pageNumber - 1}, size=${10})}">&laquo; 이전</a>
             <span th:text="${page.pageNumber + 1} + '/' + ${totalPage}">1/1</span>
             <a th:if="${page.pageNumber + 1 < totalPage}"
-               th:href="@{/order/history(page=${page.pageNumber + 1}, size=${10})}">다음 &raquo;</a>
+               th:href="@{/orders/history(page=${page.pageNumber + 1}, size=${10})}">다음 &raquo;</a>
         </div>
     </section>
 </main>
