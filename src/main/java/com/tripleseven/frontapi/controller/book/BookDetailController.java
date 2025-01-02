@@ -2,14 +2,12 @@ package com.tripleseven.frontapi.controller.book;
 
 import com.tripleseven.frontapi.dto.review.ReviewRequestDTO;
 import com.tripleseven.frontapi.dto.review.ReviewResponseDTO;
-import com.tripleseven.frontapi.dto.BookDetailViewDTO;
+import com.tripleseven.frontapi.dto.book.BookDetailViewDTO;
 import com.tripleseven.frontapi.service.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;

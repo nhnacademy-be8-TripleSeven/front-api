@@ -1,17 +1,17 @@
 package com.tripleseven.frontapi.client;
 
-import com.tripleseven.frontapi.dto.BookDetailResponseDTO;
-import com.tripleseven.frontapi.dto.BookPageResponseDTO;
+import com.tripleseven.frontapi.dto.book.BookDetailResponseDTO;
+import com.tripleseven.frontapi.dto.book.BookPageResponseDTO;
 import com.tripleseven.frontapi.dto.review.ReviewRequestDTO;
 import com.tripleseven.frontapi.dto.coupon.CouponDetailsDTO;
 
 import org.springframework.data.domain.Pageable;
 import com.tripleseven.frontapi.dto.coupon.CouponPolicyRequestDTO;
 import com.tripleseven.frontapi.dto.coupon.CouponPolicyResponseDTO;
-import com.tripleseven.frontapi.dto.coupon.BookPageDetailResponseDTO;
+import com.tripleseven.frontapi.dto.book.BookPageDetailResponseDTO;
 import org.springframework.web.bind.annotation.*;
 import com.tripleseven.frontapi.dto.review.ReviewResponseDTO;
-import com.tripleseven.frontapi.dto.BookDetailViewDTO;
+import com.tripleseven.frontapi.dto.book.BookDetailViewDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,9 +30,7 @@ public interface BookFeignClient {
     @GetMapping("/books/term/{term}")
     BookPageResponseDTO getBooksByTerm(
         @PathVariable("term") String term,
-        @RequestParam("page") int page,
-        @RequestParam("size") int size,
-        @RequestParam("sort") String sort
+        Pageable pageable
     );
   
     @GetMapping("/books/{bookId}")
@@ -53,8 +51,8 @@ public interface BookFeignClient {
     );
     @GetMapping("/books/categories/{categories}/keyword/{keyword}")
     BookPageDetailResponseDTO getCategoriesSearchBooks(
-        @RequestParam("categories") List<String> categories,
-        @RequestParam("keyword") String keyword,
+        @PathVariable("categories") List<String> categories,
+        @PathVariable("keyword") String keyword,
         @RequestParam("page") int page,
         @RequestParam("size") int size,
         @RequestParam("sort") String sort

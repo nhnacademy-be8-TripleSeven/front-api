@@ -1,15 +1,18 @@
 package com.tripleseven.frontapi.controller.book;
 
 
-import com.tripleseven.frontapi.dto.BookDetailResponseDTO;
-import com.tripleseven.frontapi.dto.BookSearchResponseDTO;
-import com.tripleseven.frontapi.dto.CategoryBookSearchViewDTO;
-import com.tripleseven.frontapi.dto.KeywordSearchBookViewDTO;
-import com.tripleseven.frontapi.dto.TypeBookSearchViewDTO;
+import com.tripleseven.frontapi.dto.book.BookPageDetailResponseDTO;
+import com.tripleseven.frontapi.dto.book.BookPageResponseDTO;
+import com.tripleseven.frontapi.dto.book.CategoryBookSearchViewDTO;
+import com.tripleseven.frontapi.dto.book.KeywordSearchBookViewDTO;
+import com.tripleseven.frontapi.dto.book.TypeBookSearchViewDTO;
 import com.tripleseven.frontapi.service.BookService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,21 +27,31 @@ public class BookSearchController {
 
     @GetMapping("/searchBook")
     public String bookSearch(
-        @RequestParam(value = "keyword", defaultValue = "없음") String term,
+        @RequestParam(value = "keyword", defaultValue = " ") String term,
         @RequestParam(value = "page", defaultValue = "0") int page,
         @RequestParam(defaultValue = "10") int size,
         @RequestParam(value = "sortField", defaultValue = "publishDate") String sortField,
         @RequestParam(value = "sortDir", defaultValue = "desc") String sortDir,
         Model model) {
+        Sort sort = Sort.by(Sort.Order.by(sortField).with(Sort.Direction.fromString(sortDir)));
 
-        term = (term == null || term.trim().isEmpty()) ? "default" : term;
+        Pageable pageable =  PageRequest.of(page, size, sort);
 
-        List<BookSearchResponseDTO> searchBooksPage = bookApiService.searchBooks(term, page, size, sortField, sortDir);
+
+        BookPageResponseDTO bookPageResponseDTO = bookApiService.searchBooks(term, pageable);
+//        BookPageResponseDTO bookPageResponseDTO = bookApiService.searchBooks(term, page, size,
+//            sortField, sortDir);
+
+        int totalPages = (int) Math.ceil((double) bookPageResponseDTO.getTotalElements()/ size);
+
+        // 페이지네이션 계산
+        int startPage = (page / 5) * 5;
+        int endPage = (int) Math.min(startPage + 4, totalPages - 1);
 
         KeywordSearchBookViewDTO searchBook = new KeywordSearchBookViewDTO(term, "searchBook",
-            searchBooksPage, page, size, sortField, sortDir);
+            bookPageResponseDTO.getContent(), page, size, sortField, sortDir, bookPageResponseDTO.getTotalElements(),startPage, endPage);
         model.addAttribute("searchBook", searchBook);
-
+        model.addAttribute("keyword", term);
         return "book-search";
     }
 
@@ -51,10 +64,22 @@ public class BookSearchController {
         @RequestParam(value = "sortField", defaultValue = "publishDate") String sortField,
         @RequestParam(value = "sortDir", defaultValue = "desc") String sortDir,
         Model model) {
-        List<BookDetailResponseDTO> bookDetailResponseDTOS = bookApiService.getTypeBookSearch(type, page, size, sortField, sortDir);
+        BookPageDetailResponseDTO typeBookSearch = bookApiService.getTypeBookSearch(type, page,
+            size, sortField, sortDir);
+        // 페이지네이션 계산
+        int startPage = page - (page % 5);  // 시작 페이지
+        int endPage = Math.min(startPage + 4, typeBookSearch.getTotalPages() - 1);  // 종료 페이지
 
-        TypeBookSearchViewDTO typeBookSearchViewDTO = new TypeBookSearchViewDTO(type, "typeBook",
-            bookDetailResponseDTOS, page, size, sortField, sortDir);
+        TypeBookSearchViewDTO typeBookSearchViewDTO = new TypeBookSearchViewDTO(type,
+            "typeBook",
+            typeBookSearch.getContent(),
+            page,
+            size,
+            sortField,
+            sortDir,
+            typeBookSearch.getTotalElements(),
+            startPage,
+            endPage);
 
         model.addAttribute("searchBook", typeBookSearchViewDTO);
 
@@ -63,23 +88,37 @@ public class BookSearchController {
 
     @GetMapping("/categorySearch")
     public String categorySearch(
-        @RequestParam(value = "categories", defaultValue = "국내도서") List<String> categories,
-        @RequestParam(value = "keyword", defaultValue = " ") String keyword,
+        @RequestParam(value = "categories", defaultValue = ",") List<String> categories,
+        @RequestParam(value = "keyword", defaultValue = "|") String keyword,
         @RequestParam(value = "page", defaultValue = "0") int page,
         @RequestParam(defaultValue = "10") int size,
         @RequestParam(value = "sortField", defaultValue = "publishDate") String sortField,
         @RequestParam(value = "sortDir", defaultValue = "desc") String sortDir,
         Model model
     ){
+        // 페이지네이션 계산
 
-        List<BookDetailResponseDTO> categorySearchBook = bookApiService.getCategorySearchBook(
+        BookPageDetailResponseDTO categorySearchBook = bookApiService.getCategorySearchBook(
             categories, keyword, page, size, sortField, sortDir);
 
-        CategoryBookSearchViewDTO bookSearchViewDTO = new CategoryBookSearchViewDTO(keyword, categories, categorySearchBook,"categorySearch", page, size, sortField, sortDir);
+        // 페이지네이션 계산
+        int startPage = page - (page % 5);  // 시작 페이지
+        int endPage = Math.min(startPage + 4, categorySearchBook.getTotalPages() - 1);  // 종료 페이지
+
+        CategoryBookSearchViewDTO bookSearchViewDTO = new CategoryBookSearchViewDTO(
+            keyword,
+            categories,
+            "categorySearch",
+            categorySearchBook.getContent() ,
+            page,
+            size,
+            sortField,
+            sortDir,
+            categorySearchBook.getTotalElements(),
+            startPage,
+            endPage);
 
         model.addAttribute("searchBook", bookSearchViewDTO);
-
-
 
         return "book-search";
     }
