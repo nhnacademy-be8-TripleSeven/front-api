@@ -2,6 +2,10 @@ package com.tripleseven.frontapi.client;
 
 import com.tripleseven.frontapi.dto.book.BookDetailResponseDTO;
 import com.tripleseven.frontapi.dto.book.BookPageResponseDTO;
+
+
+import com.tripleseven.frontapi.dto.likes.LikesResponseDTO;
+
 import com.tripleseven.frontapi.dto.review.ReviewRequestDTO;
 import com.tripleseven.frontapi.dto.coupon.CouponDetailsDTO;
 
@@ -103,4 +107,8 @@ public interface BookFeignClient {
 
     @PostMapping("/api/reviews")
     void addReview(@RequestHeader("X-User") Long userId, @RequestBody ReviewRequestDTO requestDto);
+
+    @GetMapping("/api/likes")
+    List<LikesResponseDTO> getAllLikesByUserId(@RequestHeader("X-User") Long userId, @RequestParam(defaultValue = "0") int page,
+                                               @RequestParam(defaultValue = "10") int size);
 }

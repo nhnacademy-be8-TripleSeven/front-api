@@ -3,102 +3,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>반품/교환 내역</title>
-    <link rel="stylesheet" th:href="@{/css/refund-history.css}">
+    <title>반품 내역</title>
+    <link rel="stylesheet" th:href="@{/css/order-history.css}">
     <link rel="stylesheet" th:href="@{/css/global.css}">
 </head>
 <body>
 <div th:replace="header :: header"></div>
 
-<main class="return-history-container">
+<main class="my-account-container">
     <aside class="sidebar">
         <h3>MY ACCOUNT</h3>
         <ul>
-            <li>*구매 내역</li>
-            <a th:href="@{/order-history}"><li>주문 조회/취소</li></a>
-            <a th:href="@{/refund-history}"><li>반품/교환 내역</li></a>
-            <a th:href="@{/cancel-history}"><li>취소 주문 내역</li></a>
-            <li>*좋아요</li>
-            <a th:href="@{/like-history}"><li>좋아요 내역</li></a>
-            <li>*포인트</li>
-            <a th:href="@{/point-history}"><li>포인트 적립 내역</li></a>
-            <a th:href="@{/point-usage}"><li>포인트 사용 내역</li></a>
-            <li>*쿠폰함</li>
-            <a th:href="@{/coupon-history}"><li>쿠폰 내역</li></a>
+            <li>* 구매 내역</li>
+            <a th:href="@{/orders/history}">
+                <li>주문 조회/변경/취소</li>
+            </a>
+            <a th:href="@{/orders/refund}">
+                <li>반품 내역</li>
+            </a>
+            <a th:href="@{/orders/canceled}">
+                <li>취소 주문 내역</li>
+            </a>
+            <li>* 좋아요</li>
+            <a th:href="@{/books/like}">
+                <li>좋아요 내역</li>
+            </a>
+            <li>* 포인트</li>
+            <a th:href="@{/points/earned}">
+                <li>포인트 적립 내역</li>
+            </a>
+            <a th:href="@{/points/used}">
+                <li>포인트 사용 내역</li>
+            </a>
+            <li>* 쿠폰함</li>
+            <a th:href="@{/coupons}">
+                <li>쿠폰 내역</li>
+            </a>
         </ul>
     </aside>
 
-    <section class="return-history">
-        <h2>반품/교환 내역</h2>
-        <p class="notice">최근 6개월간 주문내역만 조회할 수 있습니다.</p>
+    <section class="cancel-history">
+        <h2>반품 내역</h2>
+        <p class="notice">최근 5년간 주문내역을 조회할 수 있습니다.</p>
 
-        <div class="filters">
-            <div class="filter-item">
-                <label for="start-date">시작일</label>
-                <input type="date" id="start-date">
+        <form id="filterForm" th:action="@{/orders/refund}" method="get" th:object="${filterCriteria}">
+            <div class="filters">
+                <div class="filter-item">
+                    <label for="start-date">시작일</label>
+                    <input type="date" id="start-date" th:field="*{startDate}">
+                </div>
+                <div class="filter-item">
+                    <label for="end-date">종료일</label>
+                    <input type="date" id="end-date" th:field="*{endDate}">
+                </div>
+<!--                <div class="filter-item">-->
+<!--                    <label for="filter-options">상태</label>-->
+<!--                    <select id="filter-options">-->
+<!--                        <option value="all">전체</option>-->
+<!--                        <option value="반품 처리 신청">반품 처리 신청</option>-->
+<!--                        <option value="교환 처리 신청">교환 처리 신청</option>-->
+<!--                        <option value="반품 완료">반품 완료</option>-->
+<!--                        <option value="교환 완료">교환 완료</option>-->
+<!--                    </select>-->
+<!--                </div>-->
+                <button class="filter-btn" onclick="filterResults()">조회</button>
             </div>
-            <div class="filter-item">
-                <label for="end-date">종료일</label>
-                <input type="date" id="end-date">
-            </div>
-            <div class="filter-item">
-                <label for="filter-options">상태</label>
-                <select id="filter-options">
-                    <option value="all">전체</option>
-                    <option value="반품 처리 신청">반품 처리 신청</option>
-                    <option value="교환 처리 신청">교환 처리 신청</option>
-                    <option value="반품 완료">반품 완료</option>
-                    <option value="교환 완료">교환 완료</option>
-                </select>
-            </div>
-            <button class="filter-btn" onclick="filterResults()">조회</button>
-        </div>
+        </form>
 
-        <div class="info-banner">
-            <img th:src="@{/image/money.png}" alt="Review Points">
-            <div class="banner-text">
-                <p class="highlight">리뷰 글 작성 시 200포인트 지급!</p>
-                <p>이미지 리뷰 작성 시 500포인트 지급!</p>
+            <div class="info-banner">
+                <img th:src="@{/image/money.png}" alt="Review Points">
+                <div class="banner-text">
+                    <p class="highlight">리뷰 글 작성 시 200포인트 지급!</p>
+                    <p>이미지 리뷰 작성 시 500포인트 지급!</p>
+                </div>
             </div>
-        </div>
 
-        <table>
-            <thead>
-            <tr>
-                <th>주문 번호</th>
-                <th>주문 일자</th>
-                <th>주문 내역</th>
-                <th>주문 금액</th>
-                <th>주문 상태</th>
-                <th>수령자</th>
-            </tr>
-            </thead>
-            <tbody id="order-table-body">
-            <!-- 데이터가 없을 때 기본 메시지 -->
-            <tr>
-                <td colspan="6">조회된 데이터가 없습니다.</td>
-            </tr>
-            </tbody>
-        </table>
+            <table>
+                <thead>
+                <tr>
+                    <th>주문 번호</th>
+                    <th>주문 일자</th>
+                    <th>주문 내역</th>
+                    <th>주문 금액/수량</th>
+                    <th>주문 상태</th>
+                    <th>주문자</th>
+                    <th>수령자</th>
+                </tr>
+                </thead>
+                <tbody id="order-table-body">
+                <!-- 데이터가 없을 때 기본 메시지 -->
+                <tr th:if="${orders.isEmpty()}">
+                    <td colspan="7">조회된 데이터가 없습니다.</td>
+                </tr>
+                <tr th:each="order : ${orders}">
+                    <td><a th:text="${order.orderId}" th:href="@{/order/history/{orderId}(orderId=${order.orderId})}">123456789</a>
+                    </td>
+                    <td th:text="${order.orderDate}">2024-01-01</td>
+                    <td th:text="${order.orderContent}">도서 3권</td>
+                    <td th:text="${#numbers.formatDecimal(order.price, 0, 0, 'COMMA')} + '원 / ' + ${order.amount} + '개'">
+                        25,000원/1개
+                    </td>
+                    <td th:text="${order.status.korean}">결제 완료</td>
+                    <td th:text="${order.ordererName}">김첨지</td>
+                    <td th:text="${order.recipientName}">홍길동</td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="pagination" th:if="${!orders.isEmpty()}">
+                <a th:if="${page.getPageNumber() > 0}"
+                   th:href="@{/orders/refund(page=${page.pageNumber - 1}, size=${10})}">&laquo; 이전</a>
+                <span th:text="${page.pageNumber + 1} + '/' + ${totalPage}">1/1</span>
+                <a th:if="${page.pageNumber + 1 < totalPage}"
+                   th:href="@{/order/refund(page=${page.pageNumber + 1}, size=${10})}">다음 &raquo;</a>
+            </div>
     </section>
 </main>
 
 <div th:replace="footer :: footer"></div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const today = new Date().toISOString().split("T")[0];
-        document.getElementById('start-date').setAttribute('max', today);
-        document.getElementById('end-date').setAttribute('max', today);
-    });
 
-    function filterResults() {
-        const startDate = document.getElementById('start-date').value;
-        const endDate = document.getElementById('end-date').value;
-        const status = document.getElementById('filter-options').value;
+<script th:src="@{/js/cancel-history.js}"></script>
 
-        console.log(`Filter: ${startDate}, ${endDate}, ${status}`);
-    }
-</script>
 </body>
 </html>

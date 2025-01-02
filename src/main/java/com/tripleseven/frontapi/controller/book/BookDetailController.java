@@ -30,13 +30,16 @@ public class BookDetailController {
         BookDetailViewDTO book = bookApiService.getBookDetail(bookId);
         List<ReviewResponseDTO> reviews = bookApiService.getAllReviewsByBookId(bookId);
 
+        //Long tempUserId = 100L;
         int sum = 0;
         double avg = 0.0;
+        String resAvg = "";
         if (!reviews.isEmpty()) {
             for (ReviewResponseDTO review : reviews) {
                 sum += review.getRating();
             }
             avg = (double) sum / reviews.size();
+            resAvg = String.format("%.1f", avg);
         }
         int avgInt = (int) Math.round(avg);
         String stars = "★".repeat(avgInt) + "☆".repeat(5 - avgInt);
@@ -58,7 +61,7 @@ public class BookDetailController {
         model.addAttribute("formattedPublishedDate",
                 book.getPublishedDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
         model.addAttribute("totalReviews", reviews.size());
-        model.addAttribute("avgRating", avg);
+        model.addAttribute("avgRating", resAvg);
         model.addAttribute("ratingStars", stars);
         model.addAttribute("isLoggedIn", isLoggedIn);
         model.addAttribute("userReview", userReview);
@@ -76,17 +79,19 @@ public class BookDetailController {
         Pageable pageable = PageRequest.of(page, size);
         return bookApiService.getPagedReviewsByBookId(bookId, pageable);
     }
+
     // 도서 상세 페이지에서 리뷰 등록하는 메소드
     //@RequestHeader("X-User")
     @PostMapping("/api/reviews")
-    public RedirectView submitReview(@ModelAttribute ReviewRequestDTO reviewRequestDTO) {
+    public RedirectView submitReview(@ModelAttribute ReviewRequestDTO reviewRequestDTO,
+                                     @RequestHeader("X-User") Long userId) {
         // 유저가 해당 도서를 구매했는지 확인
 //        boolean hasPurchased = bookApiService.checkUserPurchase(userId, reviewRequestDTO.getBookId());
 //        if (!hasPurchased) {
 //            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 //        }
-        Long randUserId = (long) (Math.random() * 1000) + 1;
-        bookApiService.submitReview(randUserId, reviewRequestDTO);
+        //Long randUserId = (long) (Math.random() * 1000) + 1;
+        bookApiService.submitReview(userId, reviewRequestDTO);
         return new RedirectView("/books/" + reviewRequestDTO.getBookId());
     }
 }

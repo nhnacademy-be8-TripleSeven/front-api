@@ -1,7 +1,0 @@
-server:
-  port: 8081
-
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://admin:1234@eureka-server:8761/eureka
