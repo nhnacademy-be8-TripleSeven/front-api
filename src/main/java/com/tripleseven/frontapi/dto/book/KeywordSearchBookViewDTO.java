@@ -1,4 +1,4 @@
-package com.tripleseven.frontapi.dto;
+package com.tripleseven.frontapi.dto.book;
 
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -6,13 +6,16 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class TypeBookSearchViewDTO {
+public class KeywordSearchBookViewDTO {
 
-    private String type;
+    private String keyword;
     private String path;
-    private List<BookDetailResponseDTO> contents;
+    private List<BookSearchResponseDTO> contents;
     private int page;
     private int size;
     private String sortField;
     private String sortDir;
+    private long total;
+    private int startPage;
+    private int endPage;
 }
