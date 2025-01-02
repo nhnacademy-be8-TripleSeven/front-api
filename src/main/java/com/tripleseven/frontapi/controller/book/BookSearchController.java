@@ -33,14 +33,15 @@ public class BookSearchController {
         @RequestParam(value = "sortField", defaultValue = "publishDate") String sortField,
         @RequestParam(value = "sortDir", defaultValue = "desc") String sortDir,
         Model model) {
-        Sort sort = Sort.by(Sort.Order.by(sortField).with(Sort.Direction.fromString(sortDir)));
 
+        Sort sort = Sort.unsorted();
+        if(sortField != null) {
+            sort = Sort.by(Sort.Order.by(sortField).with(Sort.Direction.fromString(sortDir)));
+        }
         Pageable pageable =  PageRequest.of(page, size, sort);
 
 
         BookPageResponseDTO bookPageResponseDTO = bookApiService.searchBooks(term, pageable);
-//        BookPageResponseDTO bookPageResponseDTO = bookApiService.searchBooks(term, page, size,
-//            sortField, sortDir);
 
         int totalPages = (int) Math.ceil((double) bookPageResponseDTO.getTotalElements()/ size);
 
@@ -61,8 +62,8 @@ public class BookSearchController {
         @RequestParam String type,
         @RequestParam(value = "page", defaultValue = "0") int page,
         @RequestParam(defaultValue = "10") int size,
-        @RequestParam(value = "sortField", defaultValue = "publishDate") String sortField,
-        @RequestParam(value = "sortDir", defaultValue = "desc") String sortDir,
+        @RequestParam(value = "sortField", required = false) String sortField,
+        @RequestParam(value = "sortDir", required = false) String sortDir,
         Model model) {
         BookPageDetailResponseDTO typeBookSearch = bookApiService.getTypeBookSearch(type, page,
             size, sortField, sortDir);
@@ -92,8 +93,8 @@ public class BookSearchController {
         @RequestParam(value = "keyword", defaultValue = "|") String keyword,
         @RequestParam(value = "page", defaultValue = "0") int page,
         @RequestParam(defaultValue = "10") int size,
-        @RequestParam(value = "sortField", defaultValue = "publishDate") String sortField,
-        @RequestParam(value = "sortDir", defaultValue = "desc") String sortDir,
+        @RequestParam(value = "sortField", required = false) String sortField,
+        @RequestParam(value = "sortDir", required = false) String sortDir,
         Model model
     ){
         // 페이지네이션 계산

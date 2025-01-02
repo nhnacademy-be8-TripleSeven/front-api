@@ -22,7 +22,7 @@ public class BookDetailController {
 
     private final BookService bookApiService;
 
-    @GetMapping("/books/{bookId}")
+    @GetMapping("/frontend/books/{bookId}")
     public String bookDetail(
             @PathVariable Long bookId,
             @RequestHeader(value = "X-User", required = false) Long userId,
