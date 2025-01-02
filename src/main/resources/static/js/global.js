@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     loginBtn.style.display = 'inline-block';  // 로그인 버튼 보이기
                     logoutBtn.style.display = 'none';  // 로그아웃 버튼 숨기기
                     alert("로그아웃 성공!");
-                    window.location.href = "/main";  // 페이지 새로고침
+                    window.location.href = "/frontend/main";  // 페이지 새로고침
                 }
             })
     });
