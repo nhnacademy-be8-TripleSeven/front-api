@@ -14,6 +14,7 @@ public class MyPageController {
     @GetMapping("/mypage")
     public String getMyPage(Model model) {
         int point = orderService.getPoints();
+
         model.addAttribute("point", point);
         return "my-page";
     }
