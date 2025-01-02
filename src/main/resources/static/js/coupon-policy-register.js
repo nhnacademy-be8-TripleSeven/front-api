@@ -35,23 +35,16 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         const form = document.getElementById('coupon-form');
-        const data = new FormData(form);
+        const formData = new FormData(form);
 
-        fetch('/admin/frontend/coupon-policy/register', {
-            method: 'POST',
-            body: data
-        }).then(response => {
-            if (response.ok) {
-                return response.text();
-            } else {
-                throw new Error('쿠폰 정책 등록 실패');
-            }
-        }).then(message => {
-            showSuccessPopup(message); // 성공 팝업 호출
-        }).catch(error => {
-            console.error('Error:', error);
-            alert('오류가 발생했습니다: ' + error.message);
-        });
+        axios.post('/admin/frontend/coupon-policy/register', formData)
+            .then(response => {
+                console.log('Request successful:', response.data);
+                showSuccessPopup(response.data);
+            })
+            .catch(error => {
+                console.error('Request failed:', error.response || error);
+            });
     });
 
     // 성공 팝업 표시 함수
