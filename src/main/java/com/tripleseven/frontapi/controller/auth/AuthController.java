@@ -5,7 +5,6 @@ import com.tripleseven.frontapi.dto.member.MemberAccountDto;
 import com.tripleseven.frontapi.service.oauth2.AfterPaycoLoginService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -70,11 +69,24 @@ public class AuthController {
 
     @GetMapping("/account/find/email")
     public String findAccountFromEmailForm() {
-        return "/auth/find-account-email";
+        return "auth/find-account-email";
     }
 
     @GetMapping("/account/find/phone")
     public String findAccountFromPhoneForm() {
-        return "/auth/find-account-phone";
+        return "auth/find-account-phone";
+    }
+
+    @GetMapping("/reset-password")
+    public ModelAndView resetPasswordForm(@RequestParam String email, @RequestParam String code, ModelAndView modelAndView) {
+        modelAndView.addObject("email", email);
+        modelAndView.addObject("code", code);
+        modelAndView.setViewName("auth/reset-password");
+        return modelAndView;
+    }
+
+    @GetMapping("/admin/login")
+    public String adminLogin() {
+        return "admin/admin-login";
     }
 }
