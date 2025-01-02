@@ -5,76 +5,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>회원가입</title>
+  <link rel="stylesheet" th:href="@{/css/global.css}">
   <link rel="stylesheet" href="/css/join.css">
-  <style>
-    /* 이메일 필드와 인증번호 필드 크기 일치 */
-    .form-group input {
-      height: 40px;  /* 입력 필드 높이를 설정하여 크기 맞추기 */
-      padding: 0 10px;
-    }
-
-    .form-group .input-container {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    /* 인증번호 버튼 크기 조정 */
-    .form-group .check-btn {
-      height: 40px;
-      padding: 0 15px;
-    }
-
-    /* 추가 스타일링 */
-    .form-group label {
-      font-size: 14px;
-      margin-bottom: 8px;
-      display: block;
-    }
-
-    /* 이메일 필드 버튼 위치 조정 */
-    #send-verification-btn {
-      height: 40px;
-      margin-left: 10px;
-    }
-
-    /* 인증번호 필드 크기 맞추기 */
-    #verification-code {
-      width: 100%;
-      height: 40px;
-    }
-  </style>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>  <!-- axios CDN 추가 -->
   <script type="module" src="/js/axios-config.js"></script>
   <script type="module" src="/js/join.js"></script>
 </head>
 <body>
-<header class="header">
-  <div class="logo">
-    <a href="main.html"><img src="/image/logo/nhn24-logo.png" alt="NHN 24 로고"></a>
-  </div>
-  <div class="header-center">
-    <div class="search-bar">
-      <input type="text" placeholder="검색어를 입력하세요">
-      <button>🔍</button>
-    </div>
-    <nav class="menu">
-      <ul>
-        <li><a href="/recommended-books.html">추천 도서</a></li>
-        <li><a href="/domestic-books.html">국내 도서</a></li>
-        <li><a href="/foreign-books.html">외국 도서</a></li>
-        <li><a href="/bestsellers.html">베스트셀러</a></li>
-        <li><a href="/new-books.html">신간 소개</a></li>
-        <li><a href="/events.html">이벤트</a></li>
-      </ul>
-    </nav>
-  </div>
-  <div class="user-actions">
-    <img src="/image/icons/person.png" alt="User Icon">
-    <img src="/image/icons/cart.png" alt="Cart Icon">
-    <a href="login.html"><button class="login-btn">Login</button></a>
-  </div>
-</header>
+
+<div th:replace="header :: header"></div>
 
 <main class="main-content">
   <section class="signup-section">
@@ -148,32 +87,7 @@
   </section>
 </main>
 
-<footer>
-  <div class="footer-links">
-    <a href="#">회사소개</a>
-    <a href="#">이용약관</a>
-    <a href="#"><strong>개인정보처리방침</strong></a>
-    <a href="#">청소년 보호정책</a>
-  </div>
-  <div class="footer-container">
-    <div class="footer-info">
-      <p>대표이사 마르코 | 사업자등록번호 123-456-7890</p>
-      <p>통신판매업신고 2024-광주동구-01211</p>
-      <p>이메일: marco@nhn.com | 호스팅 제공자 NHN24</p>
-      <p>© NHN24. All Rights Reserved.</p>
-    </div>
-    <div class="customer-center">
-      <p><strong>고객센터 1544-8282 (발신자 부담)</strong></p>
-      <p>광주광역시 동구 서석동 조선대학교 1층 NHN아카데미</p>
-      <p>Fax 062-1234-5678</p>
-      <div>
-        <button>1:1 문의</button>
-        <button>FAQ</button>
-        <button>위치, 영업시간 안내</button>
-      </div>
-    </div>
-  </div>
-</footer>
+<div th:replace="footer :: footer"></div>
 
 </body>
 </html>
