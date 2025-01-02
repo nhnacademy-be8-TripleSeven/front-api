@@ -43,7 +43,3 @@ secret:
       client-secret: 079b482168044c9abe902c578aae31a1
   password: nhn24
 
-
-server:
-  servlet:
-    context-path: /frontend
