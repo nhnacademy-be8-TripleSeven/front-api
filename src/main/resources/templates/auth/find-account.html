@@ -23,15 +23,15 @@
       <div id="id-tab" class="tab-content active">
         <h2>아이디 찾기</h2>
         <p class="instruction-text">아이디 찾기 방법을 선택해주세요.</p>
-        <button class="dropdown-btn" th:onclick="|location.href='@{/account/find/phone}'|">등록된 휴대폰 번호로 찾기</button>
-        <button class="dropdown-btn" th:onclick="|location.href='@{/account/find/email}'|">등록된 이메일 주소로 찾기</button>
+        <button class="dropdown-btn" th:onclick="|location.href='@{/frontend/account/find/phone}'|">등록된 휴대폰 번호로 찾기</button>
+        <button class="dropdown-btn" th:onclick="|location.href='@{/frontend/account/find/email}'|">등록된 이메일 주소로 찾기</button>
       </div>
 
       <!-- 비밀번호 변경 화면 -->
       <div id="pwd-tab" class="tab-content">
         <h2>비밀번호 변경</h2>
         <p class="instruction-text">등록된 이메일 주소와 로그인 아이디를 입력해주세요.</p>
-        <form id="resetPasswordForm" method="post" th:action="@{/backend/members/reset/password}">
+        <form id="resetPasswordForm" method="post" th:action="@{/members/reset/password}">
           <label for="loginId">로그인 아이디</label>
           <input type="text" id="loginId" name="loginId" placeholder="로그인 아이디" required>
 
