@@ -7,15 +7,10 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.addEventListener('click', (event) => {
         if (event.target.classList.contains('edit-btn')) {
             const policyId = event.target.getAttribute('data-id');
-            fetch(`/admin/frontend/coupon-policy/update/${policyId}`, {
-                headers: { 'Content-Type': 'application/json' },
-                method: 'GET',
-            })
+
+            axios.get(`/admin/frontend/coupon-policy/update/${policyId}`)
                 .then(response => {
-                    if (!response.ok) throw new Error('정책 정보를 불러오지 못했습니다.');
-                    return response.json();
-                })
-                .then(policy => {
+                    const policy = response.data;
                     document.getElementById('policy-id').value = policy.id;
                     document.getElementById('policy-name').value = policy.name;
                     document.getElementById('min-amount').value = policy.couponMinAmount;
@@ -27,10 +22,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     document.getElementById('validity').value = policy.couponValidTime;
                     editPopup.style.display = 'flex';
                 })
-                .catch(error => alert(`오류: ${error.message}`));
+                .catch(error => {
+                    console.error('Error fetching policy:', error);
+                    alert(`오류: ${error.response?.data?.message || error.message}`);
+                });
         }
     });
-
 
     // 수정 데이터 저장
     saveBtn.addEventListener('click', () => {
@@ -53,17 +50,17 @@ document.addEventListener('DOMContentLoaded', () => {
             data.couponDiscountAmount = discountValue;
         }
 
-        fetch(`/admin/frontend/coupon-policy/update/${policyId}`, {
-            method: 'POST',
+        axios.post(`/admin/frontend/coupon-policy/update/${policyId}`, data, {
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data),
         })
-            .then(response => {
-                if (!response.ok) throw new Error('정책 수정 실패');
+            .then(() => {
                 alert('정책이 성공적으로 수정되었습니다.');
                 location.reload();
             })
-            .catch(error => alert(`오류: ${error.message}`));
+            .catch(error => {
+                console.error('Error updating policy:', error);
+                alert(`오류: ${error.response?.data?.message || error.message}`);
+            });
     });
 
     // 삭제 버튼 클릭 이벤트
@@ -71,15 +68,15 @@ document.addEventListener('DOMContentLoaded', () => {
         button.addEventListener('click', () => {
             const policyId = button.getAttribute('data-id');
             if (confirm('정말로 삭제하시겠습니까?')) {
-                fetch(`/admin/frontend/coupon-policy/delete/${policyId}`, {
-                    method: 'POST',
-                })
-                    .then(response => {
-                        if (!response.ok) throw new Error('정책 삭제 실패');
+                axios.post(`/admin/frontend/coupon-policy/delete/${policyId}`)
+                    .then(() => {
                         alert('정책이 성공적으로 삭제되었습니다.');
                         location.reload();
                     })
-                    .catch(error => alert(`오류: ${error.message}`));
+                    .catch(error => {
+                        console.error('Error deleting policy:', error);
+                        alert(`오류: ${error.response?.data?.message || error.message}`);
+                    });
             }
         });
     });
