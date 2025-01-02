@@ -15,6 +15,6 @@ public class MyPageController {
     public String getMyPage(Model model) {
         int point = orderService.getPoints();
         model.addAttribute("point", point);
-        return "mypage";
+        return "my-page";
     }
 }

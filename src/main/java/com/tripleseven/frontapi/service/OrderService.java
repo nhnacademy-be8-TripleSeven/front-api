@@ -31,10 +31,8 @@ public class OrderService {
         return orderFeignClient.getOrderList(requestDTO, pageable);
     }
 
-    public List<OrderDetailDTO> getOrderHistory() {
-
-
-        return List.of();
+    public OrderDetailDTO getOrderHistory(Long orderId) {
+        return orderFeignClient.getOrderDetails(orderId);
     }
 
     public int getPoints() {

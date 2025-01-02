@@ -1,5 +1,6 @@
 package com.tripleseven.frontapi.client;
 
+import com.tripleseven.frontapi.dto.order.OrderDetailDTO;
 import com.tripleseven.frontapi.dto.order.OrderManageRequestDTO;
 import com.tripleseven.frontapi.dto.order.OrderManageResponseDTO;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -9,6 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 @FeignClient(name = "order-api")
 public interface OrderFeignClient {
@@ -22,4 +25,7 @@ public interface OrderFeignClient {
 
     @GetMapping("/user/point-histories/point")
     Integer getTotalPoint();
+
+    @GetMapping("/user/point-histories/details")
+    OrderDetailDTO getOrderDetails(Long orderId);
 }
