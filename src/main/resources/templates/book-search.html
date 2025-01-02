@@ -65,14 +65,12 @@
         <!-- 정렬 방향 -->
         <select name="sortDir" onchange="updateSortField(this)">
           <!-- 최신순: sortDir='desc', sortField='publishDate' -->
+          <option value="none" th:selected="${searchBook.sortDir == 'none'}">정확도순</option>
+          <option value="desc" th:selected="${searchBook.sortDir == 'desc'}">최신순</option>
+          <option value="asc" th:selected="${searchBook.sortDir == 'asc'}">오래된순</option>
           <option value="desc"
-                  th:selected="${searchBook.sortDir == 'desc'}">최신순
+                  th:selected="${searchBook.sortField == 'popularity'}">인기순
           </option>
-          <option value="asc"
-                  th:selected="${searchBook.sortDir == 'asc'}">오래된순
-          </option>
-          <option value="desc"
-                  th:selected="${searchBook.sortDir == 'popularity'}">인기순
           </option>
         </select>
       </form>
@@ -85,6 +83,7 @@
         <input type="hidden" name="type" th:value="${searchBook.type}" />
         <input type="hidden" name="page" th:value="${searchBook.page}" />
         <select name="sortDir" onchange="this.form.submit()">
+          <option value="none" th:selected="${searchBook.sortDir == 'none'}">정확도순</option>
           <option value="desc" th:selected="${searchBook.sortDir == 'desc'}">최신순</option>
           <option value="asc" th:selected="${searchBook.sortDir == 'asc'}">오래된순</option>
           <option value="desc"
@@ -100,10 +99,11 @@
         <input type="hidden" name="keyword" th:value="${searchBook.keyword}">
         <input type="hidden" name="page" th:value="${searchBook.page}" />
         <select name="sortDir" onchange="this.form.submit()">
+          <option value="desc" th:selected="${searchBook.sortField == 'title'}">정확도순</option>
           <option value="desc" th:selected="${searchBook.sortDir == 'desc'}">최신순</option>
           <option value="asc" th:selected="${searchBook.sortDir == 'asc'}">오래된순</option>
           <option value="desc"
-                  th:selected="${searchBook.sortDir == 'popularity'}">인기순
+                  th:selected="${searchBook.sortField == 'popularity'}">인기순
           </option>
         </select>
       </form>
