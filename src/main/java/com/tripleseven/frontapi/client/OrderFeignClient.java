@@ -8,19 +8,21 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
-@FeignClient(name = "gateway")
+@FeignClient(name = "order-api")
 public interface OrderFeignClient {
     @PostMapping("/api/orders/order-groups/period")
     Page<OrderManageResponseDTO> getOrderList(@RequestBody OrderManageRequestDTO orderManageRequestDTO,
+                                              @RequestHeader("X-USER") Long userId,
                                               Pageable pageable);
 
-    @GetMapping("/order-details/check-purchase")
+    @GetMapping("/api/order-details/check-purchase")
     boolean checkUserPurchase(@RequestParam("userId") Long userId,
                               @RequestParam("bookId") Long bookId);
 
-    @GetMapping("/user/point-histories/point")
-    Integer getTotalPoint();
+    @GetMapping("/api/user/point-histories/point")
+    Integer getTotalPoint(@RequestHeader("X-USER") Long userId);
 
-    @GetMapping("/user/point-histories/details")
-    OrderDetailDTO getOrderDetails(Long orderId);
+    @GetMapping("/api/user/point-histories/details")
+    OrderDetailDTO getOrderDetails(@RequestHeader("X-USER") Long userId,
+                                   Long orderId);
 }

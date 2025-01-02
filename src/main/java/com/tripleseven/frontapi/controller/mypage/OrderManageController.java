@@ -9,10 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Objects;
@@ -22,9 +19,10 @@ import java.util.Objects;
 public class OrderManageController {
     private final OrderService orderService;
 
-    @GetMapping("/orders/history")
+    @GetMapping("/frontend/orders/history")
     public String getOrderHistories(
             @ModelAttribute FilterCriteriaDTO updateFilter,
+            @RequestHeader("X-USER") Long userId,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             Model model) {
@@ -38,7 +36,7 @@ public class OrderManageController {
 
         Pageable pageable = PageRequest.of(page, size);
 
-        Page<OrderManageResponseDTO> orderPages = orderService.getOrderHistories(filterCriteriaDTO, pageable);
+        Page<OrderManageResponseDTO> orderPages = orderService.getOrderHistories(filterCriteriaDTO, userId, pageable);
         List<OrderManageResponseDTO> orders = orderPages.getContent();
 
         model.addAttribute("filterCriteria", filterCriteriaDTO);
@@ -49,7 +47,7 @@ public class OrderManageController {
         return "order-history";
     }
 
-    @GetMapping("/orders/history/{orderId}")
+    @GetMapping("/frontend/orders/history/{orderId}")
     public String getOrderHistory(@PathVariable("orderId") Long orderId,
                                   Model model) {
 //        OrderDetailDTO orderDetail = orderService.getOrderHistory(orderId);
@@ -65,9 +63,10 @@ public class OrderManageController {
     }
 
 
-    @GetMapping("/orders/refund")
+    @GetMapping("/frontend/orders/refund")
     public String getRefundHistories(
             @ModelAttribute FilterCriteriaDTO updateFilter,
+            @RequestHeader("X-USER") Long userId,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             Model model) {
@@ -81,7 +80,7 @@ public class OrderManageController {
 
         Pageable pageable = PageRequest.of(page, size);
 
-        Page<OrderManageResponseDTO> orderPages = orderService.getOrderHistories(filterCriteriaDTO, pageable);
+        Page<OrderManageResponseDTO> orderPages = orderService.getOrderHistories(filterCriteriaDTO, userId, pageable);
         List<OrderManageResponseDTO> orders = orderPages.getContent();
 
         model.addAttribute("filterCriteria", filterCriteriaDTO);
@@ -92,8 +91,9 @@ public class OrderManageController {
         return "refund-history";
     }
 
-    @GetMapping("/orders/canceled")
+    @GetMapping("/frontend/orders/canceled")
     public String getCanceledHistories(
+            @RequestHeader("X-USER") Long userId,
             @ModelAttribute FilterCriteriaDTO updateFilter,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
@@ -108,7 +108,7 @@ public class OrderManageController {
 
         Pageable pageable = PageRequest.of(page, size);
 
-        Page<OrderManageResponseDTO> orderPages = orderService.getOrderHistories(filterCriteriaDTO, pageable);
+        Page<OrderManageResponseDTO> orderPages = orderService.getOrderHistories(filterCriteriaDTO, userId, pageable);
         List<OrderManageResponseDTO> orders = orderPages.getContent();
 
         model.addAttribute("filterCriteria", filterCriteriaDTO);

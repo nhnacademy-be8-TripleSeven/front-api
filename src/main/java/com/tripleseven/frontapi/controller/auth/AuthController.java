@@ -20,20 +20,20 @@ public class AuthController {
 
     private final AfterPaycoLoginService afterPaycoLoginService;
 
-    @GetMapping("/join")
+    @GetMapping("/frontend/join")
     public String join() {
 
         return "auth/join";
     }
 
-    @GetMapping("/login")
+    @GetMapping("/frontend/login")
     public String login(ModelAndView modelAndView) {
         modelAndView.addObject("paycoClientId", paycoClientId);
         modelAndView.setViewName("auth/login");
         return "auth/login";
     }
 
-    @GetMapping("/oauth2/authorization/payco")
+    @GetMapping("/frontend/oauth2/authorization/payco")
     public String paycoLoginRedirect() {
         String redirectUri = "https://nhn24.store/payco/callback";
         String encodedRedirectUri;
