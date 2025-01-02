@@ -59,7 +59,7 @@
       </thead>
       <tbody>
       <tr th:each="like : ${likeHistory}">
-        <td><a th:href="@{/books/{bookId}(bookId=${like.bookId})}" th:text="${like.bookId}"></a></td>
+        <td><a th:href="@{/frontend/books/{bookId}(bookId=${like.bookId})}" th:text="${like.bookId}"></a></td>
         <td th:text="${like.bookTitle}">도서 이름</td>
         <td th:text="${#temporals.format(like.createdAt, 'yyyy-MM-dd HH:mm:ss')}">좋아요 등록일</td>
       </tr>
