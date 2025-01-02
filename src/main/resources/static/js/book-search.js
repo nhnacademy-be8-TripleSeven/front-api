@@ -3,7 +3,7 @@ function updateSortField(selectElement) {
   const selectedOption = selectElement.options[selectElement.selectedIndex].text;
 
   if (selectedOption === '인기순') {
-    sortFieldInput.value = 'popularity';
+    sortFieldInput.value = 'searchCount';
   } else {
     sortFieldInput.value = 'publishDate'; // 기본값 설정 (최신순, 오래된순)
   }

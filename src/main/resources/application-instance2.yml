@@ -5,3 +5,8 @@ eureka:
   instance:
     instance-id: front-api-2
     hostname: localhost
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    serviceUrl:
+      defaultZone: http://admin:1234@eureka-server:8761/eureka
