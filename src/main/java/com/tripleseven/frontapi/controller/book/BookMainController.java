@@ -1,6 +1,6 @@
 package com.tripleseven.frontapi.controller.book;
 
-import com.tripleseven.frontapi.dto.BookDetailResponseDTO;
+import com.tripleseven.frontapi.dto.book.BookDetailResponseDTO;
 import com.tripleseven.frontapi.service.BookService;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -21,7 +21,7 @@ public class BookMainController {
 
 
 
-    @GetMapping(value = {"/main.html", "/", "/main"})
+    @GetMapping(value = "/frontend/")
     public String getMonthlyBooks(HttpServletRequest request, Model model) {
         String ip = request.getHeader("x-forwarded-for");
         if (ip == null) {

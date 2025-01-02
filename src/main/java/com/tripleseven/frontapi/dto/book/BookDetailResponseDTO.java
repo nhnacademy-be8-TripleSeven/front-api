@@ -1,4 +1,4 @@
-package com.tripleseven.frontapi.dto;
+package com.tripleseven.frontapi.dto.book;
 
 
 import java.time.LocalDate;

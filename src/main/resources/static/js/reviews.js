@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const currentPageDisplay = document.getElementById('currentPageDisplay');
     const totalPagesDisplay = document.getElementById('totalPagesDisplay');
 
-    // 모달 관련 요소
+      // 모달 관련 요소
     const modal = document.getElementById('imageModal');
     const modalImage = document.getElementById('modalImage');
     const closeModal = document.querySelector('.close');

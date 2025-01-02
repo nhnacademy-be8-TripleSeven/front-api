@@ -2,7 +2,7 @@ package com.tripleseven.frontapi.controller.book;
 
 import com.tripleseven.frontapi.dto.review.ReviewRequestDTO;
 import com.tripleseven.frontapi.dto.review.ReviewResponseDTO;
-import com.tripleseven.frontapi.dto.BookDetailViewDTO;
+import com.tripleseven.frontapi.dto.book.BookDetailViewDTO;
 import com.tripleseven.frontapi.service.BookService;
 import com.tripleseven.frontapi.service.ObjectStorageService;
 import lombok.RequiredArgsConstructor;
