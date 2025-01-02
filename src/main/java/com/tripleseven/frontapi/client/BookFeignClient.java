@@ -1,21 +1,17 @@
 package com.tripleseven.frontapi.client;
 
-import com.tripleseven.frontapi.dto.book.BookDetailResponseDTO;
-import com.tripleseven.frontapi.dto.book.BookPageResponseDTO;
+import com.tripleseven.frontapi.dto.book.*;
 
 
+import com.tripleseven.frontapi.dto.category.CategorySearchDTO;
+import com.tripleseven.frontapi.dto.coupon.*;
 import com.tripleseven.frontapi.dto.likes.LikesResponseDTO;
 
 import com.tripleseven.frontapi.dto.review.ReviewRequestDTO;
-import com.tripleseven.frontapi.dto.coupon.CouponDetailsDTO;
 
 import org.springframework.data.domain.Pageable;
-import com.tripleseven.frontapi.dto.coupon.CouponPolicyRequestDTO;
-import com.tripleseven.frontapi.dto.coupon.CouponPolicyResponseDTO;
-import com.tripleseven.frontapi.dto.book.BookPageDetailResponseDTO;
 import org.springframework.web.bind.annotation.*;
 import com.tripleseven.frontapi.dto.review.ReviewResponseDTO;
-import com.tripleseven.frontapi.dto.book.BookDetailViewDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,10 +32,10 @@ public interface BookFeignClient {
         @PathVariable("term") String term,
         Pageable pageable
     );
-  
+
     @GetMapping("/books/{bookId}")
     BookDetailViewDTO getBookDetail(@PathVariable Long bookId);
-  
+
     @GetMapping("/books/category")
     BookPageResponseDTO getCategoryBooks(
         @RequestParam String keyword,
@@ -47,7 +43,7 @@ public interface BookFeignClient {
         @RequestParam int page,
         @RequestParam int size
     );
-  
+
     @GetMapping("/books/typeSearch/{type}")
     BookPageDetailResponseDTO getTypeSearchBooks(
         @PathVariable("type") String type,
@@ -61,6 +57,18 @@ public interface BookFeignClient {
         @RequestParam("size") int size,
         @RequestParam("sort") String sort
     );
+
+
+
+    @GetMapping("/admin/search/book")
+    List<BookSearchDTO> searchBooksByName(@RequestParam("query") String query);
+
+    @GetMapping("/admin/search/category")
+    List<CategorySearchDTO> searchCategoriesByName(@RequestParam("query") String query);
+
+    @PostMapping("/admin/coupons/create-and-assign")
+    List<CouponAssignResponseDTO> createAndAssignCoupons(@RequestBody CouponCreationAndAssignRequestDTO request);
+
 
     @PostMapping("/admin/coupon-policies")
     CouponPolicyResponseDTO createCouponPolicy(@RequestBody CouponPolicyRequestDTO request);
@@ -92,6 +100,8 @@ public interface BookFeignClient {
                                           @RequestParam(required = false) String keyword,
                                           @RequestParam(required = false) String startDate,
                                           @RequestParam(required = false) String endDate);
+
+
 
     @GetMapping("/api/reviews/{bookId}/paged")
     Page<ReviewResponseDTO> getPagedReviewsByBookId(
