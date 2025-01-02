@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Fetch and render reviews
     const fetchReviews = (page) => {
-        fetch(`/api/reviews/${bookId}?page=${page}&size=${pageSize}`)
+        fetch(`/frontend/api/reviews/${bookId}?page=${page}&size=${pageSize}`)
             .then((response) => response.json())
             .then((data) => {
                 renderReviews(data.content);

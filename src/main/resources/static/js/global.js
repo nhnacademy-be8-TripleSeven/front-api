@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // 로그아웃 버튼 클릭 시 POST 요청 보내기
     logoutBtn.addEventListener('click', function (event) {
-        axios.post('/backend/auth/logout', {})
+        axios.post('/auth/logout', {})
             .then(response => {
                 if (response.status === 200) {
                     // 로그아웃 성공 시 처리

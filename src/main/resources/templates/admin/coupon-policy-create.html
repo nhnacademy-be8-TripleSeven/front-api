@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>쿠폰 정책 생성 및 발급</title>
+    <title>쿠폰 정책 생성</title>
     <link rel="stylesheet" th:href="@{/css/coupon-policy-register.css}">
     <link rel="stylesheet" th:href="@{/css/global.css}">
 </head>
@@ -41,7 +41,7 @@
         <div class="form-container">
             <form id="coupon-form">
                 <table class="form-table">
-                    <h2 class="form-title">쿠폰 정책 생성 및 발급</h2>
+                    <h2 class="form-title">쿠폰 정책 생성</h2>
                     <tr>
                         <th>쿠폰 정책 이름</th>
                         <td><input type="text" id="coupon-policy-name" name="name" placeholder="정책 이름 입력"></td>
@@ -121,6 +121,8 @@
 
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script type="module" src="/js/axios-config.js"></script>
 <script th:src="@{/js/coupon-policy-register.js}"></script>
 </body>
 </html>
