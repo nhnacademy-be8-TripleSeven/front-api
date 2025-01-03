@@ -25,11 +25,6 @@ function handleLogin(event) {
         .then(response => {
             // 로그인 성공 후 처리
             console.log('로그인 성공', response);
-            setToken(response.data.accessToken);  // 받은 토큰을 로컬 스토리지에 저장
-            axios.get('/frontend/admin/members', {
-            })
-                .then(dataResponse => {
-                    document.body.innerHTML = dataResponse.data; // 서버가 반환하는 HTML 렌더링
-                })
+            window.location.href = "/admin/frontend/members"
         })
 }
