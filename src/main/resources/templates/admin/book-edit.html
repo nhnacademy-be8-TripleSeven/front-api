@@ -11,91 +11,95 @@
 
 <div th:replace="header :: header"></div>
 
-<main class="main-content">
-  <aside class="sidebar">
-    <h3>관리자 메뉴</h3>
-    <ul>
-      <li><a href="#">*쿠폰</a>
-        <ul>
-          <li><a th:href="@{/check-coupon}">쿠폰 정책 조회</a></li>
-          <li><a th:href="@{/coupon-policy-create}">쿠폰 정책 생성, 발급</a></li>
-          <li><a th:href="@{/coupon-create}">쿠폰 생성, 발급</a></li>
-        </ul>
-      </li>
-      <li><a href="#">*회원</a>
-        <ul>
-          <li><a th:href="@{/user-list}">회원 조회</a></li>
-          <li><a th:href="@{/user-rank}">등급 조회</a></li>
-        </ul>
-      </li>
-      <li><a href="#">*도서</a>
-        <ul>
-          <li><a th:href="@{/book-list}">도서 조회</a></li>
-          <li><a th:href="@{/book-edit}">도서 수정</a></li>
-        </ul>
-      </li>
-    </ul>
-  </aside>
+<div th:replace="admin-main :: admin-main"></div>
 
-  <section class="content">
-    <h2>도서 수정</h2>
-    <div class="search-bar">
-      <input type="text" placeholder="검색 조건을 입력하세요" class="search-input">
-      <button class="search-btn" onclick="searchBooks()">조회</button>
-      <select class="sort-select" onchange="sortBooks()">
-        <option>정렬: 최신순</option>
-        <option>정렬: 오래된순</option>
-      </select>
-    </div>
-    <div class="data-table-wrapper">
-      <table class="data-table">
-        <thead>
-        <tr>
-          <th>도서 ID</th>
-          <th>도서 이름</th>
-          <th>카테고리</th>
-          <th>등록일</th>
-          <th>선택</th>
-        </tr>
-        </thead>
-        <tbody id="book-list">
-        <tr>
-          <td colspan="5">조회된 데이터가 없습니다.</td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
-    <form class="book-edit-form">
-      <div class="form-group">
-        <label for="book-name">도서 이름</label>
-        <input type="text" id="book-name" placeholder="도서 이름">
-      </div>
-      <div class="form-group">
-        <label for="book-id">도서 ID</label>
-        <input type="text" id="book-id" placeholder="도서 ID">
-      </div>
-      <div class="form-group">
-        <label for="category">카테고리</label>
-        <input type="text" id="category" placeholder="카테고리">
-      </div>
-      <div class="form-group">
-        <label for="registration-date">등록일</label>
-        <input type="date" id="registration-date">
-      </div>
-      <div class="form-group">
-        <label for="author">저자 이름</label>
-        <input type="text" id="author" placeholder="저자 이름">
-      </div>
-      <div class="form-group">
-        <label for="price">판매가</label>
-        <input type="number" id="price" placeholder="판매가">
-      </div>
-      <div class="update-btn-wrapper">
-        <button type="submit" class="update-btn">확인</button>
-      </div>
-    </form>
-  </section>
-</main>
+<form class="book-edit-form" enctype="multipart/form-data" method="post">
+  <!-- 도서 기본 정보 -->
+  <div class="form-group">
+    <label for="book-id">도서 ID</label>
+    <input type="text" id="book-id" name="id" placeholder="도서 ID" readonly>
+  </div>
+  <div class="form-group">
+    <label for="book-name">도서 이름</label>
+    <input type="text" id="book-name" name="title" placeholder="도서 이름" required>
+  </div>
+  <div class="form-group">
+    <label for="isbn">ISBN</label>
+    <input type="text" id="isbn" name="isbn" placeholder="ISBN" required>
+  </div>
+
+  <!-- 카테고리 -->
+  <div class="form-group">
+    <label for="categories">카테고리</label>
+    <textarea id="categories" name="categories" placeholder="카테고리를 입력하세요"></textarea>
+  </div>
+
+  <!-- 도서 타입 -->
+  <div class="form-group">
+    <label for="book-types">도서 타입</label>
+    <textarea id="book-types" name="bookTypes" placeholder="도서 타입을 입력하세요"></textarea>
+  </div>
+
+  <!-- 저자 -->
+  <div class="form-group">
+    <label for="authors">저자 이름</label>
+    <textarea id="authors" name="authors" placeholder="저자 정보를 입력하세요"></textarea>
+  </div>
+
+  <!-- 태그 -->
+  <div class="form-group">
+    <label for="tags">태그</label>
+    <textarea id="tags" name="tags" placeholder="태그를 입력하세요"></textarea>
+  </div>
+
+  <!-- 도서 세부 정보 -->
+  <div class="form-group">
+    <label for="published-date">출판일</label>
+    <input type="date" id="published-date" name="publishedDate">
+  </div>
+  <div class="form-group">
+    <label for="description">설명</label>
+    <textarea id="description" name="description" placeholder="도서 설명을 입력하세요"></textarea>
+  </div>
+  <div class="form-group">
+    <label for="regular-price">정가</label>
+    <input type="number" id="regular-price" name="regularPrice" placeholder="정가">
+  </div>
+  <div class="form-group">
+    <label for="sale-price">판매가</label>
+    <input type="number" id="sale-price" name="salePrice" placeholder="판매가">
+  </div>
+  <div class="form-group">
+    <label for="index">목차</label>
+    <textarea id="index" name="index" placeholder="목차를 입력하세요"></textarea>
+  </div>
+
+  <!-- 이미지 -->
+  <div class="form-group">
+    <label for="cover-images">표지 이미지</label>
+    <input type="file" id="cover-images" name="coverImages" accept="image/*" multiple>
+  </div>
+  <div class="form-group">
+    <label for="detail-images">세부 이미지</label>
+    <input type="file" id="detail-images" name="detailImages" accept="image/*" multiple>
+  </div>
+
+  <!-- 추가 정보 -->
+  <div class="form-group">
+    <label for="stock">재고</label>
+    <input type="number" id="stock" name="stock" placeholder="재고 수량">
+  </div>
+  <div class="form-group">
+    <label for="page">페이지 수</label>
+    <input type="number" id="page" name="page" placeholder="페이지 수">
+  </div>
+
+  <!-- 버튼 -->
+  <div class="update-btn-wrapper">
+    <button type="submit" class="update-btn">확인</button>
+  </div>
+</form>
+
 
 <div th:replace="footer :: footer"></div>
 

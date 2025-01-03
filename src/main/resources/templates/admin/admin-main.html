@@ -1,0 +1,27 @@
+<main class="main-content" th:fragment="main">
+  <aside class="sidebar">
+    <h3>관리자 메뉴</h3>
+    <ul>
+      <li><a href="#">*쿠폰</a>
+        <ul>
+          <li><a th:href="@{/check-coupon}">쿠폰 정책 조회</a></li>
+          <li><a th:href="@{/coupon-policy-create}">쿠폰 정책 생성, 발급</a></li>
+          <li><a th:href="@{/coupon-create}">쿠폰 생성, 발급</a></li>
+        </ul>
+      </li>
+      <li><a href="#">*회원</a>
+        <ul>
+          <li><a th:href="@{/user-list}">회원 조회</a></li>
+          <li><a th:href="@{/user-rank}">등급 조회</a></li>
+        </ul>
+      </li>
+      <li><a href="#">*도서</a>
+        <ul>
+          <li><a th:href="@{/book-list}">도서 조회</a></li>
+          <li><a th:href="@{/book-edit}">도서 수정</a></li>
+        </ul>
+      </li>
+    </ul>
+  </aside>
+
+</main>

@@ -1,10 +1,23 @@
 package com.tripleseven.frontapi.client;
 
+
+import com.tripleseven.frontapi.dto.book.BookApiDTO;
+import com.tripleseven.frontapi.dto.book.BookCreateDTO;
+import com.tripleseven.frontapi.dto.book.BookDTO;
+import com.tripleseven.frontapi.dto.book.BookDetailResponseDTO;
+import com.tripleseven.frontapi.dto.book.BookPageDTO;
+import com.tripleseven.frontapi.dto.book.BookPageResponseDTO;
+
+
+import com.tripleseven.frontapi.dto.book.BookUpdateDTO;
+import com.tripleseven.frontapi.dto.book_creator.BookCreatorDTO;
+
 import com.tripleseven.frontapi.dto.book.*;
 
 
 import com.tripleseven.frontapi.dto.category.CategorySearchDTO;
 import com.tripleseven.frontapi.dto.coupon.*;
+
 import com.tripleseven.frontapi.dto.likes.LikesResponseDTO;
 
 import com.tripleseven.frontapi.dto.review.ReviewRequestDTO;
@@ -14,6 +27,7 @@ import com.tripleseven.frontapi.dto.coupon.CouponPolicyRequestDTO;
 import com.tripleseven.frontapi.dto.coupon.CouponPolicyResponseDTO;
 import com.tripleseven.frontapi.dto.book.BookPageDetailResponseDTO;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import com.tripleseven.frontapi.dto.review.ReviewResponseDTO;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -22,6 +36,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
+import org.springframework.web.multipart.MultipartFile;
 
 @FeignClient(name = "book-coupon-api")
 public interface BookFeignClient {
@@ -123,6 +138,25 @@ public interface BookFeignClient {
     List<LikesResponseDTO> getAllLikesByUserId(@RequestHeader("X-USER") Long userId, @RequestParam(defaultValue = "0") int page,
                                                @RequestParam(defaultValue = "10") int size);
 
+
+    @GetMapping("/admin/books/keyword/{keyword}")
+    BookPageDTO getBooksByKeyword(@PathVariable("keyword") String keyword, Pageable pageable);
+
+    @GetMapping("/admin/books/aladin/isbn/{isbn}")
+    public BookApiDTO getAladinApiBookByIsbn(@PathVariable("isbn") String isbn);
+
+    @DeleteMapping("/admin/books/delete/{bookId}")
+    public void deleteBook(@PathVariable Long bookId);
+
+    @PostMapping(value = "/admin/books/updateBook", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public BookDTO updateBook(@RequestPart("book") BookUpdateDTO bookDTO,  @RequestPart("coverImages") List<MultipartFile> coverImages,@RequestPart("detailImages") List<MultipartFile> detailImages);
+
+    @PostMapping(value = "/admin/books/createBook",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public BookDTO createBook(@RequestPart("book") BookCreateDTO bookCreatorDTO, @RequestPart List<MultipartFile> coverImages,@RequestPart List<MultipartFile> detailImages);
+
+    @GetMapping("/admin/books/{id}")
+    BookDTO getBookById(@PathVariable Long id);
+
     @GetMapping("/api/likes/search")
     List<LikesResponseDTO> searchLikesByUserIdAndKeyword(
             @RequestHeader("X-USER") Long userId,
@@ -138,4 +172,5 @@ public interface BookFeignClient {
 
     @DeleteMapping("/api/likes/{bookId}")
     void deleteLikes(@PathVariable Long bookId, @RequestHeader("X-USER") Long userId);
+
 }
