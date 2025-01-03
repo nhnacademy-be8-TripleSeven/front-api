@@ -31,7 +31,7 @@ public class AdminCouponController {
     /**
      * 쿠폰 생성 페이지로 이동
      */
-    @GetMapping("/coupon/create")
+    @GetMapping("/coupons/create")
     public String showCouponCreatePage() {
         return "/admin/coupon-create";
     }
@@ -40,7 +40,7 @@ public class AdminCouponController {
     /**
      * 쿠폰 정책 생성 페이지로 이동
      */
-    @GetMapping("/coupon-policy/register")
+    @GetMapping("/coupon-policies/register")
     public String showCouponPolicyRegisterPage(Model model) {
         // 새로운 쿠폰 정책 DTO를 모델에 추가하여 폼과 연동
         model.addAttribute("couponPolicy", new CouponPolicyRequestDTO());
@@ -51,7 +51,7 @@ public class AdminCouponController {
      * 쿠폰 정책 조회 페이지(검색 포함)
      */
     // 쿠폰 정책 조회 (검색 포함)
-    @GetMapping("/coupon-policy/list")
+    @GetMapping("/coupon-policies/list")
     public String listCouponPolicies(@RequestParam(required = false) String query, Model model) {
         List<CouponPolicyResponseDTO> policies;
         try {
@@ -75,14 +75,14 @@ public class AdminCouponController {
 
 
     // 쿠폰 정책 수정 데이터 조회
-    @GetMapping("/coupon-policy/update/{id}")
+    @GetMapping("/coupon-policies/update/{id}")
     @ResponseBody
     public CouponPolicyResponseDTO getCouponPolicy(@PathVariable("id") Long id) {
         return bookFeignClient.getCouponPolicyById(id);
     }
 
     // 쿠폰 정책 수정 처리
-    @PostMapping("/coupon-policy/update/{id}")
+    @PostMapping("/coupon-policies/update/{id}")
     @ResponseBody
     public String updateCouponPolicy(@PathVariable Long id, @RequestBody CouponPolicyRequestDTO request) {
         if (request.getCouponDiscountRate() != null && request.getCouponDiscountRate().compareTo(BigDecimal.ZERO) > 0) {
@@ -101,7 +101,7 @@ public class AdminCouponController {
     }
 
     // 쿠폰 정책 삭제 처리
-    @PostMapping("/coupon-policy/delete/{id}")
+    @PostMapping("/coupon-policies/delete/{id}")
     @ResponseBody
     public String deleteCouponPolicy(@PathVariable("id") Long id) {
         bookFeignClient.deleteCouponPolicy(id);
@@ -109,7 +109,7 @@ public class AdminCouponController {
     }
 
     //쿠폰 정책 생성 요청 처리
-    @PostMapping("/coupon-policy/register")
+    @PostMapping("/coupon-policies/register")
     @ResponseBody
     public String createCouponPolicy(@ModelAttribute CouponPolicyRequestDTO couponPolicy) {
         // 할인율 또는 할인 금액 처리
@@ -131,7 +131,7 @@ public class AdminCouponController {
     }
 
     //쿠폰 생성 및 발급처리
-    @PostMapping("/coupon/create")
+    @PostMapping("/coupons/create")
     @ResponseBody
     public String createAndAssignCoupons(@RequestBody CouponCreationAndAssignRequestDTO request) {
         try {
@@ -143,7 +143,7 @@ public class AdminCouponController {
     }
 
     // 도서 쿠폰 생성을 위한 도서검색
-    @GetMapping("/search/book")
+    @GetMapping("/coupons/book-search")
     @ResponseBody
     public List<BookSearchDTO> searchBooks(@RequestParam String query) {
         try {
@@ -154,7 +154,7 @@ public class AdminCouponController {
     }
 
     // 카테고리 쿠폰 생성을 위한 카테고리 검색
-    @GetMapping("/search/category")
+    @GetMapping("/coupons/category-search")
     @ResponseBody
     public List<CategorySearchDTO> searchCategories(@RequestParam String query) {
         try {
@@ -164,7 +164,7 @@ public class AdminCouponController {
         }
     }
 
-    @GetMapping("/coupon-policy/search")
+    @GetMapping("/coupon-policies/search")
     public String searchCouponPoliciesByName(
             @RequestParam(required = false) String query,
             Model model) {

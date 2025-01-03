@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("search-category-btn").addEventListener("click", () => {
         const query = document.getElementById("category-query").value;
         axios
-            .get(`/admin/frontend/search/category?query=${query}`)
+            .get(`/admin/frontend/coupons/category-search?query=${query}`)
             .then((response) => {
                 const select = document.getElementById("category-select");
                 select.innerHTML = response.data
@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("search-book-btn").addEventListener("click", () => {
         const query = document.getElementById("book-query").value;
         axios
-            .get(`/admin/frontend/search/book?query=${query}`)
+            .get(`/admin/frontend/coupons/book-search?query=${query}`)
             .then((response) => {
                 const select = document.getElementById("book-select");
                 select.innerHTML = response.data
@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
             name: document.getElementById("coupon-name").value,
             couponPolicyId: document.getElementById("coupon-policy").value,
             recipientType: document.getElementById("recipient-type").value,
-            grade: document.getElementById("recipient-grade").value,
+            grade: document.getElementById("recipient-grade").value || null,
             memberIds: document.getElementById("recipient-member")
                 .value.split(",")
                 .map(Number),

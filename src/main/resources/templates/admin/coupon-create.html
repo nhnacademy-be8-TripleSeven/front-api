@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>쿠폰 생성 및 발급</title>
   <link rel="stylesheet" th:href="@{/css/global.css}">
+  <link rel="stylesheet" th:href="@{/css/create-coupon.css}">
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script type="module" src="/js/axios-config.js"></script>
   <script type="module" src="/js/create-coupon.js" defer></script>
@@ -19,8 +20,8 @@
       <ul>
         <li><h3>*쿠폰</h3>
           <ul>
-            <li><a th:href="@{/admin/frontend/coupon-policy/list}">쿠폰 정책 조회</a></li>
-            <li><a th:href="@{/admin/frontend/coupon-policy/register}">쿠폰 정책 생성</a></li>
+            <li><a th:href="@{/admin/frontend/coupon-policies/list}">쿠폰 정책 조회</a></li>
+            <li><a th:href="@{/admin/frontend/coupon-policies/register}">쿠폰 정책 생성</a></li>
             <li><a th:href="@{/coupon-create}">쿠폰 생성, 발급</a></li>
           </ul>
         </li>
@@ -51,8 +52,10 @@
             <tr>
               <th>쿠폰 정책</th>
               <td>
-                <input type="text" id="coupon-policy-query" placeholder="쿠폰 정책 검색">
-                <button type="button" id="search-policy-btn">검색</button>
+                <div class="search-group">
+                  <input type="text" id="coupon-policy-query" placeholder="쿠폰 정책 검색">
+                  <button type="button" id="search-policy-btn">검색</button>
+                </div>
                 <select id="coupon-policy" name="couponPolicyId" required>
                   <option value="">정책 선택</option>
                 </select>
@@ -68,7 +71,13 @@
                   <option value="개인별">개인별</option>
                 </select>
                 <div id="recipient-grade-container" style="display: none;">
-                  <input type="text" id="recipient-grade" name="grade" placeholder="등급 입력">
+                  <select id="recipient-grade" name="grade" required>
+                    <option value="">등급 선택</option>
+                    <option value="REGULAR">REGULAR</option>
+                    <option value="ROYAL">ROYAL</option>
+                    <option value="GOLD">GOLD</option>
+                    <option value="PLATINUM">PLATINUM</option>
+                  </select>
                 </div>
                 <div id="recipient-member-container" style="display: none;">
                   <input type="text" id="recipient-member" name="memberIds" placeholder="회원 ID 입력 (쉼표로 구분)">
@@ -85,15 +94,19 @@
                   <option value="일반 쿠폰">일반 쿠폰</option>
                 </select>
                 <div id="book-category-search" style="display: none;">
-                  <input type="text" id="category-query" placeholder="카테고리 검색">
-                  <button type="button" id="search-category-btn">검색</button>
+                  <div class="search-group">
+                    <input type="text" id="category-query" placeholder="카테고리 검색">
+                    <button type="button" id="search-category-btn">검색</button>
+                  </div>
                   <select id="category-select" name="categoryId">
                     <option value="">카테고리 선택</option>
                   </select>
                 </div>
                 <div id="book-search" style="display: none;">
-                  <input type="text" id="book-query" placeholder="도서 검색">
-                  <button type="button" id="search-book-btn">검색</button>
+                  <div class="search-group">
+                    <input type="text" id="book-query" placeholder="도서 검색">
+                    <button type="button" id="search-book-btn">검색</button>
+                  </div>
                   <select id="book-select" name="bookId">
                     <option value="">도서 선택</option>
                   </select>

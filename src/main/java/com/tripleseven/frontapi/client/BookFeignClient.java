@@ -60,15 +60,14 @@ public interface BookFeignClient {
 
 
 
-    @GetMapping("/admin/search/book")
+    @GetMapping("/admin/coupons/book-search")
     List<BookSearchDTO> searchBooksByName(@RequestParam("query") String query);
 
-    @GetMapping("/admin/search/category")
+    @GetMapping("/admin/coupons/category-search")
     List<CategorySearchDTO> searchCategoriesByName(@RequestParam("query") String query);
 
     @PostMapping("/admin/coupons/create-and-assign")
     List<CouponAssignResponseDTO> createAndAssignCoupons(@RequestBody CouponCreationAndAssignRequestDTO request);
-
 
     @PostMapping("/admin/coupon-policies")
     CouponPolicyResponseDTO createCouponPolicy(@RequestBody CouponPolicyRequestDTO request);
@@ -90,13 +89,13 @@ public interface BookFeignClient {
 
 
     @GetMapping("/api/coupons")
-    List<CouponDetailsDTO> getAllCoupons(@RequestHeader("X-User") Long userId,
+    List<CouponDetailsDTO> getAllCoupons(@RequestHeader("X-USER") Long userId,
                                          @RequestParam(required = false) String keyword,
                                          @RequestParam(required = false) String startDate,
                                          @RequestParam(required = false) String endDate);
 
     @GetMapping("/api/coupons/used")
-    List<CouponDetailsDTO> getUsedCoupons(@RequestHeader("X-User") Long userId,
+    List<CouponDetailsDTO> getUsedCoupons(@RequestHeader("X-USER") Long userId,
                                           @RequestParam(required = false) String keyword,
                                           @RequestParam(required = false) String startDate,
                                           @RequestParam(required = false) String endDate);
