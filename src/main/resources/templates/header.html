@@ -1,6 +1,6 @@
 <header class="header">
   <div class="logo">
-    <a th:href="@{/}"><img th:src="@{/image/logo/nhn24-logo.png}" alt="NHN 24 로고"></a>
+    <a th:href="@{/frontend/}"><img th:src="@{/image/logo/nhn24-logo.png}" alt="NHN 24 로고"></a>
   </div>
   <div class="header-center">
     <form th:action="@{/searchBook}" method="get">
@@ -21,8 +21,8 @@
     </nav>
   </div>
   <div class="user-actions">
-    <a th:href="@{/mypage}"><img th:src="@{/image/icons/person.png}" alt="User Icon"></a>
-    <a th:href="@{/cart-success}"><img th:src="@{/image/icons/cart.png}" alt="Cart Icon"></a>
+    <a th:href="@{/frontend/mypage}"><img th:src="@{/image/icons/person.png}" alt="User Icon"></a>
+    <a th:href="@{/frontend/cart-success}"><img th:src="@{/image/icons/cart.png}" alt="Cart Icon"></a>
     <a id="login-btn" href="/frontend/login"><button class="login-btn">Login</button></a>
     <button class="logout-btn" id="logout-btn" style="display: none">Logout</button>
   </div>

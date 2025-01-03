@@ -93,7 +93,7 @@ axios.interceptors.response.use(
                 alert("로그인이 필요한 서비스입니다.");
             }
             setToken(null);
-            window.location.href = "/login";
+            window.location.href = "/frontend/login";
         } else {
             alert(error.response.data.message);
         }

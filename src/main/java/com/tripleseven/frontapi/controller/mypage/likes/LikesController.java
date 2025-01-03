@@ -20,12 +20,13 @@ public class LikesController {
         this.likesService = likesService;
     }
 //@RequestHeader("X-User") Long userId; -> 파라미터에 다시 넣어야함
-    @GetMapping("/likes-history")
+    @GetMapping("/api/frontend/likes-history")
     public String likesPage(Model model,
                             @RequestParam(defaultValue = "0") int page,
                             @RequestParam(defaultValue = "10") int size,
-                            @RequestParam(defaultValue = "") String keyword) {
-        List<LikesResponseDTO> likesResponseDTOS = likesService.getAllLikesByUserId(1L, page, size); // userId가 1번인 유저일 때의 페이지(테스트)
+                            @RequestParam(defaultValue = "") String keyword,
+                            @RequestHeader("X-USER") Long userId) {
+        List<LikesResponseDTO> likesResponseDTOS = likesService.getAllLikesByUserId(userId, page, size); // userId가 1번인 유저일 때의 페이지(테스트)
         model.addAttribute("likeHistory", likesResponseDTOS);
         model.addAttribute("currentPage", page);
         model.addAttribute("pageSize", size);

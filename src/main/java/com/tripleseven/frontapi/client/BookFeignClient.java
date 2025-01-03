@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import com.tripleseven.frontapi.dto.coupon.CouponPolicyRequestDTO;
 import com.tripleseven.frontapi.dto.coupon.CouponPolicyResponseDTO;
 import com.tripleseven.frontapi.dto.book.BookPageDetailResponseDTO;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 import com.tripleseven.frontapi.dto.review.ReviewResponseDTO;
 import com.tripleseven.frontapi.dto.book.BookDetailViewDTO;
@@ -57,9 +58,7 @@ public interface BookFeignClient {
     BookPageDetailResponseDTO getCategoriesSearchBooks(
         @PathVariable("categories") List<String> categories,
         @PathVariable("keyword") String keyword,
-        @RequestParam("page") int page,
-        @RequestParam("size") int size,
-        @RequestParam("sort") String sort
+        Pageable pageable
     );
 
     @PostMapping("/admin/coupon-policies")
