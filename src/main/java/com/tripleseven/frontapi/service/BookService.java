@@ -2,10 +2,16 @@ package com.tripleseven.frontapi.service;
 
 import com.tripleseven.frontapi.client.BookFeignClient;
 import com.tripleseven.frontapi.client.OrderFeignClient;
+import com.tripleseven.frontapi.dto.book.BookApiDTO;
+import com.tripleseven.frontapi.dto.book.BookCreateDTO;
+import com.tripleseven.frontapi.dto.book.BookDTO;
 import com.tripleseven.frontapi.dto.book.BookDetailResponseDTO;
+import com.tripleseven.frontapi.dto.book.BookPageDTO;
 import com.tripleseven.frontapi.dto.book.BookPageResponseDTO;
 import com.tripleseven.frontapi.dto.book.BookSearchResponseDTO;
 import com.tripleseven.frontapi.dto.book.BookPageDetailResponseDTO;
+import com.tripleseven.frontapi.dto.book.BookUpdateDTO;
+import com.tripleseven.frontapi.dto.book_creator.BookCreatorDTO;
 import java.util.List;
 
 import com.tripleseven.frontapi.dto.review.ReviewRequestDTO;
@@ -106,8 +112,30 @@ public class BookService {
         }
         BookPageDetailResponseDTO searchBooks = bookFeignClient.getCategoriesSearchBooks(
             categories, keyword, pageable);
-
-
         return searchBooks;
+    }
+
+    public BookPageDTO getAdminBooksByKeyword(String keyword, Pageable pageable) {
+        return bookFeignClient.getBooksByKeyword(keyword, pageable);
+    }
+
+    public BookApiDTO getAladinApiBook(String isbn){
+        return bookFeignClient.getAladinApiBookByIsbn(isbn);
+    }
+
+    public void deleteBook(Long bookId) {
+        bookFeignClient.deleteBook(bookId);
+    }
+
+    public BookDTO updateBook(BookUpdateDTO bookDTO) {
+        return bookFeignClient.updateBook(bookDTO, bookDTO.getCoverImage(), bookDTO.getDetailImage());
+    }
+
+    public BookDTO createBook(BookCreateDTO bookCreateDTO) {
+        return bookFeignClient.createBook(bookCreateDTO, bookCreateDTO.getCoverImage(), bookCreateDTO.getDetailImage());
+    }
+
+    public BookDTO getBookById(Long bookId) {
+        return bookFeignClient.getBookById(bookId);
     }
 }

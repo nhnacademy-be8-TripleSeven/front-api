@@ -13,7 +13,7 @@
 <main>
   <aside class="filter-sidebar">
   <h3>검색 조건</h3>
-    <form method="get" th:action="@{/categorySearch}">
+    <form method="get" th:action="@{/frontend/categorySearch}">
       <input type="text" name="keyword" placeholder="검색어 입력" />
       <h3>카테고리 선택</h3>
       <ul>
@@ -49,7 +49,7 @@
       <p th:if="${searchBook.contents.size() > 0}" th:text="'총 ' + ${searchBook.total} + '권의 검색 결과'"></p><!-- searchBook 경로 -->
       <!-- searchBook 경로 -->
       <form th:if="${searchBook.path == 'searchBook'}"
-            th:action="@{/searchBook}"
+            th:action="@{/frontend/searchBook}"
             method="get">
 
         <!-- 검색어(Controller 파라미터: searchTerm) -->
@@ -79,7 +79,7 @@
 
 
       <!-- typeBook 경로 -->
-      <form th:if="${searchBook.path == 'typeBook'}" th:action="@{/typeBook}" method="get">
+      <form th:if="${searchBook.path == 'typeBook'}" th:action="@{/frontend/typeBook}" method="get">
         <input type="hidden" name="type" th:value="${searchBook.type}" />
         <input type="hidden" name="page" th:value="${searchBook.page}" />
         <select name="sortDir" onchange="this.form.submit()">
@@ -94,7 +94,7 @@
       </form>
 
       <!-- categorySearch 경로 -->
-      <form th:if="${searchBook.path == 'categorySearch'}" th:action="@{/categorySearch}" method="get">
+      <form th:if="${searchBook.path == 'categorySearch'}" th:action="@{/frontend/categorySearch}" method="get">
         <input type="hidden" name="categories" th:each="category : ${searchBook.categories}" th:value="${searchBook.categories}" />
         <input type="hidden" name="keyword" th:value="${searchBook.keyword}">
         <input type="hidden" name="page" th:value="${searchBook.page}" />
@@ -117,7 +117,7 @@
     </div>
     <div class="book-list">
       <div th:each="book : ${searchBook.contents}" class="book-item">
-        <a th:href="@{/books/{bookId}(bookId=${book.id})}">
+        <a th:href="@{/frontend/books/{bookId}(bookId=${book.id})}">
           <img th:src="${book.coverUrl}" th:alt="${book.title}">
           <h4 th:text="${book.title}">도서 제목</h4>
         </a>
@@ -131,7 +131,7 @@
       <div th:if="${searchBook.path == 'searchBook'}">
         <!-- 이전 페이지 버튼 -->
         <a th:if="${searchBook.page > 0}"
-           th:href="@{/searchBook(
+           th:href="@{/frontend/searchBook(
                keyword=${keyword},
                sortField=${searchBook.sortField},
                sortDir=${searchBook.sortDir},
@@ -143,7 +143,7 @@
 
         <!-- 페이지 번호 (1~5까지 표시) -->
         <span th:each="i : ${#numbers.sequence(searchBook.startPage, searchBook.endPage)}">
-            <a th:href="@{/searchBook(
+            <a th:href="@{/frontend/searchBook(
                    keyword=${keyword},
                    sortField=${searchBook.sortField},
                    sortDir=${searchBook.sortDir},
@@ -157,7 +157,7 @@
 
         <!-- 다음 페이지 버튼 -->
         <a th:if="${searchBook.page < searchBook.total - 1}"
-           th:href="@{/searchBook(
+           th:href="@{/frontend/searchBook(
                keyword=${keyword},
                sortField=${searchBook.sortField},
                sortDir=${searchBook.sortDir},
@@ -173,7 +173,7 @@
       <div th:if="${searchBook.path == 'typeBook'}">
         <!-- 이전 페이지 버튼 -->
         <a th:if="${searchBook.page > 0}"
-           th:href="@{/typeBook(
+           th:href="@{/frontend/typeBook(
            type=${searchBook.type},
            sortField=${searchBook.sortField},
            sortDir=${searchBook.sortDir},
@@ -184,7 +184,7 @@
         </a>
         <!-- 페이지 번호 (1~5까지 표시) -->
         <span th:each="i : ${#numbers.sequence(searchBook.startPage, searchBook.endPage)}">
-            <a th:href="@{/typeBook(
+            <a th:href="@{/frontend/typeBook(
                    type=${searchBook.type},
                    sortField=${searchBook.sortField},
                    sortDir=${searchBook.sortDir},
@@ -198,7 +198,7 @@
 
         <!-- 다음 페이지 버튼 -->
         <a th:if="${searchBook.page < searchBook.total / 5}"
-           th:href="@{/typeBook(
+           th:href="@{/frontend/typeBook(
            type=${searchBook.type},
            sortField=${searchBook.sortField},
            sortDir=${searchBook.sortDir},
@@ -213,7 +213,7 @@
       <div th:if="${searchBook.path == 'categorySearch'}">
         <!-- 이전 페이지 버튼 -->
         <a th:if="${searchBook.page > 0}"
-           th:href="@{/categorySearch(
+           th:href="@{/frontend/categorySearch(
            categories=${searchBook.categories},
            keyword=${searchBook.keyword},
            sortField=${searchBook.sortField},
@@ -226,7 +226,7 @@
 
         <!-- 페이지 번호 (1~5까지 표시) -->
         <span th:each="i : ${#numbers.sequence(searchBook.startPage, searchBook.endPage)}">
-            <a th:href="@{/categorySearch(
+            <a th:href="@{/frontend/categorySearch(
                    categories=${searchBook.categories},
                    keyword=${searchBook.keyword},
                    sortField=${searchBook.sortField},
@@ -241,7 +241,7 @@
 
         <!-- 다음 페이지 버튼 -->
         <a th:if="${searchBook.page < searchBook.total - 1}"
-           th:href="@{/categorySearch(
+           th:href="@{/frontend/categorySearch(
            categories=${searchBook.categories},
            keyword=${searchBook.keyword},
            sortField=${searchBook.sortField},

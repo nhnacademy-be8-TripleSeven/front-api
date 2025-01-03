@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>도서 수정</title>
+  <link rel="stylesheet" th:href="@{/css/check-user.css}">
+  <link rel="stylesheet" th:href="@{/css/global.css}">
+</head>
+<body>
+
+<div th:replace="header :: header"></div>
+
+<div th:replace="admin/admin-main :: main"></div>
+
+<form th:action="@{/admin/books/updateBook}" enctype="multipart/form-data" method="post">
+  <input type="hidden" name="id" th:value="${book.id}" />
+
+  <label>제목:</label>
+  <input type="text" name="title" th:value="${book.title}" />
+
+  <label>ISBN:</label>
+  <input type="text" name="isbn" th:value="${book.isbn}" />
+
+  <label>카테고리:</label>
+  <ul>
+    <li th:each="category : ${book.categories}">
+      <input type="text" name="categories" th:value="${category.name}" />
+    </li>
+  </ul>
+
+  <label>북 타입:</label>
+  <ul>
+    <li th:each="type : ${book.bookTypes}">
+      <input type="text" name="bookTypes" th:value="${type.type}" />
+    </li>
+  </ul>
+
+  <label>저자:</label>
+  <ul>
+    <li th:each="author : ${book.authors}">
+      <input type="text" name="authors" th:value="${author.name}" />
+    </li>
+  </ul>
+
+  <label>태그:</label>
+  <ul>
+    <li th:each="tag : ${book.tags}">
+      <input type="text" name="tags" th:value="${tag}" />
+    </li>
+  </ul>
+
+  <label>출판일:</label>
+  <input type="date" name="publishedDate" th:value="${book.publishedDate}" />
+
+  <label>설명:</label>
+  <textarea name="description" th:text="${book.description}"></textarea>
+
+  <label>정가:</label>
+  <input type="number" name="regularPrice" th:value="${book.regularPrice}" />
+
+  <label>할인가:</label>
+  <input type="number" name="salePrice" th:value="${book.salePrice}" />
+
+  <label>목차:</label>
+  <textarea name="index" th:text="${book.index}"></textarea>
+
+  <label>페이지:</label>
+  <input type="number" name="page" th:value="${book.page}" />
+
+  <label>재고:</label>
+  <input type="number" name="stock" th:value="${book.stock}" />
+
+  <!-- 표지 이미지 업로드 -->
+  <label>표지 이미지:</label>
+  <input type="file" name="coverImages" id="cover-images" accept="image/*" multiple />
+
+  <!-- 상세 이미지 업로드 -->
+  <label>상세 이미지:</label>
+  <input type="file" name="detailImages" id="detail-images" accept="image/*" multiple />
+
+  <button type="submit">수정 완료</button>
+</form>
+
+<div th:replace="footer :: footer"></div>
+
+<script>
+  function searchBooks() {
+    console.log("도서 검색 로직 실행");
+  }
+
+  function sortBooks() {
+    console.log("도서 정렬 로직 실행");
+  }
+</script>
+</body>
+</html>
