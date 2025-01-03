@@ -2,7 +2,6 @@ package com.tripleseven.frontapi.controller.mypage;
 
 import com.tripleseven.frontapi.service.OrderService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +19,7 @@ public class MyPageController {
             @RequestHeader(value = "X-USER", required = false) Long userId,
             Model model) {
         if(Objects.isNull(userId)){
-            return "redirect:/frontend/login";
+            return "auth/login";
         }
 
         int point = orderService.getPoints(userId);

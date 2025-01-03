@@ -48,16 +48,18 @@ public class OrderManageController {
     }
 
     @GetMapping("/frontend/orders/history/{orderId}")
-    public String getOrderHistory(@PathVariable("orderId") Long orderId,
-                                  Model model) {
-//        OrderDetailDTO orderDetail = orderService.getOrderHistory(orderId);
-//        List<OrderInfoDTO> orderInfos = orderDetail.getOrderInfos();
-//        DeliveryInfoDTO deliveryInfo = orderDetail.getDeliveryInfo();
-//        PayInfoDTO payInfo = orderDetail.getPayInfo();
-//
-//        model.addAttribute("orderInfos", orderInfos);
-//        model.addAttribute("deliveryInfo", deliveryInfo);
-//        model.addAttribute("payInfo", payInfo);
+    public String getOrderHistory(
+            @RequestHeader("X-USER") Long userId,
+            @PathVariable("orderId") Long orderId,
+            Model model) {
+        OrderPayDetailDTO orderDetail = orderService.getOrderHistory(userId, orderId);
+        List<OrderInfoDTO> orderInfos = orderDetail.getOrderInfos();
+        DeliveryInfoDTO deliveryInfo = orderDetail.getDeliveryInfo();
+        OrderPayInfoDTO orderPayInfo = orderDetail.getOrderPayInfoDTO();
+
+        model.addAttribute("orderInfos", orderInfos);
+        model.addAttribute("deliveryInfo", deliveryInfo);
+        model.addAttribute("OrderPayInfo", orderPayInfo);
 
         return "order-history-detail";
     }
@@ -66,7 +68,7 @@ public class OrderManageController {
     @GetMapping("/frontend/orders/refund")
     public String getRefundHistories(
             @ModelAttribute FilterCriteriaDTO updateFilter,
-            @RequestHeader("X-USER") Long userId,
+//            @RequestHeader("X-USER") Long userId,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             Model model) {
@@ -80,7 +82,7 @@ public class OrderManageController {
 
         Pageable pageable = PageRequest.of(page, size);
 
-        Page<OrderManageResponseDTO> orderPages = orderService.getOrderHistories(filterCriteriaDTO, userId, pageable);
+        Page<OrderManageResponseDTO> orderPages = orderService.getOrderHistories(filterCriteriaDTO, 1L, pageable);
         List<OrderManageResponseDTO> orders = orderPages.getContent();
 
         model.addAttribute("filterCriteria", filterCriteriaDTO);
@@ -93,7 +95,7 @@ public class OrderManageController {
 
     @GetMapping("/frontend/orders/canceled")
     public String getCanceledHistories(
-            @RequestHeader("X-USER") Long userId,
+//            @RequestHeader("X-USER") Long userId,
             @ModelAttribute FilterCriteriaDTO updateFilter,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
@@ -108,7 +110,7 @@ public class OrderManageController {
 
         Pageable pageable = PageRequest.of(page, size);
 
-        Page<OrderManageResponseDTO> orderPages = orderService.getOrderHistories(filterCriteriaDTO, userId, pageable);
+        Page<OrderManageResponseDTO> orderPages = orderService.getOrderHistories(filterCriteriaDTO, 1L, pageable);
         List<OrderManageResponseDTO> orders = orderPages.getContent();
 
         model.addAttribute("filterCriteria", filterCriteriaDTO);

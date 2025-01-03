@@ -1,12 +1,14 @@
 package com.tripleseven.frontapi.dto.order;
 
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
-@Getter
-public class OrderDetailDTO {
+@Getter @Setter
+public class OrderPayDetailDTO {
     List<OrderInfoDTO> orderInfos;
+    OrderGroupInfoDTO orderGroupInfoDTO;
     DeliveryInfoDTO deliveryInfo;
-    PayInfoDTO payInfo;
+    OrderPayInfoDTO orderPayInfoDTO;
 }

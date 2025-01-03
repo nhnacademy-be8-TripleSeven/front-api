@@ -2,9 +2,9 @@ package com.tripleseven.frontapi.service;
 
 import com.tripleseven.frontapi.client.OrderFeignClient;
 import com.tripleseven.frontapi.dto.FilterCriteriaDTO;
-import com.tripleseven.frontapi.dto.order.OrderDetailDTO;
 import com.tripleseven.frontapi.dto.order.OrderManageRequestDTO;
 import com.tripleseven.frontapi.dto.order.OrderManageResponseDTO;
+import com.tripleseven.frontapi.dto.order.OrderPayDetailDTO;
 import com.tripleseven.frontapi.dto.order.Status;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -29,7 +29,7 @@ public class OrderService {
         return orderFeignClient.getOrderList(requestDTO, userId, pageable);
     }
 
-    public OrderDetailDTO getOrderHistory(Long userId, Long orderId) {
+    public OrderPayDetailDTO getOrderHistory(Long userId, Long orderId) {
         return orderFeignClient.getOrderDetails(userId, orderId);
     }
 

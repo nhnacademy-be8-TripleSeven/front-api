@@ -1,12 +1,13 @@
 package com.tripleseven.frontapi.dto.order;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter @Setter
 public class OrderInfoDTO {
     Status status;
     String bookName;
     int amount;
-    String wrappingName;
-    int primePrice;
     int discountPrice;
-    int deliveryPrice;
-    int wrappingPrice;
+    int primePrice;
 }
