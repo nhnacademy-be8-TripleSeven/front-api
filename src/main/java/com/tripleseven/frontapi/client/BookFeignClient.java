@@ -81,13 +81,13 @@ public interface BookFeignClient {
 
 
     @GetMapping("/api/coupons")
-    List<CouponDetailsDTO> getAllCoupons(@RequestHeader("X-User") Long userId,
+    List<CouponDetailsDTO> getAllCoupons(@RequestHeader("X-USER") Long userId,
                                          @RequestParam(required = false) String keyword,
                                          @RequestParam(required = false) String startDate,
                                          @RequestParam(required = false) String endDate);
 
     @GetMapping("/api/coupons/used")
-    List<CouponDetailsDTO> getUsedCoupons(@RequestHeader("X-User") Long userId,
+    List<CouponDetailsDTO> getUsedCoupons(@RequestHeader("X-USER") Long userId,
                                           @RequestParam(required = false) String keyword,
                                           @RequestParam(required = false) String startDate,
                                           @RequestParam(required = false) String endDate);
@@ -102,12 +102,28 @@ public interface BookFeignClient {
     List<ReviewResponseDTO> getAllReviewByBookId(@PathVariable Long bookId);
 
     @GetMapping("/api/reviews/{bookId}/user")
-    ReviewResponseDTO getUserReviewForBook(@PathVariable("bookId") Long bookId, @RequestHeader("X-User") Long userId);
+    ReviewResponseDTO getUserReviewForBook(@PathVariable("bookId") Long bookId, @RequestHeader("X-USER") Long userId);
 
     @PostMapping("/api/reviews")
-    void addReview(@RequestHeader("X-User") Long userId, @RequestBody ReviewRequestDTO requestDto);
+    void addReview(@RequestHeader("X-USER") Long userId, @RequestBody ReviewRequestDTO requestDto);
 
     @GetMapping("/api/likes")
-    List<LikesResponseDTO> getAllLikesByUserId(@RequestHeader("X-User") Long userId, @RequestParam(defaultValue = "0") int page,
+    List<LikesResponseDTO> getAllLikesByUserId(@RequestHeader("X-USER") Long userId, @RequestParam(defaultValue = "0") int page,
                                                @RequestParam(defaultValue = "10") int size);
+
+    @GetMapping("/api/likes/search")
+    List<LikesResponseDTO> searchLikesByUserIdAndKeyword(
+            @RequestHeader("X-USER") Long userId,
+            @RequestParam(defaultValue = "") String keyword,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    );
+    @GetMapping("/api/likes/{bookId}/status")
+    boolean isLiked(@RequestHeader("X-USER") Long userId, @PathVariable Long bookId);
+
+    @PostMapping("/api/likes/{bookId}")
+    void addLikes(@PathVariable Long bookId, @RequestHeader("X-USER") Long userId);
+
+    @DeleteMapping("/api/likes/{bookId}")
+    void deleteLikes(@PathVariable Long bookId, @RequestHeader("X-USER") Long userId);
 }

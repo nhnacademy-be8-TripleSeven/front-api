@@ -291,6 +291,29 @@ section {
     flex: 1; /* 텍스트 영역을 남은 공간 채우기 */
 }
 
+.like-img {
+    max-width: 30px; /* 이미지 최대 너비 */
+    max-height: 30px; /* 이미지 최대 높이 */
+    object-fit: contain; /* 이미지 비율 유지 */
+    cursor: pointer; /* 클릭 가능한 상태를 표시 */
+    transition: transform 0.2s, filter 0.2s; /* 클릭 및 강조 애니메이션 */
+    margin-top: 10px; /* 상단 여백 추가로 이미지 위치 조정 */
+    margin-left: 10px;
+}
+
+/* 클릭 시 이미지 강조 효과 */
+.like-img:active {
+    transform: scale(1.1); /* 살짝 확대되는 효과 */
+    filter: brightness(1.2); /* 밝기 강조 */
+}
+
+/* 이미지 위로 마우스를 올릴 때 효과 */
+.like-img:hover {
+    filter: brightness(1.1); /* 살짝 밝아지는 효과 */
+}
+
+
+
 /* 모달 기본 스타일 */
 .modal {
     display: none; /* 기본적으로 숨김 */
