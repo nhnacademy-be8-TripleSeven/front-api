@@ -6,6 +6,8 @@
     <title>회원 조회</title>
     <link rel="stylesheet" th:href="@{/css/check-user.css}">
     <link rel="stylesheet" th:href="@{/css/global.css}">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script type="module" src="/js/axios-config.js"></script>
 </head>
 <body>
 <div class="container">
@@ -18,21 +20,20 @@
             <ul>
                 <li><h3>*쿠폰</h3>
                     <ul>
-                        <li><a th:href="@{/check-coupon}">쿠폰 정책 조회</a></li>
-                        <li><a th:href="@{/coupon-policy-create}">쿠폰 정책 생성, 발급</a></li>
-                        <li><a th:href="@{/coupon-create}">쿠폰 생성, 발급</a></li>
+                        <li><a href="/admin/frontend/check-coupon" class="menu-link">쿠폰 정책 조회</a></li>
+                        <li><a href="/admin/frontend/coupon-policy" class="menu-link">쿠폰 정책 생성, 발급</a></li>
+                        <li><a href="/admin/frontend/coupon-create" class="menu-link">쿠폰 생성, 발급</a></li>
                     </ul>
                 </li>
                 <li><h3>*회원</h3>
                     <ul>
-                        <li><a th:href="@{/user-list}">회원 조회</a></li>
-                        <li><a th:href="@{/user-rank}">등급 조회</a></li>
+                        <li><a href="/admin/frontend/user-list" class="menu-link">회원 조회</a></li>
                     </ul>
                 </li>
                 <li><h3>*도서</h3>
                     <ul>
-                        <li><a th:href="@{/book-list}">도서 조회</a></li>
-                        <li><a th:href="@{/book-edit}">도서 수정</a></li>
+                        <li><a href="/admin/frontend/book-list" class="menu-link">도서 조회</a></li>
+                        <li><a href="/admin/frontend/book-edit" class="menu-link">도서 수정</a></li>
                     </ul>
                 </li>
             </ul>
@@ -41,13 +42,13 @@
         <section class="content">
             <h2>회원 조회</h2>
             <div class="search-bar">
-                <input type="text" placeholder="검색 조건을 입력하세요" class="search-input">
-                <a th:href="@{/user-search}" class="search-btn">
-                    <button>조회</button>
-                </a>
-                <select class="sort-select">
-                    <option value="joinDate">정렬: 가입일순</option>
-                    <option value="name">정렬: 가나다순</option>
+                <label for="searchInput" class="search-label">이름 :</label>
+                <input type="text" id="searchInput" placeholder="검색 조건을 입력하세요" class="search-input"
+                       th:value="${searchName}">
+                <button id="searchBtn" class="search-btn">조회</button>
+                <select id="sortSelect" class="sort-select">
+                    <option value="name,asc" th:selected="${sort.contains('name')}">정렬: 가나다순</option>
+                    <option value="birth,desc" th:selected="${sort.contains('birth')}">정렬: 생일 순</option>
                 </select>
             </div>
             <table class="data-table">
@@ -57,30 +58,31 @@
                     <th>가입일</th>
                     <th>이름</th>
                     <th>등급</th>
-                    <th>비고</th>
-                    <th>선택</th>
+                    <th>성별</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="user : ${users}">
+                <tr th:each="user : ${page.getContent()}">
                     <td th:text="${user.id}">1</td>
-                    <td th:text="${user.joinDate}">2024-01-01</td>
+                    <td th:text="${user.birth}">2024-01-01</td>
                     <td th:text="${user.name}">홍길동</td>
-                    <td th:text="${user.rank}">VIP</td>
-                    <td th:text="${user.note}">활성</td>
-                    <td>
-                        <input type="checkbox" th:id="'user-check' + ${user.id}">
-                        <label th:for="'user-check' + ${user.id}"></label>
-                    </td>
+                    <td th:text="${user.memberGrade}">VIP</td>
+                    <td th:text="${user.gender}">MALE</td>
                 </tr>
                 </tbody>
             </table>
+            <div class="pagination">
+                <button th:each="i : ${#numbers.sequence(1, page.getTotalPages())}"
+                        th:data-page="${i}"
+                        th:text="'Page ' + ${i}"
+                        class="pagination-btn"></button>
+            </div>
         </section>
     </main>
 
     <div th:replace="footer :: footer"></div>
 
 </div>
-<script th:src="@{/js/find-user.js}"></script>
+<script type="module" src="/js/find-user.js"></script>
 </body>
 </html>
