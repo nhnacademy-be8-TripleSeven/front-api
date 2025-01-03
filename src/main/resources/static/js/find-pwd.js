@@ -20,7 +20,7 @@ function findAccountFromEmail(event) {
     }
 
     // Axios GET 요청
-    axios.get('/backend/members/account-id/email', {
+    axios.get('/members/account-id/email', {
         params: {
             email: email
         }
@@ -30,7 +30,7 @@ function findAccountFromEmail(event) {
             console.log(response);
 
             alert(`아이디: ` + response.data.loginId + " 입니다.");
-            window.location.href = '/login';
+            window.location.href = '/frontend/login';
         });
 }
 
@@ -45,7 +45,7 @@ function findAccountFromPhone(event) {
     }
 
     // Axios GET 요청
-    axios.get('/backend/members/account-id/phone', {
+    axios.get('/members/account-id/phone', {
         params: {
             phoneNumber: phoneNumber
         }
@@ -54,7 +54,7 @@ function findAccountFromPhone(event) {
             // 성공적으로 아이디를 찾은 경우 처리
             console.log(response);
             alert(`아이디: ` + response.data.loginId + " 입니다.");
-            window.location.href = '/login';
+            window.location.href = '/frontend/login';
         });
 }
 
@@ -71,7 +71,7 @@ function resetPassword(event) {
     }
 
     // Axios POST 요청
-    axios.post('/backend/members/reset/password', null, {
+    axios.post('/members/reset/password', null, {
         params : {
         email: email,
         loginId: loginId
@@ -79,7 +79,7 @@ function resetPassword(event) {
         .then(response => {
             // 비밀번호 변경 요청 성공
             alert("이메일 발송 성공! 이메일을 확인해주세요.");
-            window.location.href = '/login'; // 로그인 페이지로 리다이렉션
+            window.location.href = '/frontend/login'; // 로그인 페이지로 리다이렉션
         })
         .catch(error => {
             console.error('비밀번호 찾기 실패:', error);

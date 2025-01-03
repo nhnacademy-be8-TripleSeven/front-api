@@ -70,6 +70,13 @@ main {
     margin: 20px;
 }
 
+.search-group {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* 입력 필드와 버튼 사이 간격 */
+    margin-bottom: 15px;
+}
+
 /* 사이드바 */
 .sidebar {
     width: 20%;
@@ -229,3 +236,4 @@ footer {
 .footer-buttons button:hover {
     background-color: #bfc9d3;
 }
+

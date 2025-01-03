@@ -64,7 +64,9 @@
     <div class="tab-content" id="EBOOK">
         <div class="book-grid">
             <div th:each="book : ${ebook}" class="book-item">
-                <a th:href="@{/api/frontend/books/{bookId}(bookId=${book.id})}">
+
+                <a th:href="@{/frontend/books/{bookId}(bookId=${book.id})}">
+
                     <img th:src="${book.coverUrl}" th:alt="${book.title}">
                     <p th:text="${book.title}"></p>
                 </a>

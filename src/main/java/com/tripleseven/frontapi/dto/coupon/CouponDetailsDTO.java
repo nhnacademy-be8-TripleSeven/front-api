@@ -1,3 +1,4 @@
+
 package com.tripleseven.frontapi.dto.coupon;
 
 import lombok.Getter;
@@ -22,4 +23,7 @@ public class CouponDetailsDTO {
     private String bookTitle;
     private String categoryName;
 
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }

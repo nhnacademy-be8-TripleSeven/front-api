@@ -20,20 +20,20 @@ public class AuthController {
 
     private final AfterPaycoLoginService afterPaycoLoginService;
 
-    @GetMapping("/join")
+    @GetMapping("/frontend/join")
     public String join() {
 
         return "auth/join";
     }
 
-    @GetMapping("/login")
+    @GetMapping("/frontend/login")
     public String login(ModelAndView modelAndView) {
         modelAndView.addObject("paycoClientId", paycoClientId);
         modelAndView.setViewName("auth/login");
         return "auth/login";
     }
 
-    @GetMapping("/oauth2/authorization/payco")
+    @GetMapping("/frontend/oauth2/authorization/payco")
     public String paycoLoginRedirect() {
         String redirectUri = "https://nhn24.store/payco/callback";
         String encodedRedirectUri;
@@ -52,7 +52,7 @@ public class AuthController {
         return "redirect:" + authorizationUri;
     }
 
-    @GetMapping("/payco/callback")
+    @GetMapping("/frontend/payco/callback")
     public ModelAndView callbackPaycoLogin(@RequestParam String code, ModelAndView modelAndView) {
         MemberAccountDto memberAccountDto = afterPaycoLoginService.savePaycoMemberDetail(code);
         modelAndView.addObject("loginId", memberAccountDto.getLoginId());
@@ -61,23 +61,23 @@ public class AuthController {
         return modelAndView;
     }
 
-    @GetMapping("/find-account")
+    @GetMapping("/frontend/find-account")
     public String findAccount() {
 
         return "auth/find-account";
     }
 
-    @GetMapping("/account/find/email")
+    @GetMapping("/frontend/account/find/email")
     public String findAccountFromEmailForm() {
         return "auth/find-account-email";
     }
 
-    @GetMapping("/account/find/phone")
+    @GetMapping("/frontend/account/find/phone")
     public String findAccountFromPhoneForm() {
         return "auth/find-account-phone";
     }
 
-    @GetMapping("/reset-password")
+    @GetMapping("/frontend/reset-password")
     public ModelAndView resetPasswordForm(@RequestParam String email, @RequestParam String code, ModelAndView modelAndView) {
         modelAndView.addObject("email", email);
         modelAndView.addObject("code", code);
@@ -85,7 +85,7 @@ public class AuthController {
         return modelAndView;
     }
 
-    @GetMapping("/admin/login")
+    @GetMapping("/frontend/admin/login")
     public String adminLogin() {
         return "admin/admin-login";
     }
