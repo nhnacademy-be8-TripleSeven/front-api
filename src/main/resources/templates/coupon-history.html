@@ -27,7 +27,7 @@
         <a th:href="@{/point-earned-history}"><li>포인트 적립 내역</li></a>
         <a th:href="@{/point-used-history}"><li>포인트 사용 내역</li></a>
         <li>*쿠폰함</li>
-        <a th:href="@{/api/coupon-history-test}"><li>쿠폰 내역</li></a>
+        <a th:href="@{/api/frontend/coupons/history}"><li>쿠폰 내역</li></a>
       </ul>
     </aside>
 
@@ -37,8 +37,8 @@
       <p class="notice">최근 5년간 쿠폰 내역을 조회할 수 있습니다.</p>
 
       <!-- 필터 -->
-<!--      <form th:action="@{/api/coupon-history}" method="get" class="filters">-->
-        <form th:action="@{/api/coupon-history-test}" method="get" class="filters">
+      <form th:action="@{/api/frontend/coupons/history}" method="get" class="filters">
+<!--        <form th:action="@{/api/frontend/coupon-history-test}" method="get" class="filters">-->
         <div class="filter-item">
           <label for="start-date">시작일</label>
           <input type="date" id="start-date" name="startDate" th:value="${startDate}">
@@ -109,7 +109,8 @@
 
   <!-- 푸터 -->
   <div th:replace="footer :: footer"></div>
-
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script type="module" src="/js/axios-config.js"></script>
 </div>
 </body>
 </html>

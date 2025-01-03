@@ -42,7 +42,7 @@ function sendVerificationCode() {
     }
 
     // axios 요청으로 변경
-    axios.post(`/backend/members/verify/emails/${encodeURIComponent(email)}`)
+    axios.post(`/members/verify/emails/${encodeURIComponent(email)}`)
         .then(response => {
             alert('인증번호가 이메일로 전송되었습니다.');
         });
@@ -60,7 +60,7 @@ function verifyCode() {
     const verificationCode = document.getElementById('verification-code').value;
 
     // axios 요청으로 변경
-    axios.post(`/backend/members/verify/emails/${encodeURIComponent(email)}/${verificationCode}`)
+    axios.post(`/members/verify/emails/${encodeURIComponent(email)}/${verificationCode}`)
         .then(response => {
             alert('인증번호가 일치합니다.');
         });
@@ -88,7 +88,7 @@ function handleSignUp(event) {
     };
 
     // axios 요청
-    axios.post("/backend/members", requestBody, {
+    axios.post("/members", requestBody, {
         headers: {
             "Content-Type": "application/json",
         },
@@ -96,7 +96,7 @@ function handleSignUp(event) {
         .then(response => {
             if (response.status === 201) {
                 alert("회원가입이 성공적으로 완료되었습니다.");
-                window.location.href = "/login"; // 로그인 페이지로 이동
+                window.location.href = "/frontend/login"; // 로그인 페이지로 이동
             }
         })
 }

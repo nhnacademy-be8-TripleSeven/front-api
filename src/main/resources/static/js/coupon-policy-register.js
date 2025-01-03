@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const form = document.getElementById('coupon-form');
         const formData = new FormData(form);
 
-        axios.post('/admin/frontend/coupon-policy/register', formData)
+        axios.post('/admin/frontend/coupon-policies/register', formData)
             .then(response => {
                 console.log('Request successful:', response.data);
                 showSuccessPopup(response.data);
