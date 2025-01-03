@@ -10,6 +10,10 @@ import com.tripleseven.frontapi.dto.likes.LikesResponseDTO;
 import com.tripleseven.frontapi.dto.review.ReviewRequestDTO;
 
 import org.springframework.data.domain.Pageable;
+import com.tripleseven.frontapi.dto.coupon.CouponPolicyRequestDTO;
+import com.tripleseven.frontapi.dto.coupon.CouponPolicyResponseDTO;
+import com.tripleseven.frontapi.dto.book.BookPageDetailResponseDTO;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 import com.tripleseven.frontapi.dto.review.ReviewResponseDTO;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -53,9 +57,7 @@ public interface BookFeignClient {
     BookPageDetailResponseDTO getCategoriesSearchBooks(
         @PathVariable("categories") List<String> categories,
         @PathVariable("keyword") String keyword,
-        @RequestParam("page") int page,
-        @RequestParam("size") int size,
-        @RequestParam("sort") String sort
+        Pageable pageable
     );
 
 
@@ -112,12 +114,28 @@ public interface BookFeignClient {
     List<ReviewResponseDTO> getAllReviewByBookId(@PathVariable Long bookId);
 
     @GetMapping("/api/reviews/{bookId}/user")
-    ReviewResponseDTO getUserReviewForBook(@PathVariable("bookId") Long bookId, @RequestHeader("X-User") Long userId);
+    ReviewResponseDTO getUserReviewForBook(@PathVariable("bookId") Long bookId, @RequestHeader("X-USER") Long userId);
 
     @PostMapping("/api/reviews")
-    void addReview(@RequestHeader("X-User") Long userId, @RequestBody ReviewRequestDTO requestDto);
+    void addReview(@RequestHeader("X-USER") Long userId, @RequestBody ReviewRequestDTO requestDto);
 
     @GetMapping("/api/likes")
-    List<LikesResponseDTO> getAllLikesByUserId(@RequestHeader("X-User") Long userId, @RequestParam(defaultValue = "0") int page,
+    List<LikesResponseDTO> getAllLikesByUserId(@RequestHeader("X-USER") Long userId, @RequestParam(defaultValue = "0") int page,
                                                @RequestParam(defaultValue = "10") int size);
+
+    @GetMapping("/api/likes/search")
+    List<LikesResponseDTO> searchLikesByUserIdAndKeyword(
+            @RequestHeader("X-USER") Long userId,
+            @RequestParam(defaultValue = "") String keyword,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    );
+    @GetMapping("/api/likes/{bookId}/status")
+    boolean isLiked(@RequestHeader("X-USER") Long userId, @PathVariable Long bookId);
+
+    @PostMapping("/api/likes/{bookId}")
+    void addLikes(@PathVariable Long bookId, @RequestHeader("X-USER") Long userId);
+
+    @DeleteMapping("/api/likes/{bookId}")
+    void deleteLikes(@PathVariable Long bookId, @RequestHeader("X-USER") Long userId);
 }
