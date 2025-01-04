@@ -122,18 +122,20 @@ public interface BookFeignClient {
     @GetMapping("/admin/books/keyword/{keyword}")
     BookPageDTO getBooksByKeyword(@PathVariable("keyword") String keyword, Pageable pageable);
 
-    @GetMapping("/admin/books/aladin/isbn/{isbn}")
+    @GetMapping("/admin/books/isbn/{isbn}")
     public BookApiDTO getAladinApiBookByIsbn(@PathVariable("isbn") String isbn);
 
     @DeleteMapping("/admin/books/delete/{bookId}")
     public void deleteBook(@PathVariable Long bookId);
 
     @PostMapping(value = "/admin/books/updateBook", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public BookDTO updateBook(@RequestPart("book") BookUpdateDTO bookDTO,  @RequestPart("coverImages") List<MultipartFile> coverImages,@RequestPart("detailImages") List<MultipartFile> detailImages);
+    public BookDTO updateBook(@RequestPart("book") BookUpdateDTO bookDTO,  @RequestPart("coverImages") MultipartFile coverImages,@RequestPart("detailImages") MultipartFile detailImages);
 
     @PostMapping(value = "/admin/books/createBook",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public BookDTO createBook(@RequestPart("book") BookCreateDTO bookCreatorDTO, @RequestPart List<MultipartFile> coverImages,@RequestPart List<MultipartFile> detailImages);
 
     @GetMapping("/admin/books/{id}")
     BookDTO getBookById(@PathVariable Long id);
+
+
 }

@@ -26,7 +26,7 @@ public class AuthController {
         return "auth/join";
     }
 
-    @GetMapping("/login")
+    @GetMapping("/frontend/login")
     public String login(ModelAndView modelAndView) {
         modelAndView.addObject("paycoClientId", paycoClientId);
         modelAndView.setViewName("auth/login");
@@ -85,7 +85,7 @@ public class AuthController {
         return modelAndView;
     }
 
-    @GetMapping("/admin/login")
+    @GetMapping("/admin/frontend/login")
     public String adminLogin() {
         return "admin/admin-login";
     }

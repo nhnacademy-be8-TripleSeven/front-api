@@ -128,7 +128,9 @@ public class BookService {
     }
 
     public BookDTO updateBook(BookUpdateDTO bookDTO) {
-        return bookFeignClient.updateBook(bookDTO, bookDTO.getCoverImage(), bookDTO.getDetailImage());
+        BookDTO bookDTO1 = bookFeignClient.updateBook(bookDTO, bookDTO.getCoverImage(),
+            bookDTO.getDetailImage());
+        return bookDTO1;
     }
 
     public BookDTO createBook(BookCreateDTO bookCreateDTO) {
@@ -138,4 +140,5 @@ public class BookService {
     public BookDTO getBookById(Long bookId) {
         return bookFeignClient.getBookById(bookId);
     }
+
 }

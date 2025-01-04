@@ -14,6 +14,7 @@
 <div th:replace="admin/admin-main :: main"></div>
 
 <form th:action="@{/admin/books/updateBook}" enctype="multipart/form-data" method="post">
+
   <input type="hidden" name="id" th:value="${book.id}" />
 
   <label>제목:</label>
@@ -24,29 +25,31 @@
 
   <label>카테고리:</label>
   <ul>
-    <li th:each="category : ${book.categories}">
-      <input type="text" name="categories" th:value="${category.name}" />
+    <li th:each="category, iterStat : ${book.categories}">
+      <input type="text" name="categories[${iterStat.index}].name" th:value="${category.name}" />
     </li>
   </ul>
 
   <label>북 타입:</label>
   <ul>
-    <li th:each="type : ${book.bookTypes}">
-      <input type="text" name="bookTypes" th:value="${type.type}" />
+    <li th:each="type, iterStat : ${book.bookTypes}">
+      <input type="text" name="bookTypes[${iterStat.index}].type" th:value="${type.type}" placeholder="북 타입" />
+      <input type="text" name="bookTypes[${iterStat.index}].ranks" th:value="${type.ranks}" placeholder="순위" />
     </li>
   </ul>
 
   <label>저자:</label>
   <ul>
-    <li th:each="author : ${book.authors}">
-      <input type="text" name="authors" th:value="${author.name}" />
+    <li th:each="author, iterStat : ${book.authors}">
+      <input type="text" name="authors[${iterStat.index}].name" th:value="${author.name}" placeholder="저자 이름" />
+      <input type="text" name="authors[${iterStat.index}].role" th:value="${author.role}" placeholder="역할" />
     </li>
   </ul>
 
   <label>태그:</label>
   <ul>
-    <li th:each="tag : ${book.tags}">
-      <input type="text" name="tags" th:value="${tag}" />
+    <li th:each="tag, iterStat : ${book.tags}">
+      <input type="text" name="tags[${iterStat.index}]" th:value="${tag}" />
     </li>
   </ul>
 
@@ -73,25 +76,20 @@
 
   <!-- 표지 이미지 업로드 -->
   <label>표지 이미지:</label>
-  <input type="file" name="coverImages" id="cover-images" accept="image/*" multiple />
+  <input type="file" name="coverImage" id="cover-images" accept="image/*" />
 
   <!-- 상세 이미지 업로드 -->
   <label>상세 이미지:</label>
-  <input type="file" name="detailImages" id="detail-images" accept="image/*" multiple />
+  <input type="file" name="detailImage" id="detail-images" accept="image/*" />
 
   <button type="submit">수정 완료</button>
 </form>
 
+
 <div th:replace="footer :: footer"></div>
 
 <script>
-  function searchBooks() {
-    console.log("도서 검색 로직 실행");
-  }
 
-  function sortBooks() {
-    console.log("도서 정렬 로직 실행");
-  }
 </script>
 </body>
 </html>
