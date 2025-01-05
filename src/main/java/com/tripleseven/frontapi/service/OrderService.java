@@ -2,19 +2,20 @@ package com.tripleseven.frontapi.service;
 
 import com.tripleseven.frontapi.client.OrderFeignClient;
 import com.tripleseven.frontapi.dto.FilterCriteriaDTO;
-import com.tripleseven.frontapi.dto.order.OrderManageRequestDTO;
-import com.tripleseven.frontapi.dto.order.OrderManageResponseDTO;
-import com.tripleseven.frontapi.dto.order.OrderPayDetailDTO;
-import com.tripleseven.frontapi.dto.order.Status;
+import com.tripleseven.frontapi.dto.book.BookDetailViewDTO;
+import com.tripleseven.frontapi.dto.order.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class OrderService {
     private final OrderFeignClient orderFeignClient;
+    private final BookService bookService;
 
     public Page<OrderManageResponseDTO> getOrderHistories(FilterCriteriaDTO filterCriteriaDTO, Long userId, Pageable pageable) {
         Status status = filterCriteriaDTO.getStatus();
@@ -35,6 +36,16 @@ public class OrderService {
 
     public int getPoints(Long userId) {
         return orderFeignClient.getTotalPoint(userId);
+    }
+
+    public ProductDTO getProductInfoByDirect(Long bookId, int quantity){
+        BookDetailViewDTO bookDetailDTO = bookService.getBookDetail(bookId);
+        ProductDTO productDTO = new ProductDTO();
+        productDTO.ofCreate(bookDetailDTO,quantity);
+        return productDTO;
+    }
+    public List<ProductDTO> getProductInfoByCart(){
+        return null;
     }
 
 }
