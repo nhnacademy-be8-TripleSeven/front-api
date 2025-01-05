@@ -24,7 +24,7 @@ public class BookDetailViewDTO {
     //private String ImageDetailUrl;
     private List<BookCreatorDetailDTO> bookCreators;
     //private List<BookIndex> bookIndices;
-    //private StringBuilder categories;
+    private StringBuilder categories;
     private String bookIndex;
     private StringBuilder tags;
     private StringBuilder bookTypes;
@@ -33,7 +33,8 @@ public class BookDetailViewDTO {
 
     public BookDetailViewDTO(String title, String description, LocalDate localDate,
                             int regularPrice, int salePrice, String isbn13, int stock,
-                            int page, String coverUrl, String publisher, List<BookCreatorDetailDTO> bookCreators, String bookIndex, StringBuilder tags, StringBuilder bookTypes
+                            int page, String coverUrl, String publisher, List<BookCreatorDetailDTO> bookCreators,
+                            StringBuilder categories, String bookIndex, StringBuilder tags, StringBuilder bookTypes
     , List<String> detailImages) {
         this.title = title;
         this.description = description;
@@ -46,7 +47,7 @@ public class BookDetailViewDTO {
         this.coverUrl = coverUrl;
         this.publisher = publisher;
         this.bookCreators = bookCreators;
-        //this.categories = categories;
+        this.categories = categories;
         this.bookIndex = bookIndex;
         this.tags = tags;
         this.bookTypes = bookTypes;
