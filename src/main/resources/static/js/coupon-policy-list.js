@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (event.target.classList.contains('edit-btn')) {
             const policyId = event.target.getAttribute('data-id');
 
-            axios.get(`/admin/frontend/coupon-policy/update/${policyId}`)
+            axios.get(`/admin/frontend/coupon-policies/update/${policyId}`)
                 .then(response => {
                     const policy = response.data;
                     document.getElementById('policy-id').value = policy.id;
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
             data.couponDiscountAmount = discountValue;
         }
 
-        axios.post(`/admin/frontend/coupon-policy/update/${policyId}`, data, {
+        axios.post(`/admin/frontend/coupon-policies/update/${policyId}`, data, {
             headers: { 'Content-Type': 'application/json' },
         })
             .then(() => {
@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
         button.addEventListener('click', () => {
             const policyId = button.getAttribute('data-id');
             if (confirm('정말로 삭제하시겠습니까?')) {
-                axios.post(`/admin/frontend/coupon-policy/delete/${policyId}`)
+                axios.post(`/admin/frontend/coupon-policies/delete/${policyId}`)
                     .then(() => {
                         alert('정책이 성공적으로 삭제되었습니다.');
                         location.reload();
