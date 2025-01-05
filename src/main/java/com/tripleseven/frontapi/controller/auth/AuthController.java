@@ -84,8 +84,8 @@ public class AuthController {
         modelAndView.setViewName("auth/reset-password");
         return modelAndView;
     }
-
-
+  
+    @GetMapping("/frontend/admin/login")
     public String adminLogin() {
         return "admin/admin-login";
     }
