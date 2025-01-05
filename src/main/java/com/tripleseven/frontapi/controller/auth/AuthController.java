@@ -1,8 +1,11 @@
 package com.tripleseven.frontapi.controller.auth;
 
 import com.tripleseven.frontapi.annotations.secure.SecureKey;
+import com.tripleseven.frontapi.client.MemberFeignClient;
 import com.tripleseven.frontapi.dto.member.MemberAccountDto;
 import com.tripleseven.frontapi.service.oauth2.AfterPaycoLoginService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +22,7 @@ public class AuthController {
     private String paycoClientId;
 
     private final AfterPaycoLoginService afterPaycoLoginService;
+    private final MemberFeignClient memberFeignClient;
 
     @GetMapping("/frontend/join")
     public String join() {
@@ -27,10 +31,11 @@ public class AuthController {
     }
 
     @GetMapping("/frontend/login")
-    public String login(ModelAndView modelAndView) {
+    public ModelAndView login(HttpServletRequest request, ModelAndView modelAndView) {
+
         modelAndView.addObject("paycoClientId", paycoClientId);
         modelAndView.setViewName("auth/login");
-        return "auth/login";
+        return modelAndView;
     }
 
     @GetMapping("/frontend/oauth2/authorization/payco")
@@ -63,7 +68,6 @@ public class AuthController {
 
     @GetMapping("/frontend/find-account")
     public String findAccount() {
-
         return "auth/find-account";
     }
 
@@ -85,7 +89,15 @@ public class AuthController {
         return modelAndView;
     }
 
+    @GetMapping("/frontend/active-account")
+    public ModelAndView activeAccount(@RequestParam String email, @RequestParam String code, ModelAndView modelAndView) {
+        memberFeignClient.verifyAccountActiveCode(email, code);
+        modelAndView.addObject("success", true);
+        modelAndView.setViewName("auth/unlock-account");
+        return modelAndView;
+    }
 
+    @GetMapping("/frontend/admin/login")
     public String adminLogin() {
         return "admin/admin-login";
     }

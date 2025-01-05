@@ -45,8 +45,6 @@ axios.interceptors.response.use(
     function(error) {
 
         console.log(error)
-
-        console.log("test")
         const originalRequest = error.config;
 
         // 토큰 만료 처리
