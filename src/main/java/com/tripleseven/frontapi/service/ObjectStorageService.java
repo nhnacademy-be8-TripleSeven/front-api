@@ -113,8 +113,6 @@ public class ObjectStorageService {
             } else {
                 throw new RuntimeException("Upload failed with status: " + response.getStatusCode());
             }
-        } catch (IOException e) {
-            throw new RuntimeException("Error reading InputStream for upload", e);
         } catch (Exception e) {
             throw new RuntimeException("Unexpected error during upload", e);
         }
