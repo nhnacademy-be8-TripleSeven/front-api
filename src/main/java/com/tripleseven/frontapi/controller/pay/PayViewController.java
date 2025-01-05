@@ -1,7 +1,6 @@
-package com.tripleseven.frontapi.controller.order;
+package com.tripleseven.frontapi.controller.pay;
 
-import com.tripleseven.frontapi.dto.OrderInfoRequestDTO;
-import com.tripleseven.frontapi.dto.OrderInfoResponseDTO;
+import com.tripleseven.frontapi.dto.pay.PayInfoRequestDTO;
 import com.tripleseven.frontapi.service.OrderService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -25,11 +24,11 @@ public class PayViewController {
     @PostMapping("/payment")
     public String paymentPage(
             Model model,
-            @ModelAttribute OrderInfoRequestDTO orderInfoRequestDTO) {
+            @ModelAttribute PayInfoRequestDTO orderInfoRequestDTO) {
 
         // 주문 정보
 
-        OrderInfoResponseDTO responseDTO = orderService.getOrderInfo(orderInfoRequestDTO);
+        PayInfoRequestDTO responseDTO = orderService.getOrderInfo(orderInfoRequestDTO);
         // 멤버 api호출해서 필요한 정보 보내기?
 
         model.addAttribute("orderId", responseDTO.getOrderId());

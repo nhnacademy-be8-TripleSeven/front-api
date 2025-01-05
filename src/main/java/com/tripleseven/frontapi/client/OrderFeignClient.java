@@ -3,6 +3,8 @@ package com.tripleseven.frontapi.client;
 import com.tripleseven.frontapi.dto.order.OrderManageRequestDTO;
 import com.tripleseven.frontapi.dto.order.OrderManageResponseDTO;
 import com.tripleseven.frontapi.dto.order.OrderPayDetailDTO;
+import com.tripleseven.frontapi.dto.pay.PayInfoRequestDTO;
+import com.tripleseven.frontapi.dto.pay.PayInfoResponseDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,5 +31,11 @@ public interface OrderFeignClient {
     OrderPayDetailDTO getOrderDetails(
             @RequestHeader("X-USER") Long userId,
             @PathVariable("orderId") Long orderId
+    );
+
+    @PostMapping("/payments/order")
+    PayInfoResponseDTO getPayInfo(
+            @RequestHeader("X-USER") Long userId,
+            @RequestBody PayInfoRequestDTO payInfoRequestDTO
     );
 }

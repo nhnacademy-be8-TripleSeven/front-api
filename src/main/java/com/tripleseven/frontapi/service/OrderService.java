@@ -4,6 +4,8 @@ import com.tripleseven.frontapi.client.OrderFeignClient;
 import com.tripleseven.frontapi.dto.FilterCriteriaDTO;
 import com.tripleseven.frontapi.dto.book.BookDetailViewDTO;
 import com.tripleseven.frontapi.dto.order.*;
+import com.tripleseven.frontapi.dto.pay.PayInfoRequestDTO;
+import com.tripleseven.frontapi.dto.pay.PayInfoResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -46,6 +48,10 @@ public class OrderService {
     }
     public List<ProductDTO> getProductInfoByCart(){
         return null;
+    }
+
+    public PayInfoResponseDTO getPayInfo(Long userId, PayInfoRequestDTO requestDTO) {
+        return orderFeignClient.getPayInfo(userId,requestDTO);
     }
 
 }
