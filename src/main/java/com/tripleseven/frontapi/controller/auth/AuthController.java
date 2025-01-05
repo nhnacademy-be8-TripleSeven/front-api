@@ -85,9 +85,6 @@ public class AuthController {
         return modelAndView;
     }
 
-    @GetMapping("/admin/frontend/login")
-
-    @GetMapping("/frontend/admin/login")
 
     public String adminLogin() {
         return "admin/admin-login";
