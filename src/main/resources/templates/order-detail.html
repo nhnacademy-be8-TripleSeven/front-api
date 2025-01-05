@@ -63,10 +63,10 @@
     <ul>
       <li>ISBN: <span th:text="${book.isbn13}">ISBN 번호</span></li>
       <li>페이지: <span th:text="${book.page}">페이지 수</span> 쪽</li>
-      <li>카테고리:
-        <span th:if="${#lists.isEmpty(book.categories)}">카테고리 정보 없음</span>
-        <span th:if="${!#lists.isEmpty(book.categories)}" th:text="${book.categories}">카테고리 정보</span>
-      </li>
+<!--      <li>카테고리:-->
+<!--        <span th:if="${#lists.isEmpty(book.categories)}">카테고리 정보 없음</span>-->
+<!--        <span th:if="${!#lists.isEmpty(book.categories)}" th:text="${book.categories}">카테고리 정보</span>-->
+<!--      </li>-->
       <li>태그: <span th:text="${book.tags}">태그 정보</span></li>
       <li>도서 유형: <span th:text="${book.bookTypes}">도서 유형</span></li>
     </ul>
