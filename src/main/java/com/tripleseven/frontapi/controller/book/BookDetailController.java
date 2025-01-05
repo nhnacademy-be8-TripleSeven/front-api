@@ -28,7 +28,9 @@ public class BookDetailController {
 
     private final BookService bookApiService;
     private final ObjectStorageService objectStorageService;
+
     private final LikesService likesService;
+
 
     @GetMapping("/frontend/books/{bookId}")
     public String bookDetail(
@@ -102,10 +104,17 @@ public class BookDetailController {
                                      @RequestParam("text") String text,
                                      @RequestParam("bookId") Long bookId) {
         // 유저가 해당 도서를 구매했는지 확인
+
         boolean hasPurchased = bookApiService.checkUserPurchase(userId, bookId);
         if (!hasPurchased) {
             throw new IllegalArgumentException("You are not purchased this book");
         }
+
+//        boolean hasPurchased = bookApiService.checkUserPurchase(userId, reviewRequestDTO.getBookId());
+//        if (!hasPurchased) {
+//            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+//        }
+
         String imageUrl = null;
         objectStorageService.generateAuthToken("https://api-identity.infrastructure.cloud.toast.com/v2.0/tokens",
                 "c20e3b10d61749a2a52346ed0261d79e",

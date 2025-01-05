@@ -474,3 +474,25 @@ footer {
 .update-btn:hover {
     background-color: #699ce2;
 }
+
+.table-container {
+    overflow-x: auto; /* 좌우 스크롤 활성화 */
+    white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+}
+
+table {
+    width: 100%; /* 테이블을 최대 폭으로 설정 */
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+

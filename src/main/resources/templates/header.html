@@ -3,7 +3,7 @@
     <a th:href="@{/frontend/}"><img th:src="@{/image/logo/nhn24-logo.png}" alt="NHN 24 로고"></a>
   </div>
   <div class="header-center">
-    <form th:action="@{/searchBook}" method="get">
+    <form th:action="@{/frontend/searchBook}" method="get">
       <div class="search-bar">
         <input type="text" name="keyword" placeholder="검색어 입력">
         <button type="submit">🔍</button>
@@ -11,19 +11,19 @@
     </form>
     <nav class="menu">
       <ul>
-        <li><a th:href="@{/typeBook?type=ItemEditorChoice}">추천 도서</a></li>
-        <li><a th:href="@{/typeBook?type=Book}">국내 도서</a></li>
-        <li><a th:href="@{/typeBook?type=Foreign}">외국 도서</a></li>
-        <li><a th:href="@{/typeBook?type=Bestseller}">베스트셀러</a></li>
-        <li><a th:href="@{/typeBook?type=ItemNewAll}">신간 소개</a></li>
-        <li><a th:href="@{/typeBook?type=BlogBest}">이벤트</a></li>
+        <li><a th:href="@{/frontend/typeBook?type=ItemEditorChoice}">추천 도서</a></li>
+        <li><a th:href="@{/frontend/typeBook?type=Book}">국내 도서</a></li>
+        <li><a th:href="@{/frontend/typeBook?type=Foreign}">외국 도서</a></li>
+        <li><a th:href="@{/frontend/typeBook?type=Bestseller}">베스트셀러</a></li>
+        <li><a th:href="@{/frontend/typeBook?type=ItemNewAll}">신간 소개</a></li>
+        <li><a th:href="@{/frontend/typeBook?type=BlogBest}">이벤트</a></li>
       </ul>
     </nav>
   </div>
   <div class="user-actions">
-    <a th:href="@{/mypage}"><img th:src="@{/image/icons/person.png}" alt="User Icon"></a>
-    <a th:href="@{/cart-success}"><img th:src="@{/image/icons/cart.png}" alt="Cart Icon"></a>
-    <a id="login-btn" href="/frontend/login"><button class="login-btn">Login</button></a>
-    <button class="logout-btn" id="logout-btn" style="display: none">Logout</button>
+    <a th:href="@{/frontend/mypage}"><img th:src="@{/image/icons/person.png}" alt="User Icon"></a>
+    <a th:href="@{/frontend/cart-success}"><img th:src="@{/image/icons/cart.png}" alt="Cart Icon"></a>
+    <a th:href="@{/frontend/login}" class="login-btn" id="login-btn" th:if="!${isLoggedIn}" th:style="'display: inline-block;'">로그인</a>
+    <button class="login-btn" id="logout-btn" th:if="${isLoggedIn}" th:style="'display: inline-block;'">로그아웃</button>
   </div>
 </header>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>도서 수정</title>
+  <link rel="stylesheet" th:href="@{/css/check-user.css}">
+  <link rel="stylesheet" th:href="@{/css/global.css}">
+</head>
+<body>
+
+<div th:replace="header :: header"></div>
+
+<div th:replace="admin/admin-main :: main"></div>
+
+<form th:action="@{/admin/frontend/books/aladin}" method="get">
+  <label for="isbn">ISBN:</label>
+  <input type="text" name="isbn" placeholder="ISBN을 입력하세요" />
+  <button type="submit">책 정보 조회</button>
+</form>
+
+<form th:action="@{/admin/books/createBook}" enctype="multipart/form-data" method="post">
+
+
+  <!-- 도서 이름 -->
+  <div class="form-group">
+    <label for="book-name">도서 이름</label>
+    <input type="text" id="book-name" name="title" th:value="${book.title}" placeholder="도서 이름" required>
+  </div>
+
+  <!-- ISBN -->
+  <div class="form-group">
+    <label for="isbn">ISBN</label>
+    <input type="text" id="isbn" name="isbn" th:value="${book.isbn}" placeholder="ISBN" required>
+  </div>
+
+  <!-- 카테고리 -->
+  <div class="form-group">
+    <label th:for="categories">카테고리</label>
+    <ul>
+      <li th:each="category, iterStat : ${book.categories}">
+        <input type="text" name="categories[${iterStat.index}].name" th:value="${category.name}" placeholder="카테고리" />
+      </li>
+    </ul>
+  </div>
+
+  <!-- 도서 타입 -->
+  <div class="form-group">
+    <label th:for="book-types">도서 타입</label>
+    <ul>
+      <li th:each="type, iterStat : ${book.bookTypes}">
+        <input type="text" name="bookTypes[${iterStat.index}].type" th:value="${type.type}" placeholder="도서 타입" />
+        <input type="text" name="bookTypes[${iterStat.index}].ranks" th:value="${type.ranks}" placeholder="순위" />
+      </li>
+    </ul>
+  </div>
+
+  <!-- 저자 -->
+  <div class="form-group">
+    <label th:for="authors">저자</label>
+    <ul>
+      <li th:each="author, iterStat : ${book.authors}">
+        <input type="text" name="authors[${iterStat.index}].name" th:value="${author.name}" placeholder="저자 이름" />
+        <input type="text" name="authors[${iterStat.index}].role" th:value="${author.role}" placeholder="저자 역할" />
+      </li>
+    </ul>
+  </div>
+
+  <div class="form-group">
+    <label th:for="tags">태그</label>
+    <input type="text" name="tags" th:value="${book.tags}" placeholder="태그 입력 (쉼표로 구분)" />
+  </div>
+
+
+  <!-- 출판일 -->
+  <div class="form-group">
+    <label for="published-date">출판일</label>
+    <input type="date" id="published-date" name="publishedDate" th:value="${book.publishedDate}" />
+  </div>
+
+  <!-- 설명 -->
+  <div class="form-group">
+    <label for="description">설명</label>
+    <textarea id="description" name="description" th:text="${book.description}" placeholder="도서 설명을 입력하세요"></textarea>
+  </div>
+
+  <!-- 정가 -->
+  <div class="form-group">
+    <label for="regular-price">정가</label>
+    <input type="number" id="regular-price" name="regularPrice" th:value="${book.regularPrice}" placeholder="정가" />
+  </div>
+
+  <!-- 할인가 -->
+  <div class="form-group">
+    <label for="sale-price">할인가</label>
+    <input type="number" id="sale-price" name="salePrice" th:value="${book.salePrice}" placeholder="할인가" />
+  </div>
+
+  <!-- 목차 -->
+  <div class="form-group">
+    <label for="index">목차</label>
+    <textarea id="index" name="index"  placeholder="목차를 입력하세요"></textarea>
+  </div>
+
+  <!-- 페이지 수 -->
+  <div class="form-group">
+    <label for="page">페이지</label>
+    <input type="number" id="page" name="page" th:value="${book.page}" placeholder="페이지 수" />
+  </div>
+
+  <!-- 재고 -->
+  <div class="form-group">
+    <label for="stock">재고</label>
+    <input type="number" id="stock" name="stock" th:value="${book.stock}" placeholder="재고 수량" />
+  </div>
+
+  <!-- 표지 이미지 -->
+  <div class="form-group">
+    <label for="cover-images">표지 이미지</label>
+    <input type="file" name="coverImage" id="cover-images" accept="image/*" multiple />
+  </div>
+
+  <!-- 상세 이미지 -->
+  <div class="form-group">
+    <label for="detail-images">상세 이미지</label>
+    <input type="file" name="detailImage" id="detail-images" accept="image/*" multiple />
+  </div>
+
+  <!-- 제출 버튼 -->
+  <div class="form-group">
+    <button type="submit">수정 완료</button>
+  </div>
+
+</form>
+
+
+
+<div th:replace="footer :: footer"></div>
+
+<script>
+  function searchBooks() {
+    console.log("도서 검색 로직 실행");
+  }
+
+  function sortBooks() {
+    console.log("도서 정렬 로직 실행");
+  }
+</script>
+</body>
+</html>

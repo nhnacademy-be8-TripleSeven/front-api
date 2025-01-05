@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequiredArgsConstructor
@@ -19,9 +20,13 @@ public class BookMainController {
     private final String EBOOK = "ebook";
     private final String FOREIGN = "foreign";
 
+    @GetMapping("/")
+    public String redirectToFrontend() {
+        return "redirect:/frontend/";  // 내부적으로 /frontend로 포워드
+    }
 
 
-    @GetMapping(value = "/frontend/")
+    @GetMapping("/frontend")
     public String getMonthlyBooks(HttpServletRequest request, Model model) {
         String ip = request.getHeader("x-forwarded-for");
         if (ip == null) {

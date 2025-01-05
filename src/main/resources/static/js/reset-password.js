@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function () {
         axios.put('/backend/members/reset/password', formData)
             .then(response => {
                 alert("비밀번호가 성공적으로 변경되었습니다.");
-                window.location.href = '/login'; // 로그인 페이지로 리디렉션
+                window.location.href = '/frontend/login'; // 로그인 페이지로 리디렉션
             })
     });
 });

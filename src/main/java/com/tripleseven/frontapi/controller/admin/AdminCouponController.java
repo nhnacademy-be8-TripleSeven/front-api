@@ -2,6 +2,10 @@
 package com.tripleseven.frontapi.controller.admin;
 
 import com.tripleseven.frontapi.client.BookFeignClient;
+import com.tripleseven.frontapi.dto.book.BookSearchDTO;
+import com.tripleseven.frontapi.dto.category.CategorySearchDTO;
+import com.tripleseven.frontapi.dto.coupon.CouponAssignResponseDTO;
+import com.tripleseven.frontapi.dto.coupon.CouponCreationAndAssignRequestDTO;
 import com.tripleseven.frontapi.dto.coupon.CouponPolicyRequestDTO;
 import com.tripleseven.frontapi.dto.coupon.CouponPolicyResponseDTO;
 import feign.FeignException;
@@ -23,31 +27,31 @@ public class AdminCouponController {
 
     private final BookFeignClient bookFeignClient;
 
-//    @GetMapping("/coupon-policy/create")
-//    public String createCouponPolicy() {
-//        return "/admin/coupon-policy-create";
-//    }
-//
-//    @GetMapping("/coupon-policy/detail")
-//    public String getCouponPolicyPage() {
-//        return "/admin/coupon-policy/detail";
-//    }
-//
-//    @GetMapping("/coupons/manage")
-//    public String getCouponManagePage() {
-//        return "/admin/coupon/manage";
-//    }
-//
-//    @GetMapping("/coupon-policy-register")
-//    public String getCouponPolicyRegisterPage() {
-//        return "/admin/coupon-policy-register";
-//    }
+
+    /**
+     * 쿠폰 생성 페이지로 이동
+     */
+    @GetMapping("/coupons/create")
+    public String showCouponCreatePage() {
+        return "/admin/coupon-create";
+    }
 
 
+    /**
+     * 쿠폰 정책 생성 페이지로 이동
+     */
+    @GetMapping("/coupon-policies/register")
+    public String showCouponPolicyRegisterPage(Model model) {
+        // 새로운 쿠폰 정책 DTO를 모델에 추가하여 폼과 연동
+        model.addAttribute("couponPolicy", new CouponPolicyRequestDTO());
+        return "/admin/coupon-policy-create";
+    }
 
-
+    /**
+     * 쿠폰 정책 조회 페이지(검색 포함)
+     */
     // 쿠폰 정책 조회 (검색 포함)
-    @GetMapping("/coupon-policy/list")
+    @GetMapping("/coupon-policies/list")
     public String listCouponPolicies(@RequestParam(required = false) String query, Model model) {
         List<CouponPolicyResponseDTO> policies;
         try {
@@ -66,16 +70,19 @@ public class AdminCouponController {
     }
 
 
+
+
+
+
     // 쿠폰 정책 수정 데이터 조회
-    @GetMapping("/coupon-policy/update/{id}")
+    @GetMapping("/coupon-policies/update/{id}")
     @ResponseBody
     public CouponPolicyResponseDTO getCouponPolicy(@PathVariable("id") Long id) {
         return bookFeignClient.getCouponPolicyById(id);
     }
 
-
     // 쿠폰 정책 수정 처리
-    @PostMapping("/coupon-policy/update/{id}")
+    @PostMapping("/coupon-policies/update/{id}")
     @ResponseBody
     public String updateCouponPolicy(@PathVariable Long id, @RequestBody CouponPolicyRequestDTO request) {
         if (request.getCouponDiscountRate() != null && request.getCouponDiscountRate().compareTo(BigDecimal.ZERO) > 0) {
@@ -93,37 +100,16 @@ public class AdminCouponController {
         return "쿠폰 정책이 성공적으로 수정되었습니다.";
     }
 
-
-
     // 쿠폰 정책 삭제 처리
-    @PostMapping("/coupon-policy/delete/{id}")
+    @PostMapping("/coupon-policies/delete/{id}")
     @ResponseBody
     public String deleteCouponPolicy(@PathVariable("id") Long id) {
         bookFeignClient.deleteCouponPolicy(id);
         return "쿠폰 정책이 성공적으로 삭제되었습니다.";
     }
 
-
-
-
-
-
-
-
-    /**
-     * 쿠폰 정책 생성 페이지로 이동
-     */
-    @GetMapping("/coupon-policy/register")
-    public String showCouponPolicyRegisterPage(Model model) {
-        // 새로운 쿠폰 정책 DTO를 모델에 추가하여 폼과 연동
-        model.addAttribute("couponPolicy", new CouponPolicyRequestDTO());
-        return "/admin/coupon-policy-create";
-    }
-
-    /**
-     * 쿠폰 정책 생성 요청 처리
-     */
-    @PostMapping("/coupon-policy/register")
+    //쿠폰 정책 생성 요청 처리
+    @PostMapping("/coupon-policies/register")
     @ResponseBody
     public String createCouponPolicy(@ModelAttribute CouponPolicyRequestDTO couponPolicy) {
         // 할인율 또는 할인 금액 처리
@@ -144,5 +130,51 @@ public class AdminCouponController {
         return "쿠폰 정책이 성공적으로 등록되었습니다.";
     }
 
+    //쿠폰 생성 및 발급처리
+    @PostMapping("/coupons/create")
+    @ResponseBody
+    public String createAndAssignCoupons(@RequestBody CouponCreationAndAssignRequestDTO request) {
+        try {
+            List<CouponAssignResponseDTO> responses = bookFeignClient.createAndAssignCoupons(request);
+            return "쿠폰이 성공적으로 생성 및 발급되었습니다.";
+        } catch (FeignException e) {
+            return "쿠폰 생성/발급 중 오류가 발생했습니다: " + e.getMessage();
+        }
+    }
+
+    // 도서 쿠폰 생성을 위한 도서검색
+    @GetMapping("/coupons/book-search")
+    @ResponseBody
+    public List<BookSearchDTO> searchBooks(@RequestParam String query) {
+        try {
+            return bookFeignClient.searchBooksByName(query);
+        } catch (FeignException.NotFound e) {
+            return Collections.emptyList(); // 검색 결과 없음 처리
+        }
+    }
+
+    // 카테고리 쿠폰 생성을 위한 카테고리 검색
+    @GetMapping("/coupons/category-search")
+    @ResponseBody
+    public List<CategorySearchDTO> searchCategories(@RequestParam String query) {
+        try {
+            return bookFeignClient.searchCategoriesByName(query);
+        } catch (FeignException.NotFound e) {
+            return Collections.emptyList(); // 검색 결과 없음 처리
+        }
+    }
+
+    @GetMapping("/coupon-policies/search")
+    @ResponseBody
+    public List<CouponPolicyResponseDTO> searchCouponPoliciesByName(
+            @RequestParam(required = false) String query) {
+        try {
+            return (query == null || query.isBlank())
+                    ? Collections.emptyList()
+                    : bookFeignClient.searchCouponPoliciesByName(query);
+        } catch (Exception e) {
+            return Collections.emptyList();
+        }
+    }
 
 }

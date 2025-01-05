@@ -23,9 +23,6 @@ function handleLogin(event) {
         password: password
     })
         .then(response => {
-            // 로그인 성공 후 처리
-            console.log('로그인 성공', response);
-            setToken(response.data.accessToken);  // 받은 토큰을 로컬 스토리지에 저장
-            window.location.href = '/frontend/main';  // 로그인 후 리디렉션
+            window.location.href = '/frontend/';  // 로그인 후 리디렉션
         })
 }
