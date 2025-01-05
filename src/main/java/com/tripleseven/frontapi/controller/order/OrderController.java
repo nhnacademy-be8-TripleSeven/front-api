@@ -18,7 +18,7 @@ public class OrderController {
 
     private final OrderService orderApiService;
 
-    @GetMapping("/order")
+    @GetMapping("/frontend/order")
     public String getOrderPage(
             @RequestHeader(value = "X-USER",required = false)String userId,
             @CookieValue(value = "GUEST-ID",required = false)String guestId,

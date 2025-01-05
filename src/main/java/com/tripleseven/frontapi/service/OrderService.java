@@ -7,6 +7,7 @@ import com.tripleseven.frontapi.dto.order.*;
 import com.tripleseven.frontapi.dto.pay.PayInfoRequestDTO;
 import com.tripleseven.frontapi.dto.pay.PayInfoResponseDTO;
 import lombok.RequiredArgsConstructor;
+import org.json.simple.JSONObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -54,4 +55,7 @@ public class OrderService {
         return orderFeignClient.getPayInfo(userId,requestDTO);
     }
 
+    public JSONObject getPayment(String jsonBody){
+        return orderFeignClient.confirmPayment(jsonBody);
+    }
 }

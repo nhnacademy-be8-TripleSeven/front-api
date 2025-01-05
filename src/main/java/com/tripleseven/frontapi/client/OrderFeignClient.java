@@ -5,6 +5,7 @@ import com.tripleseven.frontapi.dto.order.OrderManageResponseDTO;
 import com.tripleseven.frontapi.dto.order.OrderPayDetailDTO;
 import com.tripleseven.frontapi.dto.pay.PayInfoRequestDTO;
 import com.tripleseven.frontapi.dto.pay.PayInfoResponseDTO;
+import org.json.simple.JSONObject;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -38,4 +39,9 @@ public interface OrderFeignClient {
             @RequestHeader("X-USER") Long userId,
             @RequestBody PayInfoRequestDTO payInfoRequestDTO
     );
+
+    @PostMapping("/confirm/payment")
+    JSONObject confirmPayment(String jsonBody);
+
+
 }
