@@ -12,42 +12,14 @@
 <div th:replace="header :: header"></div>
 
 <main class="my-account-container">
-    <aside class="sidebar">
-        <h3>MY ACCOUNT</h3>
-        <ul>
-            <li>* 구매 내역</li>
-            <a th:href="@{/orders/history}">
-                <li>주문 조회/변경/취소</li>
-            </a>
-            <a th:href="@{/orders/refund}">
-                <li>반품 내역</li>
-            </a>
-            <a th:href="@{/orders/canceled}">
-                <li>취소 주문 내역</li>
-            </a>
-            <li>* 좋아요</li>
-            <a th:href="@{/books/like}">
-                <li>좋아요 내역</li>
-            </a>
-            <li>* 포인트</li>
-            <a th:href="@{/points/earned}">
-                <li>포인트 적립 내역</li>
-            </a>
-            <a th:href="@{/points/used}">
-                <li>포인트 사용 내역</li>
-            </a>
-            <li>* 쿠폰함</li>
-            <a th:href="@{/coupons}">
-                <li>쿠폰 내역</li>
-            </a>
-        </ul>
-    </aside>
+
+    <div th:replace="sidebar.html"></div>
 
     <section class="order-history">
         <h2>주문 조회/변경/취소</h2>
         <p class="notice">최근 5년간 주문내역을 조회할 수 있습니다.</p>
 
-        <form id="filterForm" th:action="@{/orders/history}" method="get" th:object="${filterCriteria}">
+        <form id="filterForm" th:action="@{/frontend/orders/history}" method="get" th:object="${filterCriteria}">
             <div class="filters">
                 <div class="filter-item">
                     <label for="start-date">시작일</label>
@@ -88,7 +60,7 @@
                 <td colspan="7">조회된 데이터가 없습니다.</td>
             </tr>
             <tr th:each="order : ${orders}">
-                <td><a th:text="${order.orderId}" th:href="@{/orders/history/{orderId}(orderId=${order.orderId})}">123456789</a>
+                <td><a th:text="${order.orderId}" th:href="@{/frontend/orders/history/{orderId}(orderId=${order.orderId})}">123456789</a>
                 </td>
                 <td th:text="${order.orderDate}">2024-01-01</td>
                 <td th:text="${order.orderContent}">도서 3권</td>

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/frontend")
 @RequiredArgsConstructor
 public class BookMainController {
     private final BookService bookApiService;
@@ -26,7 +25,12 @@ public class BookMainController {
         return "redirect:/frontend/";  // 내부적으로 /frontend로 포워드
     }
 
+
     @GetMapping(value = "/frontend/")
+
+
+    @GetMapping(value = {"/frontend/", "/frontend/main"})
+
     public String getMonthlyBooks(HttpServletRequest request, Model model) {
         String ip = request.getHeader("x-forwarded-for");
         if (ip == null) {

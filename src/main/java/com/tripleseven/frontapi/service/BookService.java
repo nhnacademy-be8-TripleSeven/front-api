@@ -113,8 +113,10 @@ public class BookService {
         }
         BookPageDetailResponseDTO searchBooks = bookFeignClient.getCategoriesSearchBooks(
             categories, keyword, pageable);
+
         return searchBooks;
     }
+
 
     public BookPageDTO getAdminBooksByKeyword(String keyword, Pageable pageable) {
         return bookFeignClient.getBooksByKeyword(keyword, pageable);

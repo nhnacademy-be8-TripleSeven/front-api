@@ -12,22 +12,8 @@
 <div th:replace="header :: header"></div>
 
 <main class="my-account-container">
-  <aside class="sidebar">
-    <h3>MY ACCOUNT</h3>
-    <ul>
-      <li>*구매 내역</li>
-      <li><a th:href="@{/order-history}">주문 조회/취소</a></li>
-      <li><a th:href="@{/return-history}">반품/교환 내역</a></li>
-      <li><a th:href="@{/cancel-history}">취소 주문 내역</a></li>
-      <li>*좋아요</li>
-      <li><a th:href="@{/likes-history}">좋아요 내역</a></li>
-      <li>*포인트</li>
-      <li><a th:href="@{/points-earned}">포인트 적립 내역</a></li>
-      <li><a th:href="@{/points-used}">포인트 사용 내역</a></li>
-      <li>*쿠폰함</li>
-      <li><a th:href="@{/coupon-history}">쿠폰 내역</a></li>
-    </ul>
-  </aside>
+
+  <div th:replace="sidebar.html"></div>
 
   <section class="like-history">
     <h2>좋아요 내역</h2>
