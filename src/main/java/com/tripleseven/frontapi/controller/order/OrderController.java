@@ -61,7 +61,7 @@ public class OrderController {
         model.addAttribute("totalAmount", totalAmount);
         model.addAttribute("availablePoint", availablePoint);
 
-        return "pay-user";
+        return "order/pay-user";
     }
 
 //    @GetMapping("/order")
