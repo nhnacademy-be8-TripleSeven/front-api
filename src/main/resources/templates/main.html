@@ -17,7 +17,7 @@
         <button class="arrow left" onclick="prevSlide('slider1')">◀</button>
         <div class="slides">
             <div th:each="book : ${bestBooks}" class="slide">
-                <a th:href="@{/books/{bookId}(bookId=${book.id})}">
+                <a th:href="@{/frontend/books/{bookId}(bookId=${book.id})}">
                     <img th:src="${book.coverUrl}" th:alt="${book.title}">
                     <p th:text="${book.title}"></p>
                 </a>
@@ -33,7 +33,7 @@
         <button class="arrow left" onclick="prevSlide('slider2')">◀</button>
         <div class="slides">
             <div th:each="book : ${blogBest}" class="slide">
-                <a th:href="@{/books/{bookId}(bookId=${book.id})}">
+                <a th:href="@{/frontend/books/{bookId}(bookId=${book.id})}">
                     <img th:src="${book.coverUrl}" th:alt="${book.title}">
                     <p th:text="${book.title}"></p>
                 </a>
@@ -54,7 +54,7 @@
     <div class="tab-content active" id="ITEMEDITORCHOICE">
         <div class="book-grid">
             <div th:each="book : ${itemEditorChoice}" class="book-item">
-                <a th:href="@{/books/{bookId}(bookId=${book.id})}">
+                <a th:href="@{/frontend/books/{bookId}(bookId=${book.id})}">
                     <img th:src="${book.coverUrl}" th:alt="${book.title}">
                     <p th:text="${book.title}"></p>
                 </a>
@@ -64,7 +64,9 @@
     <div class="tab-content" id="EBOOK">
         <div class="book-grid">
             <div th:each="book : ${ebook}" class="book-item">
-                <a th:href="@{/books/{bookId}(bookId=${book.id})}">
+
+                <a th:href="@{/frontend/books/{bookId}(bookId=${book.id})}">
+
                     <img th:src="${book.coverUrl}" th:alt="${book.title}">
                     <p th:text="${book.title}"></p>
                 </a>
@@ -74,7 +76,7 @@
     <div class="tab-content" id="FOREIGN">
         <div class="book-grid">
             <div th:each="book : ${foreign}" class="book-item">
-                <a th:href="@{/books/{bookId}(bookId=${book.id})}">
+                <a th:href="@{/frontend/books/{bookId}(bookId=${book.id})}">
                     <img th:src="${book.coverUrl}" th:alt="${book.title}">
                     <p th:text="${book.title}"></p>
                 </a>

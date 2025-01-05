@@ -25,7 +25,7 @@ public class BookSearchController {
 
     private final BookService bookApiService;
 
-    @GetMapping("/searchBook")
+    @GetMapping("/frontend/searchBook")
     public String bookSearch(
         @RequestParam(value = "keyword", defaultValue = " ") String term,
         @RequestParam(value = "page", defaultValue = "0") int page,
@@ -57,7 +57,7 @@ public class BookSearchController {
     }
 
 
-    @GetMapping("/typeBook")
+    @GetMapping("/frontend/typeBook")
     public String typeBookSearch(
         @RequestParam String type,
         @RequestParam(value = "page", defaultValue = "0") int page,
@@ -87,7 +87,7 @@ public class BookSearchController {
         return "book-search";
     }
 
-    @GetMapping("/categorySearch")
+    @GetMapping("/frontend/categorySearch")
     public String categorySearch(
         @RequestParam(value = "categories", defaultValue = ",") List<String> categories,
         @RequestParam(value = "keyword", defaultValue = "|") String keyword,

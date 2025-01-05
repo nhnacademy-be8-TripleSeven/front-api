@@ -14,66 +14,89 @@
   <div th:replace="header :: header"></div>
 
 
-  <main class="main-content">
-    <aside class="sidebar">
-      <h3>관리자 메뉴</h3>
-      <ul>
-        <li><a href="#">*쿠폰</a>
-          <ul>
-            <li><a th:href="@{/check-coupon}">쿠폰 정책 조회</a></li>
-            <li><a th:href="@{/coupon-policy-create}">쿠폰 정책 생성, 발급</a></li>
-            <li><a th:href="@{/coupon-create}">쿠폰 생성, 발급</a></li>
-          </ul>
-        </li>
-        <li><a href="#">*회원</a>
-          <ul>
-            <li><a th:href="@{/user-list}">회원 조회</a></li>
-            <li><a th:href="@{/user-rank}">등급 조회</a></li>
-          </ul>
-        </li>
-        <li><a href="#">*도서</a>
-          <ul>
-            <li><a th:href="@{/book-list}">도서 조회</a></li>
-            <li><a th:href="@{/book-edit}">도서 수정</a></li>
-          </ul>
-        </li>
-      </ul>
-    </aside>
+  <div th:replace="admin/admin-main :: main"></div>
 
+  <main class="main-content">
     <section class="content">
       <h2>도서 조회</h2>
       <div class="search-bar">
-        <input type="text" placeholder="검색 조건을 입력하세요" class="search-input">
-        <button class="search-btn">조회</button>
+        <form th:action="@{/admin/frontend/books/keyword}" method="get">
+          <input type="text" id="keyword" name="keyword" placeholder="검색 조건을 입력하세요" class="search-input">
+          <button type="submit" class="search-btn">조회</button>
+        </form>
         <select class="sort-select">
           <option value="newest">정렬: 최신순</option>
           <option value="oldest">정렬: 오래된순</option>
         </select>
       </div>
+     <div class="table-container">
       <table class="data-table">
         <thead>
         <tr>
-          <th>도서 ID</th>
-          <th>도서 이름</th>
+          <th>ID</th>
+          <th>제목</th>
+          <th>ISBN</th>
           <th>카테고리</th>
-          <th>등록일</th>
-          <th>비고</th>
+          <th>북 타입</th>
+          <th>저자</th>
+          <th>태그</th>
+          <th>출판일</th>
+          <th>설명</th>
+          <th>정가</th>
+          <th>할인가</th>
+          <th>인덱스</th>
+          <th>페이지</th>
+          <th>재고</th>
+          <th>--</th>
+
         </tr>
         </thead>
         <tbody>
-        <tr th:each="book : ${books}">
+        <tr th:each="book : ${bookPageDTO.content}" th:if="${#lists.isEmpty(bookPageDTO.content)}">
+          <td colspan="14">등록된 도서가 없습니다.</td> <!-- 데이터가 없을 경우 메시지 출력 -->
+        </tr>
+        <tr th:each="book : ${bookPageDTO.content}" th:unless="${#lists.isEmpty(bookPageDTO.content)}">
           <td th:text="${book.id}">1</td>
-          <td th:text="${book.name}">책 제목</td>
-          <td th:text="${book.category}">카테고리</td>
-          <td th:text="${book.createdDate}">2024-01-01</td>
+          <td th:text="${book.title}">책 제목</td>
+          <td th:text="${book.isbn}">ISBN</td>
           <td>
-            <a th:href="@{/book-detail/{id}(id=${book.id})}">상세 보기</a>
+            <ul>
+              <li th:each="category : ${book.categories}" th:text="${category.name}">카테고리</li>
+            </ul>
+          </td>
+          <td>
+            <ul>
+              <li th:each="type : ${book.bookTypes}" th:text="${type.type} + ' (' + ${type.ranks} + ')'">북 타입</li>
+            </ul>
+          </td>
+          <td>
+            <ul>
+              <li th:each="author : ${book.authors}" th:text="${author.name} + ' (' + ${author.role} + ')'">저자</li>
+            </ul>
+          </td>
+          <td>
+            <ul>
+              <li th:each="tag : ${book.tags}" th:text="${tag}">태그</li>
+            </ul>
+          </td>
+          <td th:text="${book.publishedDate}">출판일</td>
+          <td th:text="${book.description}">설명</td>
+          <td th:text="${book.regularPrice}">정가</td>
+          <td th:text="${book.salePrice}">할인가</td>
+          <td th:text="${book.index}">목차</td>
+          <td th:text="${book.page}">페이지</td>
+          <td th:text="${book.stock}">재고</td>
+          <td>
+            <a th:href="@{/admin/frontend/books/update/{id}(id=${book.id})}">수정</a>
           </td>
         </tr>
+
         </tbody>
       </table>
+     </div>
     </section>
   </main>
+
 
   <div th:replace="footer :: footer"></div>
 

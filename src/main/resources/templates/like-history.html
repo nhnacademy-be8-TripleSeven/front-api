@@ -19,7 +19,7 @@
     <h2>좋아요 내역</h2>
 
     <!-- 검색 필터 -->
-    <form action="/likes-history" method="get">
+    <form action="/frontend/likes-history" method="get">
       <div class="filters">
         <label for="book-search">도서 이름</label>
         <input type="text" id="keyword" name="keyword" placeholder="도서 이름" th:value="${keyword}">
@@ -58,12 +58,12 @@
 
     <!-- 페이징 -->
     <div class="pagination">
-      <a th:href="@{/likes-history(page=${currentPage - 1}, size=${pageSize}, keyword=${keyword})}"
+      <a th:href="@{/frontend/likes-history(page=${currentPage - 1}, size=${pageSize}, keyword=${keyword})}"
          th:if="${currentPage > 0}">이전</a>
 
       <span>Page <span th:text="${currentPage + 1}"></span></span>
 
-      <a th:href="@{/likes-history(page=${currentPage + 1}, size=${pageSize}, keyword=${keyword})}"
+      <a th:href="@{/frontend/likes-history(page=${currentPage + 1}, size=${pageSize}, keyword=${keyword})}"
          th:if="${likeHistory.size()} == ${pageSize}">다음</a>
     </div>
 

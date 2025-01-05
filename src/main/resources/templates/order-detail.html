@@ -4,6 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NHN 24 - 도서 상세</title>
+
+  <link rel="stylesheet" th:href="@{/css/order-detail.css}">
+  <link rel="stylesheet" th:href="@{/css/global.css}">
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script type="module" src="/js/axios-config.js"></script>
+  <script type="module" src="/js/reviews.js" defer></script>
+  <script type="module" src="/js/like-button.js" defer></script>
+
   <link rel="stylesheet" href="/css/order-detail.css">
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script type="module" src="/js/axios-config.js"></script>
@@ -37,6 +45,15 @@
       <div class="actions">
         <a href="#"><button class="cart-btn">장바구니 담기</button></a>
         <a href="#"><button class="buy-btn">바로구매</button></a>
+        <img id="likeIcon"
+             class="like-img"
+             th:data-is-logged-in="${isLoggedIn}"
+             th:data-is-liked="${isLiked}"
+             th:data-book-id="${book.id}"
+             th:data-user-id="${userId}"
+             th:src="@{/image/likes/empty-heart.png}"
+             alt="좋아요 버튼"
+             style="cursor: pointer;">
       </div>
     </div>
   </section>
@@ -176,5 +193,6 @@
 </footer>
 
 <script src="/js/reviews.js"></script>
+<script src="/js/like-button.js"></script>
 </body>
 </html>

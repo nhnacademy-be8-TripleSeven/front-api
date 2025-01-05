@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NHN 24 관리자</title>
+  <link rel="stylesheet" th:href="@{/css/check-user.css}">
+  <link rel="stylesheet" th:href="@{/css/global.css}">
+</head>
+<body>
+<div class="container">
+
+
+  <div th:replace="header :: header"></div>
+
+
+  <div th:replace="admin/admin-main :: main"></div>
+
+  <main class="main-content">
+    <section id="categoryList">
+      <h2>Category List</h2>
+      <form id="categoryFilterForm" th:action="@{/admin/books/categoryList}" method="get">
+        <label for="level">Select Level:</label>
+        <select name="level" id="level" onchange="this.form.submit()">
+          <option value="" disabled selected>Select Level</option>
+          <option th:each="i : ${#numbers.sequence(1, 5)}" th:value="${i}" th:text="'Level ' + ${i}"></option>
+        </select>
+      </form>
+
+      <div th:if="${categories != null}">
+        <div th:each="category : ${categories}" class="category-item">
+          <div>
+            <span th:text="${category.name}"></span> <!-- 카테고리 이름 -->
+            <span th:text="'(Level ' + ${category.level} + ')'"></span> <!-- 카테고리 레벨 -->
+            <button th:onclick="'deleteCategory(' + ${category.id} + ')'">Delete</button>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Category Creation -->
+    <section id="categoryCreate">
+      <h2>Create Categories</h2>
+      <form th:action="@{/admin/books/categoryCreate}" method="post">
+        <div>
+          <label for="name">Category Name:</label>
+          <input type="text" name="name" id="name" required>
+        </div>
+        <div>
+          <label for="level">Category Level:</label>
+          <select name="level" id="levels" required>
+            <option th:each="i : ${#numbers.sequence(1, 5)}" th:value="${i}" th:text="'Level ' + ${i}"></option>
+          </select>
+        </div>
+        <button type="submit">Add Category</button>
+      </form>
+    </section>
+
+    <!-- Delete Category -->
+    <section id="categoryDelete">
+      <h2>Delete Category</h2>
+      <form th:action="@{/admin/books/categoryDelete}" method="post">
+        <div>
+          <label for="categoryId">Category ID:</label>
+          <input type="number" name="id" id="categoryId" required>
+        </div>
+        <button type="submit">Delete Category</button>
+      </form>
+    </section>
+
+  </main>
+
+
+  <div th:replace="footer :: footer"></div>
+
+</div>
+</body>
+</html>
