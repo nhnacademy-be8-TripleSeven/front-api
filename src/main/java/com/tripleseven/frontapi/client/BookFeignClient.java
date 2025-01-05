@@ -12,6 +12,9 @@ import com.tripleseven.frontapi.dto.book.BookPageResponseDTO;
 import com.tripleseven.frontapi.dto.book.BookUpdateDTO;
 import com.tripleseven.frontapi.dto.book_creator.BookCreatorDTO;
 
+import com.tripleseven.frontapi.dto.category.CategoryDTO;
+
+
 import com.tripleseven.frontapi.dto.book.*;
 
 
@@ -142,20 +145,30 @@ public interface BookFeignClient {
     @GetMapping("/admin/books/keyword/{keyword}")
     BookPageDTO getBooksByKeyword(@PathVariable("keyword") String keyword, Pageable pageable);
 
-    @GetMapping("/admin/books/aladin/isbn/{isbn}")
-    public BookApiDTO getAladinApiBookByIsbn(@PathVariable("isbn") String isbn);
+    @GetMapping("/admin/books/isbn/{isbn}")
+    BookApiDTO getAladinApiBookByIsbn(@PathVariable("isbn") String isbn);
 
     @DeleteMapping("/admin/books/delete/{bookId}")
-    public void deleteBook(@PathVariable Long bookId);
+    void deleteBook(@PathVariable Long bookId);
 
     @PostMapping(value = "/admin/books/updateBook", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public BookDTO updateBook(@RequestPart("book") BookUpdateDTO bookDTO,  @RequestPart("coverImages") List<MultipartFile> coverImages,@RequestPart("detailImages") List<MultipartFile> detailImages);
+    void updateBook(@RequestPart BookUpdateDTO bookDTO);
 
     @PostMapping(value = "/admin/books/createBook",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public BookDTO createBook(@RequestPart("book") BookCreateDTO bookCreatorDTO, @RequestPart List<MultipartFile> coverImages,@RequestPart List<MultipartFile> detailImages);
+    void createBook(@RequestPart BookCreateDTO bookCreatorDTOs);
 
     @GetMapping("/admin/books/{id}")
     BookDTO getBookById(@PathVariable Long id);
+
+
+    @PostMapping("/admin/books/categoryCreate")
+    void createCategory(@RequestBody List<CategoryDTO> categoryDTO);
+
+    @GetMapping("/admin/books/categoryList")
+    List<CategoryDTO> getCategoryList(@RequestParam int level);
+
+    @DeleteMapping("/admin/books/categoryDelete")
+    void deleteCategory(@RequestParam Long id);
 
     @GetMapping("/api/likes/search")
     List<LikesResponseDTO> searchLikesByUserIdAndKeyword(
@@ -172,5 +185,6 @@ public interface BookFeignClient {
 
     @DeleteMapping("/api/likes/{bookId}")
     void deleteLikes(@PathVariable Long bookId, @RequestHeader("X-USER") Long userId);
+
 
 }

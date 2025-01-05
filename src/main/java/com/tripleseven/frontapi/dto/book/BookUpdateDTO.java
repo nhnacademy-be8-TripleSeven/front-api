@@ -27,8 +27,8 @@ public class BookUpdateDTO {
     private int regularPrice;
     private int salePrice;
     private String index;
-    private List<MultipartFile> coverImage;
-    private List<MultipartFile> detailImage;
+    private MultipartFile coverImage;
+    private MultipartFile detailImage;
     private int stock;
     private int page;
 }

@@ -12,6 +12,7 @@ import com.tripleseven.frontapi.dto.book.BookSearchResponseDTO;
 import com.tripleseven.frontapi.dto.book.BookPageDetailResponseDTO;
 import com.tripleseven.frontapi.dto.book.BookUpdateDTO;
 import com.tripleseven.frontapi.dto.book_creator.BookCreatorDTO;
+import com.tripleseven.frontapi.dto.category.CategoryDTO;
 import java.util.List;
 
 import com.tripleseven.frontapi.dto.review.ReviewRequestDTO;
@@ -127,15 +128,29 @@ public class BookService {
         bookFeignClient.deleteBook(bookId);
     }
 
-    public BookDTO updateBook(BookUpdateDTO bookDTO) {
-        return bookFeignClient.updateBook(bookDTO, bookDTO.getCoverImage(), bookDTO.getDetailImage());
+    public void updateBook(BookUpdateDTO bookDTO) {
+        bookFeignClient.updateBook(bookDTO);
+
     }
 
-    public BookDTO createBook(BookCreateDTO bookCreateDTO) {
-        return bookFeignClient.createBook(bookCreateDTO, bookCreateDTO.getCoverImage(), bookCreateDTO.getDetailImage());
+    public void createBook(BookCreateDTO bookCreateDTO) {
+       bookFeignClient.createBook(bookCreateDTO);
     }
 
     public BookDTO getBookById(Long bookId) {
         return bookFeignClient.getBookById(bookId);
     }
+
+    public List<CategoryDTO> getCategroyByLevel(int level) {
+        return bookFeignClient.getCategoryList(level);
+    }
+
+    public void createCategory(List<CategoryDTO> categoryDTOS){
+        bookFeignClient.createCategory(categoryDTOS);
+    }
+
+    public void deleteCategory(Long categoryId) {
+        bookFeignClient.deleteCategory(categoryId);
+    }
+
 }
