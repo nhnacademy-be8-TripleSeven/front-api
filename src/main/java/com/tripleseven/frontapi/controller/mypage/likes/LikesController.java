@@ -9,6 +9,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 public class LikesController {
@@ -19,14 +20,15 @@ public class LikesController {
         this.likesService = likesService;
     }
 
-
-
+    @GetMapping("/frontend/likes-history")
     public String likesPage(Model model,
                             @RequestParam(defaultValue = "0") int page,
                             @RequestParam(defaultValue = "10") int size,
                             @RequestParam(defaultValue = "") String keyword,
                             @RequestHeader("X-USER") Long userId) {
-
+        if (Objects.isNull(userId)) {
+            return "/auth/login";
+        }
         List<LikesResponseDTO> likesResponseDTOS = likesService.searchLikes(userId, keyword, page, size); // userId가 1번인 유저일 때의 페이지(테스트)
 
 
