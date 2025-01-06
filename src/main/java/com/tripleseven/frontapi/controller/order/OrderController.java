@@ -20,11 +20,11 @@ public class OrderController {
 
     @GetMapping("/frontend/order")
     public String getOrderPage(
-            @RequestHeader(value = "X-USER",required = false)String userId,
-            @CookieValue(value = "GUEST-ID",required = false)String guestId,
+            @RequestHeader(value = "X-USER",required = false)Long userId,
+            @CookieValue(value = "GUEST-ID",required = false)Long guestId,
             @RequestParam("type")String type,
             @RequestParam(value = "bookId", required = false) Long bookId,
-            @RequestParam(value = "quantity", required = false) int quantity,
+            @RequestParam(value = "quantity", required = false ) int quantity,
             Model model) {
         List<ProductDTO>products = List.of();
         //도서 상세페이지에서 구매 버튼을 누른 경우
@@ -36,6 +36,7 @@ public class OrderController {
         else if("cart".equals(type)) {
             products = orderApiService.getProductInfoByCart();
         }
+
 
         // 총 상품 금액 및 할인 금액 계산
         int productAmount = products.stream()
@@ -51,7 +52,11 @@ public class OrderController {
         int additionalAmount = finalAmount < 30000 ? 5000 : 0; //30000은 임시, order-api에서 배송정책 조회해서 가져와야함
         int totalAmount = finalAmount + additionalAmount;
 
-        int availablePoint = 10000; // 만약 회원이라면 order-api에서 조회와야함 회원 아니면 조회 x
+        int availablePoint = 0; // 만약 회원이라면 order-api에서 조회와야함 회원 아니면 조회 x
+
+        if(userId != null) {
+            availablePoint = orderApiService.getPoints(userId);
+        }
 
         model.addAttribute("products", products);
         model.addAttribute("productAmount", productAmount);

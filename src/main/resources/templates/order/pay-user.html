@@ -261,32 +261,44 @@
                     </label>
                 </div>
                 <div class="payment-buttons">
-                    <div class="button">
+                    <!-- Toss Pay (지원됨) -->
+                    <div class="button" onclick="selectPayment('Toss')">
                         <img src="/image/logo/TossPay_Logo_Primary.png" alt="Toss Pay"/>
                     </div>
-                    <div class="button">
+                    <!-- 나머지 버튼은 지원되지 않음 -->
+                    <div class="button" onclick="showUnsupportedMessage()">
                         <img src="/image/logo/naverpay-logo.jpg" alt="NPay"/>
                     </div>
-                    <div class="button">
+                    <div class="button" onclick="showUnsupportedMessage()">
                         <img src="/image/logo/kakaopay-logo.png" alt="KakaoPay"/>
                     </div>
-                    <div class="button">
+                    <div class="button" onclick="showUnsupportedMessage()">
                         <img src="/image/logo/payco-logo.jpg" alt="Payco"/>
                     </div>
-                    <div class="button">
+                    <div class="button" onclick="showUnsupportedMessage()">
                         <span>신용카드</span>
                     </div>
-                    <div class="button">
+                    <div class="button" onclick="showUnsupportedMessage()">
                         <span>계좌 이체</span>
                     </div>
-                    <div class="button">
+                    <div class="button" onclick="showUnsupportedMessage()">
                         <span>무통장 입금</span>
                     </div>
-                    <div class="button">
+                    <div class="button" onclick="showUnsupportedMessage()">
                         <span>추가 예정</span>
                     </div>
                 </div>
             </div>
+        </div>
+            <script>
+                function selectPayment(method) {
+                    alert(`${method} 결제가 선택되었습니다.`);
+                }
+
+                function showUnsupportedMessage() {
+                    alert("현재는 토스 결제만 지원됩니다.");
+                }
+            </script>
 
             <!-- Right Side -->
             <div class="discount-options">
