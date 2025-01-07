@@ -44,7 +44,7 @@
       </div>
       <div class="actions">
         <a href="#"><button class="cart-btn">장바구니 담기</button></a>
-        <a href="#"><button class="buy-btn">바로구매</button></a>
+        <a th:href="@{/frontend/order(type='direct', bookId=${book.id})}"><button class="buy-btn" >바로구매</button></a>
         <img id="likeIcon"
              class="like-img"
              th:data-is-logged-in="${isLoggedIn}"
