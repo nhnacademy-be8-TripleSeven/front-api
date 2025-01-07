@@ -33,12 +33,9 @@ public class PayViewController {
 
         PayInfoResponseDTO responseDTO = null;
         // 주문 정보
-        if(Objects.nonNull(userId)) {
-            responseDTO = orderService.getPayInfo(userId,orderInfoRequestDTO);
-        }
-        else if(Objects.nonNull(guestId)) {
-            responseDTO = orderService.getPayInfo(guestId,orderInfoRequestDTO);
-        }
+        responseDTO = orderService.getPayInfo(userId,guestId,orderInfoRequestDTO);
+
+
         // 멤버 api호출해서 필요한 정보 보내기?
 
         model.addAttribute("orderId", responseDTO.getOrderId());

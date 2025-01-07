@@ -156,6 +156,8 @@ public class BookService {
         bookFeignClient.deleteCategory(categoryId);
     }
 
-
+    public List<CouponDetailsDTO> getUnusedCoupons(Long userId) {
+        return bookFeignClient.getUnusedCoupons(userId,null,null,null);
+    }
 
 }

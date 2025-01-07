@@ -1,6 +1,8 @@
 package com.tripleseven.frontapi.controller.order;
 
+import com.tripleseven.frontapi.dto.coupon.CouponDetailsDTO;
 import com.tripleseven.frontapi.dto.order.ProductDTO;
+import com.tripleseven.frontapi.service.BookService;
 import com.tripleseven.frontapi.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -16,7 +18,8 @@ import java.util.List;
 @Controller
 public class OrderController {
 
-    private final OrderService orderApiService;
+    private final OrderService orderService;
+    private final BookService bookService;
 
     @GetMapping("/frontend/order")
     public String getOrderPage(
@@ -24,17 +27,17 @@ public class OrderController {
             @CookieValue(value = "GUEST-ID",required = false)Long guestId,
             @RequestParam("type")String type,
             @RequestParam(value = "bookId", required = false) Long bookId,
-            @RequestParam(value = "quantity", required = false ) int quantity,
             Model model) {
+        userId = 1L;    //임시
         List<ProductDTO>products = List.of();
         //도서 상세페이지에서 구매 버튼을 누른 경우
         if("direct".equals(type)) {
-            ProductDTO product = orderApiService.getProductInfoByDirect(bookId,quantity);
+            ProductDTO product = orderService.getProductInfoByDirect(bookId,1);
             products = List.of(product);
             model.addAttribute("products",product);
         }//장바구니 페이지에서 구매 버튼을 누른 경우
         else if("cart".equals(type)) {
-            products = orderApiService.getProductInfoByCart();
+            products = orderService.getProductInfoByCart();
         }
 
 
@@ -55,8 +58,10 @@ public class OrderController {
         int availablePoint = 0; // 만약 회원이라면 order-api에서 조회와야함 회원 아니면 조회 x
 
         if(userId != null) {
-            availablePoint = orderApiService.getPoints(userId);
+            availablePoint = orderService.getPoints(userId);
         }
+
+        List<CouponDetailsDTO> couponList = bookService.getUnusedCoupons(userId);
 
         model.addAttribute("products", products);
         model.addAttribute("productAmount", productAmount);
@@ -65,6 +70,7 @@ public class OrderController {
         model.addAttribute("additionalAmount", additionalAmount);
         model.addAttribute("totalAmount", totalAmount);
         model.addAttribute("availablePoint", availablePoint);
+        model.addAttribute("couponList", couponList);
 
         return "order/pay-user";
     }

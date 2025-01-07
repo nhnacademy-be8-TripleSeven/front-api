@@ -51,8 +51,8 @@ public class OrderService {
         return null;
     }
 
-    public PayInfoResponseDTO getPayInfo(Long userId, PayInfoRequestDTO requestDTO) {
-        return orderFeignClient.getPayInfo(userId,requestDTO);
+    public PayInfoResponseDTO getPayInfo(Long userId, Long guestId,PayInfoRequestDTO requestDTO) {
+        return orderFeignClient.getPayInfo(userId,guestId,requestDTO);
     }
 
     public JSONObject getPayment(String jsonBody){

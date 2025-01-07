@@ -234,7 +234,7 @@
                 <strong class="final-amount" th:text="${#numbers.formatInteger(totalAmount,0,'COMMA') + '원'}">18,900
                     원</strong>
                 <p><strong>상품</strong> 1종 (1개) 21,000 원</p>
-                <p><span class="discount">-> 즉시할인 2,100 원</span></p>
+                <p><span class="discount" th:text="'-> 즉시할인 ' + ${#numbers.formatInteger(discountAmount,  0, 'COMMA') + ' 원'}">-> 즉시할인 2,100 원</span></p>
             </div>
 
             <div class="payment-item">쿠폰 적용<br><strong>0 원</strong></div>
@@ -312,6 +312,11 @@
                     <strong>· 쿠폰사용</strong>
                     <select id="apply-coupon">
                         <option value="0">쿠폰 선택</option>
+                        <!-- 쿠폰 리스트 렌더링 -->
+                        <option th:each="coupon : ${couponList}"
+                                th:value="${coupon.id}"
+                                th:text="'[' + coupon.name + '] ' + (coupon.discountRate != null ? coupon.discountRate + '% 할인' : coupon.discountAmount + '원 할인') + ' - 유효기간: ' + coupon.expiryDate">
+                        </option>
                     </select>
                 </div>
             </div>
@@ -351,22 +356,22 @@
                     </label>
                     <a href="#" class="info-icon">ℹ️</a>
                 </div>
-                <div class="receipt-option">
-                    <p>영수증</p>
-                    <label>
-                        <input type="radio" name="receipt" value="show" checked> 가격 표시
-                    </label>
-                    <label>
-                        <input type="radio" name="receipt" value="hide"> 가격 표시 안함
-                    </label>
-                </div>
+<!--                <div class="receipt-option">-->
+<!--                    <p>영수증</p>-->
+<!--                    <label>-->
+<!--                        <input type="radio" name="receipt" value="show" checked> 가격 표시-->
+<!--                    </label>-->
+<!--                    <label>-->
+<!--                        <input type="radio" name="receipt" value="hide"> 가격 표시 안함-->
+<!--                    </label>-->
+<!--                </div>-->
             </div>
             <div class="final-payment-info">
                 <div class="final-amountp">
                     <p>최종 결제금액</p>
                     <p><strong class="final-amount" th:text="${#numbers.formatInteger(totalAmount,0,'COMMA') + '원'}">18,900 원</strong></p>
                 </div>
-                <button>결제하기</button>
+                <button id="pay-button">결제하기</button>
             </div>
         </div>
     </section>
@@ -479,3 +484,58 @@
         });
     });
 </script>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+    document.getElementById("pay-button").addEventListener("click", (event) => {
+        event.preventDefault(); // 기본 버튼 동작 방지
+
+        const form = document.createElement("form");
+        form.method = "post";
+        form.action = "/frontend/payment";
+
+        const addHiddenField = (name, value) => {
+            const input = document.createElement("input");
+            input.type = "hidden";
+            input.name = name;
+            input.value = value;
+            form.appendChild(input);
+        };
+
+        // 주문자 정보 수집
+        addHiddenField("customerName", document.getElementById("customer-name").value);
+        addHiddenField("customerPhone", `${document.getElementById("customer-mobile1").value}-${document.getElementById("customer-mobile2").value}-${document.getElementById("customer-mobile3").value}`);
+        addHiddenField("customerLandline", `${document.getElementById("customer-landline1").value}-${document.getElementById("customer-landline2").value}-${document.getElementById("customer-landline3").value}`);
+        addHiddenField("customerEmail", document.getElementById("customer-email").value);
+        addHiddenField("customerPassword", document.getElementById("customer-password").value);
+
+        // 받는 사람 정보 수집
+        addHiddenField("recipientName", document.getElementById("name").value);
+        addHiddenField("recipientPhone", `${document.getElementById("mobile-phone1").value}-${document.getElementById("mobile-phone2").value}-${document.getElementById("mobile-phone3").value}`);
+        addHiddenField("recipientLandline", `${document.getElementById("landline-phone1").value}-${document.getElementById("landline-phone2").value}-${document.getElementById("landline-phone3").value}`);
+        addHiddenField("recipientAddress", document.getElementById("road-address").value);
+        addHiddenField("roadAddress", document.getElementById("road-address").value);
+        addHiddenField("zoneAddress", document.getElementById("zone-address").value);
+        addHiddenField("detailAddress", document.getElementById("detail-address").value);
+
+        // 포장지와 쿠폰 선택 여부 확인 후 추가
+        const wrapperElement = document.getElementById("wrapper-select");
+        const wrapperId = wrapperElement ? wrapperElement.value : null;
+        addHiddenField("wrapperId", wrapperId ? parseInt(wrapperId) : null);
+
+        const couponElement = document.getElementById("apply-coupon");
+        const couponId = couponElement ? couponElement.value : null;
+        addHiddenField("couponId", couponId ? parseInt(couponId) : null);
+
+        // 포인트와 총 금액 추가
+        // 포인트 사용 여부 확인 및 추가
+        const usedPointsElement = document.getElementById("used-points");
+        const usedPoints = usedPointsElement ? parseInt(usedPointsElement.value) || 0 : 0;
+        addHiddenField("point", usedPoints);
+        addHiddenField("totalAmount", parseInt(document.querySelector(".final-amount").textContent.replace(/[^0-9]/g, "")) || 0);
+
+        document.body.appendChild(form);
+        form.submit();
+    });
+</script>
+
