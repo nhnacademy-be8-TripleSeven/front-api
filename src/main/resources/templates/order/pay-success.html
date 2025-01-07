@@ -81,7 +81,7 @@
                 <tbody>
                 <tr th:each="product : ${order.products}">
                     <td class="product-info">
-                        <img th:src="@{/image/{product.image}(product.image=${product.image})}" alt="책 이미지">
+                        <img th:src="@{/image{product.image}(product.image=${product.image})}" alt="책 이미지">
                         <div>
                             <p><strong th:text="${product.name}">[국내 도서] 반 고흐, 인생의 그림들</strong></p>
                             <p th:text="${product.description}">- 어둠을 지나 비로소 빛이 된 불멸의 작품 120</p>

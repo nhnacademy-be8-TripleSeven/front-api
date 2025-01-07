@@ -1,8 +1,10 @@
 package com.tripleseven.frontapi.controller.order;
 
+import com.tripleseven.frontapi.dto.MemberDTO;
 import com.tripleseven.frontapi.dto.coupon.CouponDetailsDTO;
 import com.tripleseven.frontapi.dto.order.ProductDTO;
 import com.tripleseven.frontapi.service.BookService;
+import com.tripleseven.frontapi.service.MemberService;
 import com.tripleseven.frontapi.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -20,6 +24,7 @@ public class OrderController {
 
     private final OrderService orderService;
     private final BookService bookService;
+    private final MemberService memberService;
 
     @GetMapping("/frontend/order")
     public String getOrderPage(
@@ -75,19 +80,17 @@ public class OrderController {
         return "order/pay-user";
     }
 
-//    @GetMapping("/order")
-//    public String getOrderPage(Model model
-////                               @RequestParam(value = "bookId")Long bookId,
-////                               @RequestParam(value = "quantity")int quantity
-//                               ) {
-//        Long bookId = 30L;
-//        int quantity = 5;
-//        List<ProductDTO> list = new ArrayList<>();
-//        ProductDTO productDTO = orderApiService.getProductInfoByDirect(bookId, quantity);
-//        list.add(productDTO);
-//        list.add(orderApiService.getProductInfoByDirect(12L,3));
-//        model.addAttribute("currentStep","payment");
-//        model.addAttribute("products",list);
-//        return "pay-user";
-//    }
+    @GetMapping("/frontend/order/success")
+    public String getOrderSuccessPage(
+            @RequestHeader(value = "X-USER", required = false)Long userId,
+            @CookieValue(value = "GUEST-ID",required = false)Long guestId,
+            Model model
+    ){
+//        MemberDTO memberDTO = memberService.getMemberInfo(userId);
+        MemberDTO memberDTO = new MemberDTO(1L,"nhn1234@gmail.com","010-1234-1234","마르코", Date.valueOf(LocalDate.now()),"man","gold");
+        model.addAttribute("user",memberDTO);
+
+        return "order/pay-success";
+
+    }
 }

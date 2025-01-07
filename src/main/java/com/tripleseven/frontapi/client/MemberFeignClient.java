@@ -6,10 +6,7 @@ import com.tripleseven.frontapi.dto.oauth2.payco.PaycoMemberDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @FeignClient(name = "member-api")
 public interface MemberFeignClient {
@@ -23,4 +20,7 @@ public interface MemberFeignClient {
                                @RequestParam(defaultValue = "10") int size,
                                @RequestParam(required = false) String sort,
                                @RequestParam(defaultValue = "ASC") String sortOrder);
+
+    @GetMapping("/api/members/info")
+    MemberDTO getMemberInfo(@RequestHeader Long userId);
 }
