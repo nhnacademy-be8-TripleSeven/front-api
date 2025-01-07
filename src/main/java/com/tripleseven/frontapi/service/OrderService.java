@@ -2,14 +2,13 @@ package com.tripleseven.frontapi.service;
 
 import com.tripleseven.frontapi.client.OrderFeignClient;
 import com.tripleseven.frontapi.dto.FilterCriteriaDTO;
-import com.tripleseven.frontapi.dto.order.OrderManageRequestDTO;
-import com.tripleseven.frontapi.dto.order.OrderManageResponseDTO;
-import com.tripleseven.frontapi.dto.order.OrderPayDetailDTO;
-import com.tripleseven.frontapi.dto.order.Status;
+import com.tripleseven.frontapi.dto.order.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -17,14 +16,14 @@ public class OrderService {
     private final OrderFeignClient orderFeignClient;
 
     public Page<OrderManageResponseDTO> getOrderHistories(FilterCriteriaDTO filterCriteriaDTO, Long userId, Pageable pageable) {
-        Status status = filterCriteriaDTO.getStatus();
-        if (status.equals(Status.ALL)) {
-            status = null;
+        OrderStatus orderStatus = filterCriteriaDTO.getOrderStatus();
+        if (orderStatus.equals(OrderStatus.ALL)) {
+            orderStatus = null;
         }
         OrderManageRequestDTO requestDTO = new OrderManageRequestDTO(
                 filterCriteriaDTO.getStartDate(),
                 filterCriteriaDTO.getEndDate(),
-                status
+                orderStatus
         );
         return orderFeignClient.getOrderList(requestDTO, userId, pageable);
     }
@@ -35,6 +34,11 @@ public class OrderService {
 
     public int getPoints(Long userId) {
         return orderFeignClient.getTotalPoint(userId);
+    }
+
+    public void updateOrderHistories(Long userId, List<Long> ids, OrderStatus orderStatus){
+        OrderDetailUpdateRequestDTO orderDetailUpdateRequest = new OrderDetailUpdateRequestDTO(ids, orderStatus);
+        orderFeignClient.updateOrderDetails(userId, orderDetailUpdateRequest);
     }
 
 }
