@@ -26,7 +26,7 @@ public class BookMainController {
     }
 
 
-    @GetMapping("/frontend")
+    @GetMapping({"/frontend", "/frontend/main", "/frontend/"})
     public String getMonthlyBooks(HttpServletRequest request, Model model) {
         String ip = request.getHeader("x-forwarded-for");
         if (ip == null) {

@@ -5,7 +5,8 @@ import lombok.Setter;
 
 @Getter @Setter
 public class OrderInfoDTO {
-    Status status;
+    Long orderDetailId;
+    OrderStatus orderStatus;
     String bookName;
     int amount;
     int discountPrice;

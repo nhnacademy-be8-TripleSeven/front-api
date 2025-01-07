@@ -2,9 +2,178 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="'주문내역/배송조회 - NHN 24'">주문내역/배송조회</title>
+    <link rel="stylesheet" th:href="@{/css/order-history-detail.css}">
+    <link rel="stylesheet" th:href="@{/css/global.css}">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script type="module" src="/js/axios-config.js"></script>
+    <script type="module" src="/js/order-history-detail.js"></script>
 </head>
 <body>
+<div th:replace="header :: header"></div>
 
+<main class="my-account-container">
+
+    <div th:replace="sidebar.html"></div>
+
+    <section class="order-history">
+        <h2>* 주문상품정보</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>상태</th>
+                <th>상품명</th>
+                <th>주문 수량</th>
+                <th>할인가</th>
+                <th>정가</th>
+                <th>선택</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="orderInfo : ${orderInfos}">
+                <td class="import-price" th:text="${orderInfo.getOrderStatus().korean}">
+                    결제 대기
+                </td>
+                <td th:text="${orderInfo.getBookName()}">마르코의 JSP</td>
+                <td th:text="${orderInfo.getAmount()}">0</td>
+                <td class="import-price"
+                    th:text="${#numbers.formatInteger(orderInfo.getDiscountPrice(), 0, 'COMMA')} + '원'">
+                    25,000원
+                </td>
+                <td class="import-price"
+                    th:text="${#numbers.formatInteger(orderInfo.getPrimePrice(), 0, 'COMMA')} + '원'">
+                    15,000원
+                </td>
+                <td>
+                    <form id="orderForm" method="post">
+                        <input type="checkbox" name="orderIds" th:value="${orderInfo.getOrderDetailId()}">
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="2">
+                    <button type="button" class="submit-button" data-action="/frontend/orders/change-return">반품 요청</button>
+                    <button type="button" class="submit-button" data-action="/frontend/orders/change-cancel">취소 요청</button>
+                </td>
+                <td>합계</td>
+                <td th:text="${#numbers.formatInteger(orderGroupInfo.getPrimeTotalPrice(), 0, 'COMMA')} + '원'">10,000원
+                </td>
+                <td>포장지 이름</td>
+                <td th:text="${orderGroupInfo.getWrappingName()}">포장지1</td>
+            </tr>
+            <tr>
+                <td colspan="2" rowspan="5">총 금액 계산</td>
+            </tr>
+            <tr>
+                <td colspan="3">상품 총 금액</td>
+                <td th:text="${#numbers.formatInteger(orderGroupInfo.getPrimeTotalPrice(), 0, 'COMMA')} + '원'">26,100원
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">총 할인 금액(-)</td>
+                <td th:text="${#numbers.formatInteger(orderGroupInfo.getDiscountedPrice(), 0, 'COMMA')} + '원'">0원</td>
+            <tr>
+                <td colspan="3">총 배 송 비(+)</td>
+                <td th:text="${#numbers.formatInteger(orderGroupInfo.getDeliveryPrice(), 0, 'COMMA')} + '원'">0원</td>
+            </tr>
+            <tr>
+                <td colspan="3">총 포 장 비(+)</td>
+                <td th:text="${#numbers.formatInteger(orderGroupInfo.getWrappingPrice(), 0, 'COMMA')} + '원'">0원</td>
+            </tr>
+            <tr>
+                <td class="import-price" colspan="6"
+                    th:text="'주문 총 금액: '+${#numbers.formatInteger(orderGroupInfo.getTotalPrice(), 0, 'COMMA')} + '원'">
+                    주문 총 금액
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+
+        <h2>* 주문, 배송 정보</h2>
+        <table>
+            <thead>
+            <tr>
+                <th class="delivery-state">배송 상태</th>
+                <th class="delivery-date" colspan="3"
+                    th:text="${#objects.nullSafe('NHN24배송 : ' + deliveryInfo.arrivedAt, '배송 준비 중')}">
+                    배송 준비 중
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td class="thead-header">주문번호</td>
+                <td th:text="${deliveryInfo.getArrivedAt()}"></td>
+                <td class="thead-header">주문일자</td>
+                <td th:text="${deliveryInfo.getOrderedAt()}"></td>
+            </tr>
+            <tr>
+                <td class="thead-header">주문하신 분</td>
+                <td th:text="${deliveryInfo.getOrdererName()}"></td>
+                <td class="thead-header">받으시는 분</td>
+                <td th:text="${deliveryInfo.getRecipientName()}"></td>
+            </tr>
+            <tr>
+                <td class="thead-header">전화번호</td>
+                <td th:text="${deliveryInfo.getRecipientHomePhone() ?: ''}"></td>
+                <td class="thead-header">휴대폰번호</td>
+                <td th:text="${deliveryInfo.getRecipientPhone()}"></td>
+            </tr>
+            <tr>
+                <td class="thead-header">배송지 주소</td>
+                <td colspan="3" th:text="${deliveryInfo.getOrdererName()}"></td>
+            </tr>
+            <tr>
+                <td class="thead-header">배송조회</td>
+                <td colspan="3">
+                    <button class="delivery-info-button" th:id="${deliveryInfo.orderId}">조회</button>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+        <h2>* 결제정보</h2>
+        <table>
+            <tbody th:if="${orderPayInfo != null}">
+            <tr>
+                <td class="thead-header">총 주문 금액</td>
+                <td colspan="3" th:text="${orderGroupInfo.getPrimeTotalPrice()}"></td>
+            </tr>
+            <tr>
+                <td class="thead-header">총 할인 금액</td>
+                <td th:text="${orderGroupInfo.getDiscountedPrice()}"></td>
+                <td class="thead-header">NHN24 포인트 총 사용액</td>
+                <td th:text="${orderGroupInfo.getUsedPoint()}"></td>
+            </tr>
+            <tr>
+                <td class="thead-header">실 결제 금액</td>
+                <td th:text="${orderPayInfo.getTotalPrice()}"></td>
+                <td class="thead-header">NHN24 포인트 총 적립액</td>
+                <td th:text="${orderGroupInfo.getEarnedPoint()}"></td>
+            </tr>
+            <tr>
+                <td class="thead-header">결제수단</td>
+                <td colspan="3" th:text="${orderPayInfo.getPaymentName()}"></td>
+            </tr>
+            <tr>
+                <td class="thead-header">승인 번호</td>
+                <td th:text="${orderPayInfo.getPaymentKey()}"></td>
+                <td class="thead-header">승인 일자</td>
+                <td th:text="${orderPayInfo.getRequestedAt()}"></td>
+            </tr>
+            </tbody>
+            <tbody th:if="${orderPayInfo == null}">
+            <tr>
+                <td colspan="4">데이터가 없습니다.</td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+
+<div th:replace="footer :: footer"></div>
 </body>
 </html>

@@ -12,6 +12,8 @@
   <script type="module" src="/js/reviews.js" defer></script>
   <script type="module" src="/js/like-button.js" defer></script>
   <script type="module" src="/js/review-handler.js" defer></script>
+  <script type="module" src="/js/book-detail-cart.js" defer></script>
+
 </head>
 <body>
 
@@ -38,7 +40,8 @@
         <span th:text="'(' + ${totalReviews} + ' 리뷰)'"></span>
       </div>
       <div class="actions">
-        <a href="#"><button class="cart-btn">장바구니 담기</button></a>
+        <a href="#"><button class="cart-btn" id="addToCartBtn" th:data-book-id="${book.id}">장바구니 담기</button>
+        </a>
         <a href="#"><button class="buy-btn">바로구매</button></a>
         <img id="likeIcon"
              class="like-img"

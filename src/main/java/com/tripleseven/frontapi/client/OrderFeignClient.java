@@ -1,5 +1,6 @@
 package com.tripleseven.frontapi.client;
 
+import com.tripleseven.frontapi.dto.order.OrderDetailUpdateRequestDTO;
 import com.tripleseven.frontapi.dto.order.OrderManageRequestDTO;
 import com.tripleseven.frontapi.dto.order.OrderManageResponseDTO;
 import com.tripleseven.frontapi.dto.order.OrderPayDetailDTO;
@@ -29,5 +30,11 @@ public interface OrderFeignClient {
     OrderPayDetailDTO getOrderDetails(
             @RequestHeader("X-USER") Long userId,
             @PathVariable("orderId") Long orderId
+    );
+
+    @PostMapping("/api/orders/order-details/return")
+    void updateOrderDetails(
+            @RequestHeader("X-USER") Long userId,
+            @RequestBody OrderDetailUpdateRequestDTO orderDetailUpdateRequestDTO
     );
 }
