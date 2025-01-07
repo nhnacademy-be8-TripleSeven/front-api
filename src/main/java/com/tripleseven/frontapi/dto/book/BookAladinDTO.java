@@ -1,21 +1,15 @@
 package com.tripleseven.frontapi.dto.book;
 
-
 import com.tripleseven.frontapi.dto.book_creator.BookCreatorDTO;
 import com.tripleseven.frontapi.dto.book_type.BookTypeDTO;
 import com.tripleseven.frontapi.dto.category.CategoryDTO;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import org.springframework.web.multipart.MultipartFile;
 
-@NoArgsConstructor
 @Getter
-@AllArgsConstructor
-public class BookApiDTO {
+public class BookAladinDTO {
 
     private Long id;
     private String title;
@@ -29,16 +23,16 @@ public class BookApiDTO {
     private int regularPrice;
     private int salePrice;
     private String index;
-    private List<MultipartFile> coverImage;
-    private List<MultipartFile> detailImage;
+    private List<String> coverImage;
+    private List<String> detailImage;
     private int stock;
     private int page;
     private String publisherName;
 
-    public BookApiDTO(String title, String isbn, List<CategoryDTO> categories,
+    public BookAladinDTO(String title, String isbn, List<CategoryDTO> categories,
         List<BookTypeDTO> bookTypes, List<BookCreatorDTO> authors, List<String> tags,
         LocalDate publishedDate, String description, int regularPrice, int salePrice, String index,
-        List<MultipartFile> coverImage, List<MultipartFile> detailImage, int stock, int page,
+        List<String> coverImage, List<String> detailImage, int stock, int page,
         String publisherName) {
         this.title = title;
         this.isbn = isbn;

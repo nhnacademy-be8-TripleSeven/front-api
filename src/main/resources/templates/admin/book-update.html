@@ -6,22 +6,27 @@
   <title>도서 수정</title>
   <link rel="stylesheet" th:href="@{/css/check-user.css}">
   <link rel="stylesheet" th:href="@{/css/global.css}">
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script type="module" src="/js/axios-config.js"></script>
 </head>
 <body>
 
 <div th:replace="header :: header"></div>
 
-<div th:replace="admin/admin-main :: main"></div>
+<main class="main-content">
+<div th:replace="admin/admin-main :: aside"></div>
 
-<form th:action="@{/admin/books/updateBook}" enctype="multipart/form-data" method="post">
+<section>
+<form th:object="${book}" enctype="multipart/form-data" method="post">
 
-  <input type="hidden" name="id" th:value="${book.id}" />
+  <!-- book-id -->
+  <input type="hidden" id="book-id" name="id" th:value="${book.id}" />
 
   <label>제목:</label>
-  <input type="text" name="title" th:value="${book.title}" />
+  <input type="text" id="book-title" name="title" th:value="${book.title}" />
 
   <label>ISBN:</label>
-  <input type="text" name="isbn" th:value="${book.isbn}" />
+  <input type="text" id="book-isbn" name="isbn" th:value="${book.isbn}" />
 
   <label>카테고리:</label>
   <ul>
@@ -33,16 +38,20 @@
   <label>북 타입:</label>
   <ul>
     <li th:each="type, iterStat : ${book.bookTypes}">
-      <input type="text" name="bookTypes[${iterStat.index}].type" th:value="${type.type}" placeholder="북 타입" />
-      <input type="text" name="bookTypes[${iterStat.index}].ranks" th:value="${type.ranks}" placeholder="순위" />
+      <input type="text" name="bookTypes[${iterStat.index}].type"
+             th:value="${type.type}" placeholder="북 타입" />
+      <input type="text" name="bookTypes[${iterStat.index}].ranks"
+             th:value="${type.ranks}" placeholder="순위" />
     </li>
   </ul>
 
   <label>저자:</label>
   <ul>
     <li th:each="author, iterStat : ${book.authors}">
-      <input type="text" name="authors[${iterStat.index}].name" th:value="${author.name}" placeholder="저자 이름" />
-      <input type="text" name="authors[${iterStat.index}].role" th:value="${author.role}" placeholder="역할" />
+      <input type="text" name="authors[${iterStat.index}].name"
+             th:value="${author.name}" placeholder="저자 이름" />
+      <input type="text" name="authors[${iterStat.index}].role"
+             th:value="${author.role}" placeholder="역할" />
     </li>
   </ul>
 
@@ -54,42 +63,43 @@
   </ul>
 
   <label>출판일:</label>
-  <input type="date" name="publishedDate" th:value="${book.publishedDate}" />
+  <input type="date" id="published-date" name="publishedDate" th:value="${book.publishedDate}" />
 
   <label>설명:</label>
-  <textarea name="description" th:text="${book.description}"></textarea>
+  <textarea id="description" name="description" th:text="${book.description}"></textarea>
 
   <label>정가:</label>
-  <input type="number" name="regularPrice" th:value="${book.regularPrice}" />
+  <input type="number" id="regular-price" name="regularPrice" th:value="${book.regularPrice}" />
 
   <label>할인가:</label>
-  <input type="number" name="salePrice" th:value="${book.salePrice}" />
+  <input type="number" id="sale-price" name="salePrice" th:value="${book.salePrice}" />
 
   <label>목차:</label>
-  <textarea name="index" th:text="${book.index}"></textarea>
+  <textarea id="index" name="index" th:text="${book.index}"></textarea>
 
   <label>페이지:</label>
-  <input type="number" name="page" th:value="${book.page}" />
+  <input type="number" id="page" name="page" th:value="${book.page}" />
 
   <label>재고:</label>
-  <input type="number" name="stock" th:value="${book.stock}" />
+  <input type="number" id="stock" name="stock" th:value="${book.stock}" />
 
   <!-- 표지 이미지 업로드 -->
   <label>표지 이미지:</label>
-  <input type="file" name="coverImage" id="cover-images" accept="image/*" />
+  <input type="file" id="cover-images" name="coverImage" accept="image/*"  multiple/>
 
   <!-- 상세 이미지 업로드 -->
   <label>상세 이미지:</label>
-  <input type="file" name="detailImage" id="detail-images" accept="image/*" />
+  <input type="file" id="detail-images" name="detailImage" accept="image/*" multiple/>
 
-  <button type="submit">수정 완료</button>
+  <!-- 버튼에 id="book-update-btn" -->
+  <button type="submit" id="book-update-btn">수정 완료</button>
 </form>
-
 
 <div th:replace="footer :: footer"></div>
 
-<script>
-
-</script>
+<!-- JS: admin-book-update.js 에 포함된 코드 (아래 참고) -->
+<script th:src="@{/js/admin-book-update.js}"></script>
+</section>
+</main>
 </body>
 </html>

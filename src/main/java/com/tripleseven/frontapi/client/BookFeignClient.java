@@ -148,7 +148,7 @@ public interface BookFeignClient {
     BookPageDTO getBooksByKeyword(@PathVariable("keyword") String keyword, Pageable pageable);
 
     @GetMapping("/admin/books/isbn/{isbn}")
-    BookApiDTO getAladinApiBookByIsbn(@PathVariable("isbn") String isbn);
+    BookAladinDTO getAladinApiBookByIsbn(@PathVariable("isbn") String isbn);
 
     @DeleteMapping("/admin/books/delete/{bookId}")
     void deleteBook(@PathVariable Long bookId);
