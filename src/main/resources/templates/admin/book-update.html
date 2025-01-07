@@ -12,8 +12,11 @@
 <body>
 
 <div th:replace="header :: header"></div>
-<div th:replace="admin/admin-main :: main"></div>
 
+<main class="main-content">
+<div th:replace="admin/admin-main :: aside"></div>
+
+<section>
 <form th:object="${book}" enctype="multipart/form-data" method="post">
 
   <!-- book-id -->
@@ -96,6 +99,7 @@
 
 <!-- JS: admin-book-update.js 에 포함된 코드 (아래 참고) -->
 <script th:src="@{/js/admin-book-update.js}"></script>
-
+</section>
+</main>
 </body>
 </html>
