@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 
 @Slf4j
-@CrossOrigin(origins = "http://localhost:8080")
 @Controller
 @RequestMapping("/admin")
 @RequiredArgsConstructor

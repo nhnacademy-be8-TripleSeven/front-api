@@ -14,6 +14,7 @@ import com.tripleseven.frontapi.dto.book.BookPageDetailResponseDTO;
 import com.tripleseven.frontapi.dto.book.BookUpdateDTO;
 import com.tripleseven.frontapi.dto.book_creator.BookCreatorDTO;
 import com.tripleseven.frontapi.dto.category.CategoryDTO;
+import com.tripleseven.frontapi.dto.category.PageCategoryDTO;
 import java.util.List;
 
 import com.tripleseven.frontapi.dto.review.ReviewRequestDTO;
@@ -144,8 +145,8 @@ public class BookService {
         return bookFeignClient.getBookById(bookId);
     }
 
-    public List<CategoryDTO> getCategroyByLevel(int level) {
-        return bookFeignClient.getCategoryList(level);
+    public PageCategoryDTO getCategroyByLevel(int level, Pageable pageable) {
+        return bookFeignClient.getCategoryList(level, pageable);
     }
 
     public void createCategory(List<CategoryDTO> categoryDTOS){
@@ -154,6 +155,14 @@ public class BookService {
 
     public void deleteCategory(Long categoryId) {
         bookFeignClient.deleteCategory(categoryId);
+    }
+
+    public List<CategoryDTO> getAllCategories() {
+        return bookFeignClient.categoryAll();
+    }
+
+    public BookPageDetailResponseDTO getCategorySearch(long id, Pageable pageable) {
+        return bookFeignClient.getCategorySearch(id, pageable);
     }
 
 }

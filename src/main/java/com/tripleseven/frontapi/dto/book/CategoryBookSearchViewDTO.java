@@ -11,7 +11,7 @@ public class CategoryBookSearchViewDTO {
     private String keyword;
     private List<String> categories;
     private String path;
-    private List<BookDetailResponseDTO> contents;
+    private List<BookDetailResponseDTO> content;
     private int page;
     private int size;
     private String sortField;

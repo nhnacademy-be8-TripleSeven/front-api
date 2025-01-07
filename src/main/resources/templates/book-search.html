@@ -12,41 +12,35 @@
 
 <main>
   <aside class="filter-sidebar">
-  <h3>검색 조건</h3>
-    <form method="get" th:action="@{/frontend/categorySearch}">
-      <input type="text" name="keyword" placeholder="검색어 입력" />
-      <h3>카테고리 선택</h3>
-      <ul>
-        <li><label><input type="checkbox" name="categories" value="국내도서"> 국내도서</label></li>
-        <li><label><input type="checkbox" name="categories" value="외국도서"> 외국도서</label></li>
-        <li><label><input type="checkbox" name="categories" value="한국소설"> 한국소설</label></li>
-        <li><label><input type="checkbox" name="categories" value="인문학"> 인문학</label></li>
-        <li><label><input type="checkbox" name="categories" value="서양철학"> 서양철학</label></li>
-        <li><label><input type="checkbox" name="categories" value="잡지"> 잡지</label></li>
-        <li><label><input type="checkbox" name="categories" value="교육 일반"> 교육 일반</label></li>
-        <li><label><input type="checkbox" name="categories" value="어린이"> 어린이</label></li>
-        <li><label><input type="checkbox" name="categories" value="외국어"> 외국어</label></li>
+    <div>
+      <h3>검색 조건</h3>
+      <!-- 카테고리 단계별 폼 -->
+      <div>
+        <h3>카테고리 이름 검색</h3>
+        <input type="text"
+               id="categorySearchInput"
+               placeholder="카테고리를 입력..."
+               onkeyup="filterCategories()" />
+      </div>
 
+      <ul id="categoryList">
+        <!-- 카테고리 목록 -->
+        <li th:each="category : ${categories}"
+            th:attr="data-category=${category.name}"
+            style="display: none;">
+          <a th:href="@{/frontend/categorySearch(id=${category.id})}"> <!-- id를 파라미터로 추가 -->
+            <span th:text="${category.name}"></span> <!-- 카테고리 이름 표시 -->
+          </a>
+        </li>
       </ul>
-      <button type="submit">검색</button>
-    </form>
 
-<!--  <form method="get" action="/filter">-->
-<!--    <h3>*분야별 보기</h3>-->
-<!--    <ul>-->
-<!--      <li><label><input type="checkbox" name="category" value="국내 도서" th:checked="${selectedCategories.contains('국내 도서')}"> 국내 도서</label></li>-->
-<!--      <li><label><input type="checkbox" name="category" value="건강/취미" th:checked="${selectedCategories.contains('건강/취미')}"> 건강/취미</label></li>-->
-<!--      <li><label><input type="checkbox" name="category" value="경제/경영" th:checked="${selectedCategories.contains('경제/경영')}"> 경제/경영</label></li>-->
-<!--      <li><label><input type="checkbox" name="category" value="고등학교 참고서" th:checked="${selectedCategories.contains('고등학교 참고서')}"> 고등학교 참고서</label></li>-->
-<!--      <li><label><input type="checkbox" name="category" value="고전" th:checked="${selectedCategories.contains('고전')}"> 고전</label></li>-->
-<!--    </ul>-->
-<!--  </form>-->
+    </div>
 </aside>
 
   <section class="book-results">
     <h2>검색 결과</h2>
     <div class="result-controls">
-      <p th:if="${searchBook.contents.size() > 0}" th:text="'총 ' + ${searchBook.total} + '권의 검색 결과'"></p><!-- searchBook 경로 -->
+      <p th:if="${searchBook.content.size() > 0}" th:text="'총 ' + ${searchBook.total} + '권의 검색 결과'"></p><!-- searchBook 경로 -->
       <!-- searchBook 경로 -->
       <form th:if="${searchBook.path == 'searchBook'}"
             th:action="@{/frontend/searchBook}"
@@ -109,14 +103,14 @@
       </form>
 
       <!-- 검색 결과가 없는 경우 -->
-      <div th:if="${searchBook.contents.size() == 0}">
+      <div th:if="${searchBook.content.size() == 0}">
         <p>검색 결과가 없습니다.</p>
       </div>
 
 
     </div>
     <div class="book-list">
-      <div th:each="book : ${searchBook.contents}" class="book-item">
+      <div th:each="book : ${searchBook.content}" class="book-item">
         <a th:href="@{/frontend/books/{bookId}(bookId=${book.id})}">
           <img th:src="${book.coverUrl}" th:alt="${book.title}">
           <h4 th:text="${book.title}">도서 제목</h4>
@@ -264,6 +258,7 @@
 <div th:replace="footer :: footer"></div>
 
 <script th:src="@{/js/book-search.js}"></script>
+<script th:src="@{/js/category-toggle.js}"></script>
 
 </body>
 </html>

@@ -15,41 +15,9 @@
   <!-- Header -->
   <div th:replace="header :: header"></div>
 
-  <!-- Admin Sidebar -->
-  <div th:replace="admin/admin-sidebar :: main"></div>
-
   <main class="main-content">
+    <div th:replace="admin/admin-sidebar :: aside"></div>
 
-    <!-- Category Filter Section -->
-    <section id="categoryList">
-      <h2>Category Management</h2>
-
-      <form th:action="@{/admin/books/categories}" method="get" class="filter-form">
-        <label for="level">Enter Level:</label>
-        <input type="number" id="level" name="level" min="1" max="5" placeholder="Enter Level (1-5)" required>
-        <button type="submit">Filter</button>
-      </form>
-
-      <!-- Display Filtered Categories -->
-      <div th:if="${categories != null && !categories.isEmpty()}">
-        <h3>Category List</h3>
-        <div th:each="category : ${categories}" class="category-item">
-          <p>
-            <span th:text="${category.name}"></span> <!-- Category Name -->
-            <span th:text="'(Level ' + ${category.level} + ')'"></span> <!-- Category Level -->
-          </p>
-          <form th:action="@{/admin/books/categoryDelete}" method="post" class="delete-form">
-            <input type="hidden" name="id" th:value="${category.id}" />
-            <button type="submit">Delete</button>
-          </form>
-        </div>
-      </div>
-
-      <!-- No Categories Found -->
-      <div th:if="${categories == null || categories.isEmpty()}">
-        <p>No categories found for the selected level.</p>
-      </div>
-    </section>
 
     <!-- Category Creation Section -->
     <section id="categoryCreate">
@@ -68,10 +36,8 @@
         </div>
         <button type="submit">Add Category</button>
       </form>
-    </section>
 
-    <!-- Delete Specific Category by ID -->
-    <section id="categoryDelete">
+
       <h2>Delete Category by ID</h2>
       <form id="category-delete-id-form" method="post" class="delete-id-form">
         <div>

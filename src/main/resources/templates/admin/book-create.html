@@ -18,7 +18,7 @@
 
 
   <div th:replace="admin/admin-sidebar :: aside"></div>
-  <section>
+  <section class="content">
     <form th:action="@{/admin/frontend/books/aladin}" method="get">
       <label for="isbn">ISBN:</label>
       <input type="text" name="isbn" placeholder="ISBN을 입력하세요"/>

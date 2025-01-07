@@ -19,6 +19,7 @@ import com.tripleseven.frontapi.dto.book.*;
 
 
 import com.tripleseven.frontapi.dto.category.CategorySearchDTO;
+import com.tripleseven.frontapi.dto.category.PageCategoryDTO;
 import com.tripleseven.frontapi.dto.coupon.*;
 
 import com.tripleseven.frontapi.dto.likes.LikesResponseDTO;
@@ -167,7 +168,7 @@ public interface BookFeignClient {
     void createCategory(@RequestBody List<CategoryDTO> categoryDTO);
 
     @GetMapping("/admin/books/categoryList")
-    List<CategoryDTO> getCategoryList(@RequestParam int level);
+    PageCategoryDTO getCategoryList(@RequestParam int level, Pageable pageable);
 
     @DeleteMapping("/admin/books/categoryDelete")
     void deleteCategory(@RequestParam Long id);
@@ -188,5 +189,9 @@ public interface BookFeignClient {
     @DeleteMapping("/api/likes/{bookId}")
     void deleteLikes(@PathVariable Long bookId, @RequestHeader("X-USER") Long userId);
 
+    @GetMapping("/admin/books/categoryAll")
+    List<CategoryDTO> categoryAll();
 
+    @GetMapping("/books/categorySearch")
+    BookPageDetailResponseDTO getCategorySearch(@RequestParam long id, Pageable pageable);
 }

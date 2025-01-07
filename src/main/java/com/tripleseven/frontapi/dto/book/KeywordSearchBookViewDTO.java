@@ -10,7 +10,7 @@ public class KeywordSearchBookViewDTO {
 
     private String keyword;
     private String path;
-    private List<BookSearchResponseDTO> contents;
+    private List<BookSearchResponseDTO> content;
     private int page;
     private int size;
     private String sortField;

@@ -10,7 +10,7 @@ public class TypeBookSearchViewDTO {
 
     private String type;
     private String path;
-    private List<BookDetailResponseDTO> contents;
+    private List<BookDetailResponseDTO> content;
     private int page;
     private int size;
     private String sortField;
