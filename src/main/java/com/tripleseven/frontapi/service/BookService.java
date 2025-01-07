@@ -83,8 +83,8 @@ public class BookService {
         bookFeignClient.addReview(userId, reviewRequestDTO);
     }
 
-    public boolean checkUserPurchase(Long userId, Long bookId) {
-        return orderFeignClient.checkUserPurchase(userId, bookId);
+    public boolean checkUserPurchase(Long bookId, Long userId) {
+        return orderFeignClient.checkUserPurchase(bookId, userId);
     }
   
     public BookPageDetailResponseDTO getTypeBookSearch(String type, int page, int pageSize, String sortField, String sortDir) {
