@@ -34,7 +34,7 @@ public class CouponController {
                                    @RequestParam(required = false) String endDate,
                                    Model model) {
 
-        log.info("X-user {}",userId);
+        log.info("X-USER {}",userId);
         // 발급 내역 조회
         List<CouponDetailsDTO> issuedCoupons = bookFeignClient.getAllCoupons(userId, keyword, startDate, endDate);
 
@@ -129,7 +129,6 @@ public class CouponController {
         model.addAttribute("query", query); // 검색어 유지
         return "/admin/check-coupon-policy";
     }
-
 
 }
 

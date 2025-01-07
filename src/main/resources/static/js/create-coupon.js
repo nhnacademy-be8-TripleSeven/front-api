@@ -34,16 +34,31 @@ document.addEventListener("DOMContentLoaded", () => {
     // 쿠폰 정책 검색
     document.getElementById("search-policy-btn").addEventListener("click", () => {
         const query = document.getElementById("coupon-policy-query").value;
+
+        // Axios를 사용하여 서버에 검색 요청
         axios
             .get(`/admin/frontend/coupon-policies/search?query=${query}`)
             .then((response) => {
                 const select = document.getElementById("coupon-policy");
+
+                // 검색 결과를 select 요소에 업데이트
                 select.innerHTML = response.data
-                    .map((policy) => `<option value="${policy.id}">${policy.name}</option>`)
+                    .map(
+                        (policy) =>
+                            `<option value="${policy.id}">${policy.name} (최소 금액: ${policy.couponMinAmount || 0}, 최대 금액: ${policy.couponMaxAmount || 0}, 할인율: ${policy.couponDiscountRate || "없음"}, 유효 기간: ${policy.couponValidTime || "없음"}일)</option>`
+                    )
                     .join("");
+
+                if (response.data.length === 0) {
+                    alert("검색 결과가 없습니다.");
+                }
             })
-            .catch((error) => console.error("Error fetching coupon policies:", error));
+            .catch((error) => {
+                console.error("Error fetching coupon policies:", error);
+                alert("쿠폰 정책을 불러오는 중 오류가 발생했습니다.");
+            });
     });
+
 
     // 카테고리 검색
     document.getElementById("search-category-btn").addEventListener("click", () => {

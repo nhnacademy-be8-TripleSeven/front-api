@@ -165,22 +165,16 @@ public class AdminCouponController {
     }
 
     @GetMapping("/coupon-policies/search")
-    public String searchCouponPoliciesByName(
-            @RequestParam(required = false) String query,
-            Model model) {
-        List<CouponPolicyResponseDTO> policies;
+    @ResponseBody
+    public List<CouponPolicyResponseDTO> searchCouponPoliciesByName(
+            @RequestParam(required = false) String query) {
         try {
-            policies = (query == null || query.isBlank())
+            return (query == null || query.isBlank())
                     ? Collections.emptyList()
                     : bookFeignClient.searchCouponPoliciesByName(query);
         } catch (Exception e) {
-            policies = Collections.emptyList();
+            return Collections.emptyList();
         }
-
-        model.addAttribute("query", query); // 검색어 유지
-        model.addAttribute("policies", policies); // 검색 결과를 모델에 추가
-        return "/admin/coupon-policy-search"; // 검색 결과를 렌더링할 페이지
     }
-
 
 }
