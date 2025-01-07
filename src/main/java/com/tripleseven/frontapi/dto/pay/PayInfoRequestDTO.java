@@ -3,12 +3,14 @@ package com.tripleseven.frontapi.dto.pay;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDate;
 
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Setter
 public class PayInfoRequestDTO {
 
 

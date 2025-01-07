@@ -59,7 +59,8 @@
         } catch (err) {
             console.error("결제 승인 요청 중 오류 발생:", err);
             // 결제 승인 실패 시 실패 페이지로 리디렉션
-            window.location.href = `/fail.html?message=${err.message}&code=${err.code}`;
+            // window.location.href = `payment/fail.html?message=${err.message}&code=${err.code}`;
+            window.location.href = `/fail.html?message=${encodeURIComponent(err.message)}&code=${encodeURIComponent(err.code)}`;
         }
     }
 

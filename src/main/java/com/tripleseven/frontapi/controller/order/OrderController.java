@@ -33,7 +33,7 @@ public class OrderController {
         //도서 상세페이지에서 구매 버튼을 누른 경우
         if("direct".equals(type)) {
             ProductDTO product = orderService.getProductInfoByDirect(bookId,1);
-            products = List.of(product);
+            products = List.of(product,orderService.getProductInfoByDirect(2L,2));
             model.addAttribute("products",product);
         }//장바구니 페이지에서 구매 버튼을 누른 경우
         else if("cart".equals(type)) {
@@ -55,11 +55,11 @@ public class OrderController {
         int additionalAmount = finalAmount < 30000 ? 5000 : 0; //30000은 임시, order-api에서 배송정책 조회해서 가져와야함
         int totalAmount = finalAmount + additionalAmount;
 
-        int availablePoint = 0; // 만약 회원이라면 order-api에서 조회와야함 회원 아니면 조회 x
+        int availablePoint = 10000; // 만약 회원이라면 order-api에서 조회와야함 회원 아니면 조회 x
 
-        if(userId != null) {
-            availablePoint = orderService.getPoints(userId);
-        }
+//        if(userId != null) {
+//            availablePoint = orderService.getPoints(userId);
+//        }
 
         List<CouponDetailsDTO> couponList = bookService.getUnusedCoupons(userId);
 

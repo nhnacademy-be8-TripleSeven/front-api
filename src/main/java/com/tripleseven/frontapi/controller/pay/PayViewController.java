@@ -27,13 +27,14 @@ public class PayViewController {
     @PostMapping("/frontend/payment")
     public String paymentPage(
             Model model,
-            @ModelAttribute PayInfoRequestDTO orderInfoRequestDTO,
+            @ModelAttribute PayInfoRequestDTO payInfoRequestDTO,
             @RequestHeader(value = "X-USER",required = false)Long userId,
             @CookieValue(value = "GUEST-ID",required = false)Long guestId) {
 
         PayInfoResponseDTO responseDTO = null;
         // 주문 정보
-        responseDTO = orderService.getPayInfo(userId,guestId,orderInfoRequestDTO);
+        userId = 1L; //임시
+        responseDTO = orderService.getPayInfo(userId,guestId,payInfoRequestDTO);
 
 
         // 멤버 api호출해서 필요한 정보 보내기?
@@ -41,8 +42,8 @@ public class PayViewController {
         model.addAttribute("orderId", responseDTO.getOrderId());
         model.addAttribute("amount", responseDTO.getTotalAmount());
         model.addAttribute("orderName", "sample product");
-        model.addAttribute("customerName", orderInfoRequestDTO.getCustomerName());
-        model.addAttribute("customerEmail", orderInfoRequestDTO.getCustomerEmail());
+        model.addAttribute("customerName", payInfoRequestDTO.getCustomerName());
+        model.addAttribute("customerEmail", payInfoRequestDTO.getCustomerEmail());
 
         return "payment/checkout";
     }

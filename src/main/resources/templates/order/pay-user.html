@@ -495,11 +495,13 @@
         form.action = "/frontend/payment";
 
         const addHiddenField = (name, value) => {
-            const input = document.createElement("input");
-            input.type = "hidden";
-            input.name = name;
-            input.value = value;
-            form.appendChild(input);
+            if (value !== null && value !== "") { // 값이 null 또는 빈 문자열이 아닌 경우에만 추가
+                const input = document.createElement("input");
+                input.type = "hidden";
+                input.name = name;
+                input.value = value;
+                form.appendChild(input);
+            }
         };
 
         // 주문자 정보 수집
@@ -527,11 +529,22 @@
         addHiddenField("couponId", couponId ? parseInt(couponId) : null);
 
         // 포인트와 총 금액 추가
-        // 포인트 사용 여부 확인 및 추가
         const usedPointsElement = document.getElementById("used-points");
         const usedPoints = usedPointsElement ? parseInt(usedPointsElement.value) || 0 : 0;
         addHiddenField("point", usedPoints);
         addHiddenField("totalAmount", parseInt(document.querySelector(".final-amount").textContent.replace(/[^0-9]/g, "")) || 0);
+
+        // **배송 날짜 추가 (yyyy-MM-dd 형식으로 변환)**
+        const selectedDateElement = document.querySelector(".delivery-date-container .date.active");
+        if (selectedDateElement) {
+            const rawDate = selectedDateElement.getAttribute("data-date"); // 예: "01/09(목)"
+            const parts = rawDate.split(/[\/(]/); // ["01", "09", "(목)"]
+            const deliveryDate = `2025-${parts[0].padStart(2, '0')}-${parts[1].padStart(2, '0')}`; // "2025-01-09"
+            addHiddenField("deliveryDate", deliveryDate);
+        } else {
+            alert("배송 날짜를 선택해주세요.");
+            return; // 날짜가 선택되지 않았으면 폼 제출하지 않음
+        }
 
         document.body.appendChild(form);
         form.submit();
