@@ -16,9 +16,9 @@ public interface OrderFeignClient {
             @RequestHeader("X-USER") Long userId,
             Pageable pageable);
 
-    @GetMapping("/api/order-details/check-purchase")
-    boolean checkUserPurchase(@RequestParam("userId") Long userId,
-                              @RequestParam("bookId") Long bookId);
+    @GetMapping("/order-details/check-purchase")
+    boolean checkUserPurchase(@RequestParam("bookId") Long bookId,
+                              @RequestParam("userId") Long userId);
 
     @GetMapping("/api/user/point-histories/point")
     Integer getTotalPoint(
