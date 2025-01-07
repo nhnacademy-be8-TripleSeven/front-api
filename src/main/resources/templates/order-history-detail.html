@@ -9,6 +9,8 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script type="module" src="/js/axios-config.js"></script>
     <script type="module" src="/js/order-history-detail.js"></script>
+    <script src="/js/global.js"></script>
+
 </head>
 <body>
 <div th:replace="header :: header"></div>
@@ -55,8 +57,8 @@
             <tfoot>
             <tr>
                 <td colspan="2">
-                    <button type="button" class="submit-button" data-action="/frontend/orders/change-return">반품 요청</button>
-                    <button type="button" class="submit-button" data-action="/frontend/orders/change-cancel">취소 요청</button>
+                    <button type="button" class="submit-button" data-status="RETURNED_PENDING">반품 요청</button>
+                    <button type="button" class="submit-button" data-status="ORDER_CANCELED">취소 요청</button>
                 </td>
                 <td>합계</td>
                 <td th:text="${#numbers.formatInteger(orderGroupInfo.getPrimeTotalPrice(), 0, 'COMMA')} + '원'">10,000원
