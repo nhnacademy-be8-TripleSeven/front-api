@@ -1,5 +1,6 @@
 package com.tripleseven.frontapi.controller.admin;
 
+import com.tripleseven.frontapi.dto.book.BookAladinDTO;
 import com.tripleseven.frontapi.dto.book.BookApiDTO;
 import com.tripleseven.frontapi.dto.book.BookCreateDTO;
 import com.tripleseven.frontapi.dto.book.BookDTO;
@@ -78,10 +79,10 @@ public class AdminBookController {
 
 
     @GetMapping("/frontend/books/aladin")
-    public String getAladinBookByIsbn(@RequestParam String isbn, Model model) {
-        BookApiDTO aladinApiBook = bookService.getAladinApiBook(isbn);
+    public String getAladinBookByIsbn(@RequestParam("isbn") String isbn, Model model) {
+        BookAladinDTO aladinApiBook = bookService.getAladinApiBook(isbn);
         model.addAttribute("book", aladinApiBook);
-        return "/admin/book-aladin";
+        return "/admin/book-create";
     }
 
     @DeleteMapping("/books/delete/{bookId}")

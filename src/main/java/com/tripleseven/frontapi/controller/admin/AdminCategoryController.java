@@ -19,10 +19,12 @@ public class AdminCategoryController {
 
     private final BookService bookService;
 
-    @GetMapping("/admin/books/categoryList")
-    public String adminCategoryByLevel(@RequestParam int level, Model model) {
-        List<CategoryDTO> categroyByLevel = bookService.getCategroyByLevel(level);
-        model.addAttribute("categories", categroyByLevel);
+    // 카테고리 필터링
+    @GetMapping("/admin/books/categories")
+    public String adminCategoryByLevel(@RequestParam(required = true, defaultValue = "1", value = "level") Integer level, Model model) {
+        List<CategoryDTO> categoryByLevel = bookService.getCategroyByLevel(level);
+        model.addAttribute("categories", categoryByLevel);
+        model.addAttribute("selectedLevel", level); // 선택된 레벨을 뷰에 전달
         return "admin/category";
     }
 
@@ -33,9 +35,9 @@ public class AdminCategoryController {
     }
 
     @DeleteMapping("/admin/books/categoryDelete")
-    public String adminCategoryDelete(@RequestParam long id) {
+    public String adminCategoryDelete(@RequestParam("id") Long id) {
         bookService.deleteCategory(id);
-        return "redirect:/admin/frontend/books";
+        return "redirect:/admin/frontend/category";
     }
 
     @GetMapping("/admin/frontend/category")
