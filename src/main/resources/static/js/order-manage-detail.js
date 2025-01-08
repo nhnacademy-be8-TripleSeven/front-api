@@ -23,12 +23,12 @@ document.querySelectorAll(".submit-button").forEach(button => {
             orderStatus: this.getAttribute("data-status") // 버튼의 상태 값
         };
 
-        axios.post("/api/orders/order-details/status", requestData)
+        axios.post("/admin/orders/order-details/status", requestData)
             .then(response => {
                 console.log("Update successful:", response.data); // 성공 시 메시지 출력
                 alert("요청이 성공적으로 처리되었습니다.");
                 // 요청 성공 시 리다이렉트
-                window.location.href = `/frontend/orders/history/${id}`;
+                window.location.href = `/admin/frontend/orders/status/${id}`;
             })
             .catch(error => {
                 console.error("Error during update:", error);

@@ -1,28 +1,42 @@
 <aside class="sidebar">
 
-    <h3>관리자 메뉴</h3>
+    <h3>📋 관리자 메뉴</h3>
     <ul>
-      <li><a href="#">*쿠폰</a>
-        <ul>
-          <li><a th:href="@{/check-coupon}">쿠폰 정책 조회</a></li>
-          <li><a th:href="@{/coupon-policy-create}">쿠폰 정책 생성, 발급</a></li>
-          <li><a th:href="@{/coupon-create}">쿠폰 생성, 발급</a></li>
-        </ul>
-      </li>
-      <li><a href="#">*회원</a>
-        <ul>
-          <li><a th:href="@{/user-list}">회원 조회</a></li>
-          <li><a th:href="@{/user-rank}">등급 조회</a></li>
-        </ul>
-      </li>
-      <li><a href="#">*도서</a>
-        <ul>
-          <li><a th:href="@{/admin/frontend/books/create}">도서 등록</a></li>
-          <li><a th:href="@{/admin/frontend/books}">도서 조회/수정/삭제</a></li>
-          <lis><a th:href="@{/admin/frontend/category}">카테고리 조회/등록/삭제</a></lis>
-          <li><a th:href="@{/admin/frontend/tags}">태그 등록</a></li>
-        </ul>
-      </li>
+        <li>* 쿠폰</li>
+            <ul>
+                <li><a th:href="@{/admin/frontend/coupon-policies/list}">쿠폰 정책 조회</a></li>
+                <li><a th:href="@{/admin/frontend/coupon-policies/register}">쿠폰 정책 생성</a></li>
+                <li><a th:href="@{/admin/frontend/coupons/create}">쿠폰 생성, 발급</a></li>
+            </ul>
+        </li>
+        <li>* 회원</li>
+            <ul>
+                <li><a th:href="@{/admin/frontend/members}">회원 조회</a></li>
+                <li><a th:href="@{/user-rank}">등급 조회</a></li>
+            </ul>
+        </li>
+        <li>* 도서</a>
+            <ul>
+                <li><a th:href="@{/admin/frontend/books/create}">도서 등록</a></li>
+                <li><a th:href="@{/admin/frontend/books}">도서 조회/수정/삭제</a></li>
+                <lis><a th:href="@{/admin/frontend/category}">카테고리 조회/등록/삭제</a></lis>
+                <li><a th:href="@{/admin/frontend/tags}">태그 등록</a></li>
+
+            </ul>
+        </li>
+        <li>* 주문</li>
+            <ul>
+                <li><a th:href="@{/admin/frontend/orders/status}">주문 상태 관리</a></li>
+                <li><a th:href="@{/admin/frontend/orders/refund}">반품 대기 관리</a></li>
+
+            </ul>
+        </li>
+        <li>* 정책</li>
+            <ul>
+                <li><a th:href="@{/admin/frontend/policies/delivery}">배송비 정책 관리</a></li>
+                <li><a th:href="@{/admin/frontend/policies/point}">포인트 정책 관리</a></li>
+            </ul>
+        </li>
     </ul>
 
 </aside>

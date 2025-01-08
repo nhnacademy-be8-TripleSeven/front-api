@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>쿠폰 정책 생성</title>
+    <link rel="stylesheet" th:href="@{/css/admin-policy.css}">
+    <link rel="stylesheet" th:href="@{/css/global.css}">
+</head>
+<body>
+<div th:replace="header :: header"></div>
+
+
+<main class="my-container">
+    <div th:replace="admin/admin-sidebar :: aside"></div>
+
+    <section>
+        <h2>포인트 정책</h2>
+        <div class="button-container">
+            <form th:action="@{/admin/frontend/policies/point/create}" method="get">
+                <button type="submit" class="create-btn">정책 생성</button>
+            </form>
+        </div>
+        <table>
+            <thead>
+            <tr>
+                <th>정책 이름</th>
+                <th>적립액</th>
+                <th>적립률</th>
+                <th>수정</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:if="${points.isEmpty()}">
+                <td colspan="4">조회된 데이터가 없습니다.</td>
+            </tr>
+            <tr th:each="point : ${points}">
+                <td th:text="${point.getName()}">정책 1</td>
+                <td th:text="${#numbers.formatInteger(point.getAmount(), 0, 'COMMA')} + '원'">0원</td>
+                <td th:text="${point.getRate()} + '%'">0%</td>
+                <td>
+                    <form class="point-edit-form">
+                        <input type="hidden" name="id" th:value="${point.getId()}"/>
+                        <table>
+                            <tr>
+                                <td>이름</td>
+                                <td><input type="text" name="name" th:value="${point.getName()}"/></td>
+                            </tr>
+                            <tr>
+                                <td>적립액</td>
+                                <td><input type="number" name="amount" th:value="${point.getAmount()}"/></td>
+                            </tr>
+                            <tr>
+                                <td>적립율</td>
+                                <td><input type="number" name="rate" th:value="${point.getRate()}"/></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <button type="submit" class="point-edit-btn">수정</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+
+<div th:replace="footer :: footer"></div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script type="module" src="/js/axios-config.js"></script>
+<script th:src="@{/js/point-policy.js}"></script>
+</body>
+</html>
