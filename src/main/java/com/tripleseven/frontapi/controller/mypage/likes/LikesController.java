@@ -31,8 +31,6 @@ public class LikesController {
         }
         List<LikesResponseDTO> likesResponseDTOS = likesService.searchLikes(userId, keyword, page, size); // userId가 1번인 유저일 때의 페이지(테스트)
 
-
-
         model.addAttribute("likeHistory", likesResponseDTOS);
         model.addAttribute("currentPage", page);
         model.addAttribute("pageSize", size);
@@ -40,16 +38,4 @@ public class LikesController {
 
         return "like-history";
     }
-
-//    @PostMapping("/frontend/likes/{bookId}")
-//    public RedirectView addLikes(@PathVariable Long bookId, @RequestHeader("X-USER") Long userId) {
-//        likesService.addLikes(bookId, userId);
-//        return new RedirectView("/frontend/books/" + bookId);
-//    }
-//
-//    @DeleteMapping("/frontend/likes/{bookId}")
-//    public RedirectView deleteLikes(@PathVariable Long bookId, @RequestHeader("X-USER") Long userId) {
-//        likesService.deleteLikes(bookId, userId);
-//        return new RedirectView("/frontend/books/" + bookId);
-//    }
 }

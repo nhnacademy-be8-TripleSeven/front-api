@@ -19,6 +19,7 @@ import java.util.List;
 import com.tripleseven.frontapi.dto.review.ReviewRequestDTO;
 import com.tripleseven.frontapi.dto.review.ReviewResponseDTO;
 import com.tripleseven.frontapi.dto.book.BookDetailViewDTO;
+import com.tripleseven.frontapi.dto.tag.TagResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -156,4 +157,7 @@ public class BookService {
         bookFeignClient.deleteCategory(categoryId);
     }
 
+    public List<TagResponseDto> getAllTags() {
+        return bookFeignClient.getAllTags().getContent();
+    }
 }
