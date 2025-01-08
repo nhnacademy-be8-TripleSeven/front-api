@@ -2,6 +2,7 @@ package com.tripleseven.frontapi.service;
 
 import com.tripleseven.frontapi.client.BookFeignClient;
 import com.tripleseven.frontapi.client.OrderFeignClient;
+import com.tripleseven.frontapi.dto.book.BookAladinDTO;
 import com.tripleseven.frontapi.dto.book.BookApiDTO;
 import com.tripleseven.frontapi.dto.book.BookCreateDTO;
 import com.tripleseven.frontapi.dto.book.BookDTO;
@@ -82,8 +83,8 @@ public class BookService {
         bookFeignClient.addReview(userId, reviewRequestDTO);
     }
 
-    public boolean checkUserPurchase(Long userId, Long bookId) {
-        return orderFeignClient.checkUserPurchase(userId, bookId);
+    public boolean checkUserPurchase(Long bookId, Long userId) {
+        return orderFeignClient.checkUserPurchase(bookId, userId);
     }
   
     public BookPageDetailResponseDTO getTypeBookSearch(String type, int page, int pageSize, String sortField, String sortDir) {
@@ -122,7 +123,7 @@ public class BookService {
         return bookFeignClient.getBooksByKeyword(keyword, pageable);
     }
 
-    public BookApiDTO getAladinApiBook(String isbn){
+    public BookAladinDTO getAladinApiBook(String isbn){
         return bookFeignClient.getAladinApiBookByIsbn(isbn);
     }
 
