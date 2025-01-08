@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title th:text="'주문 상태 관리 - NHN 24'">주문 상태 관리</title>
+  <link rel="stylesheet" th:href="@{/css/order-history.css}">
+  <link rel="stylesheet" th:href="@{/css/global.css}">
+</head>
+<body>
+
+<div th:replace="header :: header"></div>
+
+<main class="my-account-container">
+
+  <div th:replace="admin/admin-sidebar :: aside"></div>
+
+  <section class="order-history">
+    <h2>주문 상태 관리</h2>
+
+    <form id="filterForm">
+      <div class="filters">
+        <div class="filter-item">
+          <label for="start-date">시작일</label>
+          <input type="date" id="start-date" name="startDate"
+                 th:value="${param.startDate ?: ''}">
+
+        </div>
+        <div class="filter-item">
+          <label for="end-date">종료일</label>
+          <input type="date" id="end-date" name="endDate"
+                 th:value="${param.endDate ?: ''}">
+        </div>
+        <button class="filter-btn" id="search-btn">조회</button>
+      </div>
+    </form>
+
+
+    <table>
+      <thead>
+      <tr>
+        <th>주문 번호</th>
+        <th>주문 일자</th>
+        <th>주문 내역</th>
+        <th>주문 금액/수량</th>
+        <th>주문 상태</th>
+        <th>주문자</th>
+        <th>수령자</th>
+      </tr>
+      </thead>
+      <tbody id="order-table-body">
+      <tr th:if="${orders.isEmpty()}">
+        <td colspan="7">조회된 데이터가 없습니다.</td>
+      </tr>
+      <tr th:each="order : ${orders}">
+        <td><a th:text="${order.orderId}"
+               th:href="@{/admin/frontend/orders/status/{orderId}(orderId=${order.orderId})}">123456789</a>
+        </td>
+        <td th:text="${order.orderDate}">2024-01-01</td>
+        <td th:text="${order.orderContent}">도서 3권</td>
+        <td th:text="${#numbers.formatDecimal(order.price, 0, 0, 'COMMA')} + '원 / ' + ${order.amount} + '개'">
+          25,000원/1개
+        </td>
+        <td th:text="${order.orderStatus.korean}">결제 완료</td>
+        <td th:text="${order.ordererName}">김첨지</td>
+        <td th:text="${order.recipientName}">홍길동</td>
+      </tr>
+      </tbody>
+    </table>
+    <div class="pagination" th:if="${!orders.isEmpty()}">
+      <a th:if="${page.getPageNumber() > 0}"
+         th:href="@{/admin/frontend/orders/refund(page=${page.pageNumber - 1}, size=${10})}">&laquo; 이전</a>
+      <span th:text="${page.pageNumber + 1} + '/' + ${totalPage}">1/1</span>
+      <a th:if="${page.pageNumber + 1 < totalPage}"
+         th:href="@{/admin/frontend/orders/refund(page=${page.pageNumber + 1}, size=${10})}">다음 &raquo;</a>
+    </div>
+  </section>
+</main>
+
+<div th:replace="footer :: footer"></div>
+
+<script src="/js/global.js"></script>
+
+</body>
+</html>

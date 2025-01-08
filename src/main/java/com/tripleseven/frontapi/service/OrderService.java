@@ -41,4 +41,21 @@ public class OrderService {
         orderFeignClient.updateOrderDetails(userId, orderDetailUpdateRequest);
     }
 
+    public Page<OrderManageResponseDTO> getAdminOrderHistories(FilterCriteriaDTO filterCriteriaDTO, Pageable pageable) {
+        OrderStatus orderStatus = filterCriteriaDTO.getOrderStatus();
+        if (orderStatus.equals(OrderStatus.ALL)) {
+            orderStatus = null;
+        }
+        OrderManageRequestDTO requestDTO = new OrderManageRequestDTO(
+                filterCriteriaDTO.getStartDate(),
+                filterCriteriaDTO.getEndDate(),
+                orderStatus
+        );
+        return orderFeignClient.getAdminOrderList(requestDTO, pageable);
+    }
+
+    public OrderPayDetailDTO getAdminOrderHistory(Long orderId) {
+        return orderFeignClient.getAdminOrderDetails(orderId);
+    }
+
 }

@@ -47,4 +47,14 @@ public interface OrderFeignClient {
 
     @GetMapping("/admin/orders/point-policies")
     List<PointPolicyDTO> getAllPointPolicies();
+
+    @PostMapping("/admin/orders/order-groups/period")
+    Page<OrderManageResponseDTO> getAdminOrderList(
+            @RequestBody OrderManageRequestDTO orderManageRequestDTO,
+            Pageable pageable);
+
+    @GetMapping("/admin/orders/order-groups/{orderId}")
+    OrderPayDetailDTO getAdminOrderDetails(
+            @PathVariable("orderId") Long orderId
+    );
 }
