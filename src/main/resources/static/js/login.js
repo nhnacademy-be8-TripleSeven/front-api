@@ -5,6 +5,18 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
+
+function showTab(tabId) {
+    const tabs = document.querySelectorAll('.tab');
+    const contents = document.querySelectorAll('.tab-content');
+
+    tabs.forEach(tab => tab.classList.remove('active'));
+    contents.forEach(content => content.classList.remove('active'));
+
+    document.querySelector(`.tab[onclick="showTab('${tabId}')"]`).classList.add('active');
+    document.getElementById(tabId).classList.add('active');
+}
+
 // 로그인 핸들러 함수 (async 함수로 변경)
 async function handleLogin(event) {
     event.preventDefault();  // 기본 폼 제출을 막음
@@ -42,7 +54,11 @@ async function handleLogin(event) {
                 console.error("휴면 계정 해제 요청 실패", unlockError);
                 alert("휴면 계정 해제 요청에 실패했습니다.");
             }
-        } else {
+        } else if (errorMessage && errorMessage.includes("탈퇴")) {
+            alert(errorMessage);
+        }
+
+        else {
             // 다른 에러 처리
             console.error("로그인 에러", error);
             alert("로그인에 실패했습니다.");
