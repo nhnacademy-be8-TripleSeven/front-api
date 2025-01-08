@@ -142,6 +142,44 @@ public class AdminCouponController {
         }
     }
 
+//    @PostMapping("/coupons/create")
+//    @ResponseBody
+//    public String createAndAssignCoupons(@RequestBody CouponCreationAndAssignRequestDTO request) {
+//        try {
+//            // 쿠폰 정책 확인
+//            if (request.getCouponPolicyId() == null) {
+//                throw new IllegalArgumentException("쿠폰 정책 ID가 필요합니다.");
+//            }
+//
+//            // 발급 대상 확인
+//            if ("등급별".equals(request.getRecipientType()) && (request.getGrade() == null || request.getGrade().isEmpty())) {
+//                throw new IllegalArgumentException("등급별 발급을 위해 등급을 지정해야 합니다.");
+//            }
+//
+//            if ("개인별".equals(request.getRecipientType()) && (request.getMemberIds() == null || request.getMemberIds().isEmpty())) {
+//                throw new IllegalArgumentException("개인별 발급을 위해 회원 ID가 필요합니다.");
+//            }
+//
+//            // Feign 클라이언트로 요청 전송
+//            List<CouponAssignResponseDTO> responses = bookFeignClient.createAndAssignCoupons(request);
+//
+//            // 결과 처리
+//            StringBuilder responseMessage = new StringBuilder("쿠폰 생성 및 발급 결과:\n");
+//            for (CouponAssignResponseDTO response : responses) {
+//                responseMessage.append(String.format("Coupon ID: %d - %s\n", response.getCouponId(), response.getStatusMessage()));
+//            }
+//
+//            return responseMessage.toString();
+//        } catch (IllegalArgumentException e) {
+//            return "잘못된 요청: " + e.getMessage();
+//        } catch (FeignException e) {
+//            return "쿠폰 생성/발급 중 오류가 발생했습니다: " + e.getMessage();
+//        } catch (Exception e) {
+//            return "예상치 못한 오류가 발생했습니다: " + e.getMessage();
+//        }
+//    }
+
+
     // 도서 쿠폰 생성을 위한 도서검색
     @GetMapping("/coupons/book-search")
     @ResponseBody

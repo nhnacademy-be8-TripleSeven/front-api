@@ -25,6 +25,7 @@ import com.tripleseven.frontapi.dto.likes.LikesResponseDTO;
 
 import com.tripleseven.frontapi.dto.review.ReviewRequestDTO;
 
+import com.tripleseven.frontapi.dto.tag.TagResponseDto;
 import org.springframework.data.domain.Pageable;
 import com.tripleseven.frontapi.dto.coupon.CouponPolicyRequestDTO;
 import com.tripleseven.frontapi.dto.coupon.CouponPolicyResponseDTO;
@@ -188,5 +189,6 @@ public interface BookFeignClient {
     @DeleteMapping("/api/likes/{bookId}")
     void deleteLikes(@PathVariable Long bookId, @RequestHeader("X-USER") Long userId);
 
-
+    @GetMapping("/admin/tags")
+    Page<TagResponseDto> getAllTags();
 }
