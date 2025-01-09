@@ -32,15 +32,15 @@
                     <input type="date" id="end-date" name="endDate"
                            th:value="${param.endDate ?: ''}">
                 </div>
-                <div class="filter-item">
-                    <label for="filter-status">상태</label>
-                    <select id="filter-status" name="status">
-                        <option value="ALL" th:selected="${status == 'ALL'}">전체</option>
-                        <option value="PAYMENT_PENDING" th:selected="${status == 'PAYMENT_PENDING'}">결제 대기</option>
-                        <option value="PAYMENT_COMPLETED" th:selected="${status == 'PAYMENT_COMPLETED'}">결제 완료</option>
-                        <option value="ORDER_CANCELED" th:selected="${status == 'ORDER_CANCELED'}">취소 완료</option>
-                    </select>
-                </div>
+<!--                <div class="filter-item">-->
+<!--                    <label for="filter-status">상태</label>-->
+<!--                    <select id="filter-status" name="status">-->
+<!--                        <option value="ALL" th:selected="${status == 'ALL'}">전체</option>-->
+<!--                        <option value="PAYMENT_PENDING" th:selected="${status == 'PAYMENT_PENDING'}">결제 대기</option>-->
+<!--                        <option value="PAYMENT_COMPLETED" th:selected="${status == 'PAYMENT_COMPLETED'}">결제 완료</option>-->
+<!--                        <option value="ORDER_CANCELED" th:selected="${status == 'ORDER_CANCELED'}">취소 완료</option>-->
+<!--                    </select>-->
+<!--                </div>-->
                 <button class="filter-btn" id="search-btn">조회</button>
             </div>
         </form>
@@ -89,6 +89,7 @@
 
 <div th:replace="footer :: footer"></div>
 
-<script th:src="@{/js/order-manage.js}"></script>
+<script src="/js/global.js"></script>
+
 </body>
 </html>

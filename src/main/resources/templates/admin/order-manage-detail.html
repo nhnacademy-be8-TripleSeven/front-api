@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:text="'상세 주문 내역 - NHN 24'">상세 주문 내역</title>
+    <title th:text="'주문내역/배송조회 - NHN 24'">주문내역/배송조회</title>
     <link rel="stylesheet" th:href="@{/css/order-history-detail.css}">
     <link rel="stylesheet" th:href="@{/css/global.css}">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script type="module" src="/js/axios-config.js"></script>
-    <script type="module" src="/js/order-history-detail.js"></script>
+    <script type="module" src="/js/order-manage-detail.js"></script>
     <script src="/js/global.js"></script>
 
 </head>
@@ -17,7 +17,7 @@
 
 <main class="my-account-container">
 
-    <div th:replace="sidebar.html"></div>
+    <div th:replace="admin/admin-sidebar :: aside"></div>
 
     <section class="order-history">
         <h2>* 주문상품정보</h2>
@@ -57,8 +57,30 @@
             <tfoot>
             <tr>
                 <td colspan="2">
-                    <button type="button" class="submit-button" data-status="RETURNED_PENDING">반품 요청</button>
-                    <button type="button" class="submit-button" data-status="ORDER_CANCELED">취소 요청</button>
+                    <table>
+
+                        <tbody>
+                        <tr>
+                            <td>
+                                <button type="button" class="submit-button" data-status="ORDER_CANCELED">주문 취소</button>
+                                <button type="button" class="submit-button" data-status="PAYMENT_PENDING">결제 대기</button>
+                                <button type="button" class="submit-button" data-status="PAYMENT_COMPLETED">결제 완료</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <button type="button" class="submit-button" data-status="SHIPPING">배송 중</button>
+                                <button type="button" class="submit-button" data-status="DELIVERED">배송 완료</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <button type="button" class="submit-button" data-status="RETURNED_PENDING">반품 대기</button>
+                                <button type="button" class="submit-button" data-status="RETURNED">반품</button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </td>
                 <td>합계</td>
                 <td th:text="${#numbers.formatInteger(orderGroupInfo.getPrimeTotalPrice(), 0, 'COMMA')} + '원'">10,000원
