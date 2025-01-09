@@ -15,11 +15,9 @@ function handleCreateBook(event) {
     publisherName: document.getElementById('publisher-name').value, // 추가
 
     // categories도 collectNestedInputValues로 수정
-    categories: collectNestedInputValues('categories'),
+    categories: categoryNestInputValue('categories'),
     bookTypes: collectNestedInputValues('bookTypes'),
     authors: collectNestedInputValues('authors'),
-
-    tags: document.querySelector('input[name="tags"]').value,
     publishedDate: document.getElementById('published-date').value,
     description: document.getElementById('description').value,
     regularPrice: document.getElementById('regular-price').value,
@@ -39,11 +37,18 @@ function handleCreateBook(event) {
   const coverFiles = document.getElementById('cover-images').files;
   const detailFiles = document.getElementById('detail-images').files;
 
+  // 표지 이미지 추가
   if (coverFiles.length > 0) {
-    Array.from(coverFiles).forEach(file => formData.append('coverImages', file)); // 필드 이름 정확히 맞추기
+    Array.from(coverFiles).forEach(file => formData.append('coverImages', file));
+  } else {
+    formData.append('coverImages', new Blob([], { type: 'application/octet-stream' }), ''); // 빈 파일 추가
   }
+
+  // 상세 이미지 추가
   if (detailFiles.length > 0) {
-    Array.from(detailFiles).forEach(file => formData.append('detailImages', file)); // 필드 이름 정확히 맞추기
+    Array.from(detailFiles).forEach(file => formData.append('detailImages', file));
+  } else {
+    formData.append('detailImages', new Blob([], { type: 'application/octet-stream' }), ''); // 빈 파일 추가
   }
 
   // Axios 요청
@@ -65,20 +70,36 @@ function handleCreateBook(event) {
 
 // 카테고리, 도서 타입, 저자 등 중첩 필드 수집 함수
 function collectNestedInputValues(fieldName) {
-  const inputs = document.querySelectorAll(`input[name^="${fieldName}"]`);
-  const values = {};
+  const inputs = document.querySelectorAll(`[name^="${fieldName}"]`);
+  const values = [];
 
   inputs.forEach(input => {
     const match = input.name.match(/\[(\d+)\]\.(.+)/);
     if (match) {
-      const index = match[1];
+      const index = parseInt(match[1], 10);
       const key = match[2];
+
       if (!values[index]) {
         values[index] = {};
       }
+
       values[index][key] = input.value.trim();
     }
   });
 
-  return Object.values(values);
+  return values;
+}
+
+// 카테고리, 도서 타입, 저자 등 중첩 필드 수집 함수 (카테고리는 select만 처리)
+function categoryNestInputValue(fieldName) {
+  const selectElements = document.querySelectorAll(`select[name^="${fieldName}"]`);
+  const values = [];
+
+  selectElements.forEach(select => {
+    if (select.value) {
+      values.push(select.value);
+    }
+  });
+
+  return values;
 }

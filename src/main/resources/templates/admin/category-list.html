@@ -6,6 +6,8 @@
   <title>NHN 24 관리자</title>
   <link rel="stylesheet" th:href="@{/css/check-user.css}">
   <link rel="stylesheet" th:href="@{/css/global.css}">
+  <link rel="stylesheet" th:href="@{/css/category.css}">
+
 </head>
 <body>
 <div class="container">
@@ -17,7 +19,7 @@
     <div th:replace="admin/admin-sidebar :: aside"></div>
 
     <!-- Category Filter Section -->
-    <section>
+    <section class="content">
       <h2>Category Management</h2>
 
       <form th:action="@{/admin/frontend/books/categories}" method="get">
@@ -36,12 +38,13 @@
         <h3>Category List</h3>
         <div th:each="category : ${categoryPage.content}" class="category-item">
           <p>
-            <span th:text="${category.name}"></span>
-            <span th:text="'(Level ' + ${category.level} + ')'"></span>
+            <strong>ID:</strong> <span th:text="${category.id}"></span><br/>
+            <strong>이름:</strong> <span th:text="${category.name}"></span>
           </p>
         </div>
 
-        <div>
+        <!-- Pagination -->
+        <div class="pagination">
           <!-- 이전 페이지 -->
           <button th:if="${categoryPage.hasPrevious()}"
                   th:attr="onclick=|location.href='@{/admin/frontend/books/categories(level=${selectedLevel},page=${categoryPage.number-1},size=${categoryPage.size})}'|">
@@ -50,11 +53,10 @@
 
           <!-- 페이지 번호들 -->
           <span th:each="pageNum : ${#numbers.sequence(0, categoryPage.totalPages - 1)}">
-    <!-- 현재 페이지와 비교하여, 같은 경우 강조 표시 (예: bold) -->
-    <a th:href="@{/admin/frontend/books/categories(level=${selectedLevel},page=${pageNum},size=${categoryPage.size})}"
-       th:classappend="${pageNum == categoryPage.number} ? 'active-page' : ''"
-       th:text="${pageNum + 1}"></a>
-  </span>
+            <a th:href="@{/admin/frontend/books/categories(level=${selectedLevel},page=${pageNum},size=${categoryPage.size})}"
+               th:classappend="${pageNum == categoryPage.number} ? 'active-page' : ''"
+               th:text="${pageNum + 1}"></a>
+          </span>
 
           <!-- 다음 페이지 -->
           <button th:if="${categoryPage.hasNext()}"
@@ -65,9 +67,7 @@
 
       </div>
 
-
     </section>
-
 
   </main>
 

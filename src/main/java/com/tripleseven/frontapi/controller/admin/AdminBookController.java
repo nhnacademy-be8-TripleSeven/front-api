@@ -6,6 +6,7 @@ import com.tripleseven.frontapi.dto.book.BookCreateDTO;
 import com.tripleseven.frontapi.dto.book.BookDTO;
 import com.tripleseven.frontapi.dto.book.BookPageDTO;
 import com.tripleseven.frontapi.dto.book.BookUpdateDTO;
+import com.tripleseven.frontapi.dto.category.CategoryLevelDTO;
 import com.tripleseven.frontapi.service.BookService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -48,6 +49,8 @@ public class AdminBookController {
     @GetMapping("/frontend/books/update/{id}")
     public String updateBookDetail(@PathVariable Long id, Model model){
         BookDTO bookById = bookService.getBookById(id);
+        CategoryLevelDTO categoryLevel = bookService.getCategoryLevel();
+        model.addAttribute("categories", categoryLevel);
         model.addAttribute("book", bookById);
         return "admin/book-update";
     }
@@ -71,6 +74,8 @@ public class AdminBookController {
 
     @GetMapping("/frontend/books/create")
     public String createBook(Model model) {
+        CategoryLevelDTO categoryLevel = bookService.getCategoryLevel();
+        model.addAttribute("categories", categoryLevel);
         model.addAttribute("book", new BookApiDTO());
         return "admin/book-create";
     }
@@ -80,6 +85,8 @@ public class AdminBookController {
     @GetMapping("/frontend/books/aladin")
     public String getAladinBookByIsbn(@RequestParam("isbn") String isbn, Model model) {
         BookAladinDTO aladinApiBook = bookService.getAladinApiBook(isbn);
+        CategoryLevelDTO categoryLevel = bookService.getCategoryLevel();
+        model.addAttribute("categories", categoryLevel);
         model.addAttribute("book", aladinApiBook);
         return "/admin/book-create";
     }

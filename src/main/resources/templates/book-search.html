@@ -4,8 +4,48 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>도서 검색</title>
+  <title>북 검색</title>
+  <style>
+    /* 기본 트리 스타일 */
+    ul {
+      list-style-type: none;
+      padding-left: 20px;
+    }
+    .category-item {
+      margin-left: 20px;
+    }
+    .toggle-button {
+      cursor: pointer;
+      margin-right: 5px;
+    }
+  </style>
+  <script>
+    // 트리 확장/축소 기능
+    function toggleCategory(event) {
+      const button = event.target;
+      const ul = button.parentElement.querySelector('ul');
+      if (ul) {
+        if (ul.style.display === 'none') {
+          ul.style.display = 'block';
+          button.textContent = '-';
+        } else {
+          ul.style.display = 'none';
+          button.textContent = '+';
+        }
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const toggleButtons = document.querySelectorAll('.toggle-button');
+      toggleButtons.forEach(button => {
+        button.addEventListener('click', toggleCategory);
+      });
+    });
+  </script>
+
   <link rel="stylesheet" th:href="@{/css/book-search.css}">
   <link rel="stylesheet" th:href="@{/css/global.css}">
+  <script th:src="@{/js/book-search.js}"></script>
 </head>
 <body>
 <div th:replace="header :: header"></div>
@@ -13,26 +53,22 @@
 <main>
   <aside class="filter-sidebar">
     <div>
-      <h3>검색 조건</h3>
-      <!-- 카테고리 단계별 폼 -->
-      <div>
-        <h3>카테고리 이름 검색</h3>
-        <input type="text"
-               id="categorySearchInput"
-               placeholder="카테고리를 입력..."
-               onkeyup="filterCategories()" />
-      </div>
+      <h3>카테고리</h3>
+
+
 
       <ul id="categoryList">
-        <!-- 카테고리 목록 -->
-        <li th:each="category : ${categories}"
-            th:attr="data-category=${category.name}"
-            style="display: none;">
-          <a th:href="@{/frontend/categorySearch(id=${category.id})}"> <!-- id를 파라미터로 추가 -->
-            <span th:text="${category.name}"></span> <!-- 카테고리 이름 표시 -->
+        <li th:each="category : ${categories}">
+          <span th:if="${!#lists.isEmpty(category.children)}" class="toggle-button">+</span>
+          <span th:if="${#lists.isEmpty(category.children)}" style="display: inline-block; width: 12px;"></span>
+          <a th:href="@{/frontend/categorySearch(search=${category.id})}">
+            <span th:text="${category.name}"></span>
           </a>
+          <!-- 재귀적 프래그먼트 포함 -->
+          <div th:replace="fragments/category-fragment :: category(category=${category})"></div>
         </li>
       </ul>
+
 
     </div>
 </aside>
@@ -40,216 +76,89 @@
   <section class="book-results">
     <h2>검색 결과</h2>
     <div class="result-controls">
-      <p th:if="${searchBook.content.size() > 0}" th:text="'총 ' + ${searchBook.total} + '권의 검색 결과'"></p><!-- searchBook 경로 -->
-      <!-- searchBook 경로 -->
-      <form th:if="${searchBook.path == 'searchBook'}"
-            th:action="@{/frontend/searchBook}"
-            method="get">
-
-        <!-- 검색어(Controller 파라미터: searchTerm) -->
-        <input type="hidden" name="keyword" th:value="${searchBook.keyword}">
-
-        <!-- 현재 페이지, 페이지네이션 로직에 따라 page=0으로 초기화할 수도 있음 -->
-        <input type="hidden" name="page" th:value="${searchBook.page}" />
-
-        <!-- sortField 파라미터, 자바스크립트로 설정될 예정 -->
-        <input type="hidden" id="sortField" name="sortField"
-               th:value="${searchBook.sortField != null ? searchBook.sortField : 'publishDate'}" />
-
-        <!-- 정렬 방향 -->
-        <select name="sortDir" onchange="updateSortField(this)">
-          <!-- 최신순: sortDir='desc', sortField='publishDate' -->
-          <option value="none" th:selected="${searchBook.sortDir == 'none'}">정확도순</option>
-          <option value="desc" th:selected="${searchBook.sortDir == 'desc'}">최신순</option>
-          <option value="asc" th:selected="${searchBook.sortDir == 'asc'}">오래된순</option>
-          <option value="desc"
-                  th:selected="${searchBook.sortField == 'popularity'}">인기순
-          </option>
-          </option>
-        </select>
-      </form>
+      <p th:if="${searchBook.content.totalElements > 0}" th:text="'총 ' + ${searchBook.content.totalElements} + '권의 검색 결과'"></p><!-- searchBook 경로 -->
 
 
 
 
-      <!-- typeBook 경로 -->
-      <form th:if="${searchBook.path == 'typeBook'}" th:action="@{/frontend/typeBook}" method="get">
-        <input type="hidden" name="type" th:value="${searchBook.type}" />
-        <input type="hidden" name="page" th:value="${searchBook.page}" />
-        <select name="sortDir" onchange="this.form.submit()">
-          <option value="none" th:selected="${searchBook.sortDir == 'none'}">정확도순</option>
-          <option value="desc" th:selected="${searchBook.sortDir == 'desc'}">최신순</option>
-          <option value="asc" th:selected="${searchBook.sortDir == 'asc'}">오래된순</option>
-          <option value="desc"
-                  th:selected="${searchBook.sortField == 'popularity'}">인기순
-          </option>
+      <form th:action="@{/frontend/{path}?search={search}&page={page}&size={size}
+                (path=${searchBook.path},
+                 search=${searchBook.search},
+                 page=${pageNum},
+                 size=${searchBook.content.size})}" method="get" class="sort-form">
+        <input type="hidden" name="search" th:value="${searchBook.search}" />
+        <input type="hidden" name="page" th:value="${searchBook.content.number}" />
+        <input type="hidden" name="size" th:value="${searchBook.content.size}" />
 
-        </select>
-      </form>
-
-      <!-- categorySearch 경로 -->
-      <form th:if="${searchBook.path == 'categorySearch'}" th:action="@{/frontend/categorySearch}" method="get">
-        <input type="hidden" name="categories" th:each="category : ${searchBook.categories}" th:value="${searchBook.categories}" />
-        <input type="hidden" name="keyword" th:value="${searchBook.keyword}">
-        <input type="hidden" name="page" th:value="${searchBook.page}" />
-        <select name="sortDir" onchange="this.form.submit()">
-          <option value="desc" th:selected="${searchBook.sortField == 'title'}">정확도순</option>
-          <option value="desc" th:selected="${searchBook.sortDir == 'desc'}">최신순</option>
-          <option value="asc" th:selected="${searchBook.sortDir == 'asc'}">오래된순</option>
-          <option value="desc"
-                  th:selected="${searchBook.sortField == 'popularity'}">인기순
-          </option>
+        <label for="sort">정렬:</label>
+        <select name="sort" id="sort" onchange="this.form.submit()">
+          <option value="" disabled selected>정렬 선택</option>
+          <option value="title,asc" th:selected="${searchBook.content.pageable.sort == 'title,asc'}">제목 오름차순</option>
+          <option value="title,desc" th:selected="${searchBook.content.pageable.sort == 'title,desc'}">제목 내림차순</option>
+          <option value="salePrice,asc" th:selected="${searchBook.content.pageable.sort == 'salePrice,asc'}">가격 낮은순</option>
+          <option value="salePrice,desc" th:selected="${searchBook.content.pageable.sort == 'salePrice,desc'}">가격 높은순</option>
+          <option value="salePrice,asc" th:selected="${searchBook.content.pageable.sort == 'publishDate,asc'}">최신순</option>
+          <option value="salePrice,desc" th:selected="${searchBook.content.pageable.sort == 'publishDate,desc'}">오래된순</option>
         </select>
       </form>
 
       <!-- 검색 결과가 없는 경우 -->
-      <div th:if="${searchBook.content.size() == 0}">
+      <div th:if="${searchBook.content.totalElements == 0}" class="empty-results">
         <p>검색 결과가 없습니다.</p>
+        <a th:href="@{/frontend/}" class="back-to-home">홈으로 돌아가기</a> <!-- 필요 시 버튼 추가 -->
       </div>
 
-
-    </div>
-    <div class="book-list">
-      <div th:each="book : ${searchBook.content}" class="book-item">
-        <a th:href="@{/frontend/books/{bookId}(bookId=${book.id})}">
-          <img th:src="${book.coverUrl}" th:alt="${book.title}">
-          <h4 th:text="${book.title}">도서 제목</h4>
-        </a>
-        <p th:text="'판매가: ' + ${book.salePrice}">판매가</p>
+      <!-- 검색 결과가 있는 경우 -->
+      <div th:if="${searchBook.content.size > 0}">
+        <div class="book-list">
+          <div th:each="book : ${searchBook.content}" class="book-item">
+            <a th:href="@{/frontend/books/{bookId}(bookId=${book.id})}">
+              <img th:src="${book.coverUrl}" th:alt="${book.title}">
+              <h4 th:text="${book.title}">도서 제목</h4>
+            </a>
+            <p th:text="'판매가: ' + ${book.salePrice}">판매가</p>
+          </div>
+        </div>
       </div>
-    </div>
-
 
     <div class="pagination">
 
-      <div th:if="${searchBook.path == 'searchBook'}">
-        <!-- 이전 페이지 버튼 -->
-        <a th:if="${searchBook.page > 0}"
-           th:href="@{/frontend/searchBook(
-               keyword=${keyword},
-               sortField=${searchBook.sortField},
-               sortDir=${searchBook.sortDir},
-               page=${searchBook.page - 1},
-               size=${searchBook.size}
-           )}">
+      <div class="pagination">
+
+        <!-- 이전 페이지 -->
+        <button th:if="${searchBook.content.hasPrevious()}"
+                th:attr="onclick=|location.href='@{/admin/frontend/{path}(search=${searchBook.search},page=${searchBook.content.number - 1},size=${searchBook.content.size})(path=${searchBook.path})}'|">
           이전
-        </a>
+        </button>
 
-        <!-- 페이지 번호 (1~5까지 표시) -->
-        <span th:each="i : ${#numbers.sequence(searchBook.startPage, searchBook.endPage)}">
-            <a th:href="@{/frontend/searchBook(
-                   keyword=${keyword},
-                   sortField=${searchBook.sortField},
-                   sortDir=${searchBook.sortDir},
-                   page=${i},
-                   size=${searchBook.size}
-               )}"
-               th:text="${i + 1}"
-               th:classappend="${i == searchBook.page} ? 'active' : ''">
-            </a>
-        </span>
+        <span th:each="pageNum : ${#numbers.sequence(0, searchBook.content.totalPages - 1)}">
 
-        <!-- 다음 페이지 버튼 -->
-        <a th:if="${searchBook.page < searchBook.total - 1}"
-           th:href="@{/frontend/searchBook(
-               keyword=${keyword},
-               sortField=${searchBook.sortField},
-               sortDir=${searchBook.sortDir},
-               page=${searchBook.page + 1},
-               size=${searchBook.size}
-           )}">
+  <!-- 동적 경로 + 쿼리 파라미터 -->
+  <a th:href="@{/frontend/{path}?search={search}&page={page}&size={size}
+                (path=${searchBook.path},
+                 search=${searchBook.search},
+                 page=${pageNum},
+                 size=${searchBook.content.size})}"
+     th:classappend="${pageNum == searchBook.content.number} ? 'active-page' : ''"
+     th:text="${pageNum + 1}">
+  </a>
+
+</span>
+
+        <!-- 다음 페이지 -->
+        <button th:if="${searchBook.content.hasNext()}"
+                th:attr="onclick=|location.href='@{/admin/frontend/{path}(search=${searchBook.search},page=${searchBook.content.number + 1},size=${searchBook.content.size})(path=${searchBook.path})}'|">
           다음
-        </a>
+        </button>
+
+
+
+
+
       </div>
 
-
-      <!-- typeBook -->
-      <div th:if="${searchBook.path == 'typeBook'}">
-        <!-- 이전 페이지 버튼 -->
-        <a th:if="${searchBook.page > 0}"
-           th:href="@{/frontend/typeBook(
-           type=${searchBook.type},
-           sortField=${searchBook.sortField},
-           sortDir=${searchBook.sortDir},
-           page=${searchBook.page - 1},
-           size=${searchBook.size}
-       )}">
-          이전
-        </a>
-        <!-- 페이지 번호 (1~5까지 표시) -->
-        <span th:each="i : ${#numbers.sequence(searchBook.startPage, searchBook.endPage)}">
-            <a th:href="@{/frontend/typeBook(
-                   type=${searchBook.type},
-                   sortField=${searchBook.sortField},
-                   sortDir=${searchBook.sortDir},
-                   page=${i},
-                   size=${searchBook.size}
-               )}"
-               th:text="${i + 1}"
-               th:classappend="${i == searchBook.page} ? 'active' : ''">
-            </a>
-        </span>
-
-        <!-- 다음 페이지 버튼 -->
-        <a th:if="${searchBook.page < searchBook.total / 5}"
-           th:href="@{/frontend/typeBook(
-           type=${searchBook.type},
-           sortField=${searchBook.sortField},
-           sortDir=${searchBook.sortDir},
-           page=${searchBook.page + 1},
-           size=${searchBook.size}
-       )}">
-          다음
-        </a>
       </div>
-
-      <!-- categorySearch -->
-      <div th:if="${searchBook.path == 'categorySearch'}">
-        <!-- 이전 페이지 버튼 -->
-        <a th:if="${searchBook.page > 0}"
-           th:href="@{/frontend/categorySearch(
-           categories=${searchBook.categories},
-           keyword=${searchBook.keyword},
-           sortField=${searchBook.sortField},
-           sortDir=${searchBook.sortDir},
-           page=${searchBook.page - 1},
-           size=${searchBook.size}
-       )}">
-          이전
-        </a>
-
-        <!-- 페이지 번호 (1~5까지 표시) -->
-        <span th:each="i : ${#numbers.sequence(searchBook.startPage, searchBook.endPage)}">
-            <a th:href="@{/frontend/categorySearch(
-                   categories=${searchBook.categories},
-                   keyword=${searchBook.keyword},
-                   sortField=${searchBook.sortField},
-                   sortDir=${searchBook.sortDir},
-                   page=${i},
-                   size=${searchBook.size}
-               )}"
-               th:text="${i + 1}"
-               th:classappend="${i == searchBook.page} ? 'active' : ''">
-            </a>
-        </span>
-
-        <!-- 다음 페이지 버튼 -->
-        <a th:if="${searchBook.page < searchBook.total - 1}"
-           th:href="@{/frontend/categorySearch(
-           categories=${searchBook.categories},
-           keyword=${searchBook.keyword},
-           sortField=${searchBook.sortField},
-           sortDir=${searchBook.sortDir},
-           page=${searchBook.page + 1},
-           size=${searchBook.size}
-       )}">
-          다음
-        </a>
-      </div>
-
     </div>
-
-
 
 
   </section>
@@ -257,8 +166,10 @@
 
 <div th:replace="footer :: footer"></div>
 
-<script th:src="@{/js/book-search.js}"></script>
-<script th:src="@{/js/category-toggle.js}"></script>
+
 
 </body>
+
+<script th:src="@{/js/book-search.js}"></script>
+<script th:src="@{/js/category-toggle.js}"></script>
 </html>
