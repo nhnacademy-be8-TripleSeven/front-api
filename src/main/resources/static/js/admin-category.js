@@ -1,63 +1,78 @@
+
+
 document.addEventListener('DOMContentLoaded', function () {
-  const createForm = document.getElementById('category-create-form'); // 잘못된 셀렉터 수정
-  const deleteForm = document.getElementById('category-delete-id-form'); // 잘못된 셀렉터 수정
+  const createForm = document.getElementById('category-create-form');
+  const deleteForm = document.getElementById('category-delete-id-form');
 
   // [1] 카테고리 등록 처리
   if (createForm) {
-    createForm.addEventListener('submit', handleCreateCategory);
+    createForm.addEventListener('submit', function (event) {
+      event.preventDefault();
+      createCategory();
+    });
   }
 
   // [2] 카테고리 삭제 처리
   if (deleteForm) {
-    deleteForm.addEventListener('submit', handleDeleteCategory);
+    deleteForm.addEventListener('submit', function (event) {
+      event.preventDefault();
+      handleDeleteCategory();
+    });
   }
 });
 
-// [1] 카테고리 등록 함수
-function handleCreateCategory(event) {
-  event.preventDefault(); // 기본 폼 제출 방지
+// Axios로 카테고리 생성 요청 보내기
+async function createCategory() {
+  const levelSelect = document.getElementById('levelSelect');
+  const categorySelect = document.getElementById('categorySelect');
+  const categoryNameInput = document.getElementById('categoryName');
 
-  const name = document.getElementById('name').value.trim();
-  const level = document.getElementById('levels').value;
+  const categoryData = {
+    name: categoryNameInput.value,
+    level: parseInt(levelSelect.value, 10),
+    parentCategoryId: categorySelect.value || null,
+  };
 
-  if (!name || !level) {
-    alert('카테고리 이름과 레벨을 모두 입력해주세요.');
-    return;
+  try {
+    const response = await axios.post('/admin/books/categoryCreate', categoryData);
+    alert('카테고리가 성공적으로 생성되었습니다.');
+    location.reload(); // 페이지 새로고침
+  } catch (error) {
+    console.error('Error creating category:', error);
+    alert('카테고리 생성 중 문제가 발생했습니다.');
   }
-
-  const categoryData = { name, level };
-
-  axios.post('/admin/books/categoryCreate', categoryData)
-  .then(response => {
-    alert('카테고리가 성공적으로 등록되었습니다.');
-    window.location.reload(); // 페이지 새로고침
-  })
-  .catch(error => {
-    console.error('카테고리 등록 실패:', error);
-    alert('카테고리 등록 중 오류가 발생했습니다.');
-  });
 }
 
-// [2] 카테고리 삭제 함수
-function handleDeleteCategory(event) {
-  event.preventDefault(); // 기본 폼 제출 방지
+async function handleDeleteCategory() {
+  const categoryIdInput = document.getElementById('categoryId');
+  const categoryIdValue = categoryIdInput ? categoryIdInput.value.trim() : null;
 
-  const categoryId = document.getElementById('categoryId').value.trim();
-
-  if (!categoryId) {
-    alert('유효한 카테고리 ID를 입력해주세요.');
+  if (!categoryIdValue || isNaN(categoryIdValue)) {
+    alert('유효한 숫자 형식의 카테고리 ID를 입력해주세요.');
     return;
   }
 
-  const deleteData = { id: categoryId };
+  const categoryId = parseInt(categoryIdValue, 10);
 
-  axios.post('/admin/books/categoryDelete', deleteData)
+  if (!confirm(`정말로 ID가 ${categoryId}인 카테고리를 삭제하시겠습니까?`)) {
+    return;
+  }
+
+  axios.post('/admin/books/categoryDelete', null, {
+    params: { id: categoryId }
+  })
   .then(response => {
     alert('카테고리가 성공적으로 삭제되었습니다.');
-    window.location.reload(); // 페이지 새로고침
+    window.location.reload(); // 삭제 후 페이지 새로고침
   })
   .catch(error => {
     console.error('카테고리 삭제 실패:', error);
-    alert('카테고리 삭제 중 오류가 발생했습니다.');
+    if (error.response && error.response.data && error.response.data.message) {
+      alert(`카테고리 삭제 중 오류가 발생했습니다: ${error.response.data.message}`);
+    } else {
+      alert('카테고리 삭제 중 오류가 발생했습니다.');
+    }
   });
 }
+
+
