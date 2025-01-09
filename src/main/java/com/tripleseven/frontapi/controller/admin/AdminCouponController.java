@@ -33,7 +33,7 @@ public class AdminCouponController {
      */
     @GetMapping("/coupons/create")
     public String showCouponCreatePage() {
-        return "/admin/coupon-create";
+        return "admin/coupon-create";
     }
 
 
@@ -44,7 +44,7 @@ public class AdminCouponController {
     public String showCouponPolicyRegisterPage(Model model) {
         // 새로운 쿠폰 정책 DTO를 모델에 추가하여 폼과 연동
         model.addAttribute("couponPolicy", new CouponPolicyRequestDTO());
-        return "/admin/coupon-policy-create";
+        return "admin/coupon-policy-create";
     }
 
     /**
@@ -66,7 +66,7 @@ public class AdminCouponController {
 
         model.addAttribute("policies", policies);
         model.addAttribute("query", query); // 검색어 유지
-        return "/admin/check-coupon-policy";
+        return "admin/check-coupon-policy";
     }
 
 
