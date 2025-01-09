@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 select.innerHTML = response.data
                     .map(
                         (policy) =>
-                            `<option value="${policy.id}">${policy.name} (최소 금액: ${policy.couponMinAmount || 0}, 최대 금액: ${policy.couponMaxAmount || 0}, 할인율: ${policy.couponDiscountRate || "없음"}, 유효 기간: ${policy.couponValidTime || "없음"}일)</option>`
+                            `<option value="${policy.id}">${policy.name} (최소 금액: ${policy.couponMinAmount || 0}, 최대 금액: ${policy.couponMaxAmount || 0}, 할인금액: ${policy.couponDiscountAmount || "없음"}, 할인율: ${policy.couponDiscountRate || "없음"}, 유효 기간: ${policy.couponValidTime || "없음"}일)</option>`
                     )
                     .join("");
 
@@ -82,10 +82,15 @@ document.addEventListener("DOMContentLoaded", () => {
             .then((response) => {
                 const select = document.getElementById("book-select");
                 select.innerHTML = response.data
-                    .map((book) => `<option value="${book.id}">${book.title}</option>`)
+                    .map(
+                        (book) => `<option value="${book.id}">${book.title} (ISBN: ${book.isbn13})</option>`
+                    )
                     .join("");
             })
-            .catch((error) => console.error("Error fetching books:", error));
+            .catch((error) => {
+                console.error("Error fetching books:", error);
+                alert("도서를 검색하는 중 오류가 발생했습니다.");
+            });
     });
 
     // 양식 제출
@@ -105,7 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
         };
 
         axios
-            .post("/admin/frontend/coupons/create-and-assign", formData)
+            .post("/admin/frontend/coupons/create", formData)
             .then((response) => {
                 alert("쿠폰이 성공적으로 생성 및 발급되었습니다.");
                 console.log(response.data);

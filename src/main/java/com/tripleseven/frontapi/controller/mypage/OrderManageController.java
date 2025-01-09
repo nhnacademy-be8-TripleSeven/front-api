@@ -2,11 +2,13 @@ package com.tripleseven.frontapi.controller.mypage;
 
 import com.tripleseven.frontapi.dto.FilterCriteriaDTO;
 import com.tripleseven.frontapi.dto.order.*;
+import com.tripleseven.frontapi.dto.point.UserPointHistoryDTO;
 import com.tripleseven.frontapi.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -127,7 +129,6 @@ public class OrderManageController {
     ) {
         orderService.updateOrderHistories(userId, ids, OrderStatus.ORDER_CANCELED);
     }
-
 
     private FilterCriteriaDTO createFilterCriteria(LocalDate startDate, LocalDate endDate, OrderStatus orderStatus) {
         FilterCriteriaDTO filterCriteriaDTO = new FilterCriteriaDTO();

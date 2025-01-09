@@ -9,10 +9,12 @@
   <link rel="stylesheet" th:href="@{/css/global.css}">
 
   <script type="module" src="/js/like-button.js" defer></script>
+  <script type="module" src="/js/review-handler.js" defer></script>
   <script type="module" src="/js/book-detail-cart.js" defer></script>
 
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script type="module" src="/js/axios-config.js"></script>
+
 
 </head>
 <body>
@@ -100,23 +102,28 @@
     <div class="user-review" th:if="${isLoggedIn && userReview != null}">
       <h3>내 리뷰</h3>
       <div class="review-item">
-        <p>
-          <strong>평점:</strong>
-          <span class="rating-stars" th:text="${userReviewStars}"></span>
-        </p>
-        <p><strong>내용:</strong> <span th:text="${userReview.text}"></span></p>
-        <p><strong>작성일:</strong> <span th:text="${#temporals.format(userReview.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></span></p>
-        <img th:if="${userReview.imageUrl != null}" th:src="${userReview.imageUrl}"
-             alt="리뷰 이미지" style="max-width: 200px; max-height: 200px;">"
+        <img th:if="${userReview.imageUrl != null}" th:src="${userReview.imageUrl}" alt="리뷰 이미지" class="review-image">
+
+        <div class="review-details">
+          <p><strong>작성자:</strong> <span th:text="${userId}"></span></p>
+          <p>
+            <strong>평점:</strong>
+            <span class="rating-stars" th:text="${userReviewStars}"></span>
+          </p>
+          <p><strong>내용:</strong> <span th:text="${userReview.text}"></span></p>
+          <p><strong>작성일:</strong>
+            <span th:text="${#temporals.format(userReview.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></span>
+          </p>
+        </div>
       </div>
     </div>
 
     <!-- 리뷰 작성 폼 -->
     <div class="review-form" th:if="${isLoggedIn && userReview == null}">
       <h3>리뷰 작성</h3>
-      <form action="/api/frontend/reviews" method="post" enctype="multipart/form-data">
+      <form class="review-form" method="post" enctype="multipart/form-data" th:disabled="${!isPurchased}">
         <label for="review-rating">평점:</label>
-        <select name="rating" id="review-rating">
+        <select name="rating" id="review-rating" th:disabled="${!isPurchased}">
           <option value="5">★★★★★</option>
           <option value="4">★★★★☆</option>
           <option value="3">★★★☆☆</option>
@@ -124,12 +131,14 @@
           <option value="1">★☆☆☆☆</option>
         </select>
         <label for="review-text">내용:</label>
-        <textarea name="text" id="review-text" rows="5" required></textarea>
+        <textarea name="text" id="review-text" rows="5" required th:disabled="${!isPurchased}"></textarea>
         <label for="file">이미지 업로드</label>
-        <input type="file" name="file" id="file" accept="image/*">
+        <input type="file" name="file" id="file" accept="image/*" th:disabled="${!isPurchased}">
         <input type="hidden" name="bookId" th:value="${book.id}" />
-        <button type="submit">리뷰 등록</button>
+        <input type="hidden" id="userId" th:value="${userId}" />
+        <button type="submit" th:disabled="${!isPurchased}">리뷰 등록</button>
       </form>
+      <p th:if="${!isPurchased}" style="color: red;">도서를 구매한 사람만 리뷰를 등록할 수 있습니다.</p>
     </div>
 
 
@@ -189,8 +198,5 @@
     </div>
   </div>
 </footer>
-
-<script src="/js/reviews.js"></script>
-<script src="/js/like-button.js"></script>
 </body>
 </html>
