@@ -1,12 +1,12 @@
 package com.tripleseven.frontapi.client;
 
-import com.tripleseven.frontapi.dto.order.OrderManageRequestDTO;
-import com.tripleseven.frontapi.dto.order.OrderManageResponseDTO;
-import com.tripleseven.frontapi.dto.order.OrderPayDetailDTO;
+import com.tripleseven.frontapi.dto.order.*;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @FeignClient(name = "order-api")
 public interface OrderFeignClient {
@@ -30,4 +30,11 @@ public interface OrderFeignClient {
             @RequestHeader("X-USER") Long userId,
             @PathVariable("orderId") Long orderId
     );
+
+    @GetMapping("/orders/order-groups")
+    List<OrderGroupResponseDTO> getGuestOrderGroups(@RequestParam("phone") String phone);
+
+
+    @GetMapping("/order-details/order-groups/{orderGroupId}")
+    List<OrderDetailResponseDTO> getOrderDetailsByOrderGroupId(@PathVariable("orderGroupId") Long orderGroupId);
 }
