@@ -41,7 +41,7 @@ public class AdminStatusController {
         model.addAttribute("orders", orderPages.getContent());
         model.addAttribute("page", pageable);
         model.addAttribute("totalPage", orderPages.getTotalPages());
-        return "/admin/order-manage";
+        return "admin/order-manage";
     }
 
     @GetMapping("/status/{orderId}")
@@ -61,7 +61,7 @@ public class AdminStatusController {
         model.addAttribute("deliveryInfo", deliveryInfo);
         model.addAttribute("orderPayInfo", orderPayInfo);
 
-        return "/admin/order-manage-detail";
+        return "admin/order-manage-detail";
     }
 
     @GetMapping("/refund")
@@ -82,7 +82,7 @@ public class AdminStatusController {
         model.addAttribute("orders", orderPages.getContent());
         model.addAttribute("page", pageable);
         model.addAttribute("totalPage", orderPages.getTotalPages());
-        return "/admin/order-manage-refund";
+        return "admin/order-manage-refund";
     }
 
 

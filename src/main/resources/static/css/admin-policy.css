@@ -243,13 +243,22 @@ td {
     cursor: pointer;
 }
 
-.submit-button {
+.submit-button, .point-edit-btn, .delivery-edit-btn, .delivery-update-btn, .create-btn {
     background-color: #D8EFF9;
     border: none;             /* 테두리 없음 */
     padding: 8px 16px;        /* 여백 */
-    margin: 0 16px;
+    margin: 0px 16px;
     border-radius: 5px;       /* 둥근 모서리 */
     cursor: pointer;
+}
+
+.create-btn {
+    margin: 10px 16px;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
 }
 
 .info-banner {

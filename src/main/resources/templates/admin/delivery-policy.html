@@ -15,11 +15,13 @@
     <div th:replace="admin/admin-sidebar :: aside"></div>
 
     <section>
-        <h2>배송비 정책 관리</h2>
-        <div class="button-container">
-            <form th:action="@{/admin/frontend/policies/delivery/create}" method="get">
-                <button type="submit" class="create-btn">정책 생성</button>
-            </form>
+        <div class="header-container">
+            <h2>배송비 정책 관리</h2>
+            <div class="button-container">
+                <form th:action="@{/admin/frontend/policies/delivery/create}" method="get">
+                    <button type="submit" class="create-btn">정책 생성</button>
+                </form>
+            </div>
         </div>
         <table>
             <thead>
@@ -53,6 +55,8 @@
                             <tr>
                                 <td colspan="2">
                                     <button type="submit" class="delivery-edit-btn">수정</button>
+                                    <input type="hidden" name="type" value="DEFAULT">
+                                    <button type="submit" class="delivery-update-btn">기본 배송비 설정</button>
                                 </td>
                             </tr>
                         </table>

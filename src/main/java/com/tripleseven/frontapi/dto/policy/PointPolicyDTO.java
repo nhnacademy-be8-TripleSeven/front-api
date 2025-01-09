@@ -14,4 +14,5 @@ public class PointPolicyDTO {
     private int amount;
 
     private BigDecimal rate;
+
 }
