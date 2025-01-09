@@ -1,10 +1,9 @@
 package com.tripleseven.frontapi.controller.mypage.point;
 
-import com.tripleseven.frontapi.dto.point.PageResponseDTO;
+import com.tripleseven.frontapi.dto.point.PointHistoryPageResponseDTO;
 import com.tripleseven.frontapi.dto.point.UserPointHistoryDTO;
 import com.tripleseven.frontapi.service.OrderService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -23,13 +22,13 @@ public class PointManageController {
     }
 
     @GetMapping("/api/frontend/points/history/data")
-    public ResponseEntity<PageResponseDTO<UserPointHistoryDTO>> getPointHistories(
+    public ResponseEntity<PointHistoryPageResponseDTO<UserPointHistoryDTO>> getPointHistories(
             @RequestHeader("X-USER") Long memberId,
             @RequestParam(value = "startDate", required = false) String startDate,
             @RequestParam(value = "endDate", required = false) String endDate,
             Pageable pageable
     ) {
-        PageResponseDTO<UserPointHistoryDTO> pointHistories = orderService.getPointHistories(memberId, startDate, endDate, pageable);
+        PointHistoryPageResponseDTO<UserPointHistoryDTO> pointHistories = orderService.getPointHistories(memberId, startDate, endDate, pageable);
         return ResponseEntity.ok(pointHistories);
     }
 

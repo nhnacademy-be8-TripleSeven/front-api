@@ -43,12 +43,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
         histories.forEach(history => {
             const row = document.createElement("tr");
-            const amount = history.types === "SPEND" ? `-${history.amount}` : history.amount;
             row.innerHTML = `
                 <td>${history.pointHistoryId}</td>
                 <td>${history.orderGroupId || "N/A"}</td>
                 <td>${history.typesKoreanName}</td>
-                <td>${amount} P</td>
+                <td>${history.amount} P</td>
                 <td>${new Date(history.changedAt).toLocaleString()}</td>
                 <td>${history.comment}</td>
             `;

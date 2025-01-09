@@ -4,7 +4,7 @@ import com.tripleseven.frontapi.dto.order.OrderDetailUpdateRequestDTO;
 import com.tripleseven.frontapi.dto.order.OrderManageRequestDTO;
 import com.tripleseven.frontapi.dto.order.OrderManageResponseDTO;
 import com.tripleseven.frontapi.dto.order.OrderPayDetailDTO;
-import com.tripleseven.frontapi.dto.point.PageResponseDTO;
+import com.tripleseven.frontapi.dto.point.PointHistoryPageResponseDTO;
 import com.tripleseven.frontapi.dto.point.UserPointHistoryDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.data.domain.Page;
@@ -41,7 +41,7 @@ public interface OrderFeignClient {
     );
 
     @GetMapping("/api/user/point-histories")
-    PageResponseDTO<UserPointHistoryDTO> getUserPointHistories(
+    PointHistoryPageResponseDTO<UserPointHistoryDTO> getUserPointHistories(
             @RequestHeader("X-USER") Long memberId,
             @RequestParam("startDate") String startDate,
             @RequestParam("endDate") String endDate,

@@ -3,7 +3,7 @@ package com.tripleseven.frontapi.service;
 import com.tripleseven.frontapi.client.OrderFeignClient;
 import com.tripleseven.frontapi.dto.FilterCriteriaDTO;
 import com.tripleseven.frontapi.dto.order.*;
-import com.tripleseven.frontapi.dto.point.PageResponseDTO;
+import com.tripleseven.frontapi.dto.point.PointHistoryPageResponseDTO;
 import com.tripleseven.frontapi.dto.point.UserPointHistoryDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -43,7 +43,7 @@ public class OrderService {
         orderFeignClient.updateOrderDetails(userId, orderDetailUpdateRequest);
     }
 
-    public PageResponseDTO<UserPointHistoryDTO> getPointHistories(Long memberId, String startDate, String endDate, Pageable pageable) {
+    public PointHistoryPageResponseDTO<UserPointHistoryDTO> getPointHistories(Long memberId, String startDate, String endDate, Pageable pageable) {
         return orderFeignClient.getUserPointHistories(memberId, startDate, endDate, pageable);
     }
 

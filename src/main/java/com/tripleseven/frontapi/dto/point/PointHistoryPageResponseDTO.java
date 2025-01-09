@@ -9,7 +9,7 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PageResponseDTO<T> {
+public class PointHistoryPageResponseDTO<T> {
     private List<T> content;
     private int pageNumber;
     private int pageSize;
