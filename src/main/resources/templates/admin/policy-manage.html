@@ -44,11 +44,13 @@
                 </tr>
                 </tbody>
             </table>
-            <h2>기본 포인트 정책 관리</h2>
-            <form th:action="@{/admin/frontend/policies/point}" method="get">
-                <button type="submit" class="point-edit-btn">수정</button>
-            </form>
-            <div class="button-container">
+            <div class="header-container">
+                <h2>기본 포인트 정책 관리</h2>
+                <div class="button-container">
+                    <form th:action="@{/admin/frontend/policies/point}" method="get">
+                        <button type="submit" class="point-edit-btn">수정</button>
+                    </form>
+                </div>
             </div>
             <table>
                 <thead>
