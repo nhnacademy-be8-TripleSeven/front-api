@@ -2,6 +2,34 @@
 
     <h3>📋 관리자 메뉴</h3>
     <ul>
+
+      <li><a href="#">*쿠폰</a>
+        <ul>
+          <li><a th:href="@{/check-coupon}">쿠폰 정책 조회</a></li>
+          <li><a th:href="@{/coupon-policy-create}">쿠폰 정책 생성, 발급</a></li>
+          <li><a th:href="@{/coupon-create}">쿠폰 생성, 발급</a></li>
+        </ul>
+      </li>
+      <li><a href="#">*회원</a>
+        <ul>
+          <li><a th:href="@{/user-list}">회원 조회</a></li>
+          <li><a th:href="@{/user-rank}">등급 조회</a></li>
+        </ul>
+      </li>
+      <li><a href="#">*도서</a>
+        <ul>
+          <li><a th:href="@{/admin/frontend/books/create}">등록</a></li>
+          <li><a th:href="@{/admin/frontend/books}">조회/수정/삭제</a></li>
+        </ul>
+      </li>
+
+      <li><a href="#">*카테고리</a>
+        <ul>
+          <li><a th:href="@{/admin/frontend/categoryList}">조회</a></li>
+          <li><a th:href="@{/admin/frontend/category}">등록/삭제</a></li>
+        </ul>
+      </li>
+
         <li>* 쿠폰</li>
             <ul>
                 <li><a th:href="@{/admin/frontend/coupon-policies/list}">쿠폰 정책 조회</a></li>
@@ -37,6 +65,7 @@
                 <li><a th:href="@{/admin/frontend/policies/point}">포인트 정책 관리</a></li>
             </ul>
         </li>
+
     </ul>
 
 </aside>

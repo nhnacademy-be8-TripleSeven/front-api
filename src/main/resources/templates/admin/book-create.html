@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>도서 수정</title>
+  <title>도서 등록</title>
   <link rel="stylesheet" th:href="@{/css/check-user.css}">
   <link rel="stylesheet" th:href="@{/css/global.css}">
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -18,7 +18,7 @@
 
 
   <div th:replace="admin/admin-sidebar :: aside"></div>
-  <section>
+  <section class="content">
     <form th:action="@{/admin/frontend/books/aladin}" method="get">
       <label for="isbn">ISBN:</label>
       <input type="text" name="isbn" placeholder="ISBN을 입력하세요"/>
@@ -47,19 +47,69 @@
                th:value="${book.publisherName}" placeholder="출판사"/>
       </div>
 
-      <!-- 카테고리 -->
       <div class="form-group">
         <label th:for="categories">카테고리</label>
         <ul id="categoryList">
-          <li th:each="category, iterStat : ${book.categories}">
-            <input type="text" name="categories[${iterStat.index}].name" th:value="${category.name}"
-                   placeholder="카테고리"/>
-            <input type="hidden" name="categories[${iterStat.index}].level"
-                   th:value="${iterStat.index + 1}"/>
+          <!-- 레벨 1 -->
+          <li>
+            <label>1단계</label>
+            <select name="categories.level1">
+              <option value="" disabled selected>1단계</option>
+              <option th:each="level1Category : ${categories.level1}"
+                      th:value="${level1Category.name}"
+                      th:text="${level1Category.name}"></option>
+            </select>
+          </li>
+
+          <!-- 레벨 2 -->
+          <li>
+            <label>2단계</label>
+            <select name="categories.level2">
+              <option value="" disabled selected>2단계</option>
+              <option th:each="level2Category : ${categories.level2}"
+                      th:value="${level2Category.name}"
+                      th:text="${level2Category.name}"></option>
+            </select>
+          </li>
+
+          <!-- 레벨 3 -->
+          <li>
+            <label>3단계</label>
+            <select name="categories.level3">
+              <option value="" disabled selected>3단계</option>
+              <option th:each="level3Category : ${categories.level3}"
+                      th:value="${level3Category.name}"
+                      th:text="${level3Category.name}"></option>
+            </select>
+          </li>
+
+          <!-- 레벨 4 -->
+          <li>
+            <label>4단계</label>
+            <select name="categories.level4">
+              <option value="" disabled selected>4단계</option>
+              <option th:each="level4Category : ${categories.level4}"
+                      th:value="${level4Category.name}"
+                      th:text="${level4Category.name}"></option>
+            </select>
+          </li>
+
+          <!-- 레벨 5 -->
+          <li>
+            <label>5단계</label>
+            <select name="categories.level5">
+              <option value="" disabled selected>5단계</option>
+              <option th:each="level5Category : ${categories.level5}"
+                      th:value="${level5Category.name}"
+                      th:text="${level5Category.name}"></option>
+            </select>
           </li>
         </ul>
-        <button type="button" onclick="addCategory()">카테고리 추가</button>
       </div>
+
+
+
+
 
       <!-- 도서 타입 -->
       <div class="form-group">
@@ -89,10 +139,7 @@
         <button type="button" onclick="addAuthor()">저자 추가</button>
       </div>
 
-      <div class="form-group">
-        <label th:for="tags">태그</label>
-        <input type="text" name="tags" th:value="${book.tags}" placeholder="태그 입력 (쉼표로 구분)"/>
-      </div>
+
 
       <!-- 출판일 -->
       <div class="form-group">
@@ -167,16 +214,8 @@
 
 <!-- 새 필드 동적 추가를 위한 간단한 스크립트 -->
 <script>
-  function addCategory() {
-    const categoryList = document.getElementById('categoryList');
-    const index = categoryList.querySelectorAll('li').length;
-    const li = document.createElement('li');
-    li.innerHTML = `
-      <input type="text" name="categories[\${index}].name" placeholder="카테고리" />
-      <input type="hidden" name="categories[\${index}].level" value="\${index + 1}" />
-    `.replace(/\$\{index\}/g, index);
-    categoryList.appendChild(li);
-  }
+
+
 
   function addBookType() {
     const typeList = document.getElementById('typeList');

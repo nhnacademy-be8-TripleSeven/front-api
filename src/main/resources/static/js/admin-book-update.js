@@ -39,11 +39,18 @@ function handleUpdateBook(event) {
   const coverFiles = document.getElementById('cover-images').files;
   const detailFiles = document.getElementById('detail-images').files;
 
+  // 표지 이미지 추가
   if (coverFiles.length > 0) {
-    Array.from(coverFiles).forEach(file => formData.append('coverImage', file)); // 필드 이름 정확히 맞추기
+    Array.from(coverFiles).forEach(file => formData.append('coverImage', file));
+  } else {
+    formData.append('coverImages', new Blob([], { type: 'application/octet-stream' }), ''); // 빈 파일 추가
   }
+
+  // 상세 이미지 추가
   if (detailFiles.length > 0) {
-    Array.from(detailFiles).forEach(file => formData.append('detailImage', file)); // 필드 이름 정확히 맞추기
+    Array.from(detailFiles).forEach(file => formData.append('detailImage', file));
+  } else {
+    formData.append('detailImages', new Blob([], { type: 'application/octet-stream' }), ''); // 빈 파일 추가
   }
 
   // [4] Axios 요청

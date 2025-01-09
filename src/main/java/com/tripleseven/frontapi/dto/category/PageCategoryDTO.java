@@ -1,14 +1,15 @@
-package com.tripleseven.frontapi.dto.book;
+package com.tripleseven.frontapi.dto.category;
 
 import java.util.List;
-import lombok.Data;
+import lombok.Getter;
 
-@Data
-public class BookPageResponseDTO {
-    private Object search;
-    private List<BookSearchResponseDTO> content;// 실제 데이터
+@Getter
+public class PageCategoryDTO {
+
+    private List<CategoryDTO> content;
     private int number; // 현재 페이지 번호
     private int size; // 페이지 크기
     private int totalPages; // 전체 페이지 수
     private long totalElements; // 전체 항목 수
+
 }
