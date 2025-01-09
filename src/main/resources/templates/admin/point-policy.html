@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>쿠폰 정책 생성</title>
+    <title>포인트 정책 관리</title>
     <link rel="stylesheet" th:href="@{/css/admin-policy.css}">
     <link rel="stylesheet" th:href="@{/css/global.css}">
 </head>
@@ -15,11 +15,13 @@
     <div th:replace="admin/admin-sidebar :: aside"></div>
 
     <section>
-        <h2>포인트 정책</h2>
-        <div class="button-container">
-            <form th:action="@{/admin/frontend/policies/point/create}" method="get">
-                <button type="submit" class="create-btn">정책 생성</button>
-            </form>
+        <div class="header-container">
+            <h2>포인트 정책</h2>
+            <div class="button-container">
+                <form th:action="@{/admin/frontend/policies/point/create}" method="get">
+                    <button type="submit" class="create-btn">정책 생성</button>
+                </form>
+            </div>
         </div>
         <table>
             <thead>
@@ -57,6 +59,26 @@
                             <tr>
                                 <td colspan="2">
                                     <button type="submit" class="point-edit-btn">수정</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <button type="button" class="submit-button" data-status="NO_CONTENT_REVIEW">사진없는
+                                        리뷰
+                                    </button>
+                                </td>
+                                <td>
+                                    <button type="button" class="submit-button" data-status="CONTENT_REVIEW">사진 리뷰
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <button type="button" class="submit-button" data-status="DEFAULT_BUY">기본 구매 적립
+                                    </button>
+                                </td>
+                                <td>
+                                    <button type="button" class="submit-button" data-status="REGISTER">회원가입</button>
                                 </td>
                             </tr>
                         </table>

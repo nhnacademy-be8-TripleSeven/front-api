@@ -6,6 +6,7 @@ import com.tripleseven.frontapi.dto.order.OrderManageResponseDTO;
 import com.tripleseven.frontapi.dto.order.OrderPayDetailDTO;
 import com.tripleseven.frontapi.dto.point.PointHistoryPageResponseDTO;
 import com.tripleseven.frontapi.dto.point.UserPointHistoryDTO;
+import com.tripleseven.frontapi.dto.policy.DefaultPolicyDTO;
 import com.tripleseven.frontapi.dto.policy.DeliveryPolicyDTO;
 import com.tripleseven.frontapi.dto.policy.PointPolicyDTO;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -67,4 +68,7 @@ public interface OrderFeignClient {
     OrderPayDetailDTO getAdminOrderDetails(
             @PathVariable("orderId") Long orderId
     );
+
+    @GetMapping("/admin/orders/default-policies")
+    DefaultPolicyDTO getDefaultPolicies();
 }
