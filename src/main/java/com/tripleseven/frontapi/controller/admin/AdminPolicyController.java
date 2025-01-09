@@ -23,12 +23,12 @@ public class AdminPolicyController {
             Model model) {
         List<DeliveryPolicyDTO> dtos = deliveryPolicyService.getAllDeliveryPolicies();
         model.addAttribute("deliveryPolicies", dtos);
-        return "/admin/delivery-policy";
+        return "admin/delivery-policy";
     }
 
     @GetMapping("/policies/delivery/create")
     public String getDeliveryPolicyCreatePage() {
-        return "/admin/delivery-policy-create";
+        return "admin/delivery-policy-create";
     }
 
     @GetMapping("/policies/point")
@@ -36,19 +36,11 @@ public class AdminPolicyController {
             Model model) {
         List<PointPolicyDTO> pointPolicies = pointPolicyService.getPointPolicies();
         model.addAttribute("points", pointPolicies);
-        return "/admin/point-policy";
+        return "admin/point-policy";
     }
 
     @GetMapping("/policies/point/create")
     public String getPointPolicyCreatePage() {
-        return "/admin/point-policy-create";
-    }
-
-    @PostMapping("/policies/point/{pointId}")
-    public void updatePointPolicy(
-            @PathVariable("pointId") Long pointId,
-            @RequestBody PointPolicyUpdateRequestDTO requestDTO,
-            Model model) {
-
+        return "admin/point-policy-create";
     }
 }

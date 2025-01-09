@@ -15,30 +15,8 @@
     <div th:replace="header :: header"></div>
 
     <main class="main-content">
-        <aside class="sidebar">
-            <h3>관리자 메뉴</h3>
-            <ul>
-                <li><h3>*쿠폰</h3>
-                    <ul>
-                        <li><a href="/admin/frontend/check-coupon" class="menu-link">쿠폰 정책 조회</a></li>
-                        <li><a href="/admin/frontend/coupon-policy" class="menu-link">쿠폰 정책 생성, 발급</a></li>
-                        <li><a href="/admin/frontend/coupon-create" class="menu-link">쿠폰 생성, 발급</a></li>
-                    </ul>
-                </li>
-                <li><h3>*회원</h3>
-                    <ul>
-                        <li><a href="/admin/frontend/user-list" class="menu-link">회원 조회</a></li>
-                    </ul>
-                </li>
-                <li><h3>*도서</h3>
-                    <ul>
-                        <li><a href="/admin/frontend/book-list" class="menu-link">도서 조회</a></li>
-                        <li><a href="/admin/frontend/book-edit" class="menu-link">도서 수정</a></li>
-                        <li><a href="/admin/frontend/tags" class="menu-link">태그 등록</a> </li>
-                    </ul>
-                </li>
-            </ul>
-        </aside>
+
+        <div th:replace="admin/admin-sidebar :: aside"></div>
 
         <section class="content">
             <h2>회원 조회</h2>
