@@ -1,5 +1,6 @@
 package com.tripleseven.frontapi.client;
 
+import com.tripleseven.frontapi.dto.order.*;
 import com.tripleseven.frontapi.dto.order.OrderDetailUpdateRequestDTO;
 import com.tripleseven.frontapi.dto.order.OrderManageRequestDTO;
 import com.tripleseven.frontapi.dto.order.OrderManageResponseDTO;
@@ -38,6 +39,14 @@ public interface OrderFeignClient {
             @PathVariable("orderId") Long orderId
     );
 
+
+    @GetMapping("/orders/order-groups")
+    List<OrderGroupResponseDTO> getGuestOrderGroups(@RequestParam("phone") String phone);
+
+
+    @GetMapping("/order-details/order-groups/{orderGroupId}")
+    List<OrderDetailResponseDTO> getOrderDetailsByOrderGroupId(@PathVariable("orderGroupId") Long orderGroupId);
+
     @PostMapping("/api/orders/order-details/return")
     void updateOrderDetails(
             @RequestHeader("X-USER") Long userId,
@@ -67,4 +76,5 @@ public interface OrderFeignClient {
     OrderPayDetailDTO getAdminOrderDetails(
             @PathVariable("orderId") Long orderId
     );
+
 }
