@@ -22,7 +22,7 @@
           <ul>
             <li><a th:href="@{/admin/frontend/coupon-policies/list}">쿠폰 정책 조회</a></li>
             <li><a th:href="@{/admin/frontend/coupon-policies/register}">쿠폰 정책 생성</a></li>
-            <li><a th:href="@{/coupon-create}">쿠폰 생성, 발급</a></li>
+            <li><a th:href="@{/admin/frontend/coupons/create}">쿠폰 생성, 발급</a></li>
           </ul>
         </li>
         <li><h3>*회원</h3>
@@ -71,7 +71,7 @@
                   <option value="개인별">개인별</option>
                 </select>
                 <div id="recipient-grade-container" style="display: none;">
-                  <select id="recipient-grade" name="grade" required>
+                  <select id="recipient-grade" name="grade">
                     <option value="">등급 선택</option>
                     <option value="REGULAR">REGULAR</option>
                     <option value="ROYAL">ROYAL</option>

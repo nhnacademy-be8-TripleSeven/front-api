@@ -33,7 +33,7 @@ public class AdminCouponController {
      */
     @GetMapping("/coupons/create")
     public String showCouponCreatePage() {
-        return "/admin/coupon-create";
+        return "admin/coupon-create";
     }
 
 
@@ -44,7 +44,7 @@ public class AdminCouponController {
     public String showCouponPolicyRegisterPage(Model model) {
         // 새로운 쿠폰 정책 DTO를 모델에 추가하여 폼과 연동
         model.addAttribute("couponPolicy", new CouponPolicyRequestDTO());
-        return "/admin/coupon-policy-create";
+        return "admin/coupon-policy-create";
     }
 
     /**
@@ -66,7 +66,7 @@ public class AdminCouponController {
 
         model.addAttribute("policies", policies);
         model.addAttribute("query", query); // 검색어 유지
-        return "/admin/check-coupon-policy";
+        return "admin/check-coupon-policy";
     }
 
 
@@ -142,6 +142,44 @@ public class AdminCouponController {
         }
     }
 
+//    @PostMapping("/coupons/create")
+//    @ResponseBody
+//    public String createAndAssignCoupons(@RequestBody CouponCreationAndAssignRequestDTO request) {
+//        try {
+//            // 쿠폰 정책 확인
+//            if (request.getCouponPolicyId() == null) {
+//                throw new IllegalArgumentException("쿠폰 정책 ID가 필요합니다.");
+//            }
+//
+//            // 발급 대상 확인
+//            if ("등급별".equals(request.getRecipientType()) && (request.getGrade() == null || request.getGrade().isEmpty())) {
+//                throw new IllegalArgumentException("등급별 발급을 위해 등급을 지정해야 합니다.");
+//            }
+//
+//            if ("개인별".equals(request.getRecipientType()) && (request.getMemberIds() == null || request.getMemberIds().isEmpty())) {
+//                throw new IllegalArgumentException("개인별 발급을 위해 회원 ID가 필요합니다.");
+//            }
+//
+//            // Feign 클라이언트로 요청 전송
+//            List<CouponAssignResponseDTO> responses = bookFeignClient.createAndAssignCoupons(request);
+//
+//            // 결과 처리
+//            StringBuilder responseMessage = new StringBuilder("쿠폰 생성 및 발급 결과:\n");
+//            for (CouponAssignResponseDTO response : responses) {
+//                responseMessage.append(String.format("Coupon ID: %d - %s\n", response.getCouponId(), response.getStatusMessage()));
+//            }
+//
+//            return responseMessage.toString();
+//        } catch (IllegalArgumentException e) {
+//            return "잘못된 요청: " + e.getMessage();
+//        } catch (FeignException e) {
+//            return "쿠폰 생성/발급 중 오류가 발생했습니다: " + e.getMessage();
+//        } catch (Exception e) {
+//            return "예상치 못한 오류가 발생했습니다: " + e.getMessage();
+//        }
+//    }
+
+
     // 도서 쿠폰 생성을 위한 도서검색
     @GetMapping("/coupons/book-search")
     @ResponseBody
@@ -165,22 +203,16 @@ public class AdminCouponController {
     }
 
     @GetMapping("/coupon-policies/search")
-    public String searchCouponPoliciesByName(
-            @RequestParam(required = false) String query,
-            Model model) {
-        List<CouponPolicyResponseDTO> policies;
+    @ResponseBody
+    public List<CouponPolicyResponseDTO> searchCouponPoliciesByName(
+            @RequestParam(required = false) String query) {
         try {
-            policies = (query == null || query.isBlank())
+            return (query == null || query.isBlank())
                     ? Collections.emptyList()
                     : bookFeignClient.searchCouponPoliciesByName(query);
         } catch (Exception e) {
-            policies = Collections.emptyList();
+            return Collections.emptyList();
         }
-
-        model.addAttribute("query", query); // 검색어 유지
-        model.addAttribute("policies", policies); // 검색 결과를 모델에 추가
-        return "/admin/coupon-policy-search"; // 검색 결과를 렌더링할 페이지
     }
-
 
 }

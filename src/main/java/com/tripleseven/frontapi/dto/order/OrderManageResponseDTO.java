@@ -14,19 +14,19 @@ public class OrderManageResponseDTO {
     String orderContent;
     int price;
     int amount;
-    Status status;
+    OrderStatus orderStatus;
     String ordererName;
     String recipientName;
 
     @Builder
     private OrderManageResponseDTO(Long orderId, LocalDate orderDate, String orderContent, int price, int amount,
-                                   Status status, String ordererName, String recipientName) {
+                                   OrderStatus orderStatus, String ordererName, String recipientName) {
         this.orderId = orderId;
         this.orderDate = orderDate;
         this.orderContent = orderContent;
         this.price = price;
         this.amount = amount;
-        this.status = status;
+        this.orderStatus = orderStatus;
         this.ordererName = ordererName;
         this.recipientName = recipientName;
     }
@@ -38,7 +38,7 @@ public class OrderManageResponseDTO {
                 .orderContent(orderManage.getOrderContent())
                 .price(orderManage.getPrice())
                 .amount(orderManage.getAmount())
-                .status(orderManage.getStatus())
+                .orderStatus(orderManage.getOrderStatus())
                 .ordererName(orderManage.getOrdererName())
                 .recipientName(orderManage.getRecipientName())
                 .build();

@@ -18,13 +18,17 @@ import com.tripleseven.frontapi.dto.category.CategoryDTO;
 import com.tripleseven.frontapi.dto.book.*;
 
 
+import com.tripleseven.frontapi.dto.category.CategoryLevelDTO;
+import com.tripleseven.frontapi.dto.category.CategoryResponseDTO;
 import com.tripleseven.frontapi.dto.category.CategorySearchDTO;
+import com.tripleseven.frontapi.dto.category.PageCategoryDTO;
 import com.tripleseven.frontapi.dto.coupon.*;
 
 import com.tripleseven.frontapi.dto.likes.LikesResponseDTO;
 
 import com.tripleseven.frontapi.dto.review.ReviewRequestDTO;
 
+import com.tripleseven.frontapi.dto.tag.TagResponseDto;
 import org.springframework.data.domain.Pageable;
 import com.tripleseven.frontapi.dto.coupon.CouponPolicyRequestDTO;
 import com.tripleseven.frontapi.dto.coupon.CouponPolicyResponseDTO;
@@ -148,7 +152,7 @@ public interface BookFeignClient {
     BookPageDTO getBooksByKeyword(@PathVariable("keyword") String keyword, Pageable pageable);
 
     @GetMapping("/admin/books/isbn/{isbn}")
-    BookApiDTO getAladinApiBookByIsbn(@PathVariable("isbn") String isbn);
+    BookAladinDTO getAladinApiBookByIsbn(@PathVariable("isbn") String isbn);
 
     @DeleteMapping("/admin/books/delete/{bookId}")
     void deleteBook(@PathVariable Long bookId);
@@ -167,7 +171,7 @@ public interface BookFeignClient {
     void createCategory(@RequestBody List<CategoryDTO> categoryDTO);
 
     @GetMapping("/admin/books/categoryList")
-    List<CategoryDTO> getCategoryList(@RequestParam int level);
+    PageCategoryDTO getCategoryList(@RequestParam int level, Pageable pageable);
 
     @DeleteMapping("/admin/books/categoryDelete")
     void deleteCategory(@RequestParam Long id);
@@ -188,5 +192,19 @@ public interface BookFeignClient {
     @DeleteMapping("/api/likes/{bookId}")
     void deleteLikes(@PathVariable Long bookId, @RequestHeader("X-USER") Long userId);
 
+
+
+    @GetMapping("/books/categorySearch")
+    BookPageDetailResponseDTO getCategorySearch(@RequestParam long id, Pageable pageable);
+
+    @GetMapping("/admin/books/categories/tree")
+    List<CategoryResponseDTO> getCategoriesTree();
+
+    @GetMapping("/admin/books/categoryLevelList")
+    CategoryLevelDTO getCategoryLevelList();
+
+
+    @GetMapping("/admin/tags")
+    Page<TagResponseDto> getAllTags();
 
 }

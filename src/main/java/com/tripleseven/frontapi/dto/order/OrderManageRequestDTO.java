@@ -8,5 +8,5 @@ import java.time.LocalDate;
 public class OrderManageRequestDTO {
     LocalDate startDate;
     LocalDate endDate;
-    Status status;
+    OrderStatus orderStatus;
 }
