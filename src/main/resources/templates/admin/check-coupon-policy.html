@@ -1,134 +1,106 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>쿠폰 정책 조회</title>
-    <link rel="stylesheet" th:href="@{/css/coupon1.css}">
+    <title>쿠폰 생성 및 발급</title>
+    <link rel="stylesheet" th:href="@{/css/global.css}">
+    <link rel="stylesheet" th:href="@{/css/create-coupon.css}">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script type="module" src="/js/axios-config.js"></script>
+    <script type="module" src="/js/create-coupon.js" defer></script>
 </head>
 <body>
 <div class="container">
-
     <div th:replace="header :: header"></div>
 
     <main>
-        <aside class="sidebar">
-            <h3>📋 관리자 메뉴</h3>
-            <ul>
-                <li><h3>*쿠폰</h3>
-                    <ul>
-                        <li><a th:href="@{/admin/frontend/coupon-policies/list}">쿠폰 정책 조회</a></li>
-                        <li><a th:href="@{/admin/frontend/coupon-policies/register}">쿠폰 정책 생성</a></li>
-                        <li><a th:href="@{/admin/frontend/coupons/create}">쿠폰 생성, 발급</a></li>
-                    </ul>
-                </li>
-                <li><h3>*회원</h3>
-                    <ul>
-                        <li><a th:href="@{/user-list}">회원 조회</a></li>
-                        <li><a th:href="@{/user-rank}">등급 조회</a></li>
-                    </ul>
-                </li>
-                <li><h3>*도서</h3>
-                    <ul>
-                        <li><a th:href="@{/book-list}">도서 조회</a></li>
-                        <li><a th:href="@{/book-edit}">도서 수정</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </aside>
+        <div th:replace="admin/admin-sidebar :: aside"></div>
 
-        <section class="content">
-            <h2>쿠폰 정책 조회</h2>
-            <div class="search-bar">
-                <form th:action="@{/admin/frontend/coupon-policies/list}" method="get">
-                    <input type="text" name="query" th:value="${query}" placeholder="검색어를 입력하세요">
-                    <button type="submit">검색</button>
-                </form>
-            </div>
 
-            <!-- 테이블 컨테이너 추가 -->
-            <div class="table-container">
-                <table>
-                    <thead>
-                    <tr>
-                        <th>쿠폰 정책 이름</th>
-                        <th>최소 금액</th>
-                        <th>최고 금액</th>
-                        <th>할인율</th>
-                        <th>할인 금액</th>
-                        <th>유효 기간</th>
-                        <th>수정</th>
-                        <th>삭제</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="policy : ${policies}">
-                        <td th:text="${policy.name}"></td>
-                        <td th:text="${policy.couponMinAmount}"></td>
-                        <td th:text="${policy.couponMaxAmount}"></td>
-                        <td th:text="${policy.couponDiscountRate != null ? policy.couponDiscountRate.multiply(100).setScale(0) + '%' : '-'}"></td>
-                        <td th:text="${policy.couponDiscountAmount != null ? policy.couponDiscountAmount + ' 원' : '-'}"></td>
-                        <td th:text="${policy.couponValidTime}"></td>
-                        <td>
-                            <button class="edit-btn" th:attr="data-id=${policy.id}">수정</button>
-                        </td>
-                        <td>
-                            <button class="delete-btn" th:attr="data-id=${policy.id}">삭제</button>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-
-        <!-- 수정 팝업 -->
-        <div class="popup-overlay" id="edit-popup">
-            <div class="popup-content">
-                <h2>쿠폰 정책 수정</h2>
-                <form id="edit-form">
-                    <input type="hidden" id="policy-id">
-                    <div>
-                        <label>이름:</label>
-                        <input type="text" id="policy-name" name="name">
-                    </div>
-                    <div>
-                        <label>최소 금액:</label>
-                        <input type="number" id="min-amount" name="couponMinAmount">
-                    </div>
-                    <div>
-                        <label>최고 금액:</label>
-                        <input type="number" id="max-amount" name="couponMaxAmount">
-                    </div>
-                    <div>
-                        <label>할인 유형:</label>
-                        <select id="discount-type" name="discountType">
-                            <option value="rate">할인율(%)</option>
-                            <option value="amount">할인 금액(원)</option>
-                        </select>
-                        <input type="number" id="discount-value" placeholder="값 입력">
-                        <input type="hidden" id="couponDiscountAmount" name="couponDiscountAmount">
-                        <input type="hidden" id="couponDiscountRate" name="couponDiscountRate">
-                    </div>
-                    <div>
-                        <label>유효 기간:</label>
-                        <input type="number" id="validity" name="couponValidTime">
-                    </div>
-                    <button type="button" id="save-btn">저장</button>
-                    <button type="button" id="cancel-btn">취소</button>
+        <div class="main-container">
+            <div class="form-container">
+                <h3>쿠폰 생성 및 발급</h3>
+                <form id="coupon-form">
+                    <table class="form-table">
+                        <tr>
+                            <th>쿠폰 이름</th>
+                            <td><input type="text" id="coupon-name" name="couponName" placeholder="쿠폰 이름 입력" required>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>쿠폰 정책</th>
+                            <td>
+                                <div class="search-group">
+                                    <input type="text" id="coupon-policy-query" placeholder="쿠폰 정책 검색">
+                                    <button type="button" id="search-policy-btn">검색</button>
+                                </div>
+                                <select id="coupon-policy" name="couponPolicyId" required>
+                                    <option value="">정책 선택</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>발급 대상</th>
+                            <td>
+                                <select id="recipient-type" name="recipientType" required>
+                                    <option value="">선택</option>
+                                    <option value="전체">전체</option>
+                                    <option value="등급별">등급별</option>
+                                    <option value="개인별">개인별</option>
+                                </select>
+                                <div id="recipient-grade-container" style="display: none;">
+                                    <select id="recipient-grade" name="grade">
+                                        <option value="">등급 선택</option>
+                                        <option value="REGULAR">REGULAR</option>
+                                        <option value="ROYAL">ROYAL</option>
+                                        <option value="GOLD">GOLD</option>
+                                        <option value="PLATINUM">PLATINUM</option>
+                                    </select>
+                                </div>
+                                <div id="recipient-member-container" style="display: none;">
+                                    <input type="text" id="recipient-member" name="memberIds"
+                                           placeholder="회원 ID 입력 (쉼표로 구분)">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>분류</th>
+                            <td>
+                                <select id="coupon-category" name="couponCategory" required>
+                                    <option value="">선택</option>
+                                    <option value="도서 쿠폰">도서 쿠폰</option>
+                                    <option value="카테고리 쿠폰">카테고리 쿠폰</option>
+                                    <option value="일반 쿠폰">일반 쿠폰</option>
+                                </select>
+                                <div id="book-category-search" style="display: none;">
+                                    <div class="search-group">
+                                        <input type="text" id="category-query" placeholder="카테고리 검색">
+                                        <button type="button" id="search-category-btn">검색</button>
+                                    </div>
+                                    <select id="category-select" name="categoryId">
+                                        <option value="">카테고리 선택</option>
+                                    </select>
+                                </div>
+                                <div id="book-search" style="display: none;">
+                                    <div class="search-group">
+                                        <input type="text" id="book-query" placeholder="도서 검색">
+                                        <button type="button" id="search-book-btn">검색</button>
+                                    </div>
+                                    <select id="book-select" name="bookId">
+                                        <option value="">도서 선택</option>
+                                    </select>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <button type="submit" class="register-btn">쿠폰 생성 및 발급</button>
                 </form>
             </div>
         </div>
     </main>
 
-
     <div th:replace="footer :: footer"></div>
-
 </div>
-
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script type="module" src="/js/axios-config.js"></script>
-<script th:src="@{/js/coupon-policy-list.js}"></script>
-
 </body>
 </html>
-
