@@ -122,15 +122,14 @@
             <tr>
                 <th class="delivery-state">배송 상태</th>
                 <th class="delivery-date" colspan="3"
-                    th:text="${#objects.nullSafe('NHN24배송 : ' + deliveryInfo.arrivedAt, '배송 준비 중')}">
-                    배송 준비 중
+                    th:text="${deliveryInfo.arrivedAt != null ? 'NHN24배송 : ' + deliveryInfo.arrivedAt : '배송 준비 중'}"                    배송 준비 중
                 </th>
             </tr>
             </thead>
             <tbody>
             <tr>
-                <td class="thead-header">주문번호</td>
-                <td th:text="${deliveryInfo.getArrivedAt()}"></td>
+                <td class="thead-header">출고일</td>
+                <td th:text="${deliveryInfo.getShippingAt() != null ? deliveryInfo.getShippingAt() : '출고 준비 중'}"></td>
                 <td class="thead-header">주문일자</td>
                 <td th:text="${deliveryInfo.getOrderedAt()}"></td>
             </tr>
