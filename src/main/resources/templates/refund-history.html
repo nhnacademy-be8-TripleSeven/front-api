@@ -6,6 +6,9 @@
     <title>반품 내역</title>
     <link rel="stylesheet" th:href="@{/css/order-history.css}">
     <link rel="stylesheet" th:href="@{/css/global.css}">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>  <!-- axios CDN 추가 -->
+    <script type="module" src="/js/axios-config.js"></script>
+    <script th:src="@{/js/global.js}"></script>
 </head>
 <body>
 <div th:replace="header :: header"></div>
@@ -85,9 +88,6 @@
 </main>
 
 <div th:replace="footer :: footer"></div>
-
-
-<script src="/js/global.js"></script>
 
 </body>
 </html>

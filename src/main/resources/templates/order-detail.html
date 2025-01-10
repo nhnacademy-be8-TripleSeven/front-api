@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NHN 24 - 도서 상세</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NHN 24 - 도서 상세</title>
 
-  <link rel="stylesheet" th:href="@{/css/order-detail.css}">
-  <link rel="stylesheet" th:href="@{/css/global.css}">
+    <link rel="stylesheet" th:href="@{/css/order-detail.css}">
+    <link rel="stylesheet" th:href="@{/css/global.css}">
 
-  <script type="module" src="/js/like-button.js" defer></script>
-  <script type="module" src="/js/review-handler.js" defer></script>
-  <script type="module" src="/js/book-detail-cart.js" defer></script>
-
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <script type="module" src="/js/axios-config.js"></script>
+    <script type="module" src="/js/like-button.js" defer></script>
+    <script type="module" src="/js/review-handler.js" defer></script>
+    <script type="module" src="/js/book-detail-cart.js" defer></script>
+    <script type="module" src="/js/reviews.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script type="module" src="/js/axios-config.js"></script>
+    <script th:src="@{/js/global.js}"></script>
 
 
 </head>
@@ -21,182 +22,163 @@
 
 <div th:replace="header :: header"></div>
 <main>
-  <section class="product-info">
-    <img th:src="${book.coverUrl}" alt="도서 이미지">
-    <div class="product-details">
-      <h1 th:text="${book.title}">도서 제목</h1>
-      <ul>
-        <li>저자:
-          <span th:if="${#lists.isEmpty(book.bookCreators)}">저자 정보 없음</span>
-          <span th:if="${!#lists.isEmpty(book.bookCreators)}" th:text="${book.bookCreators[0].name}">저자명</span>
-        </li>
-        <li>출판사: <span th:text="${book.publisher}">출판사명</span></li>
-        <li>발행일: <span th:text="${formattedPublishedDate}">발행일</span></li>
-        <li>정가: <span class="original" th:text="${book.regularPrice} + '원'">정가</span></li>
-        <li>판매가: <span class="discount" th:text="${book.salePrice} + '원'">판매가</span> (할인)</li>
-        <li>재고: <span th:text="${book.stock}">재고수량</span> 권</li>
-      </ul>
-      <div class="rating">
-        <span th:text="${ratingStars}"></span>
-        <span th:text="${avgRating != null ? avgRating : '평점 없음'}">평균 평점</span>
-        <span th:text="'(' + ${totalReviews} + ' 리뷰)'"></span>
-      </div>
-      <div class="actions">
-        <a href="#"><button class="cart-btn" id="addToCartBtn" th:data-book-id="${book.id}">장바구니 담기</button>
-        </a>
-        <a href="#"><button class="buy-btn">바로구매</button></a>
-        <img id="likeIcon"
-             class="like-img"
-             th:data-is-logged-in="${isLoggedIn}"
-             th:data-is-liked="${isLiked}"
-             th:data-book-id="${book.id}"
-             th:data-user-id="${userId}"
-             th:src="@{/image/likes/empty-heart.png}"
-             alt="좋아요 버튼"
-             style="cursor: pointer;">
-      </div>
-    </div>
-  </section>
-
-  <section class="details">
-    <h2>기본정보</h2>
-    <ul>
-      <li>ISBN: <span th:text="${book.isbn13}">ISBN 번호</span></li>
-      <li>페이지: <span th:text="${book.page}">페이지 수</span> 쪽</li>
-      <li>카테고리:
-        <span th:if="${#lists.isEmpty(book.categories)}">카테고리 정보 없음</span>
-        <span th:if="${!#lists.isEmpty(book.categories)}" th:text="${book.categories}">카테고리 정보</span>
-      </li>
-      <li>태그: <span th:text="${book.tags}">태그 정보</span></li>
-      <li>도서 유형: <span th:text="${book.bookTypes}">도서 유형</span></li>
-    </ul>
-  </section>
-
-  <section class="book-index">
-    <h2>목차</h2>
-    <p th:text="${book.bookIndex}">도서 목차</p>
-  </section>
-
-  <section class="book-intro">
-    <h2>책 소개</h2>
-    <p th:text="${book.description}">책 소개 내용</p>
-
-    <!-- 상세 이미지 추가 -->
-    <div class="book-detail-images">
-      <div class="detail-images">
-        <div th:each="image : ${book.detailImages}" class="detail-image-container">
-          <img th:src="${image}" alt="상세 이미지">
+    <section class="product-info">
+        <img th:src="${book.coverUrl}" alt="도서 이미지">
+        <div class="product-details">
+            <h1 th:text="${book.title}">도서 제목</h1>
+            <ul>
+                <li>저자:
+                    <span th:if="${#lists.isEmpty(book.bookCreators)}">저자 정보 없음</span>
+                    <span th:if="${!#lists.isEmpty(book.bookCreators)}"
+                          th:text="${book.bookCreators[0].name}">저자명</span>
+                </li>
+                <li>출판사: <span th:text="${book.publisher}">출판사명</span></li>
+                <li>발행일: <span th:text="${formattedPublishedDate}">발행일</span></li>
+                <li>정가: <span class="original" th:text="${book.regularPrice} + '원'">정가</span></li>
+                <li>판매가: <span class="discount" th:text="${book.salePrice} + '원'">판매가</span> (할인)</li>
+                <li>재고: <span th:text="${book.stock}">재고수량</span> 권</li>
+            </ul>
+            <div class="rating">
+                <span th:text="${ratingStars}"></span>
+                <span th:text="${avgRating != null ? avgRating : '평점 없음'}">평균 평점</span>
+                <span th:text="'(' + ${totalReviews} + ' 리뷰)'"></span>
+            </div>
+            <div class="actions">
+                <a href="#">
+                    <button class="cart-btn" id="addToCartBtn" th:data-book-id="${book.id}">장바구니 담기</button>
+                </a>
+                <a href="#">
+                    <button class="buy-btn">바로구매</button>
+                </a>
+                <img id="likeIcon"
+                     class="like-img"
+                     th:data-is-logged-in="${isLoggedIn}"
+                     th:data-is-liked="${isLiked}"
+                     th:data-book-id="${book.id}"
+                     th:data-user-id="${userId}"
+                     th:src="@{/image/likes/empty-heart.png}"
+                     alt="좋아요 버튼"
+                     style="cursor: pointer;">
+            </div>
         </div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="review-section">
-    <input type="hidden" id="bookId" th:value="${book.id}" />
+    <section class="details">
+        <h2>기본정보</h2>
+        <ul>
+            <li>ISBN: <span th:text="${book.isbn13}">ISBN 번호</span></li>
+            <li>페이지: <span th:text="${book.page}">페이지 수</span> 쪽</li>
+            <li>카테고리:
+                <span th:if="${#lists.isEmpty(book.categories)}">카테고리 정보 없음</span>
+                <span th:if="${!#lists.isEmpty(book.categories)}" th:text="${book.categories}">카테고리 정보</span>
+            </li>
+            <li>태그: <span th:text="${book.tags}">태그 정보</span></li>
+            <li>도서 유형: <span th:text="${book.bookTypes}">도서 유형</span></li>
+        </ul>
+    </section>
 
-    <div class="review-header">
-      <h2>구매자 리뷰</h2>
-      <p>욕설 및 인신공격성 글은 상품 페이지에서 노출 제재 처리됩니다.</p>
-    </div>
+    <section class="book-index">
+        <h2>목차</h2>
+        <p th:text="${book.bookIndex}">도서 목차</p>
+    </section>
 
-    <div class="user-review" th:if="${isLoggedIn && userReview != null}">
-      <h3>내 리뷰</h3>
-      <div class="review-item">
-        <img th:if="${userReview.imageUrl != null}" th:src="${userReview.imageUrl}" alt="리뷰 이미지" class="review-image">
+    <section class="book-intro">
+        <h2>책 소개</h2>
+        <p th:text="${book.description}">책 소개 내용</p>
 
-        <div class="review-details">
-          <p><strong>작성자:</strong> <span th:text="${userId}"></span></p>
-          <p>
-            <strong>평점:</strong>
-            <span class="rating-stars" th:text="${userReviewStars}"></span>
-          </p>
-          <p><strong>내용:</strong> <span th:text="${userReview.text}"></span></p>
-          <p><strong>작성일:</strong>
-            <span th:text="${#temporals.format(userReview.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></span>
-          </p>
+        <!-- 상세 이미지 추가 -->
+        <div class="book-detail-images">
+            <div class="detail-images">
+                <div th:each="image : ${book.detailImages}" class="detail-image-container">
+                    <img th:src="${image}" alt="상세 이미지">
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
+    </section>
 
-    <!-- 리뷰 작성 폼 -->
-    <div class="review-form" th:if="${isLoggedIn && userReview == null}">
-      <h3>리뷰 작성</h3>
-      <form class="review-form" method="post" enctype="multipart/form-data" th:disabled="${!isPurchased}">
-        <label for="review-rating">평점:</label>
-        <select name="rating" id="review-rating" th:disabled="${!isPurchased}">
-          <option value="5">★★★★★</option>
-          <option value="4">★★★★☆</option>
-          <option value="3">★★★☆☆</option>
-          <option value="2">★★☆☆☆</option>
-          <option value="1">★☆☆☆☆</option>
-        </select>
-        <label for="review-text">내용:</label>
-        <textarea name="text" id="review-text" rows="5" required th:disabled="${!isPurchased}"></textarea>
-        <label for="file">이미지 업로드</label>
-        <input type="file" name="file" id="file" accept="image/*" th:disabled="${!isPurchased}">
-        <input type="hidden" name="bookId" th:value="${book.id}" />
-        <input type="hidden" id="userId" th:value="${userId}" />
-        <button type="submit" th:disabled="${!isPurchased}">리뷰 등록</button>
-      </form>
-      <p th:if="${!isPurchased}" style="color: red;">도서를 구매한 사람만 리뷰를 등록할 수 있습니다.</p>
-    </div>
+    <section class="review-section">
+        <input type="hidden" id="bookId" th:value="${book.id}"/>
+
+        <div class="review-header">
+            <h2>구매자 리뷰</h2>
+            <p>욕설 및 인신공격성 글은 상품 페이지에서 노출 제재 처리됩니다.</p>
+        </div>
+
+        <div class="user-review" th:if="${isLoggedIn && userReview != null}">
+            <h3>내 리뷰</h3>
+            <div class="review-item">
+                <img th:if="${userReview.imageUrl != null}" th:src="${userReview.imageUrl}" alt="리뷰 이미지"
+                     class="review-image">
+
+                <div class="review-details">
+                    <p><strong>작성자:</strong> <span th:text="${userId}"></span></p>
+                    <p>
+                        <strong>평점:</strong>
+                        <span class="rating-stars" th:text="${userReviewStars}"></span>
+                    </p>
+                    <p><strong>내용:</strong> <span th:text="${userReview.text}"></span></p>
+                    <p><strong>작성일:</strong>
+                        <span th:text="${#temporals.format(userReview.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 리뷰 작성 폼 -->
+        <div class="review-form" th:if="${isLoggedIn && userReview == null}">
+            <h3>리뷰 작성</h3>
+            <form class="review-form" method="post" enctype="multipart/form-data" th:disabled="${!isPurchased}">
+                <label for="review-rating">평점:</label>
+                <select name="rating" id="review-rating" th:disabled="${!isPurchased}">
+                    <option value="5">★★★★★</option>
+                    <option value="4">★★★★☆</option>
+                    <option value="3">★★★☆☆</option>
+                    <option value="2">★★☆☆☆</option>
+                    <option value="1">★☆☆☆☆</option>
+                </select>
+                <label for="review-text">내용:</label>
+                <textarea name="text" id="review-text" rows="5" required th:disabled="${!isPurchased}"></textarea>
+                <label for="file">이미지 업로드</label>
+                <input type="file" name="file" id="file" accept="image/*" th:disabled="${!isPurchased}">
+                <input type="hidden" name="bookId" th:value="${book.id}"/>
+                <input type="hidden" id="userId" th:value="${userId}"/>
+                <button type="submit" th:disabled="${!isPurchased}">리뷰 등록</button>
+            </form>
+            <p th:if="${!isPurchased}" style="color: red;">도서를 구매한 사람만 리뷰를 등록할 수 있습니다.</p>
+        </div>
 
 
-    <div class="login-reminder" th:if="${!isLoggedIn}">
-      <p>리뷰를 작성하려면 <a th:href="@{/frontend/login}">로그인</a>이 필요합니다.</p>
-    </div>
-    <!-- 리뷰 목록 -->
-    <div id="reviewList">
-      <div class="review-item">
-        <p><strong>작성자:</strong> 사용자 ID 12345</p>
-        <p>
-          <strong>평점:</strong>
-          <span class="rating-stars">★★★★☆</span>
-        </p>
-        <p><strong>내용:</strong> 리뷰 내용</p>
-        <p><strong>작성일:</strong> 2024-12-26 17:30:45</p>
-      </div>
-    </div>
+        <div class="login-reminder" th:if="${!isLoggedIn}">
+            <p>리뷰를 작성하려면 <a th:href="@{/frontend/login}">로그인</a>이 필요합니다.</p>
+        </div>
+        <!-- 리뷰 목록 -->
+        <div id="reviewList">
+            <div class="review-item">
+                <p><strong>작성자:</strong> 사용자 ID 12345</p>
+                <p>
+                    <strong>평점:</strong>
+                    <span class="rating-stars">★★★★☆</span>
+                </p>
+                <p><strong>내용:</strong> 리뷰 내용</p>
+                <p><strong>작성일:</strong> 2024-12-26 17:30:45</p>
+            </div>
+        </div>
 
 
-    <div class="pagination">
-      <button id="prevPage" disabled>이전</button>
-      <span id="currentPageDisplay"></span> / <span id="totalPagesDisplay"></span>
-      <button id="nextPage" disabled>다음</button>
-    </div>
-  </section>
+        <div class="pagination">
+            <button id="prevPage" disabled>이전</button>
+            <span id="currentPageDisplay"></span> / <span id="totalPagesDisplay"></span>
+            <button id="nextPage" disabled>다음</button>
+        </div>
+    </section>
 </main>
 
 <div id="imageModal" class="modal">
-  <span class="close">&times;</span>
-  <img id="modalImage" class="modal-content">
+    <span class="close">&times;</span>
+    <img id="modalImage" class="modal-content">
 </div>
 
-<footer>
-  <div class="footer-links">
-    <a href="#">회사소개</a>
-    <a href="#">이용약관</a>
-    <a href="#"><strong>개인정보처리방침</strong></a>
-    <a href="#">청소년 보호정책</a>
-  </div>
-  <div class="footer-container">
-    <div class="footer-info">
-      <p>대표이사 마르코 | 사업자등록번호 123-456-7890</p>
-      <p>통신판매업신고 2024-광주동구-01211</p>
-      <p>이메일: marco@nhn.com | 호스팅 제공자 NHN24</p>
-      <p>© NHN24. All Rights Reserved.</p>
-    </div>
-    <div class="customer-center">
-      <p><strong>고객센터 1544-8282 (발신자 부담)</strong></p>
-      <p>광주광역시 동구 서석동 조선대학교 1층 NHN아카데미</p>
-      <p>Fax 062-1234-5678</p>
-      <div class="footer-buttons">
-        <button>1:1 문의</button>
-        <button>FAQ</button>
-        <button>위치, 영업시간 안내</button>
-      </div>
-    </div>
-  </div>
-</footer>
+<div th:replace="footer :: footer"></div>
+
 </body>
 </html>
