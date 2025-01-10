@@ -39,18 +39,18 @@ document.addEventListener("DOMContentLoaded", () => {
             });
             alert("리뷰가 성공적으로 등록되었습니다!");
             // 3) 사진 여부에 따른 pointPolicyId 분기
-            const pointPolicyId = file ? 2 : 1;  // 사진이 있으면 2, 없으면 1
-
-            // 4) 포인트 적립 API (POST /api/point-histories)
-            const pointRequestBody = {
-                types: "EARN",       // 예: 리뷰 적립 타입
-                pointPolicyId: pointPolicyId
-            };
-            await axios.post("/api/point-histories", pointRequestBody, {
-                headers: {
-                    "X-USER": userId,
-                },
-            });
+            // const pointPolicyId = file ? 2 : 1;  // 사진이 있으면 2, 없으면 1
+            //
+            // // 4) 포인트 적립 API (POST /api/point-histories)
+            // const pointRequestBody = {
+            //     types: "EARN",       // 예: 리뷰 적립 타입
+            //     pointPolicyId: pointPolicyId
+            // };
+            // await axios.post("/api/point-histories", pointRequestBody, {
+            //     headers: {
+            //         "X-USER": userId,
+            //     },
+            // });
 
             window.location.reload();
         } catch (error) {
