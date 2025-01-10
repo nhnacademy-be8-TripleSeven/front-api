@@ -127,8 +127,8 @@
             </thead>
             <tbody>
             <tr>
-                <td class="thead-header">출고일</td>
-                <td th:text="${deliveryInfo.getShippingAt() != null ? deliveryInfo.getShippingAt() : '출고 준비 중'}"></td>
+                <td class="thead-header">주문번호</td>
+                <td th:text="${deliveryInfo.getOrderId()}"></td>
                 <td class="thead-header">주문일자</td>
                 <td th:text="${deliveryInfo.getOrderedAt()}"></td>
             </tr>
@@ -149,8 +149,10 @@
                 <td colspan="3" th:text="${deliveryInfo.getOrdererName()}"></td>
             </tr>
             <tr>
+                <td class="thead-header">출고일</td>
+                <td th:text="${deliveryInfo.getShippingAt() != null ? deliveryInfo.getShippingAt() : '출고 준비 중'}"></td>
                 <td class="thead-header">배송조회</td>
-                <td colspan="3">
+                <td>
                     <button class="delivery-info-button" th:id="${deliveryInfo.orderId}">조회</button>
                 </td>
             </tr>
