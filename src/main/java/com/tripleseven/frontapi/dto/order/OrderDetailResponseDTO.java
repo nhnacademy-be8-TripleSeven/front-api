@@ -12,7 +12,7 @@ public class OrderDetailResponseDTO {
 
     private final int amount;
 
-    private final Status orderStatus;
+    private final OrderStatus orderStatus;
 
     private final int primePrice;
 
