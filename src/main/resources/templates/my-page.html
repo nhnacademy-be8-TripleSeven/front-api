@@ -6,6 +6,8 @@
     <title>NHN 24 - My Page</title>
     <link rel="stylesheet" th:href="@{/css/mypage.css}">
     <link rel="stylesheet" th:href="@{/css/global.css}">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script type="module" src="/js/axios-config.js"></script>
 </head>
 <body>
 
@@ -45,6 +47,11 @@
                     <p>골드</p>
                 </div>
             </div>
+
+            <div class="membership-actions">
+                <button id="deleteAccountButton" class="delete-button">회원 탈퇴</button>
+            </div>
+
         </div>
     </section>
 </main>
@@ -52,6 +59,29 @@
 <div th:replace="footer :: footer"></div>
 
 <script src="/js/global.js"></script>
-
+<script>
+    document.getElementById('deleteAccountButton').addEventListener('click', function () {
+        if (confirm("정말로 탈퇴하시겠습니까?")) {
+            axios.delete('/api/members')
+                .then(response => {
+                    if (response.status === 200) { // HTTP 상태 코드 확인
+                        alert("탈퇴가 완료되었습니다.");
+                        axios.post('/auth/logout', {})
+                            .then(response => {
+                                if (response.status === 200) {
+                                    window.location.href = "/frontend/main";  // 페이지 새로고침
+                                }
+                            })
+                    } else {
+                        alert("탈퇴 중 오류가 발생했습니다. 다시 시도해주세요.");
+                    }
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    alert("탈퇴 요청이 실패했습니다.");
+                });
+        }
+    });
+</script>
 </body>
 </html>
