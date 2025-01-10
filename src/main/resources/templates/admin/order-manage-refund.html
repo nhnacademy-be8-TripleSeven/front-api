@@ -6,7 +6,9 @@
   <title th:text="'주문 상태 관리 - NHN 24'">주문 상태 관리</title>
   <link rel="stylesheet" th:href="@{/css/order-history.css}">
   <link rel="stylesheet" th:href="@{/css/global.css}">
-  <script src="/js/global.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>  <!-- axios CDN 추가 -->
+  <script type="module" src="/js/axios-config.js"></script>
+  <script th:src="@{/js/global.js}"></script>
 </head>
 <body>
 

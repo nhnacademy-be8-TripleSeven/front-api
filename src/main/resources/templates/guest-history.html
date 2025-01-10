@@ -91,6 +91,10 @@
   <title>비회원 주문 조회</title>
   <link rel="stylesheet" th:href="@{/css/guest-history.css}">
   <link rel="stylesheet" th:href="@{/css/global.css}">
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script type="module" src="/js/axios-config.js"></script>
+  <script th:src="@{/js/global.js}"></script>
+  <script th:src="@{/js/guest-history.js}"></script>
 </head>
 <body>
 <div class="container">
@@ -163,8 +167,5 @@
 
 </div>
 
-
-<script th:src="@{/js/guest-history.js}"></script>
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </body>
 </html>
