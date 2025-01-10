@@ -20,6 +20,6 @@ public class AdminTagController {
     public String frontendTags(Model model) {
         List<TagResponseDto> tags = bookService.getAllTags();
         model.addAttribute("tags", tags);
-        return "/admin/tag-register";
+        return "admin/tag-register";
     }
 }
