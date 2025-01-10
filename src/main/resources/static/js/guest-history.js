@@ -53,8 +53,6 @@
 // });
 
 document.addEventListener("DOMContentLoaded", () => {
-    const searchButton = document.getElementById("search-orders-btn");
-    const phoneInput = document.getElementById("guest-phone");
     const orderList = document.getElementById("order-list");
     const orderDetailList = document.getElementById("order-detail-list");
     const modal = document.getElementById("order-detail-modal");
@@ -80,39 +78,33 @@ document.addEventListener("DOMContentLoaded", () => {
             renderOrderList(orders);
         } catch (error) {
             console.error("Error fetching guest orders:", error);
-            orderList.innerHTML = `<tr><td colspan="5">주문 데이터를 불러오지 못했습니다.</td></tr>`;
+            orderList.innerHTML = `<tr><td colspan="6">주문 데이터를 불러오지 못했습니다.</td></tr>`;
         }
     };
 
-
-    /**
-     * Render orders into the table.
-     * @param {Array} orders - Array of order objects.
-     */
     const renderOrderList = (orders) => {
-        orderList.innerHTML = ""; // 기존 내용 초기화
+        orderList.innerHTML = "";
 
         if (orders.length === 0) {
-            orderList.innerHTML = `<tr><td colspan="5">해당 전화번호로 조회된 주문이 없습니다.</td></tr>`;
+            orderList.innerHTML = `<tr><td colspan="6">조회된 주문이 없습니다.</td></tr>`;
             return;
         }
-        // 주문 날짜 최신순 정렬
+
         const sortedOrders = orders.sort((a, b) => new Date(b.orderedAt) - new Date(a.orderedAt));
 
-        // 정렬된 데이터 렌더링
         sortedOrders.forEach(order => {
             const row = document.createElement("tr");
             row.innerHTML = `
-            <td>${order.id}</td>
-            <td>${order.recipientName}</td>
-            <td>${order.address}</td>
-            <td>${order.deliveryPrice.toLocaleString()}원</td>
-            <td>${new Date(order.orderedAt).toLocaleDateString()}</td>
-            <td><button class="detail-btn" data-group-id="${order.id}">상세조회</button></td>
-        `;
+                <td>${order.id}</td>
+                <td>${order.recipientName}</td>
+                <td>${order.address}</td>
+                <td>${order.deliveryPrice.toLocaleString()}원</td>
+                <td>${new Date(order.orderedAt).toLocaleDateString()}</td>
+                <td><button class="detail-btn" data-group-id="${order.id}">상세조회</button></td>
+            `;
             orderList.appendChild(row);
         });
-        // Add click event to detail buttons
+
         const detailButtons = document.querySelectorAll(".detail-btn");
         detailButtons.forEach(button => {
             button.addEventListener("click", (e) => {
@@ -122,10 +114,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     };
 
-    /**
-     * Fetch order details by order group ID.
-     * @param {number} orderGroupId - Order group ID to fetch details.
-     */
     const fetchOrderDetails = async (orderGroupId) => {
         try {
             const response = await axios.get(`/frontend/guest/order-details/${orderGroupId}`);
@@ -138,12 +126,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    /**
-     * Render order details into the modal.
-     * @param {Array} details - Array of order detail objects.
-     */
     const renderOrderDetailList = (details) => {
-        orderDetailList.innerHTML = ""; // 기존 내용 초기화
+        orderDetailList.innerHTML = "";
 
         if (details.length === 0) {
             orderDetailList.innerHTML = `<tr><td colspan="5">해당 주문 그룹에 대한 상세 정보가 없습니다.</td></tr>`;
@@ -164,42 +148,25 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     };
 
-    /**
-     * Open the modal.
-     */
     const openModal = () => {
         modal.style.display = "flex";
     };
 
-    /**
-     * Close the modal.
-     */
     const closeModal = () => {
         modal.style.display = "none";
     };
 
-    // Close modal on clicking the close button
     closeModalButton.addEventListener("click", closeModal);
-
-    // Close modal on clicking outside the modal content
     modal.addEventListener("click", (event) => {
         if (event.target === modal) {
             closeModal();
         }
     });
 
-    /**
-     * Handle search button click.
-     */
-    searchButton.addEventListener("click", () => {
-        const phone = phoneInput.value.trim();
-
-        if (!phone) {
-            alert("전화번호를 입력해주세요.");
-            return;
-        }
-
+    if (typeof phone !== "undefined" && phone) {
         fetchGuestOrders(phone);
-    });
+    } else {
+        console.error("Phone number is missing");
+    }
 });
 

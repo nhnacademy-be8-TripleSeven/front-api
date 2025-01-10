@@ -7,6 +7,7 @@ import com.tripleseven.frontapi.dto.order.OrderManageResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,15 +19,12 @@ import java.util.List;
 public class GuestOrderController {
     private final OrderFeignClient orderFeignClient;
 
-    @GetMapping("/frontend/guest/order-histories-test")
-    public String viewGuestOrdersPageTest() {
-        return "guest-history-test"; // HTML 템플릿 호출
+    @GetMapping("/frontend/guest/order-histories")
+    public String viewGuestOrdersPage(@RequestParam(required = false) String phone, Model model) {
+        model.addAttribute("phone", phone); 
+        return "guest-history";
     }
 
-    @GetMapping("/frontend/guest/order-histories")
-    public String viewGuestOrdersPage() {
-        return "guest-history"; // HTML 템플릿 호출
-    }
 
     @GetMapping("/frontend/guest/order-histories/list")
     public ResponseEntity<List<OrderGroupResponseDTO>> getGuestOrders(@RequestParam String phone) {
