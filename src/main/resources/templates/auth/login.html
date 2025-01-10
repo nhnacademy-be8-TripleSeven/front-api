@@ -43,7 +43,7 @@
         </div>
 
         <div id="guest-order" class="tab-content">
-          <form th:action="@{/guest-order}" method="post">
+          <form th:action="@{/frontend/guest/order-histories}" method="get">
             <input type="text" id="guest-phone" name="phone" placeholder="휴대폰 번호" required>
             <button class="large-btn" type="submit">조회</button>
           </form>
