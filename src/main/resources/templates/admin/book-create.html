@@ -109,18 +109,15 @@
       </div>
 
 
-
-
-
       <!-- 도서 타입 -->
       <div class="form-group">
         <label th:for="book-types">도서 타입</label>
         <ul id="typeList">
           <li th:each="type, iterStat : ${book.bookTypes}">
-            <input type="text" name="bookTypes[${iterStat.index}].type" th:value="${type.type}"
-                   placeholder="도서 타입"/>
-            <input type="text" name="bookTypes[${iterStat.index}].ranks" th:value="${type.ranks}"
-                   placeholder="순위"/>
+            <input type="text" name="bookTypes[${iterStat.index}].type"
+                   th:value="${type.type}" placeholder="도서 타입"/>
+            <input type="text" name="bookTypes[${iterStat.index}].ranks"
+                   th:value="${type.ranks}" placeholder="순위"/>
           </li>
         </ul>
         <button type="button" onclick="addBookType()">도서 타입 추가</button>
@@ -139,7 +136,6 @@
         </ul>
         <button type="button" onclick="addAuthor()">저자 추가</button>
       </div>
-
 
 
       <!-- 출판일 -->
@@ -212,10 +208,8 @@
 <div th:replace="footer :: footer"></div>
 
 
-
 <!-- 새 필드 동적 추가를 위한 간단한 스크립트 -->
 <script>
-
 
 
   function addBookType() {
