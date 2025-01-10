@@ -91,25 +91,27 @@
           </li>
         </ul>
       </div>
-
-        <label>북 타입:</label>
-        <ul>
+      <div>
+        <label th:for="book-types">도서 타입</label>
+        <ul id="typeList">
           <li th:each="type, iterStat : ${book.bookTypes}">
-            <input type="text" name="bookTypes[${iterStat.index}].type"
+            <input type="text" th:name="'bookTypes[' + ${iterStat.index} + '].type'"
                    th:value="${type.type}" placeholder="북 타입"/>
-            <input type="text" name="bookTypes[${iterStat.index}].ranks"
+            <input type="text" th:name="'bookTypes[' + ${iterStat.index} + '].ranks'"
                    th:value="${type.ranks}" placeholder="순위"/>
           </li>
         </ul>
+      </div>
 
       <div>
-
-        <label>저자:</label>
-        <ul>
+        <label th:for="authors">저자</label>
+        <ul id="authorList">
           <li th:each="author, iterStat : ${book.authors}">
-            <input type="text" name="authors[${iterStat.index}].name"
+            <input  type="hidden" th:name="'authors[' + ${iterStat.index} + '].id'"
+                   th:value="${author.id}" />
+            <input type="text" th:name="'authors[' + ${iterStat.index} + '].name'"
                    th:value="${author.name}" placeholder="저자 이름"/>
-            <input type="text" name="authors[${iterStat.index}].role"
+            <input type="text" th:name="'authors[' + ${iterStat.index} + '].role'"
                    th:value="${author.role}" placeholder="역할"/>
           </li>
         </ul>
