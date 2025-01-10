@@ -280,11 +280,20 @@ section {
     padding: 10px 0;
 }
 
+.review-image {
+    max-width: 150px; /* 이미지 최대 크기 */
+    max-height: 150px;
+    border-radius: 8px; /* 이미지 모서리 둥글게 */
+    object-fit: cover; /* 이미지 비율 유지 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+}
+
 .review-image img {
     max-width: 150px; /* 이미지 최대 크기 */
     max-height: 150px;
     border-radius: 8px; /* 이미지 모서리 둥글게 */
     object-fit: cover; /* 이미지 비율 유지 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
 }
 
 .review-text {

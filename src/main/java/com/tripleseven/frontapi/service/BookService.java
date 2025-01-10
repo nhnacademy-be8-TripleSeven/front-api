@@ -2,6 +2,7 @@ package com.tripleseven.frontapi.service;
 
 import com.tripleseven.frontapi.client.BookFeignClient;
 import com.tripleseven.frontapi.client.OrderFeignClient;
+import com.tripleseven.frontapi.dto.book.BookAladinDTO;
 import com.tripleseven.frontapi.dto.book.BookApiDTO;
 import com.tripleseven.frontapi.dto.book.BookCreateDTO;
 import com.tripleseven.frontapi.dto.book.BookDTO;
@@ -13,11 +14,16 @@ import com.tripleseven.frontapi.dto.book.BookPageDetailResponseDTO;
 import com.tripleseven.frontapi.dto.book.BookUpdateDTO;
 import com.tripleseven.frontapi.dto.book_creator.BookCreatorDTO;
 import com.tripleseven.frontapi.dto.category.CategoryDTO;
+import com.tripleseven.frontapi.dto.category.CategoryLevelDTO;
+import com.tripleseven.frontapi.dto.category.CategoryResponseDTO;
+import com.tripleseven.frontapi.dto.category.CategorySearchDTO;
+import com.tripleseven.frontapi.dto.category.PageCategoryDTO;
 import java.util.List;
 
 import com.tripleseven.frontapi.dto.review.ReviewRequestDTO;
 import com.tripleseven.frontapi.dto.review.ReviewResponseDTO;
 import com.tripleseven.frontapi.dto.book.BookDetailViewDTO;
+import com.tripleseven.frontapi.dto.tag.TagResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -45,9 +51,6 @@ public class BookService {
 
     public BookPageResponseDTO searchBooks(String term, Pageable pageable) {
 
-        if(pageable.getSort() == null) {
-            pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize());
-        }
 
         BookPageResponseDTO booksByTerm = bookFeignClient.getBooksByTerm(term, pageable);
 
@@ -82,35 +85,21 @@ public class BookService {
         bookFeignClient.addReview(userId, reviewRequestDTO);
     }
 
-    public boolean checkUserPurchase(Long userId, Long bookId) {
-        return orderFeignClient.checkUserPurchase(userId, bookId);
+    public boolean checkUserPurchase(Long bookId, Long userId) {
+        return orderFeignClient.checkUserPurchase(bookId, userId);
     }
   
-    public BookPageDetailResponseDTO getTypeBookSearch(String type, int page, int pageSize, String sortField, String sortDir) {
+    public BookPageDetailResponseDTO getTypeBookSearch(String type, Pageable pageable) {
 
-        Sort sort = Sort.unsorted();
-        if(sortField != null) {
-            Sort.Direction direction = Sort.Direction.fromString(sortDir);
-            sort = Sort.by(direction, sortField);
-        }
-        Pageable pageable = PageRequest.of(page, pageSize, sort);
 
         BookPageDetailResponseDTO typeSearchBooks = bookFeignClient.getTypeSearchBooks(type, pageable);
 
         return typeSearchBooks;
     }
 
-    public BookPageDetailResponseDTO getCategorySearchBook(List<String> categories, String keyword, int page, int pageSize, String sortField, String sortDir) {
+    public BookPageDetailResponseDTO getCategorySearchBook(List<String> categories, String keyword, Pageable pageable) {
 
-        Sort sort = Sort.unsorted();
-        Pageable pageable = null;
-        if(sortField != null) {
-            Sort.Direction direction = Sort.Direction.fromString(sortDir);
-            sort = Sort.by(direction, sortField);
-            pageable = PageRequest.of(page, pageSize, sort);
-        }else {
-            pageable = PageRequest.of(page, pageSize);
-        }
+
         BookPageDetailResponseDTO searchBooks = bookFeignClient.getCategoriesSearchBooks(
             categories, keyword, pageable);
 
@@ -122,7 +111,7 @@ public class BookService {
         return bookFeignClient.getBooksByKeyword(keyword, pageable);
     }
 
-    public BookApiDTO getAladinApiBook(String isbn){
+    public BookAladinDTO getAladinApiBook(String isbn){
         return bookFeignClient.getAladinApiBookByIsbn(isbn);
     }
 
@@ -143,8 +132,8 @@ public class BookService {
         return bookFeignClient.getBookById(bookId);
     }
 
-    public List<CategoryDTO> getCategroyByLevel(int level) {
-        return bookFeignClient.getCategoryList(level);
+    public PageCategoryDTO getCategroyByLevel(int level, Pageable pageable) {
+        return bookFeignClient.getCategoryList(level, pageable);
     }
 
     public void createCategory(List<CategoryDTO> categoryDTOS){
@@ -153,6 +142,23 @@ public class BookService {
 
     public void deleteCategory(Long categoryId) {
         bookFeignClient.deleteCategory(categoryId);
+    }
+
+    public List<CategoryResponseDTO> getAllCategories() {
+        return bookFeignClient.getCategoriesTree();
+    }
+
+    public BookPageDetailResponseDTO getCategorySearch(long id, Pageable pageable) {
+        return bookFeignClient.getCategorySearch(id, pageable);
+    }
+
+    public CategoryLevelDTO getCategoryLevel(){
+        return bookFeignClient.getCategoryLevelList();
+    }
+
+
+    public List<TagResponseDto> getAllTags() {
+        return bookFeignClient.getAllTags().getContent();
     }
 
 }

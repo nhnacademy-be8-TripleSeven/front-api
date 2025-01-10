@@ -1,0 +1,14 @@
+<!-- src/main/resources/templates/fragments/category-fragment.html -->
+<div th:fragment="category (category)">
+  <ul th:if="${!#lists.isEmpty(category.children)}"  style="display: none">
+    <li th:each="subCategory : ${category.children}" class="category-item">
+      <span th:if="${!#lists.isEmpty(subCategory.children)}" class="toggle-button">+</span>
+      <span th:if="${#lists.isEmpty(subCategory.children)}" style="display: inline-block; width: 12px;"></span>
+      <a th:href="@{/frontend/categorySearch(search=${subCategory.id})}">
+        <span th:text="${subCategory.name}"></span>
+      </a>
+      <!-- 재귀 호출 -->
+      <div th:replace="fragments/category-fragment :: category(category=${subCategory})"></div>
+    </li>
+  </ul>
+</div>

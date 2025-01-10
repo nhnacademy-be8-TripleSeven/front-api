@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>기본 정책 관리</title>
+    <link rel="stylesheet" th:href="@{/css/admin-policy.css}">
+    <link rel="stylesheet" th:href="@{/css/global.css}">
+</head>
+<body>
+<div th:replace="header :: header"></div>
+
+
+<main class="my-container">
+    <div th:replace="admin/admin-sidebar :: aside"></div>
+    <section>
+        <div class="header-container">
+            <div class="header-container">
+                <h2>기본 배송 정책 관리</h2>
+                <div class="button-container">
+                    <form th:action="@{/admin/frontend/policies/delivery}" method="get">
+                        <button type="submit" class="delivery-edit-btn">수정</button>
+                    </form>
+                </div>
+            </div>
+            <table>
+                <thead>
+                <tr>
+                    <th>타입</th>
+                    <th>아이디</th>
+                    <th>이름</th>
+                    <th>가격</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${deliveries.isEmpty()}">
+                    <td colspan="4">조회된 데이터가 없습니다.</td>
+                </tr>
+                <tr th:each="delivery : ${deliveries}">
+                    <td th:text="${delivery.getType().korean}">오류</td>
+                    <td th:text="${delivery.getId()}">0</td>
+                    <td th:text="${delivery.getName()}">정책 1</td>
+                    <td th:text="${#numbers.formatInteger(delivery.getPrice(), 0, 'COMMA')} + '원'">0원</td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="header-container">
+                <h2>기본 포인트 정책 관리</h2>
+                <div class="button-container">
+                    <form th:action="@{/admin/frontend/policies/point}" method="get">
+                        <button type="submit" class="point-edit-btn">수정</button>
+                    </form>
+                </div>
+            </div>
+            <table>
+                <thead>
+                <tr>
+                    <th>타입</th>
+                    <th>아이디</th>
+                    <th>이름</th>
+                    <th>적립량</th>
+                    <th>적립률</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${points.isEmpty()}">
+                    <td colspan="5">조회된 데이터가 없습니다.</td>
+                </tr>
+                <tr th:each="point : ${points}">
+                    <td th:text="${point.getType().korean}">오류</td>
+                    <td th:text="${point.getId()}">0</td>
+                    <td th:text="${point.getName()}">정책 1</td>
+                    <td th:text="${#numbers.formatInteger(point.getAmount(), 0, 'COMMA')} + '원'">0원</td>
+                    <td th:text="${point.getRate()} + '%'">0%</td>
+
+                </tr>
+                </tbody>
+            </table>
+    </section>
+</main>
+
+<div th:replace="footer :: footer"></div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script type="module" src="/js/axios-config.js"></script>
+</body>
+</html>

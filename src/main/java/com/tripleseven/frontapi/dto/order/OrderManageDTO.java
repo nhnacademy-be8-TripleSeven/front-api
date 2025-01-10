@@ -11,7 +11,7 @@ public class OrderManageDTO {
     String orderContent;
     int price;
     int amount;
-    Status status;
+    OrderStatus orderStatus;
     String ordererName;
     String recipientName;
 }

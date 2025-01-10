@@ -18,27 +18,20 @@
         <h2>반품 내역</h2>
         <p class="notice">최근 5년간 주문내역을 조회할 수 있습니다.</p>
 
-        <form id="filterForm" th:action="@{/orders/refund}" method="get" th:object="${filterCriteria}">
+        <form id="filterForm">
             <div class="filters">
                 <div class="filter-item">
                     <label for="start-date">시작일</label>
-                    <input type="date" id="start-date" th:field="*{startDate}">
+                    <input type="date" id="start-date" name="startDate"
+                           th:value="${param.startDate ?: ''}">
+
                 </div>
                 <div class="filter-item">
                     <label for="end-date">종료일</label>
-                    <input type="date" id="end-date" th:field="*{endDate}">
+                    <input type="date" id="end-date" name="endDate"
+                           th:value="${param.endDate ?: ''}">
                 </div>
-<!--                <div class="filter-item">-->
-<!--                    <label for="filter-options">상태</label>-->
-<!--                    <select id="filter-options">-->
-<!--                        <option value="all">전체</option>-->
-<!--                        <option value="반품 처리 신청">반품 처리 신청</option>-->
-<!--                        <option value="교환 처리 신청">교환 처리 신청</option>-->
-<!--                        <option value="반품 완료">반품 완료</option>-->
-<!--                        <option value="교환 완료">교환 완료</option>-->
-<!--                    </select>-->
-<!--                </div>-->
-                <button class="filter-btn" onclick="filterResults()">조회</button>
+                <button class="filter-btn" id="search-btn">조회</button>
             </div>
         </form>
 
@@ -68,14 +61,14 @@
                     <td colspan="7">조회된 데이터가 없습니다.</td>
                 </tr>
                 <tr th:each="order : ${orders}">
-                    <td><a th:text="${order.orderId}" th:href="@{/order/history/{orderId}(orderId=${order.orderId})}">123456789</a>
+                    <td><a th:text="${order.orderId}" th:href="@{/frontend/orders/history/{orderId}(orderId=${order.orderId})}">123456789</a>
                     </td>
                     <td th:text="${order.orderDate}">2024-01-01</td>
                     <td th:text="${order.orderContent}">도서 3권</td>
                     <td th:text="${#numbers.formatDecimal(order.price, 0, 0, 'COMMA')} + '원 / ' + ${order.amount} + '개'">
                         25,000원/1개
                     </td>
-                    <td th:text="${order.status.korean}">결제 완료</td>
+                    <td th:text="${order.orderStatus.korean}">결제 완료</td>
                     <td th:text="${order.ordererName}">김첨지</td>
                     <td th:text="${order.recipientName}">홍길동</td>
                 </tr>
@@ -83,10 +76,10 @@
             </table>
             <div class="pagination" th:if="${!orders.isEmpty()}">
                 <a th:if="${page.getPageNumber() > 0}"
-                   th:href="@{/orders/refund(page=${page.pageNumber - 1}, size=${10})}">&laquo; 이전</a>
+                   th:href="@{/frontend/orders/refund(page=${page.pageNumber - 1}, size=${10})}">&laquo; 이전</a>
                 <span th:text="${page.pageNumber + 1} + '/' + ${totalPage}">1/1</span>
                 <a th:if="${page.pageNumber + 1 < totalPage}"
-                   th:href="@{/order/refund(page=${page.pageNumber + 1}, size=${10})}">다음 &raquo;</a>
+                   th:href="@{/frontend/order/refund(page=${page.pageNumber + 1}, size=${10})}">다음 &raquo;</a>
             </div>
     </section>
 </main>
@@ -94,7 +87,7 @@
 <div th:replace="footer :: footer"></div>
 
 
-<script th:src="@{/js/cancel-history.js}"></script>
+<script src="/js/global.js"></script>
 
 </body>
 </html>
