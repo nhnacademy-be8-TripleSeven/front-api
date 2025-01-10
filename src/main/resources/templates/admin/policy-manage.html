@@ -68,7 +68,7 @@
                 </tr>
                 <tr th:each="point : ${points}">
                     <td th:text="${point.getType().korean}">오류</td>
-                    <td th:text="${point.getId()}">0</td>
+                    <td th:text="${point.getPointPolicyId()}">0</td>
                     <td th:text="${point.getName()}">정책 1</td>
                     <td th:text="${#numbers.formatInteger(point.getAmount(), 0, 'COMMA')} + '원'">0원</td>
                     <td th:text="${point.getRate()} + '%'">0%</td>
