@@ -6,6 +6,9 @@
     <title>NHN 24 - My Page</title>
     <link rel="stylesheet" th:href="@{/css/mypage.css}">
     <link rel="stylesheet" th:href="@{/css/global.css}">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>  <!-- axios CDN 추가 -->
+    <script type="module" src="/js/axios-config.js"></script>
+    <script th:src="@{/js/global.js}"></script>
 </head>
 <body>
 
@@ -50,8 +53,5 @@
 </main>
 
 <div th:replace="footer :: footer"></div>
-
-<script src="/js/global.js"></script>
-
 </body>
 </html>

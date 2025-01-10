@@ -6,42 +6,17 @@
     <title>취소 주문 내역</title>
     <link rel="stylesheet" th:href="@{/css/order-history.css}">
     <link rel="stylesheet" th:href="@{/css/global.css}">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>  <!-- axios CDN 추가 -->
+    <script type="module" src="/js/axios-config.js"></script>
+    <script th:src="@{/js/global.js}"></script>
+    <script th:src="@{/js/cancel-history.js}"></script>
 </head>
 <body>
 
 <div th:replace="header :: header"></div>
 
 <main class="my-account-container">
-    <aside class="sidebar">
-        <h3>MY ACCOUNT</h3>
-        <ul>
-            <li>* 구매 내역</li>
-            <a th:href="@{/frontend/orders/history}">
-                <li>주문 조회/변경/취소</li>
-            </a>
-            <a th:href="@{/frontend/orders/refund}">
-                <li>반품 내역</li>
-            </a>
-            <a th:href="@{/frontend/orders/canceled}">
-                <li>취소 주문 내역</li>
-            </a>
-            <li>* 좋아요</li>
-            <a th:href="@{/frontend/books/like}">
-                <li>좋아요 내역</li>
-            </a>
-            <li>* 포인트</li>
-            <a th:href="@{/frontend/points/earned}">
-                <li>포인트 적립 내역</li>
-            </a>
-            <a th:href="@{/frontend/points/used}">
-                <li>포인트 사용 내역</li>
-            </a>
-            <li>* 쿠폰함</li>
-            <a th:href="@{/frontend/coupons}">
-                <li>쿠폰 내역</li>
-            </a>
-        </ul>
-    </aside>
+    <div th:replace="sidebar.html"></div>
 
     <section class="cancel-history">
         <h2>취소 주문 내역</h2>
@@ -114,6 +89,5 @@
 <div th:replace="footer :: footer"></div>
 
 
-<script th:src="@{/js/cancel-history.js}"></script>
 </body>
 </html>

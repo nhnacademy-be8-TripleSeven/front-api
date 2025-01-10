@@ -8,9 +8,8 @@
     <link rel="stylesheet" th:href="@{/css/global.css}">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script type="module" src="/js/axios-config.js"></script>
-    <script type="module" src="/js/order-history-detail.js"></script>
-    <script src="/js/global.js"></script>
-
+    <script th:src="/js/order-history-detail.js"></script>
+    <script th:src="@{/js/global.js}"></script>
 </head>
 <body>
 <div th:replace="header :: header"></div>
@@ -100,7 +99,7 @@
             <tr>
                 <th class="delivery-state">배송 상태</th>
                 <th class="delivery-date" colspan="3"
-                    th:text="${#objects.nullSafe('NHN24배송 : ' + deliveryInfo.arrivedAt, '배송 준비 중')}">
+                    th:text="${#objects.nullSafe('배송 준비 중', 'NHN24배송 : ' + deliveryInfo.arrivedAt)}">
                     배송 준비 중
                 </th>
             </tr>
@@ -108,7 +107,7 @@
             <tbody>
             <tr>
                 <td class="thead-header">주문번호</td>
-                <td th:text="${deliveryInfo.getArrivedAt()}"></td>
+                <td th:text="${deliveryInfo.getOrderId()}"></td>
                 <td class="thead-header">주문일자</td>
                 <td th:text="${deliveryInfo.getOrderedAt()}"></td>
             </tr>
@@ -126,11 +125,13 @@
             </tr>
             <tr>
                 <td class="thead-header">배송지 주소</td>
-                <td colspan="3" th:text="${deliveryInfo.getOrdererName()}"></td>
+                <td colspan="3" th:text="${deliveryInfo.getAddress()}"></td>
             </tr>
             <tr>
+                <td class="thead-header">출고일</td>
+                <td th:text="${#objects.nullSafe('출고 준비 중', deliveryInfo.getShippingAt())}"></td>
                 <td class="thead-header">배송조회</td>
-                <td colspan="3">
+                <td>
                     <button class="delivery-info-button" th:id="${deliveryInfo.orderId}">조회</button>
                 </td>
             </tr>
