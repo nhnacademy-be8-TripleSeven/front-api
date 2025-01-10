@@ -1,12 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
 
 /* 초기화 */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Gamja Flower', cursive;
+    font-family: "Open Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-weight: 800; /* bold 또는 700 */
+
+
+    /* font-variation-settings는 Open Sans가 가변 폰트가 아니므로 제거 */
 }
+
 
 /* Body 스타일 */
 body {
@@ -435,14 +442,10 @@ footer {
         background-color: #eee;
         color: #999;
     }
-    /* 검색 조건 부분 숨기기 */
-    .filter-sidebar {
-        display: none; /* 모바일 화면에서 검색 조건 숨기기 */
-    }
 
     /* 검색 결과 영역 확장 */
     .book-results {
-        width: 100%; /* 전체 화면 너비를 사용하도록 확장 */
+        width: 80%; /* 전체 화면 너비를 사용하도록 확장 */
         margin: 0 auto; /* 중앙 정렬 */
         padding: 20px; /* 내부 여백 추가 */
     }
