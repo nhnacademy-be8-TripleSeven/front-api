@@ -210,4 +210,6 @@ public interface BookFeignClient {
     @GetMapping("/admin/tags")
     Page<TagResponseDto> getAllTags();
 
+    @GetMapping("/admin/book-tags/{bookId}")
+    List<BookTagResponseDTO> getTagsByBookId(@PathVariable Long bookId);
 }

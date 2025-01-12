@@ -25,10 +25,12 @@ document.addEventListener("DOMContentLoaded", () => {
             tagContainer.innerHTML = content
                 .map(
                     (tag) =>
-                        `<div class="tag-card" data-tag-id="${tag.id}">
-                            <p class="tag-name">${tag.tagName}</p>
-                            <button class="delete-tag-button">삭제</button>
-                         </div>`
+                        `<div class="tag-item" data-tag-id="${tag.id}">
+                        <!-- tagId도 표시 -->
+                        <span class="tag-id">#${tag.id}</span>
+                        <span class="tag-name">${tag.tagName}</span>
+                        <button class="delete-tag-button">삭제</button>
+                     </div>`
                 )
                 .join("");
 
@@ -69,7 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const deleteButtons = document.querySelectorAll(".delete-tag-button");
         deleteButtons.forEach((button) => {
             button.addEventListener("click", (event) => {
-                const tagCard = event.target.closest(".tag-card");
+                const tagCard = event.target.closest(".tag-item");
                 const tagId = tagCard.dataset.tagId;
 
                 if (confirm("정말로 이 태그를 삭제하시겠습니까?")) {
