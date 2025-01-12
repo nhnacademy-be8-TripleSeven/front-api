@@ -30,6 +30,8 @@ import org.springframework.web.bind.annotation.RequestPart;
 public class AdminBookController {
 
     private final BookService bookService;
+    private static final String REDIRECT_BOOK_LIST = "redirect:/admin/frontend/books";
+    private static final String CATEGORIES = "categories";
 
     @GetMapping("/frontend/books")
     public String frontendBooks(Model model) {
@@ -50,32 +52,28 @@ public class AdminBookController {
     public String updateBookDetail(@PathVariable Long id, Model model){
         BookDTO bookById = bookService.getBookById(id);
         CategoryLevelDTO categoryLevel = bookService.getCategoryLevel();
-        model.addAttribute("categories", categoryLevel);
+        model.addAttribute(CATEGORIES, categoryLevel);
         model.addAttribute("book", bookById);
         return "admin/book-update";
     }
 
     @PostMapping("/books/updateBook")
     public String updateBook(@ModelAttribute BookUpdateDTO bookDTO) {
-        log.info("update book {}", bookDTO);
         bookService.updateBook(bookDTO);
-        log.info("Book updated");
-        return "redirect:/admin/frontend/books";
+        return REDIRECT_BOOK_LIST;
     }
 
     @PostMapping("/books/createBook")
     public String createBook(@ModelAttribute BookCreateDTO bookDTO) {
-        log.info("created start");
         bookService.createBook(bookDTO);
-        log.info("Book created");
-        return "redirect:/admin/frontend/books";
+        return REDIRECT_BOOK_LIST;
     }
 
 
     @GetMapping("/frontend/books/create")
     public String createBook(Model model) {
         CategoryLevelDTO categoryLevel = bookService.getCategoryLevel();
-        model.addAttribute("categories", categoryLevel);
+        model.addAttribute(CATEGORIES, categoryLevel);
         model.addAttribute("book", new BookApiDTO());
         return "admin/book-create";
     }
@@ -86,15 +84,15 @@ public class AdminBookController {
     public String getAladinBookByIsbn(@RequestParam("isbn") String isbn, Model model) {
         BookAladinDTO aladinApiBook = bookService.getAladinApiBook(isbn);
         CategoryLevelDTO categoryLevel = bookService.getCategoryLevel();
-        model.addAttribute("categories", categoryLevel);
+        model.addAttribute(CATEGORIES, categoryLevel);
         model.addAttribute("book", aladinApiBook);
-        return "/admin/book-create";
+        return "admin/book-create";
     }
 
     @DeleteMapping("/books/delete/{bookId}")
     public String deleteBook(@PathVariable Long bookId) {
         bookService.deleteBook(bookId);
-        return "redirect:/admin/frontend/books";
+        return REDIRECT_BOOK_LIST;
     }
 
 

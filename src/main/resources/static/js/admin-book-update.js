@@ -26,7 +26,6 @@ function handleUpdateBook(event) {
     categories: collectNestedInputValues('categories'),
     bookTypes: collectNestedInputValues('bookTypes'),
     authors: collectNestedInputValues('authors'),
-    tags: collectInputValues('tags') // tags는 단순 배열이면 collectInputValues로 가능
   };
 
   // FormData 생성
@@ -73,24 +72,26 @@ function handleUpdateBook(event) {
 
 // [5] categories, bookTypes, authors와 같은 중첩 필드 수집 함수
 // "categories[0].name" 등의 인풋들을 { name: ... } 객체 배열로 만들기
+// 카테고리, 도서 타입, 저자 등 중첩 필드 수집 함수
 function collectNestedInputValues(fieldName) {
-  const inputs = document.querySelectorAll(`input[name^="${fieldName}"]`);
-  const values = {};
+  const inputs = document.querySelectorAll(`[name^="${fieldName}"]`);
+  const values = [];
 
   inputs.forEach(input => {
-    // 예: categories[0].name
     const match = input.name.match(/\[(\d+)\]\.(.+)/);
     if (match) {
-      const index = match[1];
+      const index = parseInt(match[1], 10);
       const key = match[2];
+
       if (!values[index]) {
         values[index] = {};
       }
+
       values[index][key] = input.value.trim();
     }
   });
 
-  return Object.values(values);
+  return values;
 }
 
 // [6] tags 같은 단순 배열( "tags[0]", "tags[1]" ) 수집 함수
@@ -98,3 +99,32 @@ function collectInputValues(fieldName) {
   const inputs = document.querySelectorAll(`input[name^="${fieldName}"]`);
   return Array.from(inputs).map(input => input.value.trim());
 }
+
+function TypeCollectNestedInputValues(fieldName) {
+  const inputs = document.querySelectorAll(`input[name^="${fieldName}"]`);
+  const values = [];
+
+  console.log('Found inputs:', inputs);  // inputs를 확인
+
+  inputs.forEach(input => {
+    console.log('Input name:', input.name); // name 속성 확인
+
+    const match = input.name.match(/\[(\d+)\]\.(\w+)/); // 정규식 확인
+    console.log('Match result:', match); // 매칭 결과 확인
+
+    if (match) {
+      const index = parseInt(match[1], 10);  // [0], [1], [2] 의 숫자 추출
+      const key = match[2];  // 'type' 또는 'ranks' 추출
+
+      if (!values[index]) {
+        values[index] = {};  // 해당 인덱스에 객체 할당
+      }
+
+      values[index][key] = input.value.trim();  // 값 할당
+    }
+  });
+
+  console.log('Final values:', values);  // 최종 값 확인
+  return values;
+}
+
