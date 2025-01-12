@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>쿠폰 대량 생성</title>
+    <link rel="stylesheet" th:href="@{/css/global.css}">
+    <link rel="stylesheet" th:href="@{/css/coupon-bulk-create.css}">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script th:src="@{/js/coupon-bulk-create.js}" defer></script>
+</head>
+<body>
+<div th:replace="header :: header"></div>
+
+<main>
+    <div th:replace="admin/admin-sidebar :: aside"></div>
+
+    <div class="main-container">
+        <div class="form-container">
+            <h3>쿠폰 대량 생성</h3>
+            <form id="bulk-coupon-form">
+                <table class="form-table">
+                    <tr>
+                        <th>쿠폰 이름</th>
+                        <td><input type="text" id="coupon-name" name="name" placeholder="쿠폰 이름 입력" required></td>
+                    </tr>
+                    <tr>
+                        <th>쿠폰 정책</th>
+                        <td>
+                            <div class="search-group">
+                                <input type="text" id="coupon-policy-query" placeholder="쿠폰 정책 검색">
+                                <button type="button" id="search-policy-btn">검색</button>
+                            </div>
+                            <select id="coupon-policy" name="couponPolicyId" required>
+                                <option value="">정책 선택</option>
+                                <!-- 동적으로 채워질 부분 -->
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>생성 수량</th>
+                        <td><input type="number" id="coupon-quantity" name="quantity" min="1" required></td>
+                    </tr>
+                    <tr>
+                        <th>분류</th>
+                        <td>
+                            <select id="coupon-category" name="couponCategory">
+                                <option value="">선택</option>
+                                <option value="도서 쿠폰">도서 쿠폰</option>
+                                <option value="카테고리 쿠폰">카테고리 쿠폰</option>
+                                <option value="일반 쿠폰">일반 쿠폰</option>
+                            </select>
+                            <div id="book-category-search" style="display: none;">
+                                <div class="search-group">
+                                    <input type="text" id="category-query" placeholder="카테고리 검색">
+                                    <button type="button" id="search-category-btn">검색</button>
+                                </div>
+                                <select id="category-select" name="categoryId">
+                                    <option value="">카테고리 선택</option>
+                                </select>
+                            </div>
+                            <div id="book-search" style="display: none;">
+                                <div class="search-group">
+                                    <input type="text" id="book-query" placeholder="도서 검색">
+                                    <button type="button" id="search-book-btn">검색</button>
+                                </div>
+                                <select id="book-select" name="bookId">
+                                    <option value="">도서 선택</option>
+                                </select>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <button type="submit" class="register-btn">쿠폰 생성</button>
+            </form>
+        </div>
+    </div>
+</main>
+
+<div th:replace="footer :: footer"></div>
+</body>
+</html>
