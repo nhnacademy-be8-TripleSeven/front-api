@@ -38,7 +38,7 @@ public class OrderController {
         //도서 상세페이지에서 구매 버튼을 누른 경우
         if("direct".equals(type)) {
             ProductDTO product = orderService.getProductInfoByDirect(bookId,1);
-            products = List.of(product,orderService.getProductInfoByDirect(2L,2));
+            products = List.of(product);
             model.addAttribute("products",product);
         }//장바구니 페이지에서 구매 버튼을 누른 경우
         else if("cart".equals(type)) {
