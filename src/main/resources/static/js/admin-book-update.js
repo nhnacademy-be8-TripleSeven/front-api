@@ -23,8 +23,8 @@ function handleUpdateBook(event) {
     stock: document.getElementById('stock').value,
 
     // 중첩 필드들
-    categories: collectNestedInputValues('categories'),
-    bookTypes: collectNestedInputValues('bookTypes'),
+    categories: categoryNestedInputValues('categories'),
+    bookTypes: TypeCollectNestedInputValues('bookTypes'),
     authors: collectNestedInputValues('authors'),
   };
 
@@ -128,3 +128,54 @@ function TypeCollectNestedInputValues(fieldName) {
   return values;
 }
 
+
+
+function categoryNestedInputValues(fieldName) {
+  const inputs = document.querySelectorAll(`[name^="${fieldName}"]`);
+  const values = [];
+
+  // 레벨마다 값을 처리
+  inputs.forEach((input) => {
+    const match = input.name.match(/\.(.+)/); // "categories.level1", "categories.level2"에서 level1, level2 추출
+    if (match) {
+      const level = match[1]; // level1, level2 등의 키 이름 추출
+      const numericLevel = parseInt(level.replace(/[^\d]/g, ''), 10); // level1 -> 1, level2 -> 2 등으로 변환
+
+      const selectedOption = input.options[input.selectedIndex];
+      if (selectedOption && selectedOption.value) {
+        const categoryName = selectedOption.text.trim(); // 선택된 옵션의 텍스트 값
+        values.push({ level: numericLevel, name: categoryName });
+      }
+    }
+  });
+
+  return values;
+}
+document.addEventListener("DOMContentLoaded", function () {
+  const categorySelectors = document.querySelectorAll('[name^="categories.level"]');
+
+  // 각 셀렉트 박스에 이벤트 리스너 추가
+  categorySelectors.forEach((selector, index) => {
+    selector.addEventListener("change", function () {
+      const nextLevel = categorySelectors[index + 1];
+
+      if (nextLevel) {
+        if (this.value) {
+          nextLevel.disabled = false; // 현재 단계 선택 시 다음 단계 활성화
+        } else {
+          resetCategoryLevels(index + 1, categorySelectors); // 선택 해제 시 이후 단계 초기화
+        }
+      }
+    });
+  });
+
+  // 초기 상태: 첫 번째 셀렉트만 활성화, 나머지는 비활성화
+  resetCategoryLevels(1, categorySelectors);
+});
+
+function resetCategoryLevels(startIndex, categorySelectors) {
+  for (let i = startIndex; i < categorySelectors.length; i++) {
+    categorySelectors[i].value = ""; // 값 초기화
+    categorySelectors[i].disabled = true; // 비활성화
+  }
+}
