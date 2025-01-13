@@ -137,31 +137,57 @@ function categoryNestedInputValues(fieldName) {
 
   return values;
 }
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener('DOMContentLoaded', function () {
   const categorySelectors = document.querySelectorAll('[name^="categories.level"]');
 
-  // 각 셀렉트 박스에 이벤트 리스너 추가
+  // 각 카테고리 셀렉터에 이벤트 리스너 추가
   categorySelectors.forEach((selector, index) => {
-    selector.addEventListener("change", function () {
-      const nextLevel = categorySelectors[index + 1];
+    selector.addEventListener('change', function () {
+      const selectedValue = this.value; // 현재 선택된 값
+      const nextLevel = categorySelectors[index + 1]; // 다음 단계 셀렉터
 
       if (nextLevel) {
-        if (this.value) {
-          nextLevel.disabled = false; // 현재 단계 선택 시 다음 단계 활성화
+        if (selectedValue) {
+          // 다음 단계 카테고리 요청
+          fetchCategoriesForLevel(selectedValue, index + 2).then((options) => {
+            nextLevel.innerHTML = '<option value="" disabled selected>선택</option>';
+            options.forEach((option) => {
+              nextLevel.innerHTML += `<option value="${option.id}">${option.name}</option>`;
+            });
+            nextLevel.disabled = false; // 다음 단계 활성화
+          });
         } else {
-          resetCategoryLevels(index + 1, categorySelectors); // 선택 해제 시 이후 단계 초기화
+          // 선택값이 없으면 하위 단계 초기화
+          resetCategoryLevels(index + 1, categorySelectors);
         }
       }
     });
   });
 
-  // 초기 상태: 첫 번째 셀렉트만 활성화, 나머지는 비활성화
+  // 초기화
   resetCategoryLevels(1, categorySelectors);
 });
 
+// 하위 카테고리 초기화 함수
 function resetCategoryLevels(startIndex, categorySelectors) {
   for (let i = startIndex; i < categorySelectors.length; i++) {
-    categorySelectors[i].value = ""; // 값 초기화
+    categorySelectors[i].innerHTML = '<option value="" disabled selected>선택</option>';
     categorySelectors[i].disabled = true; // 비활성화
+  }
+}
+
+// 카테고리 데이터 요청 함수
+async function fetchCategoriesForLevel(parentCategoryId, level) {
+  try {
+    const response = await axios.get(`/admin/books/categoriesParentList`, {
+      params: {
+        parent: parentCategoryId,
+        level: level
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching categories:', error);
+    return [];
   }
 }
