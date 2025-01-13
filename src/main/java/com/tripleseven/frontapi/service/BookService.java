@@ -11,6 +11,7 @@ import com.tripleseven.frontapi.dto.category.CategorySearchDTO;
 import com.tripleseven.frontapi.dto.category.PageCategoryDTO;
 import java.util.List;
 
+import com.tripleseven.frontapi.dto.coupon.CouponDetailsDTO;
 import com.tripleseven.frontapi.dto.review.ReviewRequestDTO;
 import com.tripleseven.frontapi.dto.review.ReviewResponseDTO;
 import com.tripleseven.frontapi.dto.tag.TagResponseDto;
@@ -154,4 +155,6 @@ public class BookService {
     public List<BookTagResponseDTO> getTagsByBookId(Long bookId) {
         return bookFeignClient.getTagsByBookId(bookId);
     }
+
+    public BookOrderDetailResponse getBookOrderDetail(Long bookId) {return bookFeignClient.getBookOrderDetail(bookId);}
 }

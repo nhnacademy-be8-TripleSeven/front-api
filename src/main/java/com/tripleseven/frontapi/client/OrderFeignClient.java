@@ -10,6 +10,9 @@ import com.tripleseven.frontapi.dto.point.UserPointHistoryDTO;
 import com.tripleseven.frontapi.dto.policy.DefaultPolicyDTO;
 import com.tripleseven.frontapi.dto.policy.DeliveryPolicyDTO;
 import com.tripleseven.frontapi.dto.policy.PointPolicyDTO;
+import com.tripleseven.frontapi.dto.pay.PayInfoRequestDTO;
+import com.tripleseven.frontapi.dto.pay.PayInfoResponseDTO;
+import org.json.simple.JSONObject;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -80,5 +83,17 @@ public interface OrderFeignClient {
 
     @GetMapping("/admin/orders/default-policies")
     DefaultPolicyDTO getDefaultPolicies();
+
+
+    @PostMapping("/payments/order")
+    PayInfoResponseDTO getPayInfo(
+            @RequestHeader("X-USER") Long userId,
+            @CookieValue("GUEST-ID")Long guestId,
+            @RequestBody PayInfoRequestDTO payInfoRequestDTO
+    );
+
+    @PostMapping("/confirm/payment")
+    JSONObject confirmPayment(String jsonBody);
+
 
 }

@@ -129,7 +129,11 @@ public interface BookFeignClient {
                                           @RequestParam(required = false) String startDate,
                                           @RequestParam(required = false) String endDate);
 
-
+    @GetMapping("/api/coupons/unused")
+    List<CouponDetailsDTO> getUnusedCoupons(@RequestHeader("X-USER") Long userId,
+                                            @RequestParam(required = false)String keyword,
+                                            @RequestParam(required = false)String startDate,
+                                            @RequestParam(required = false)String endDate);
 
     @GetMapping("/api/reviews/{bookId}/paged")
     Page<ReviewResponseDTO> getPagedReviewsByBookId(
@@ -212,4 +216,7 @@ public interface BookFeignClient {
 
     @GetMapping("/admin/book-tags/{bookId}")
     List<BookTagResponseDTO> getTagsByBookId(@PathVariable Long bookId);
+
+    @GetMapping("/books/orderDetail/{bookId}")
+    BookOrderDetailResponse getBookOrderDetail(@PathVariable Long bookId);
 }

@@ -58,4 +58,7 @@ public interface MemberFeignClient {
                       @CookieValue("GUEST-ID") String guestId);
 
 
+
+    @GetMapping("/api/members/info")
+    MemberDTO getMemberInfo(@RequestHeader Long userId);
 }
