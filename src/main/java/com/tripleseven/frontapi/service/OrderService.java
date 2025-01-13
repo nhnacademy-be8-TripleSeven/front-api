@@ -2,8 +2,10 @@ package com.tripleseven.frontapi.service;
 
 import com.tripleseven.frontapi.client.OrderFeignClient;
 import com.tripleseven.frontapi.dto.FilterCriteriaDTO;
-import com.tripleseven.frontapi.dto.book.BookDetailViewDTO;
 import com.tripleseven.frontapi.dto.order.*;
+import com.tripleseven.frontapi.dto.point.PointHistoryPageResponseDTO;
+import com.tripleseven.frontapi.dto.point.UserPointHistoryDTO;
+import com.tripleseven.frontapi.dto.book.BookDetailViewDTO;
 import com.tripleseven.frontapi.dto.pay.PayInfoRequestDTO;
 import com.tripleseven.frontapi.dto.pay.PayInfoResponseDTO;
 import lombok.RequiredArgsConstructor;
@@ -21,14 +23,14 @@ public class OrderService {
     private final BookService bookService;
 
     public Page<OrderManageResponseDTO> getOrderHistories(FilterCriteriaDTO filterCriteriaDTO, Long userId, Pageable pageable) {
-        Status status = filterCriteriaDTO.getStatus();
-        if (status.equals(Status.ALL)) {
-            status = null;
+        OrderStatus orderStatus = filterCriteriaDTO.getOrderStatus();
+        if (orderStatus.equals(OrderStatus.ALL)) {
+            orderStatus = null;
         }
         OrderManageRequestDTO requestDTO = new OrderManageRequestDTO(
                 filterCriteriaDTO.getStartDate(),
                 filterCriteriaDTO.getEndDate(),
-                status
+                orderStatus
         );
         return orderFeignClient.getOrderList(requestDTO, userId, pageable);
     }
@@ -40,6 +42,34 @@ public class OrderService {
     public int getPoints(Long userId) {
         return orderFeignClient.getTotalPoint(userId);
     }
+
+    public void updateOrderHistories(Long userId, List<Long> ids, OrderStatus orderStatus){
+        OrderDetailUpdateRequestDTO orderDetailUpdateRequest = new OrderDetailUpdateRequestDTO(ids, orderStatus);
+        orderFeignClient.updateOrderDetails(userId, orderDetailUpdateRequest);
+    }
+
+    public Page<OrderManageResponseDTO> getAdminOrderHistories(FilterCriteriaDTO filterCriteriaDTO, Pageable pageable) {
+        OrderStatus orderStatus = filterCriteriaDTO.getOrderStatus();
+        if (orderStatus.equals(OrderStatus.ALL)) {
+            orderStatus = null;
+        }
+        OrderManageRequestDTO requestDTO = new OrderManageRequestDTO(
+                filterCriteriaDTO.getStartDate(),
+                filterCriteriaDTO.getEndDate(),
+                orderStatus
+        );
+        return orderFeignClient.getAdminOrderList(requestDTO, pageable);
+    }
+
+    public OrderPayDetailDTO getAdminOrderHistory(Long orderId) {
+        return orderFeignClient.getAdminOrderDetails(orderId);
+    }
+
+    public PointHistoryPageResponseDTO<UserPointHistoryDTO> getPointHistories(Long memberId, String startDate, String endDate, Pageable pageable) {
+        return orderFeignClient.getUserPointHistories(memberId, startDate, endDate, pageable);
+    }
+
+
 
     public ProductDTO getProductInfoByDirect(Long bookId, int quantity){
         BookDetailViewDTO bookDetailDTO = bookService.getBookDetail(bookId);

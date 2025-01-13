@@ -1,10 +1,12 @@
 package com.tripleseven.frontapi.controller.admin;
 
+import com.tripleseven.frontapi.dto.book.BookAladinDTO;
 import com.tripleseven.frontapi.dto.book.BookApiDTO;
 import com.tripleseven.frontapi.dto.book.BookCreateDTO;
 import com.tripleseven.frontapi.dto.book.BookDTO;
 import com.tripleseven.frontapi.dto.book.BookPageDTO;
 import com.tripleseven.frontapi.dto.book.BookUpdateDTO;
+import com.tripleseven.frontapi.dto.category.CategoryLevelDTO;
 import com.tripleseven.frontapi.service.BookService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,13 +24,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 
 @Slf4j
-@CrossOrigin(origins = "http://localhost:8080")
 @Controller
 @RequestMapping("/admin")
 @RequiredArgsConstructor
 public class AdminBookController {
 
     private final BookService bookService;
+    private static final String REDIRECT_BOOK_LIST = "redirect:/admin/frontend/books";
+    private static final String CATEGORIES = "categories";
 
     @GetMapping("/frontend/books")
     public String frontendBooks(Model model) {
@@ -48,29 +51,29 @@ public class AdminBookController {
     @GetMapping("/frontend/books/update/{id}")
     public String updateBookDetail(@PathVariable Long id, Model model){
         BookDTO bookById = bookService.getBookById(id);
+        CategoryLevelDTO categoryLevel = bookService.getCategoryLevel();
+        model.addAttribute(CATEGORIES, categoryLevel);
         model.addAttribute("book", bookById);
         return "admin/book-update";
     }
 
     @PostMapping("/books/updateBook")
     public String updateBook(@ModelAttribute BookUpdateDTO bookDTO) {
-        log.info("update book {}", bookDTO);
         bookService.updateBook(bookDTO);
-        log.info("Book updated");
-        return "redirect:/admin/frontend/books";
+        return REDIRECT_BOOK_LIST;
     }
 
     @PostMapping("/books/createBook")
     public String createBook(@ModelAttribute BookCreateDTO bookDTO) {
-        log.info("created start");
         bookService.createBook(bookDTO);
-        log.info("Book created");
-        return "redirect:/admin/frontend/books";
+        return REDIRECT_BOOK_LIST;
     }
 
 
     @GetMapping("/frontend/books/create")
     public String createBook(Model model) {
+        CategoryLevelDTO categoryLevel = bookService.getCategoryLevel();
+        model.addAttribute(CATEGORIES, categoryLevel);
         model.addAttribute("book", new BookApiDTO());
         return "admin/book-create";
     }
@@ -78,16 +81,18 @@ public class AdminBookController {
 
 
     @GetMapping("/frontend/books/aladin")
-    public String getAladinBookByIsbn(@RequestParam String isbn, Model model) {
-        BookApiDTO aladinApiBook = bookService.getAladinApiBook(isbn);
+    public String getAladinBookByIsbn(@RequestParam("isbn") String isbn, Model model) {
+        BookAladinDTO aladinApiBook = bookService.getAladinApiBook(isbn);
+        CategoryLevelDTO categoryLevel = bookService.getCategoryLevel();
+        model.addAttribute(CATEGORIES, categoryLevel);
         model.addAttribute("book", aladinApiBook);
-        return "/admin/book-aladin";
+        return "admin/book-create";
     }
 
     @DeleteMapping("/books/delete/{bookId}")
     public String deleteBook(@PathVariable Long bookId) {
         bookService.deleteBook(bookId);
-        return "redirect:/admin/frontend/books";
+        return REDIRECT_BOOK_LIST;
     }
 
 

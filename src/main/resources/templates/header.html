@@ -5,18 +5,18 @@
   <div class="header-center">
     <form th:action="@{/frontend/searchBook}" method="get">
       <div class="search-bar">
-        <input type="text" name="keyword" placeholder="검색어 입력">
+        <input type="text" name="search" placeholder="검색어 입력">
         <button type="submit">🔍</button>
       </div>
     </form>
     <nav class="menu">
       <ul>
-        <li><a th:href="@{/frontend/typeBook?type=ItemEditorChoice}">추천 도서</a></li>
-        <li><a th:href="@{/frontend/typeBook?type=Book}">국내 도서</a></li>
-        <li><a th:href="@{/frontend/typeBook?type=Foreign}">외국 도서</a></li>
-        <li><a th:href="@{/frontend/typeBook?type=Bestseller}">베스트셀러</a></li>
-        <li><a th:href="@{/frontend/typeBook?type=ItemNewAll}">신간 소개</a></li>
-        <li><a th:href="@{/frontend/typeBook?type=BlogBest}">이벤트</a></li>
+        <li><a th:href="@{/frontend/typeBook?search=ItemEditorChoice}">추천 도서</a></li>
+        <li><a th:href="@{/frontend/typeBook?search=Book}">국내 도서</a></li>
+        <li><a th:href="@{/frontend/typeBook?search=Foreign}">외국 도서</a></li>
+        <li><a th:href="@{/frontend/typeBook?search=Bestseller}">베스트셀러</a></li>
+        <li><a th:href="@{/frontend/typeBook?search=ItemNewAll}">신간 소개</a></li>
+        <li><a th:href="@{/frontend/typeBook?search=BlogBest}">이벤트</a></li>
       </ul>
     </nav>
   </div>

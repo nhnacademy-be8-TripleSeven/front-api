@@ -11,7 +11,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public class BookDetailResponseDTO {
 
-    private long id;
+    private Long id;
 
     private String title;
 

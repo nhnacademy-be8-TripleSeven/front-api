@@ -1,3 +1,89 @@
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org" lang="ko">-->
+<!--<head>-->
+<!--  <meta charset="UTF-8">-->
+<!--  <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--  <title>비회원 주문 조회</title>-->
+<!--  <link rel="stylesheet" th:href="@{/css/guest-history.css}">-->
+<!--  <link rel="stylesheet" th:href="@{/css/global.css}">-->
+<!--</head>-->
+<!--<body>-->
+<!--<div class="container">-->
+
+<!--  <div th:replace="header :: header"></div>-->
+
+<!--  <main>-->
+<!--    <section class="guest-order-container">-->
+<!--      <h2 th:text="|* 주문 번호: ${orderNumber}|">* 주문 번호: Y0364352474</h2>-->
+<!--      <div class="order-summary">-->
+<!--        <h3>주문, 배송, 결제 정보</h3>-->
+<!--        <table>-->
+<!--          <tbody>-->
+<!--          <tr>-->
+<!--            <th>받는 분</th>-->
+<!--            <td th:text="${recipient}">홍길동</td>-->
+<!--          </tr>-->
+<!--          <tr>-->
+<!--            <th>배송지</th>-->
+<!--            <td th:text="${address}">광주광역시 동구 서석동 조선대학교 NHN 아카데미</td>-->
+<!--          </tr>-->
+<!--          <tr>-->
+<!--            <th>결제 금액</th>-->
+<!--            <td th:text="${paymentAmount}">18,900원</td>-->
+<!--          </tr>-->
+<!--          <tr>-->
+<!--            <th>결제 방법</th>-->
+<!--            <td th:text="${paymentMethod}">신용카드 결제</td>-->
+<!--          </tr>-->
+<!--          </tbody>-->
+<!--        </table>-->
+<!--      </div>-->
+
+<!--      <div class="search-container">-->
+<!--        <input type="text" placeholder="주문 상태, 상품명 검색">-->
+<!--        <button>찾기</button>-->
+<!--      </div>-->
+
+<!--      <table class="order-table">-->
+<!--        <thead>-->
+<!--        <tr>-->
+<!--          <th><input type="checkbox" id="select-all"> 전체 선택</th>-->
+<!--          <th>주문 상태</th>-->
+<!--          <th>상품명</th>-->
+<!--          <th>가격</th>-->
+<!--          <th>포인트</th>-->
+<!--          <th>선택</th>-->
+<!--        </tr>-->
+<!--        </thead>-->
+<!--        <tbody>-->
+<!--        <tr th:each="item : ${orderList}">-->
+<!--          <td><input type="checkbox" class="row-checkbox"></td>-->
+<!--          <td th:text="${item.status}">배송 전</td>-->
+<!--          <td th:text="${item.productName}">도서명: 고흐 인생의 그림들</td>-->
+<!--          <td th:text="${item.price}">18,900원</td>-->
+<!--          <td th:text="${item.points}">0</td>-->
+<!--          <td>-->
+<!--            <button class="cancel-btn" th:disabled="${item.status == '배송 완료'}"-->
+<!--                    th:data-status="${item.status}"-->
+<!--                    th:text="'취소'"></button>-->
+<!--          </td>-->
+<!--        </tr>-->
+<!--        </tbody>-->
+<!--      </table>-->
+<!--      <a th:href="@{/main}"><button class="main-btn">메인으로 이동</button></a>-->
+<!--    </section>-->
+<!--  </main>-->
+
+<!--  <div th:replace="footer :: footer"></div>-->
+
+<!--</div>-->
+
+<!--<script th:src="@{/js/guest-history.js}"></script>-->
+<!--</body>-->
+<!--</html>-->
+
+
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head>
@@ -6,78 +92,68 @@
   <title>비회원 주문 조회</title>
   <link rel="stylesheet" th:href="@{/css/guest-history.css}">
   <link rel="stylesheet" th:href="@{/css/global.css}">
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script th:src="@{/js/guest-history.js}"></script>
+  <script th:inline="javascript">
+    const phone = /*[[${phone != null ? phone : ''}]]*/ '';
+  </script>
 </head>
 <body>
 <div class="container">
-
-  <div th:replace="header :: header"></div>
+  <header th:replace="header :: header"></header>
 
   <main>
     <section class="guest-order-container">
-      <h2 th:text="|* 주문 번호: ${orderNumber}|">* 주문 번호: Y0364352474</h2>
-      <div class="order-summary">
-        <h3>주문, 배송, 결제 정보</h3>
-        <table>
-          <tbody>
+      <h1>비회원 주문 조회</h1>
+
+      <div class="info-banner">
+        <p>전화번호: <strong th:text="${phone}"></strong></p>
+        비회원 환불, 주문취소는 고객센터에 문의해주세요<br>
+        <strong>010-XXXX-XXXX</strong>
+      </div>
+
+      <div class="order-table-wrapper">
+        <table class="order-table">
+          <thead>
           <tr>
+            <th>주문 번호</th>
             <th>받는 분</th>
-            <td th:text="${recipient}">홍길동</td>
-          </tr>
-          <tr>
             <th>배송지</th>
-            <td th:text="${address}">광주광역시 동구 서석동 조선대학교 NHN 아카데미</td>
-          </tr>
-          <tr>
             <th>결제 금액</th>
-            <td th:text="${paymentAmount}">18,900원</td>
+            <th>주문 날짜</th>
+            <th>상세 조회</th>
           </tr>
-          <tr>
-            <th>결제 방법</th>
-            <td th:text="${paymentMethod}">신용카드 결제</td>
-          </tr>
+          </thead>
+          <tbody id="order-list">
+          <!-- JavaScript로 동적으로 추가 -->
           </tbody>
         </table>
       </div>
-
-      <div class="search-container">
-        <input type="text" placeholder="주문 상태, 상품명 검색">
-        <button>찾기</button>
-      </div>
-
-      <table class="order-table">
-        <thead>
-        <tr>
-          <th><input type="checkbox" id="select-all"> 전체 선택</th>
-          <th>주문 상태</th>
-          <th>상품명</th>
-          <th>가격</th>
-          <th>포인트</th>
-          <th>선택</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="item : ${orderList}">
-          <td><input type="checkbox" class="row-checkbox"></td>
-          <td th:text="${item.status}">배송 전</td>
-          <td th:text="${item.productName}">도서명: 고흐 인생의 그림들</td>
-          <td th:text="${item.price}">18,900원</td>
-          <td th:text="${item.points}">0</td>
-          <td>
-            <button class="cancel-btn" th:disabled="${item.status == '배송 완료'}"
-                    th:data-status="${item.status}"
-                    th:text="'취소'"></button>
-          </td>
-        </tr>
-        </tbody>
-      </table>
-      <a th:href="@{/main}"><button class="main-btn">메인으로 이동</button></a>
     </section>
+
+    <div id="order-detail-modal" class="modal-overlay" style="display: none;">
+      <div class="modal-content">
+        <span class="close-button" id="close-modal">&times;</span>
+        <h2>주문 상세 정보</h2>
+        <table class="order-detail-table">
+          <thead>
+          <tr>
+            <th>상품 ID</th>
+            <th>수량</th>
+            <th>상태</th>
+            <th>원가</th>
+            <th>할인 금액</th>
+          </tr>
+          </thead>
+          <tbody id="order-detail-list">
+          <!-- JavaScript로 동적으로 추가 -->
+          </tbody>
+        </table>
+      </div>
+    </div>
   </main>
 
-  <div th:replace="footer :: footer"></div>
-
+  <footer th:replace="footer :: footer"></footer>
 </div>
-
-<script th:src="@{/js/guest-history.js}"></script>
 </body>
 </html>

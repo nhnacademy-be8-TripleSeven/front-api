@@ -7,8 +7,7 @@
   <link rel="stylesheet" th:href="@{/css/login.css}">
   <link rel="stylesheet" th:href="@{/css/global.css}">
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <script type="module" src="/js/axios-config.js"></script>
-  <script type="module" src="/js/login.js" defer></script>
+  <script src="/js/global.js"></script>
 </head>
 <body>
 <div class="container">
@@ -44,15 +43,10 @@
         </div>
 
         <div id="guest-order" class="tab-content">
-          <form th:action="@{/guest-order}" method="post">
-            <input type="text" id="guest-order-id" name="orderId" placeholder="주문 번호" required>
+          <form th:action="@{/frontend/guest/order-histories}" method="get">
             <input type="text" id="guest-phone" name="phone" placeholder="휴대폰 번호" required>
             <button class="large-btn" type="submit">조회</button>
           </form>
-          <div class="helper-links">
-            <a th:href="@{/find-guest}" class="helper-link">주문 번호 찾기</a>
-            <a th:href="@{/find-guest}" class="helper-link">주문 비밀번호 찾기</a>
-          </div>
         </div>
       </div>
 
@@ -66,8 +60,6 @@
 
 </div>
 
-
+<script th:src="@{/js/login.js}"></script>
 </body>
-
-
 </html>

@@ -4,10 +4,7 @@ package com.tripleseven.frontapi.controller.admin;
 import com.tripleseven.frontapi.client.BookFeignClient;
 import com.tripleseven.frontapi.dto.book.BookSearchDTO;
 import com.tripleseven.frontapi.dto.category.CategorySearchDTO;
-import com.tripleseven.frontapi.dto.coupon.CouponAssignResponseDTO;
-import com.tripleseven.frontapi.dto.coupon.CouponCreationAndAssignRequestDTO;
-import com.tripleseven.frontapi.dto.coupon.CouponPolicyRequestDTO;
-import com.tripleseven.frontapi.dto.coupon.CouponPolicyResponseDTO;
+import com.tripleseven.frontapi.dto.coupon.*;
 import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -33,7 +30,7 @@ public class AdminCouponController {
      */
     @GetMapping("/coupons/create")
     public String showCouponCreatePage() {
-        return "/admin/coupon-create";
+        return "admin/coupon-create";
     }
 
 
@@ -44,7 +41,7 @@ public class AdminCouponController {
     public String showCouponPolicyRegisterPage(Model model) {
         // 새로운 쿠폰 정책 DTO를 모델에 추가하여 폼과 연동
         model.addAttribute("couponPolicy", new CouponPolicyRequestDTO());
-        return "/admin/coupon-policy-create";
+        return "admin/coupon-policy-create";
     }
 
     /**
@@ -66,7 +63,7 @@ public class AdminCouponController {
 
         model.addAttribute("policies", policies);
         model.addAttribute("query", query); // 검색어 유지
-        return "/admin/check-coupon-policy";
+        return "admin/check-coupon-policy";
     }
 
 
@@ -141,6 +138,26 @@ public class AdminCouponController {
             return "쿠폰 생성/발급 중 오류가 발생했습니다: " + e.getMessage();
         }
     }
+
+    // 쿠폰 대량 생성 페이지 이동
+    @GetMapping("/coupons/bulk")
+    public String showCouponBulkCreatePage() {
+        return "admin/coupon-bulk-create";
+    }
+
+
+    // 쿠폰 대량 생성 요청
+    @PostMapping("/coupons/bulk")
+    @ResponseBody
+    public String createCouponsInBulk(@RequestBody CouponBulkCreationRequestDTO request) {
+        try {
+            bookFeignClient.createCouponsInBulk(request);
+            return "쿠폰이 성공적으로 생성되었습니다.";
+        } catch (FeignException e) {
+            return "쿠폰 생성 중 오류가 발생했습니다: " + e.getMessage();
+        }
+    }
+
 
     // 도서 쿠폰 생성을 위한 도서검색
     @GetMapping("/coupons/book-search")

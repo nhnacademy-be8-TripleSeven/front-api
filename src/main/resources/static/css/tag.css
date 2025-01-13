@@ -1,0 +1,42 @@
+/* 태그 리스트 컨테이너 */
+.tag-card-container {
+    display: block;      /* flex 대신 block으로: 줄 단위 */
+    margin-top: 16px;
+}
+
+/* 각 줄(아이템) */
+.tag-item {
+    display: flex;       /* 한 줄에서 ID, 이름, 버튼 배치 */
+    align-items: center;
+    justify-content: flex-start;
+    border-bottom: 1px solid #ddd;
+    padding: 8px 0;
+}
+
+/* tagId 스타일 */
+.tag-id {
+    margin-right: 16px;
+    color: #666;
+    font-weight: bold;
+}
+
+/* 태그 이름 */
+.tag-name {
+    flex: 1;
+    font-size: 14px;
+    color: #333;
+}
+
+/* 삭제 버튼 */
+.delete-tag-button {
+    background: none;
+    border: none;
+    color: #888;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: 8px;
+}
+
+.delete-tag-button:hover {
+    color: red;
+}

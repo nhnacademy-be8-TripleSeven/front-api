@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>배송비 정책 관리</title>
+    <link rel="stylesheet" th:href="@{/css/admin-policy.css}">
+    <link rel="stylesheet" th:href="@{/css/global.css}">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script type="module" src="/js/axios-config.js"></script>
+    <script th:src="@{/js/global.js}"></script>
+    <script th:src="@{/js/delivery-policy.js}"></script>
+</head>
+<body>
+<div th:replace="header :: header"></div>
+
+
+<main class="my-container">
+    <div th:replace="admin/admin-sidebar :: aside"></div>
+
+    <section>
+        <div class="header-container">
+            <h2>배송비 정책 관리</h2>
+            <div class="button-container">
+                <form th:action="@{/admin/frontend/policies/delivery/create}" method="get">
+                    <button type="submit" class="create-btn">정책 생성</button>
+                </form>
+            </div>
+        </div>
+        <table>
+            <thead>
+            <tr>
+                <th>아이디</th>
+                <th>정책 이름</th>
+                <th>가격</th>
+                <th>수정</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:if="${deliveryPolicies.isEmpty()}">
+                <td colspan="4">조회된 데이터가 없습니다.</td>
+            </tr>
+            <tr th:each="delivery : ${deliveryPolicies}">
+                <td th:text="${delivery.getId()}">0</td>
+                <td th:text="${delivery.getName()}">정책 1</td>
+                <td th:text="${#numbers.formatInteger(delivery.getPrice(), 0, 'COMMA')} + '원'">0원</td>
+                <td>
+                    <form class="delivery-edit-form">
+                        <input type="hidden" name="id" th:value="${delivery.getId()}"/>
+                        <table>
+                            <tr>
+                                <td>이름</td>
+                                <td><input type="text" name="name" th:value="${delivery.getName()}"/></td>
+                            </tr>
+                            <tr>
+                                <td>가격</td>
+                                <td><input type="number" name="price" th:value="${delivery.getPrice()}"/></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <button type="submit" class="delivery-edit-btn">수정</button>
+                                    <input type="hidden" name="type" value="DEFAULT">
+                                    <button type="submit" class="delivery-update-btn">기본 배송비 설정</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+
+<div th:replace="footer :: footer"></div>
+
+</body>
+</html>

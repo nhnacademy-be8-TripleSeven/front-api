@@ -1,11 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
 
+/* 초기화 */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Gamja Flower', cursive;
+    font-family: "Open Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-weight: 600; /* bold 또는 700 */
+
+
+    /* font-variation-settings는 Open Sans가 가변 폰트가 아니므로 제거 */
 }
+
 
 body {
     background-color: #f9fbfc;

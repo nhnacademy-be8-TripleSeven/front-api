@@ -6,6 +6,9 @@
   <title>장바구니</title>
   <link rel="stylesheet" th:href="@{/css/cart-fail.css}">
   <link rel="stylesheet" th:href="@{/css/global.css}">
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script type="module" src="/js/axios-config.js"></script>
+  <script th:src="@{/js/global.js}"></script>
 </head>
 <body>
 <div class="container">
@@ -21,8 +24,6 @@
       </div>
       <div id="cart-tab" class="tab-content active">
         <p class="empty-cart-text">장바구니에 담긴 상품이 없습니다.</p>
-        <p class="instruction-text">로그인하시면 장바구니에 저장한 상품을 볼 수 있습니다.</p>
-        <button class="login-btn" th:onclick="|location.href='@{/login}'|">로그인하기</button>
       </div>
       <div id="recent-tab" class="tab-content">
         <p class="empty-cart-text">오늘 본 상품이 없습니다.</p>

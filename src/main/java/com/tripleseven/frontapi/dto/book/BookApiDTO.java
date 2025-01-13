@@ -33,11 +33,13 @@ public class BookApiDTO {
     private List<MultipartFile> detailImage;
     private int stock;
     private int page;
+    private String publisherName;
 
     public BookApiDTO(String title, String isbn, List<CategoryDTO> categories,
         List<BookTypeDTO> bookTypes, List<BookCreatorDTO> authors, List<String> tags,
         LocalDate publishedDate, String description, int regularPrice, int salePrice, String index,
-        List<MultipartFile> coverImage, List<MultipartFile> detailImage, int stock, int page) {
+        List<MultipartFile> coverImage, List<MultipartFile> detailImage, int stock, int page,
+        String publisherName) {
         this.title = title;
         this.isbn = isbn;
         this.categories = categories;
@@ -53,5 +55,6 @@ public class BookApiDTO {
         this.detailImage = detailImage;
         this.stock = stock;
         this.page = page;
+        this.publisherName = publisherName;
     }
 }

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>포인트 내역</title>
+    <link rel="stylesheet" th:href="@{/css/global.css}">
+    <link rel="stylesheet" th:href="@{/css/points-history.css}">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>  <!-- axios CDN 추가 -->
+    <script type="module" src="/js/axios-config.js"></script>
+    <script th:src="@{/js/global.js}"></script>
+    <script th:src="@{/js/points-history.js}"></script>
+</head>
+<body>
+<div th:replace="header :: header"></div>
+
+<main class="my-account-container">
+    <div th:replace="sidebar.html"></div>
+    <section class="return-history">
+        <h2>포인트 내역</h2>
+        <form id="filterForm">
+            <div class="filters">
+                <div class="filter-item">
+                    <label for="start-date">시작일</label>
+                    <input type="date" id="start-date" name="startDate">
+                </div>
+                <div class="filter-item">
+                    <label for="end-date">종료일</label>
+                    <input type="date" id="end-date" name="endDate">
+                </div>
+                <button type="button" class="filter-btn" id="search-btn">조회</button>
+            </div>
+        </form>
+
+        <table>
+            <thead>
+            <tr>
+                <th>이력 ID</th>
+                <th>주문 그룹 ID</th>
+                <th>타입</th>
+                <th>변동량</th>
+                <th>변동일시</th>
+                <th>변동사유</th>
+            </tr>
+            </thead>
+            <tbody id="point-table-body">
+            <!-- 데이터가 동적으로 추가됩니다 -->
+            </tbody>
+        </table>
+        <div id="pagination" class="pagination"></div>
+    </section>
+</main>
+
+<div th:replace="footer :: footer"></div>
+
+</body>
+</html>

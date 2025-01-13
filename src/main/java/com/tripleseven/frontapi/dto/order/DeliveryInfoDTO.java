@@ -15,5 +15,7 @@ public class DeliveryInfoDTO {
     String OrdererName;
     String recipientName;
     String recipientPhone;
+    String recipientHomePhone;
     String address;
+    LocalDate shippingAt;
 }

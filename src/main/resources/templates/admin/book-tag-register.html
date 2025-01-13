@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>도서 태그 관리</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- css -->
+  <link rel="stylesheet" th:href="@{/css/global.css}">
+  <link rel="stylesheet" th:href="@{/css/check-user.css}">
+
+  <!-- js -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script type="module" src="/js/axios-config.js"></script>
+  <script type="module" src="/js/book-tag.js"></script>
+</head>
+<body>
+<div th:replace="header :: header"></div>
+
+<main class="main-content">
+  <div th:replace="admin/admin-sidebar :: aside"></div>
+  <section>
+    <div class="tag-container">
+      <h2>도서 태그 관리</h2>
+
+      <!-- 도서 검색: Thymeleaf GET Form -->
+      <div class="form-group">
+        <!-- bookId 파라미터를 GET으로 넘긴다 -->
+        <form th:action="@{/admin/frontend/book_tags}" method="get">
+          <label for="searchBookId">도서 ID</label>
+          <!-- 만약 이미 검색된 bookId가 있다면, 해당 값을 유지 (수정/재검색 편의용) -->
+          <input type="number"
+                 id="searchBookId"
+                 name="bookId"
+                 placeholder="도서 ID를 입력하세요"
+                 th:value="${bookId}" />
+          <button class="btn-submit" type="submit">태그 조회</button>
+        </form>
+      </div>
+
+      <hr>
+
+      <!-- 태그 리스트 -->
+      <div class="tag-list">
+        <h3>등록된 태그</h3>
+        <ul class="tag-list-items">
+          <!-- tags: 컨트롤러에서 model.addAttribute("tags", ...) -->
+          <li th:each="tag : ${tags}">
+            <span th:text="'#' + ${tag.tagId} + ' - ' + ${tag.tagName}"></span>
+            <button type="button"
+                    class="delete-tag-button"
+                    th:attr="data-tag-id=${tag.tagId}">
+              삭제
+            </button>
+          </li>
+
+          <!-- 태그가 비었을 때 -->
+          <li th:if="${#lists.isEmpty(tags)}">등록된 태그가 없습니다.</li>
+        </ul>
+      </div>
+
+      <hr>
+
+      <!-- 태그 추가 (axios POST 요청) -->
+      <div class="form-group">
+        <!-- 새 태그를 추가하기 위해 도서 ID와 태그 ID를 입력 -->
+        <label for="addTagId">태그 ID 추가</label>
+        <input type="number" id="addTagId" name="addTagId" placeholder="추가할 태그 ID를 입력하세요" />
+        <button id="addTagToBookButton" class="btn-submit">태그 추가</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div th:replace="footer :: footer"></div>
+</body>
+</html>

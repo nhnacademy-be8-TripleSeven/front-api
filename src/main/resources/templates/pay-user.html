@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NHN 24</title>
+    <link rel="stylesheet" th:href="@{/css/pay-user.css}">
+    <link rel="stylesheet" th:href="@{/css/global.css}">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>  <!-- axios CDN 추가 -->
+    <script type="module" src="/js/axios-config.js"></script>
+    <script th:src="@{/js/global.js}"></script>
+</head>
+<body>
+<div th:replace="header :: header"></div>
+
+<main>
+    <section class="step-container">
+        <div class="step active">카트</div>
+        <div class="step current">결제</div>
+        <div class="step">완료</div>
+    </section>
+    <section class="delivery-section">
+        <h2><img th:src="@{/image/emoji/ship.png}" alt=""> NHN 24 배송</h2>
+        <h6>일반 배송: 5000원</h6>
+    </section>
+    <section class="shipping-info">
+    </section>
+    <section class="payment-method">
+    </section>
+</main>
+
+
+<div th:replace="footer :: footer"></div>
+</body>
+</html>
