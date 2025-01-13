@@ -29,7 +29,7 @@ public class OrderController {
     @GetMapping("/frontend/order")
     public String getOrderPage(
             @RequestHeader(value = "X-USER",required = false)Long userId,
-            @CookieValue(value = "GUEST-ID",required = false)Long guestId,
+            @CookieValue(value = "GUEST-ID",required = false)String guestId,
             @RequestParam("type")String type,
             @RequestParam(value = "bookId", required = false) Long bookId,
             Model model) {
@@ -83,7 +83,7 @@ public class OrderController {
     @GetMapping("/frontend/order/success")
     public String getOrderSuccessPage(
             @RequestHeader(value = "X-USER", required = false)Long userId,
-            @CookieValue(value = "GUEST-ID",required = false)Long guestId,
+            @CookieValue(value = "GUEST-ID",required = false)String guestId,
             Model model
     ){
 //        MemberDTO memberDTO = memberService.getMemberInfo(userId);

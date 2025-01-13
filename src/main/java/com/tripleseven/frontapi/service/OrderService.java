@@ -89,4 +89,8 @@ public class OrderService {
     public JSONObject getPayment(String jsonBody){
         return orderFeignClient.confirmPayment(jsonBody);
     }
+//
+//    public int getDeliveryPrice(){
+//         orderFeignClient.getDefaultPolicies();
+//    }
 }

@@ -505,12 +505,7 @@
             }
         };
 
-        // 주문자 정보 수집
-        addHiddenField("customerName", document.getElementById("customer-name").value);
-        addHiddenField("customerPhone", `${document.getElementById("customer-mobile1").value}-${document.getElementById("customer-mobile2").value}-${document.getElementById("customer-mobile3").value}`);
-        addHiddenField("customerLandline", `${document.getElementById("customer-landline1").value}-${document.getElementById("customer-landline2").value}-${document.getElementById("customer-landline3").value}`);
-        addHiddenField("customerEmail", document.getElementById("customer-email").value);
-        addHiddenField("customerPassword", document.getElementById("customer-password").value);
+
 
         // 받는 사람 정보 수집
         addHiddenField("recipientName", document.getElementById("name").value);
