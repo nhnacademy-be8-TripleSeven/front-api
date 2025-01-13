@@ -15,8 +15,8 @@ function handleCreateBook(event) {
     publisherName: document.getElementById('publisher-name').value, // 추가
 
     // categories도 collectNestedInputValues로 수정
-    categories: categoryNestInputValue('categories'),
-    bookTypes: collectNestedInputValues('bookTypes'),
+    categories: categoryNestedInputValues('categories'),
+    bookTypes: TypeCollectNestedInputValues('bookTypes'),
     authors: collectNestedInputValues('authors'),
     publishedDate: document.getElementById('published-date').value,
     description: document.getElementById('description').value,
@@ -68,7 +68,6 @@ function handleCreateBook(event) {
   });
 }
 
-// 카테고리, 도서 타입, 저자 등 중첩 필드 수집 함수
 function collectNestedInputValues(fieldName) {
   const inputs = document.querySelectorAll(`[name^="${fieldName}"]`);
   const values = [];
@@ -89,17 +88,80 @@ function collectNestedInputValues(fieldName) {
 
   return values;
 }
-
-// 카테고리, 도서 타입, 저자 등 중첩 필드 수집 함수 (카테고리는 select만 처리)
-function categoryNestInputValue(fieldName) {
-  const selectElements = document.querySelectorAll(`select[name^="${fieldName}"]`);
+function TypeCollectNestedInputValues(fieldName) {
+  const inputs = document.querySelectorAll(`input[name^="${fieldName}"]`);
   const values = [];
 
-  selectElements.forEach(select => {
-    if (select.value) {
-      values.push(select.value);
+  console.log('Found inputs:', inputs);  // inputs를 확인
+
+  inputs.forEach(input => {
+    console.log('Input name:', input.name); // name 속성 확인
+
+    const match = input.name.match(/\[(\d+)\]\.(\w+)/); // 정규식 확인
+    console.log('Match result:', match); // 매칭 결과 확인
+
+    if (match) {
+      const index = parseInt(match[1], 10);  // [0], [1], [2] 의 숫자 추출
+      const key = match[2];  // 'type' 또는 'ranks' 추출
+
+      if (!values[index]) {
+        values[index] = {};  // 해당 인덱스에 객체 할당
+      }
+
+      values[index][key] = input.value.trim();  // 값 할당
+    }
+  });
+
+  console.log('Final values:', values);  // 최종 값 확인
+  return values;
+}
+
+function categoryNestedInputValues(fieldName) {
+  const inputs = document.querySelectorAll(`[name^="${fieldName}"]`);
+  const values = [];
+
+  // 레벨마다 값을 처리
+  inputs.forEach((input) => {
+    const match = input.name.match(/\.(.+)/); // "categories.level1", "categories.level2"에서 level1, level2 추출
+    if (match) {
+      const level = match[1]; // level1, level2 등의 키 이름 추출
+      const numericLevel = parseInt(level.replace(/[^\d]/g, ''), 10); // level1 -> 1, level2 -> 2 등으로 변환
+
+      const selectedOption = input.options[input.selectedIndex];
+      if (selectedOption && selectedOption.value) {
+        const categoryName = selectedOption.text.trim(); // 선택된 옵션의 텍스트 값
+        values.push({ level: numericLevel, name: categoryName });
+      }
     }
   });
 
   return values;
+}
+document.addEventListener("DOMContentLoaded", function () {
+  const categorySelectors = document.querySelectorAll('[name^="categories.level"]');
+
+  // 각 셀렉트 박스에 이벤트 리스너 추가
+  categorySelectors.forEach((selector, index) => {
+    selector.addEventListener("change", function () {
+      const nextLevel = categorySelectors[index + 1];
+
+      if (nextLevel) {
+        if (this.value) {
+          nextLevel.disabled = false; // 현재 단계 선택 시 다음 단계 활성화
+        } else {
+          resetCategoryLevels(index + 1, categorySelectors); // 선택 해제 시 이후 단계 초기화
+        }
+      }
+    });
+  });
+
+  // 초기 상태: 첫 번째 셀렉트만 활성화, 나머지는 비활성화
+  resetCategoryLevels(1, categorySelectors);
+});
+
+function resetCategoryLevels(startIndex, categorySelectors) {
+  for (let i = startIndex; i < categorySelectors.length; i++) {
+    categorySelectors[i].value = ""; // 값 초기화
+    categorySelectors[i].disabled = true; // 비활성화
+  }
 }
