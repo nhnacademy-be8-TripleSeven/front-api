@@ -60,13 +60,15 @@
             console.error("결제 승인 요청 중 오류 발생:", err);
             // 결제 승인 실패 시 실패 페이지로 리디렉션
             // window.location.href = `payment/fail.html?message=${err.message}&code=${err.code}`;
-            window.location.href = `/fail.html?message=${encodeURIComponent(err.message)}&code=${encodeURIComponent(err.code)}`;
+            // window.location.href = `/fail.html?message=${encodeURIComponent(err.message)}&code=${encodeURIComponent(err.code)}`;
+            window.location.href = 'frontend/payment/fail?message=${encodeURIComponent(err.message)}&code=${encodeURIComponent(err.code)}'
         }
     }
 
     confirm()
         .then(function (data) {
             // 결제 승인 성공 시 UI 처리 (response 데이터를 화면에 띄우지 않음)
+
         })
         .catch((err) => {
             // 결제 승인 실패 시 UI 처리 (실패 페이지로 리디렉션)

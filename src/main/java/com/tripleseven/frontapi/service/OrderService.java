@@ -82,7 +82,7 @@ public class OrderService {
         return null;
     }
 
-    public PayInfoResponseDTO getPayInfo(Long userId, Long guestId,PayInfoRequestDTO requestDTO) {
+    public PayInfoResponseDTO getPayInfo(Long userId, String guestId,PayInfoRequestDTO requestDTO) {
         return orderFeignClient.getPayInfo(userId,guestId,requestDTO);
     }
 

@@ -29,27 +29,27 @@ public class PayViewController {
             Model model,
             @ModelAttribute PayInfoRequestDTO payInfoRequestDTO,
             @RequestHeader(value = "X-USER",required = false)Long userId,
-            @CookieValue(value = "GUEST-ID",required = false)Long guestId) {
+            @CookieValue(value = "GUEST-ID")String guestId) {
 
-        PayInfoResponseDTO responseDTO = null;
         // 주문 정보
-        userId = 1L; //임시
-        responseDTO = orderService.getPayInfo(userId,guestId,payInfoRequestDTO);
-
+        PayInfoResponseDTO responseDTO = orderService.getPayInfo(userId,guestId,payInfoRequestDTO);
 
         // 멤버 api호출해서 필요한 정보 보내기?
 
         model.addAttribute("orderId", responseDTO.getOrderId());
         model.addAttribute("amount", responseDTO.getTotalAmount());
         model.addAttribute("orderName", "sample product");
-        model.addAttribute("customerName", payInfoRequestDTO.getRecipientName());
-        model.addAttribute("customerEmail", payInfoRequestDTO.getRecipientPhone());
+        model.addAttribute("customerName", payInfoRequestDTO.getRecipientInfo().getRecipientName());
+//        model.addAttribute("customerEmail", payInfoRequestDTO.get);
 
         return "payment/checkout";
     }
 
-    @GetMapping("/payment/success")
-    public String paymentSuccessPage() {
+    @GetMapping("/frontend/payment/success")
+    public String paymentSuccessPage(
+            @RequestHeader(value = "X-USER",required = false)Long userId,
+            @CookieValue(value = "GUEST-ID")String guestId
+    ) {
 
         return "payment/success";
     }
@@ -63,11 +63,13 @@ public class PayViewController {
         return ResponseEntity.status(statusCode).body(response);
     }
 
-    @RequestMapping(value = "/fail", method = RequestMethod.GET)
-    public String failPayment(HttpServletRequest request, Model model) {
+    @RequestMapping(value = "frontend/payment/fail", method = RequestMethod.GET)
+    public String failPayment(HttpServletRequest request, Model model,
+                              @RequestHeader(value = "X-USER",required = false)Long userId,
+                              @CookieValue(value = "GUEST-ID")String guestId) {
         model.addAttribute("code", request.getParameter("code"));
         model.addAttribute("message", request.getParameter("message"));
-        return "/pay-fail";
+        return "payment/fail";
     }
 }
 

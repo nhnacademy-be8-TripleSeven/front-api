@@ -88,7 +88,7 @@ public interface OrderFeignClient {
     @PostMapping("/payments/order")
     PayInfoResponseDTO getPayInfo(
             @RequestHeader("X-USER") Long userId,
-            @CookieValue("GUEST-ID")Long guestId,
+            @CookieValue("GUEST-ID")String guestId,
             @RequestBody PayInfoRequestDTO payInfoRequestDTO
     );
 

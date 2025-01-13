@@ -410,7 +410,7 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", () => {
-        // DOM 요소 가져오기
+        // 1. 포인트 사용 여부 처리
         const pointsYes = document.getElementById("use-points-yes");
         const pointsNo = document.getElementById("use-points-no");
         const finalAmountElems = document.querySelectorAll(".final-amount ");
@@ -418,13 +418,28 @@
         const availablePointsElem = document.getElementById("available-points");
         const pointUsedElem = document.getElementById("point-used");
 
-        // 초기 데이터
         let finalAmount = parseInt(finalAmountElems[0].textContent.replace(/[^0-9]/g, "")) || 0;
         let availablePoints = parseInt(availablePointsElem.textContent.replace(/[^0-9]/g, "")) || 0;
         let isUsingPoints = false;
 
-        // 포인트 사용 여부 이벤트
+        const updateAmounts = () => {
+            const pointsUsed = isUsingPoints ? Math.min(finalAmount, availablePoints) : 0;
+            const pointsFinalAmount = Math.max(finalAmount - pointsUsed, 0);
+
+            pointUsedElem.textContent = `${pointsUsed.toLocaleString()} 원`;
+            pointsFinalAmountElem.textContent = `${pointsFinalAmount.toLocaleString()} 원`;
+            availablePointsElem.textContent = isUsingPoints
+                ? `${(availablePoints - pointsUsed).toLocaleString()} PT`
+                : `${availablePoints.toLocaleString()} PT`;
+
+            finalAmountElems.forEach((elem) => {
+                elem.textContent = `${pointsFinalAmount.toLocaleString()} 원`;
+            });
+        };
+
+        const payForm = document.getElementById("pay-button");
         pointsYes.addEventListener("change", () => {
+            console.log("test")
             isUsingPoints = true;
             updateAmounts();
         });
@@ -434,116 +449,85 @@
             updateAmounts();
         });
 
-        // 금액 업데이트 함수
-        const updateAmounts = () => {
-            // 포인트 사용 금액 계산
-            const pointsUsed = isUsingPoints ? Math.min(finalAmount, availablePoints) : 0;
-
-            // 포인트 적용 후 금액 계산
-            const pointsFinalAmount = Math.max(finalAmount - pointsUsed, 0);
-
-            // UI 업데이트
-            pointUsedElem.textContent = `${pointsUsed.toLocaleString()} 원`;
-            pointsFinalAmountElem.textContent = `${pointsFinalAmount.toLocaleString()} 원`;
-            availablePointsElem.textContent = isUsingPoints
-                ? `${(availablePoints - pointsUsed).toLocaleString()} PT`
-                : `${availablePoints.toLocaleString()} PT`;
-
-            // 모든 최종 결제 금액 요소 업데이트
-            finalAmountElems.forEach((elem) => {
-                elem.textContent = `${pointsFinalAmount.toLocaleString()} 원`;
-            });
-        };
-
-        // 초기화
         updateAmounts();
-    });
-    document.addEventListener("DOMContentLoaded", () => {
+
+        // 2. 배송 날짜 선택 처리
         const dateElements = document.querySelectorAll(".delivery-date-container .date");
         const deliveryDateElements = document.querySelectorAll(".item-section .product-table tbody tr td:nth-child(4)");
 
         dateElements.forEach((dateElement) => {
             dateElement.addEventListener("click", () => {
-                // 모든 날짜에서 'active' 클래스 제거
                 dateElements.forEach((el) => el.classList.remove("active"));
-
-                // 선택된 날짜에 'active' 클래스 추가
                 dateElement.classList.add("active");
-
-                // 선택된 날짜 가져오기
                 const selectedDate = dateElement.getAttribute("data-date");
 
                 if (selectedDate) {
-                    // 상품별 배송일 업데이트
                     deliveryDateElements.forEach((deliveryElem) => {
-                        deliveryElem.textContent = selectedDate; // 날짜 업데이트
+                        deliveryElem.textContent = selectedDate;
                     });
                 } else {
                     console.error("선택된 날짜를 가져올 수 없습니다.");
                 }
             });
         });
-    });
-</script>
 
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script>
-    document.getElementById("pay-button").addEventListener("click", (event) => {
-        event.preventDefault(); // 기본 버튼 동작 방지
+        // 3. 결제 버튼 클릭 처리 (axios 사용)
+        payForm.addEventListener("click", (event) => {
+            console.log("asdf");
+            event.preventDefault(); // 기본 버튼 동작 방지
 
-        const form = document.createElement("form");
-        form.method = "post";
-        form.action = "/frontend/payment";
+            const form = document.createElement("form");
+            form.method = "post";
+            form.action = "/frontend/payment";
+            form.enctype = "application/x-www-form-urlencoded";
 
-        const addHiddenField = (name, value) => {
-            if (value !== null && value !== "") { // 값이 null 또는 빈 문자열이 아닌 경우에만 추가
-                const input = document.createElement("input");
-                input.type = "hidden";
-                input.name = name;
-                input.value = value;
-                form.appendChild(input);
+            const addHiddenField = (name, value) => {
+                if (value !== null && value !== "") {
+                    const input = document.createElement("input");
+                    input.type = "hidden";
+                    input.name = name;
+                    input.value = value;
+                    form.appendChild(input);
+                }
+            };
+
+            // 요청 데이터 수집 및 폼에 추가
+
+            addHiddenField("recipientName", document.getElementById("name").value);
+            addHiddenField("recipientPhone", `${document.getElementById("mobile-phone1").value}-${document.getElementById("mobile-phone2").value}-${document.getElementById("mobile-phone3").value}`);
+            addHiddenField("recipientLandline", `${document.getElementById("landline-phone1").value}-${document.getElementById("landline-phone2").value}-${document.getElementById("landline-phone3").value}`);
+            addHiddenField("roadAddress", document.getElementById("road-address").value);
+            addHiddenField("zoneAddress", document.getElementById("zone-address").value);
+            addHiddenField("detailAddress", document.getElementById("detail-address").value);
+
+            const wrapperElement = document.getElementById("wrapper-select");
+            const wrapperId = wrapperElement ? wrapperElement.value : null;
+            addHiddenField("wrapperId", wrapperId ? parseInt(wrapperId) : null);
+
+            const couponElement = document.getElementById("apply-coupon");
+            const couponId = couponElement ? couponElement.value : null;
+            addHiddenField("couponId", couponId ? parseInt(couponId) : null);
+
+            const usedPointsElement = document.getElementById("used-points");
+            const usedPoints = usedPointsElement ? parseInt(usedPointsElement.value) || 0 : 0;
+            addHiddenField("point", usedPoints);
+            addHiddenField("totalAmount", parseInt(document.querySelector(".final-amount").textContent.replace(/[^0-9]/g, "")) || 0);
+
+            const selectedDateElement = document.querySelector(".delivery-date-container .date.active");
+            if (selectedDateElement) {
+                const rawDate = selectedDateElement.getAttribute("data-date");
+                const parts = rawDate.split(/[\/(]/);
+                const deliveryDate = `2025-${parts[0].padStart(2, '0')}-${parts[1].padStart(2, '0')}`;
+                addHiddenField("deliveryDate", deliveryDate);
+            } else {
+                alert("배송 날짜를 선택해주세요.");
+                return;
             }
-        };
 
+            document.body.appendChild(form);
+            form.submit();
 
-
-        // 받는 사람 정보 수집
-        addHiddenField("recipientName", document.getElementById("name").value);
-        addHiddenField("recipientPhone", `${document.getElementById("mobile-phone1").value}-${document.getElementById("mobile-phone2").value}-${document.getElementById("mobile-phone3").value}`);
-        addHiddenField("recipientLandline", `${document.getElementById("landline-phone1").value}-${document.getElementById("landline-phone2").value}-${document.getElementById("landline-phone3").value}`);
-        addHiddenField("roadAddress", document.getElementById("road-address").value);
-        addHiddenField("zoneAddress", document.getElementById("zone-address").value);
-        addHiddenField("detailAddress", document.getElementById("detail-address").value);
-
-        // 포장지와 쿠폰 선택 여부 확인 후 추가
-        const wrapperElement = document.getElementById("wrapper-select");
-        const wrapperId = wrapperElement ? wrapperElement.value : null;
-        addHiddenField("wrapperId", wrapperId ? parseInt(wrapperId) : null);
-
-        const couponElement = document.getElementById("apply-coupon");
-        const couponId = couponElement ? couponElement.value : null;
-        addHiddenField("couponId", couponId ? parseInt(couponId) : null);
-
-        // 포인트와 총 금액 추가
-        const usedPointsElement = document.getElementById("used-points");
-        const usedPoints = usedPointsElement ? parseInt(usedPointsElement.value) || 0 : 0;
-        addHiddenField("point", usedPoints);
-        addHiddenField("totalAmount", parseInt(document.querySelector(".final-amount").textContent.replace(/[^0-9]/g, "")) || 0);
-
-        // **배송 날짜 추가 (yyyy-MM-dd 형식으로 변환)**
-        const selectedDateElement = document.querySelector(".delivery-date-container .date.active");
-        if (selectedDateElement) {
-            const rawDate = selectedDateElement.getAttribute("data-date"); // 예: "01/09(목)"
-            const parts = rawDate.split(/[\/(]/); // ["01", "09", "(목)"]
-            const deliveryDate = `2025-${parts[0].padStart(2, '0')}-${parts[1].padStart(2, '0')}`; // "2025-01-09"
-            addHiddenField("deliveryDate", deliveryDate);
-        } else {
-            alert("배송 날짜를 선택해주세요.");
-            return; // 날짜가 선택되지 않았으면 폼 제출하지 않음
-        }
-
-        document.body.appendChild(form);
-        form.submit();
+        });
     });
 </script>
 

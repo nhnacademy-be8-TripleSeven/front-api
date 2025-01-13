@@ -1,11 +1,15 @@
 package com.tripleseven.frontapi.dto.pay;
 
+import com.tripleseven.frontapi.dto.order.AddressInfoDTO;
+import com.tripleseven.frontapi.dto.order.OrderBookInfoDTO;
+import com.tripleseven.frontapi.dto.order.RecipientInfoDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -13,15 +17,11 @@ import java.time.LocalDate;
 @Setter
 public class PayInfoRequestDTO {
 
-
+    private List<OrderBookInfoDTO> bookOrderDetails;
     // 받는 사람 정보
-    private String recipientName;     // 받는 사람 이름
-    private String recipientPhone;    // 받는 사람 휴대폰 번호
-    private String recipientLandline; // 받는 사람 일반 전화
+    private RecipientInfoDTO recipientInfo;
 
-    private String roadAddress;     // 도로명 주소
-    private String zoneAddress;     // 지번 주소
-    private String detailAddress;   // 상세 주소
+    private AddressInfoDTO addressInfo;
 
     private LocalDate deliveryDate;//배송 날짜
 
@@ -29,5 +29,5 @@ public class PayInfoRequestDTO {
     private long couponId; //쿠폰 아이디
 
     private long point; //사용하는 포인트
-    private long totalAmount; //총 가격
+    private long totalAmount; //최종 결제 가격
 }

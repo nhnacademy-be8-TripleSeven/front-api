@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css" href="/style.css" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>토스페이먼츠 샘플 프로젝트</title>
+    <title>토스결제 페이지</title>
     <!-- SDK 추가 -->
     <script src="https://js.tosspayments.com/v2/standard"></script>
 </head>
@@ -28,11 +28,11 @@
         <!-- 결제하기 버튼 -->
         <button class="button" style="margin-top: 30px" onclick="requestPayment()">결제하기</button>
     </div>
-    <div class="box_section" style="padding: 40px 30px 50px 30px; margin-top: 30px; margin-bottom: 50px">
-        <h1>정기 결제</h1>
-        <!-- 빌링 버튼 -->
-        <button class="button" style="margin-top: 30px" onclick="requestBillingAuth()">빌링키 발급하기</button>
-    </div>
+<!--    <div class="box_section" style="padding: 40px 30px 50px 30px; margin-top: 30px; margin-bottom: 50px">-->
+<!--        <h1>정기 결제</h1>-->
+<!--        &lt;!&ndash; 빌링 버튼 &ndash;&gt;-->
+<!--        <button class="button" style="margin-top: 30px" onclick="requestBillingAuth()">빌링키 발급하기</button>-->
+<!--    </div>-->
 </div>
 <script>
     // 서버에서 전달된 금액 및 주문 정보를 받아옴
@@ -77,8 +77,8 @@
                     amount,
                     orderId: orderId,  // 서버에서 받은 주문 ID 사용
                     orderName: orderName,  // 서버에서 받은 주문 이름 사용
-                    successUrl: window.location.origin + "/payment/success", // 결제 요청이 성공하면 리다이렉트되는 URL
-                    failUrl: window.location.origin + "/pay-fail.html", // 결제 요청이 실패하면 리다이렉트되는 URL
+                    successUrl: window.location.origin + "/frontend/payment/success", // 결제 요청이 성공하면 리다이렉트되는 URL
+                    failUrl: window.location.origin + "/frontend/payment/fail", // 결제 요청이 실패하면 리다이렉트되는 URL
                     customerEmail: customerEmail,  // 서버에서 받은 고객 이메일 사용
                     customerName: customerName,  // 서버에서 받은 고객 이름 사용
                 });
