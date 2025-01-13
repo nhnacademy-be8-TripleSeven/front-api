@@ -42,8 +42,8 @@ public class PayViewController {
         model.addAttribute("orderId", responseDTO.getOrderId());
         model.addAttribute("amount", responseDTO.getTotalAmount());
         model.addAttribute("orderName", "sample product");
-        model.addAttribute("customerName", payInfoRequestDTO.getCustomerName());
-        model.addAttribute("customerEmail", payInfoRequestDTO.getCustomerEmail());
+        model.addAttribute("customerName", payInfoRequestDTO.getRecipientName());
+        model.addAttribute("customerEmail", payInfoRequestDTO.getRecipientPhone());
 
         return "payment/checkout";
     }

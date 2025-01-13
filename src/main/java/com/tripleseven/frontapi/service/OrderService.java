@@ -2,6 +2,7 @@ package com.tripleseven.frontapi.service;
 
 import com.tripleseven.frontapi.client.OrderFeignClient;
 import com.tripleseven.frontapi.dto.FilterCriteriaDTO;
+import com.tripleseven.frontapi.dto.book.BookOrderDetailResponse;
 import com.tripleseven.frontapi.dto.order.*;
 import com.tripleseven.frontapi.dto.point.PointHistoryPageResponseDTO;
 import com.tripleseven.frontapi.dto.point.UserPointHistoryDTO;
@@ -72,7 +73,7 @@ public class OrderService {
 
 
     public ProductDTO getProductInfoByDirect(Long bookId, int quantity){
-        BookDetailViewDTO bookDetailDTO = bookService.getBookDetail(bookId);
+        BookOrderDetailResponse bookDetailDTO = bookService.getBookOrderDetail(bookId);
         ProductDTO productDTO = new ProductDTO();
         productDTO.ofCreate(bookDetailDTO,quantity);
         return productDTO;
