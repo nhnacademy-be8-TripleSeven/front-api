@@ -69,8 +69,13 @@ document.addEventListener("DOMContentLoaded", () => {
         };
 
         axios.post("/admin/frontend/coupons/bulk", formData)
-            .then(() => {
-                alert("쿠폰이 성공적으로 생성되었습니다.");
+            .then(response => {
+                const { success, createdCount } = response.data;
+                if (success) {
+                    alert(`쿠폰 생성 완료. 생성된 쿠폰 수: ${createdCount}`);
+                } else {
+                    alert("쿠폰 생성에 실패했습니다.");
+                }
             })
             .catch(error => {
                 console.error("Error creating coupons in bulk:", error);

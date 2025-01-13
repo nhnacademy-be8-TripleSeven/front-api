@@ -149,14 +149,15 @@ public class AdminCouponController {
     // 쿠폰 대량 생성 요청
     @PostMapping("/coupons/bulk")
     @ResponseBody
-    public String createCouponsInBulk(@RequestBody CouponBulkCreationRequestDTO request) {
+    public BulkCouponCreationResponseDTO createCouponsInBulk(@RequestBody CouponBulkCreationRequestDTO request) {
         try {
-            bookFeignClient.createCouponsInBulk(request);
-            return "쿠폰이 성공적으로 생성되었습니다.";
+            return bookFeignClient.createCouponsInBulk(request);
         } catch (FeignException e) {
-            return "쿠폰 생성 중 오류가 발생했습니다: " + e.getMessage();
+            return new BulkCouponCreationResponseDTO(false, 0L);
         }
     }
+
+
 
 
     // 도서 쿠폰 생성을 위한 도서검색

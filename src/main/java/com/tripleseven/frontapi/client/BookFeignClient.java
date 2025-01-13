@@ -96,7 +96,7 @@ public interface BookFeignClient {
     List<CouponAssignResponseDTO> createAndAssignCoupons(@RequestBody CouponCreationAndAssignRequestDTO request);
 
     @PostMapping("/admin/coupons/bulk")
-    void createCouponsInBulk(@RequestBody CouponBulkCreationRequestDTO request);
+    BulkCouponCreationResponseDTO createCouponsInBulk(@RequestBody CouponBulkCreationRequestDTO request);
 
     @PostMapping("/admin/coupon-policies")
     CouponPolicyResponseDTO createCouponPolicy(@RequestBody CouponPolicyRequestDTO request);
