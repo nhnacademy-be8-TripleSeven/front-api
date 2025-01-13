@@ -18,6 +18,7 @@ public class ProductDTO {
     private String[] deliveryDate; // 예상 배송일 배열
     private double discountPercentage;
     private int totalPrice;
+    private Long bookId;
 
     public void ofCreate(BookDetailViewDTO searchBookDetailDTO, int quantity) {
         this.title = searchBookDetailDTO.getTitle();
@@ -27,6 +28,7 @@ public class ProductDTO {
         this.coverUrl = searchBookDetailDTO.getCoverUrl();
         this.quantity = quantity;
         this.totalPrice = quantity * discountedPrice;
+        this.bookId = 60L;
 
         // 배열 초기화 (5개의 예상 배송일)
         this.deliveryDate = new String[5];
