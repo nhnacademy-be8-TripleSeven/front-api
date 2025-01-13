@@ -7,36 +7,8 @@
     <link rel="stylesheet" href="/css/pay-user.css">
 </head>
 <body>
-<header class="header">
-    <div class="logo">
-        <a href="../frontend/"><img src="/image/logo/nhn24-logo.png" alt="NHN 24 로고"></a>
-    </div>
-    <div class="header-center">
-        <div class="search-bar">
-            <label>
-                <input type="text" placeholder="검색어를 입력하세요">
-            </label>
-            <button>🔍</button>
-        </div>
-        <nav class="menu">
-            <ul>
-                <li><a href="/recommended-books.html">추천 도서</a></li>
-                <li><a href="/domestic-books.html">국내 도서</a></li>
-                <li><a href="/foreign-books.html">외국 도서</a></li>
-                <li><a href="/bestsellers.html">베스트셀러</a></li>
-                <li><a href="/new-books.html">신간 소개</a></li>
-                <li><a href="/events.html">이벤트</a></li>
-            </ul>
-        </nav>
-    </div>
-    <div class="user-actions">
-        <img src="/image/icons/person.png" alt="User Icon">
-        <img src="/image/icons/cart.png" alt="Cart Icon">
-        <a href="login-succes.html">
-            <button class="login-btn">Login</button>
-        </a>
-    </div>
-</header>
+<div th:replace="header :: header"></div>
+
 
 
 <!-- 메인 섹션 -->
@@ -53,8 +25,9 @@
     <section class="shipping-info">
         <div class="flex-box progress-bar"></div>
         <span class="free-shipping-text">
-            <strong>30,000원</strong> 이상 구매 시 <strong>무료배송</strong>
-        </span>
+        <strong th:text="${#numbers.formatInteger(defaultDeliveryPrice, 0, 'COMMA') + '원'}">30,000원</strong>
+        이상 구매 시 <strong>무료배송</strong>
+    </span>
         <button class="more-details-btn">더 담으러 가기</button>
     </section>
     <section class="item-section">
@@ -437,7 +410,6 @@
             });
         };
 
-        const payForm = document.getElementById("pay-button");
         pointsYes.addEventListener("change", () => {
             console.log("test")
             isUsingPoints = true;
@@ -471,14 +443,13 @@
             });
         });
 
-        // 3. 결제 버튼 클릭 처리 (axios 사용)
+        const payForm = document.getElementById("pay-button");
         payForm.addEventListener("click", (event) => {
-            console.log("asdf");
             event.preventDefault(); // 기본 버튼 동작 방지
 
             const form = document.createElement("form");
             form.method = "post";
-            form.action = "/frontend/payment";
+            form.action = "/frontend/payment"; // 서버의 결제 요청 처리 엔드포인트
             form.enctype = "application/x-www-form-urlencoded";
 
             const addHiddenField = (name, value) => {
@@ -491,28 +462,43 @@
                 }
             };
 
-            // 요청 데이터 수집 및 폼에 추가
+            // 책 주문 정보 수집 및 폼에 추가
+            document.querySelectorAll(".product-table tbody tr").forEach((row, index) => {
+                const bookId = parseInt(row.querySelector("a").getAttribute("href").split("/").pop());
+                const title = row.querySelector("a").textContent;
+                const price = parseInt(row.querySelector("td:nth-child(3)").textContent.replace(/[^0-9]/g, ""));
+                const quantity = parseInt(row.querySelector("td:nth-child(2)").textContent);
+                const couponSalePrice = parseInt(row.querySelector("td:nth-child(5) span").textContent.replace(/[^0-9]/g, ""));
 
-            addHiddenField("recipientName", document.getElementById("name").value);
-            addHiddenField("recipientPhone", `${document.getElementById("mobile-phone1").value}-${document.getElementById("mobile-phone2").value}-${document.getElementById("mobile-phone3").value}`);
-            addHiddenField("recipientLandline", `${document.getElementById("landline-phone1").value}-${document.getElementById("landline-phone2").value}-${document.getElementById("landline-phone3").value}`);
-            addHiddenField("roadAddress", document.getElementById("road-address").value);
-            addHiddenField("zoneAddress", document.getElementById("zone-address").value);
-            addHiddenField("detailAddress", document.getElementById("detail-address").value);
+                addHiddenField(`bookOrderDetails[${index}].bookId`, bookId);
+                addHiddenField(`bookOrderDetails[${index}].title`, title);
+                addHiddenField(`bookOrderDetails[${index}].price`, price);
+                addHiddenField(`bookOrderDetails[${index}].quantity`, quantity);
+                addHiddenField(`bookOrderDetails[${index}].couponSalePrice`, couponSalePrice);
+            });
 
-            const wrapperElement = document.getElementById("wrapper-select");
-            const wrapperId = wrapperElement ? wrapperElement.value : null;
-            addHiddenField("wrapperId", wrapperId ? parseInt(wrapperId) : null);
+            // 받는 사람 정보 폼에 추가
+            addHiddenField("recipientInfo.recipientName", document.getElementById("name").value);
+            addHiddenField("recipientInfo.recipientPhone", `${document.getElementById("mobile-phone1").value}-${document.getElementById("mobile-phone2").value}-${document.getElementById("mobile-phone3").value}`);
+            addHiddenField("recipientInfo.recipientLandline", `${document.getElementById("landline-phone1").value}-${document.getElementById("landline-phone2").value}-${document.getElementById("landline-phone3").value}`);
 
-            const couponElement = document.getElementById("apply-coupon");
-            const couponId = couponElement ? couponElement.value : null;
-            addHiddenField("couponId", couponId ? parseInt(couponId) : null);
+            // 주소 정보 폼에 추가
+            addHiddenField("addressInfo.roadAddress", document.getElementById("road-address").value);
+            addHiddenField("addressInfo.zoneAddress", document.getElementById("zone-address").value);
+            addHiddenField("addressInfo.detailAddress", document.getElementById("detail-address").value);
 
-            const usedPointsElement = document.getElementById("used-points");
-            const usedPoints = usedPointsElement ? parseInt(usedPointsElement.value) || 0 : 0;
-            addHiddenField("point", usedPoints);
-            addHiddenField("totalAmount", parseInt(document.querySelector(".final-amount").textContent.replace(/[^0-9]/g, "")) || 0);
+            // 기타 정보 폼에 추가
+            const wrapperId = parseInt(document.querySelector("input[name='gift-wrap']:checked").value) || 0;
+            const couponId = parseInt(document.getElementById("apply-coupon").value) || 0;
+            const point = parseInt(document.getElementById("point-used").textContent.replace(/[^0-9]/g, ""));
+            const totalAmount = parseInt(document.querySelector(".final-amount").textContent.replace(/[^0-9]/g, ""));
 
+            addHiddenField("wrapperId", wrapperId);
+            addHiddenField("couponId", couponId);
+            addHiddenField("point", point);
+            addHiddenField("totalAmount", totalAmount);
+
+            // 배송 날짜 폼에 추가
             const selectedDateElement = document.querySelector(".delivery-date-container .date.active");
             if (selectedDateElement) {
                 const rawDate = selectedDateElement.getAttribute("data-date");
@@ -525,8 +511,7 @@
             }
 
             document.body.appendChild(form);
-            form.submit();
-
+            form.submit(); // 폼 제출
         });
     });
 </script>

@@ -3,6 +3,7 @@ package com.tripleseven.frontapi.controller.order;
 import com.tripleseven.frontapi.dto.MemberDTO;
 import com.tripleseven.frontapi.dto.coupon.CouponDetailsDTO;
 import com.tripleseven.frontapi.dto.order.ProductDTO;
+import com.tripleseven.frontapi.dto.policy.DeliveryPolicyType;
 import com.tripleseven.frontapi.service.BookService;
 import com.tripleseven.frontapi.service.MemberService;
 import com.tripleseven.frontapi.service.OrderService;
@@ -56,14 +57,15 @@ public class OrderController {
                 .sum();
 
         int finalAmount = productAmount - discountAmount;
-        int additionalAmount = finalAmount < 30000 ? 5000 : 0; //30000은 임시, order-api에서 배송정책 조회해서 가져와야함
+        int defaultDeliveryPrice = orderService.getDeliveryPrice(DeliveryPolicyType.DEFAULT);
+        int additionalAmount = finalAmount < defaultDeliveryPrice ? 5000 : 0; //30000은 임시, order-api에서 배송정책 조회해서 가져와야함
         int totalAmount = finalAmount + additionalAmount;
 
-        int availablePoint = 30000; // 만약 회원이라면 order-api에서 조회와야함 회원 아니면 조회 x
+        int availablePoint = 0; // 만약 회원이라면 order-api에서 조회와야함 회원 아니면 조회 x
 
-//        if(userId != null) {
-//            availablePoint = orderService.getPoints(userId);
-//        }
+        if(userId != null) {
+            availablePoint = orderService.getPoints(userId);
+        }
 
 //        List<CouponDetailsDTO> couponList = bookService.getUnusedCoupons(userId);
 
@@ -71,6 +73,7 @@ public class OrderController {
         model.addAttribute("productAmount", productAmount);
         model.addAttribute("discountAmount", discountAmount);
         model.addAttribute("finalAmount", finalAmount);
+        model.addAttribute("defaultDeliveryPrice", defaultDeliveryPrice);
         model.addAttribute("additionalAmount", additionalAmount);
         model.addAttribute("totalAmount", totalAmount);
         model.addAttribute("availablePoint", availablePoint);

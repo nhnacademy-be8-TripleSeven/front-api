@@ -7,9 +7,7 @@ import com.tripleseven.frontapi.dto.order.OrderManageResponseDTO;
 import com.tripleseven.frontapi.dto.order.OrderPayDetailDTO;
 import com.tripleseven.frontapi.dto.point.PointHistoryPageResponseDTO;
 import com.tripleseven.frontapi.dto.point.UserPointHistoryDTO;
-import com.tripleseven.frontapi.dto.policy.DefaultPolicyDTO;
-import com.tripleseven.frontapi.dto.policy.DeliveryPolicyDTO;
-import com.tripleseven.frontapi.dto.policy.PointPolicyDTO;
+import com.tripleseven.frontapi.dto.policy.*;
 import com.tripleseven.frontapi.dto.pay.PayInfoRequestDTO;
 import com.tripleseven.frontapi.dto.pay.PayInfoResponseDTO;
 import org.json.simple.JSONObject;
@@ -94,6 +92,9 @@ public interface OrderFeignClient {
 
     @PostMapping("/confirm/payment")
     JSONObject confirmPayment(String jsonBody);
+
+    @GetMapping("/orders/default-policy/delivery")
+    DefaultDeliveryPolicyDTO getDefaultDeliveryPolicy(@RequestParam DeliveryPolicyType type);
 
 
 }

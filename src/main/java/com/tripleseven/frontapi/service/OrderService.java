@@ -6,9 +6,10 @@ import com.tripleseven.frontapi.dto.book.BookOrderDetailResponse;
 import com.tripleseven.frontapi.dto.order.*;
 import com.tripleseven.frontapi.dto.point.PointHistoryPageResponseDTO;
 import com.tripleseven.frontapi.dto.point.UserPointHistoryDTO;
-import com.tripleseven.frontapi.dto.book.BookDetailViewDTO;
 import com.tripleseven.frontapi.dto.pay.PayInfoRequestDTO;
 import com.tripleseven.frontapi.dto.pay.PayInfoResponseDTO;
+import com.tripleseven.frontapi.dto.policy.DefaultDeliveryPolicyDTO;
+import com.tripleseven.frontapi.dto.policy.DeliveryPolicyType;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONObject;
 import org.springframework.data.domain.Page;
@@ -89,8 +90,9 @@ public class OrderService {
     public JSONObject getPayment(String jsonBody){
         return orderFeignClient.confirmPayment(jsonBody);
     }
-//
-//    public int getDeliveryPrice(){
-//         orderFeignClient.getDefaultPolicies();
-//    }
+
+    public int getDeliveryPrice(DeliveryPolicyType type){
+        DefaultDeliveryPolicyDTO defaultDeliveryPolicyDTO = orderFeignClient.getDefaultDeliveryPolicy(type);
+        return defaultDeliveryPolicyDTO.getPrice();
+    }
 }

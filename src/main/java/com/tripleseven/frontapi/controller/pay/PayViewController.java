@@ -11,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Objects;
 
 
 @RequiredArgsConstructor
@@ -40,7 +39,7 @@ public class PayViewController {
         model.addAttribute("amount", responseDTO.getTotalAmount());
         model.addAttribute("orderName", "sample product");
         model.addAttribute("customerName", payInfoRequestDTO.getRecipientInfo().getRecipientName());
-//        model.addAttribute("customerEmail", payInfoRequestDTO.get);
+        model.addAttribute("customerEmail", "nhn1234@gmail.com");
 
         return "payment/checkout";
     }
