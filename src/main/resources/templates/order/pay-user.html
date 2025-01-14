@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NHN 24</title>
+    <link rel="stylesheet" href="/css/pay-user.css">
+</head>
+<body>
+<div th:replace="header :: header"></div>
+
+
+
+<!-- 메인 섹션 -->
+[<main>
+    <section class="step-container">
+        <div class="step active">카트</div>
+        <div class="step current">결제</div>
+        <div class="step">완료</div>
+    </section>
+    <section class="delivery-section">
+        <h2><img src="/image/emoji/ship.png" alt=""> NHN 24 배송</h2>
+        <h6>일반 배송: 5000원</h6>
+    </section>
+    <section class="shipping-info">
+        <div class="flex-box progress-bar"></div>
+        <span class="free-shipping-text">
+        <strong id = defaultDeliveryPrice th:text="${#numbers.formatInteger(defaultDeliveryPrice, 0, 'COMMA') + '원'}">30,000원</strong>
+        이상 구매 시 <strong>무료배송</strong>
+    </span>
+        <button class="more-details-btn">더 담으러 가기</button>
+    </section>
+    <section class="item-section">
+        <div class="product-table">
+            <table>
+                <thead>
+                <tr>
+                    <th>상품정보</th>
+                    <th>수량</th>
+                    <th>상품금액</th>
+                    <th>배송일</th>
+                    <th>할인금액</th>
+                    <th>합계</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="product : ${products}">
+                    <td class="product-info">
+                        <img th:src="${product.coverUrl}" alt="책 이미지">
+                        <div>
+                            <a th:href="'/frontend/books/' + ${product.bookId}" th:text="${product.title}"></a>
+                        </div>
+                    </td>
+                    <td th:text="${product.quantity}">1</td>
+                    <td th:text="${#numbers.formatInteger(product.price, 0, 'COMMA') + '원'}">21,000원</td>
+                    <td th:text="${product.deliveryDate[0]}">12/12(목)<br>도착(예정)</td>
+                    <td>
+                        <span th:text="${#numbers.formatInteger(product.discountedPrice, 0, 'COMMA') + '원'}">18,900원</span><br>
+                        <span class="discount"
+                              th:text="'(' + ${#numbers.formatInteger(product.discountPercentage,0)} + '% 할인)'">(10% 할인)</span>
+                    </td>
+                    <td th:text="${#numbers.formatInteger(product.totalPrice,  0, 'COMMA') + '원'}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+    <section class="delivery-date-container">
+        <div class="delivery-date-label">배송일</div>
+        <div th:each="date, iterStat : ${products.getFirst().deliveryDate}"
+             class="date"
+             th:classappend="${iterStat.index == 0} ? 'active' : ''"
+             th:attr="data-date=${date}"
+             th:text="${date}">
+            12/15(일)
+        </div>
+    </section>
+
+    <!-- 배송 주소 -->
+    <section class="shipping-container">
+        <h3><img src="/image/emoji/ship.png" alt=""> 배송 주소</h3>
+        <div class="shipping-content">
+            <!-- 왼쪽 섹션 -->
+            <div class="shipping-left">
+                <!-- 배송 방법 -->
+                <div class="section shipping-method">
+                    <h4>배송 방법</h4>
+                    <div class="shipping-method-class">
+                        <label>
+                            <input type="radio" name="shipping" value="default" checked>
+                            <span>일반 택배</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="shipping" value="world">
+                            <span>해외 배송</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="shipping" value="convenient">
+                            <span>편의점 택배</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- 이름 -->
+                <div class="section name">
+                    <label for="name">이름 </label>
+                    <input type="text" id="name" placeholder="이름 입력">
+                </div>
+
+                <!-- 배송 주소 -->
+                <div class="section address">
+                    <label>배송주소</label>
+                    <div>
+                        <input type="text" id="road-address" placeholder="도로명 주소">
+                        <input type="text" id="zone-address" placeholder="지번 주소">
+                        <input type="text" id="detail-address" placeholder="상세 주소">
+                    </div>
+                </div>
+
+                <!-- 휴대폰 -->
+                <div class="section mobile-phone">
+                    <label>휴대폰</label>
+                    <div class="phone-group">
+                        <input type="text" id="mobile-phone1" maxlength="3"> -
+                        <input type="text" id="mobile-phone2" maxlength="4"> -
+                        <input type="text" id="mobile-phone3" maxlength="4">
+                    </div>
+                </div>
+
+                <!-- 일반 전화 -->
+                <div class="section landline-phone">
+                    <label>일반 전화</label>
+                    <div class="phone-group">
+                        <input type="text" id="landline-phone1" maxlength="3"> -
+                        <input type="text" id="landline-phone2" maxlength="4"> -
+                        <input type="text" id="landline-phone3" maxlength="4">
+                    </div>
+                </div>
+            </div>
+
+            <div class="shipping-right">
+                <h3>주문 고객</h3>
+                <p>
+                    회원가입 하시면 NHN 24 포인트 5000원 적립되며,<br>
+                    쿠폰/추가적립/이벤트 등의 혜택이 있습니다. 지금 바로 가입하시고 보다 많은 혜택 누려보세요.
+                </p>
+                <a href="/frontend/join">
+                    <button class="signup-btn">회원가입하기</button>
+                </a>
+
+<!--                <form>-->
+<!--                    <div class="radio-group">-->
+<!--                        <label><input type="radio" name="customer-info" checked> 새로입력</label>-->
+<!--                        <label><input type="radio" name="customer-info"> 배송정보와 동일</label>-->
+<!--                    </div>-->
+<!--                    <div class="section name">-->
+<!--                        <label for="customer-name">이름</label>-->
+<!--                        <input type="text" id="customer-name" placeholder="이름 입력">-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash; 휴대폰 &ndash;&gt;-->
+<!--                    <div class="section mobile-phone">-->
+<!--                        <label>휴대폰</label>-->
+<!--                        <div class="phone-group">-->
+<!--                            <input type="text" id="customer-mobile1" maxlength="3"> - -->
+<!--                            <input type="text" id="customer-mobile2" maxlength="4"> - -->
+<!--                            <input type="text" id="customer-mobile3" maxlength="4">-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash; 일반 전화 &ndash;&gt;-->
+<!--                    <div class="section landline-phone">-->
+<!--                        <label>일반 전화</label>-->
+<!--                        <div class="phone-group">-->
+<!--                            <input type="text" id="customer-landline1" maxlength="3"> - -->
+<!--                            <input type="text" id="customer-landline2" maxlength="4"> - -->
+<!--                            <input type="text" id="customer-landline3" maxlength="4">-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash; 이메일 &ndash;&gt;-->
+<!--                    <div class="section email">-->
+<!--                        <label for="customer-email">이메일</label>-->
+<!--                        <input type="email" id="customer-email" placeholder="이메일 입력">-->
+<!--                    </div>-->
+
+<!--                    &lt;!&ndash; 비밀번호 &ndash;&gt;-->
+<!--                    <div class="section password">-->
+<!--                        <label for="customer-password">비밀번호</label>-->
+<!--                        <input type="password" id="customer-password" placeholder="비밀번호 입력">-->
+<!--                    </div>-->
+<!--                </form>-->
+<!--                <p class="info-text">비밀번호는 "주문 확인"시 필수기재사항으로 반드시 기입하셔야 합니다.</p>-->
+<!--                <p class="info-text">비밀번호는 숫자 + 영문 조합하여 4자리 이상으로 입력해주세요.</p>-->
+            </div>
+        </div>
+    </section>
+
+    <section class="payment-info">
+        <h3 class="payment-info-title"><img src="/image/emoji/card.png" alt=""> 결제 정보</h3>
+        <div class="payment-grid">
+            <div class="payment-item">상품 금액<br><strong
+                    th:text="${#numbers.formatInteger(productAmount,0,'COMMA') + '원'}">21,000 원</strong></div>
+
+            <!-- 총 추가금액 항목: 택배비와 포장비 구분 -->
+            <div class="payment-item">총 추가금액<br>
+                <div>
+                    <span>택배비: </span><strong id="delivery-fee" th:text="${#numbers.formatInteger(additionalAmount, 0, 'COMMA') + ' 원'}">5,000 원</strong>
+                </div>
+                <div>
+                    <span>포장비: </span><strong id="wrapper-price-detail">0 원</strong>
+                </div>
+            </div>
+
+            <div class="payment-item">할인금액<br><strong
+                    th:text="${#numbers.formatInteger(discountAmount, 0, 'COMMA') + ' 원'}">0 원</strong>
+            </div>
+
+            <div class="payment-total">
+                <p class="payment-total-title">최종 결제금액<br></p>
+                <strong id="payment-info-final-amount" th:text="${#numbers.formatInteger(finalAmount,0,'COMMA') + '원'}">18,900 원</strong>
+
+                <p class="payment-total-title"><strong>상품</strong> 1종 (1개) 21,000 원</p>
+                <p><span class="discount" th:text="'-> 즉시할인 ' + ${#numbers.formatInteger(discountAmount, 0, 'COMMA') + ' 원'}">-> 즉시할인 2,100 원</span></p>
+            </div>
+
+            <div class="payment-item">쿠폰 적용<br><strong>0 원</strong></div>
+            <div class="payment-item">포인트 사용<br><strong id="point-used">0 원</strong></div>
+            <div class="payment-detail">
+                <ul>
+                    <li>포인트 사용시 결제 금액: <span id="points-final-amount">0 원</span></li>
+                    <li>쿠폰 적용 후 결제 금액: <span id="coupon-final-amount">0 원</span></li>
+                    <li>사용 가능한 포인트: <span id="available-points" th:text="${availablePoint + ' PT'}">0 PT</span></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="payment-method">
+        <h3 class="section-title"><img src="/image/emoji/card.png" alt=""> 결제 방법</h3>
+        <div class="payment-container">
+            <!-- Left Side -->
+            <div class="payment-options">
+                <div class="payment-header">
+                    <label>
+                        <input type="radio" name="payment-method" checked/>
+                        결제 수단
+                    </label>
+                </div>
+                <div class="payment-buttons">
+                    <!-- Toss Pay (지원됨) -->
+                    <div class="button" onclick="selectPayment('Toss')">
+                        <img src="/image/logo/TossPay_Logo_Primary.png" alt="Toss Pay"/>
+                    </div>
+                    <!-- 나머지 버튼은 지원되지 않음 -->
+                    <div class="button" onclick="showUnsupportedMessage()">
+                        <img src="/image/logo/naverpay-logo.jpg" alt="NPay"/>
+                    </div>
+                    <div class="button" onclick="showUnsupportedMessage()">
+                        <img src="/image/logo/kakaopay-logo.png" alt="KakaoPay"/>
+                    </div>
+                    <div class="button" onclick="showUnsupportedMessage()">
+                        <img src="/image/logo/payco-logo.jpg" alt="Payco"/>
+                    </div>
+                    <div class="button" onclick="showUnsupportedMessage()">
+                        <span>신용카드</span>
+                    </div>
+                    <div class="button" onclick="showUnsupportedMessage()">
+                        <span>계좌 이체</span>
+                    </div>
+                    <div class="button" onclick="showUnsupportedMessage()">
+                        <span>무통장 입금</span>
+                    </div>
+                    <div class="button" onclick="showUnsupportedMessage()">
+                        <span>추가 예정</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <script>
+                function selectPayment(method) {
+                    alert(`${method} 결제가 선택되었습니다.`);
+                }
+
+                function showUnsupportedMessage() {
+                    alert("현재는 토스 결제만 지원됩니다.");
+                }
+            </script>
+
+            <!-- Right Side -->
+            <div class="discount-options">
+                <div class="direct-point">
+                    <strong>· 적립 포인트 사용</strong>
+                    <label><input type="radio" name="use-points" value="use" id="use-points-yes"> 사용함</label>
+                    <label><input type="radio" name="use-points" value="not-use" id="use-points-no" checked>
+                        사용안함</label>
+                </div>
+                <div class="coupon">
+                    <strong>· 쿠폰사용</strong>
+                    <select id="apply-coupon">
+                        <option value="0">쿠폰 선택</option>
+                        <!-- 쿠폰 리스트 렌더링 -->
+                        <option th:each="coupon : ${couponList}"
+                                th:value="${coupon.couponId}"
+                                th:text="'[' + coupon.couponname + '] ' + (coupon.discountRate != null ? coupon.discountRate + '% 할인' : coupon.discountAmount + '원 할인') + ' - 유효기간: ' + coupon.expiryDate">
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="payment-section">
+        <div class="payment-right">
+            <div class="gift-wrapping-section">
+                <div class="gift-option">
+                    <p>선물포장</p>
+                    <label>
+                        <input type="radio" name="gift-wrap" value="include" id="gift-wrap-include"> 포함
+                    </label>
+                    <label>
+                        <input type="radio" name="gift-wrap" value="exclude" id="gift-wrap-exclude" checked> 포함 안함
+                    </label>
+                    <!-- 포장지 선택 링크 -->
+                    <a href="#" class="info-icon" id="select-gift-wrap">포장지 선택</a>
+                </div>
+            </div>
+
+            <!-- 숨겨진 포장지 아이디 필드 -->
+            <input type="hidden" id="wrapper-id" name="wrapperId" value="0">
+
+            <div class="final-payment-info">
+                <div class="final-amountp">
+                    <p>최종 결제금액: <strong id="final-amount" th:text="${#numbers.formatInteger(finalAmount,0,'COMMA') + '원'}">18,900 원</strong></p>
+
+                </div>
+                <button id="pay-button">결제하기</button>
+            </div>
+
+            <!-- 포장지 선택 모달 (섹션 내부에 포함) -->
+            <div id="gift-wrap-modal" class="modal hidden">
+                <div class="modal-content">
+                    <h3>포장지 선택</h3>
+                    <div id="wrapper-list" class="wrapper-list">
+                        <!-- 포장지 리스트를 타임리프를 통해 동적으로 렌더링 -->
+                        <div th:each="wrapper : ${wrappingList}" class="wrapper-item"
+                             th:attr="data-id=${wrapper.id}, data-price=${wrapper.price}"
+                             th:text="${wrapper.name} + ' - ' + ${#numbers.formatInteger(wrapper.price, 0, 'COMMA') + '원'}">
+                        </div>
+                    </div>
+                    <button id="close-modal" class="close-btn">닫기</button>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<div th:replace="footer :: footer"></div>
+
+<!--<script src="script.js"></script>-->
+<script src="/js/order-payment.js" defer></script>
+<script src="/js/order-common.js"></script>
+<script src="/js/order-wrapping.js"></script>
+</body>
+</html>
+
+
+

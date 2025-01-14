@@ -208,6 +208,8 @@ section {
 }
 
 .button {
+    width: 100%;
+    height: 80px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -215,11 +217,21 @@ section {
     background-color: white;
     border: 1px solid #ccc;
     border-radius: 8px;
-    padding: 10px;
+    /*padding: 10px;*/
+    justify-content: center;
+    font-size: 20px;
     flex: 1;
     text-align: center;
     cursor: pointer;
     transition: all 0.3s ease;
+}
+
+.button img {
+    max-width: 80%; /* 버튼 내부에서 이미지의 최대 너비를 버튼에 맞춤 */
+    max-height: 80%; /* 이미지의 최대 높이를 버튼에 맞춤 */
+    object-fit: contain; /* 이미지 비율 유지하며 버튼 내부에 맞춤 */
+    display: block; /* 이미지 아래 여백 제거 */
+    margin: auto; /* 수평 및 수직 중앙 정렬 */
 }
 
 .button:hover {
@@ -284,7 +296,7 @@ section {
     background: rgba(158, 174, 223, 0.26);
     padding: 10px;
     text-align: center;
-    font-size: 14px;
+    font-size: 16px;
     border: 1px solid #ddd;
     height: 100%;
     align-items: center;
@@ -296,8 +308,15 @@ section {
     background: linear-gradient(0deg, rgba(158, 174, 223, 0.26), rgba(158, 174, 223, 0.26)),
     linear-gradient(0deg, rgba(158, 174, 223, 0.26), rgba(158, 174, 223, 0.26));
     text-align: center;
-    padding: 20px;
+    display: grid;
+    align-items: center;
+    height: 100%;
     border: 1px solid #ddd;
+}
+
+.payment-total-title {
+    font-size: 20px;
+    font-weight: bold;
 }
 
 .final-amount {
@@ -312,7 +331,7 @@ section {
     background: rgba(158, 174, 223, 0.26);
     padding: 10px;
     text-align: center;
-    font-size: 11px;
+    font-size: 13px;
     border: 1px solid #ddd;
     height: 100%;
     align-items: center;
@@ -487,30 +506,30 @@ section {
 }
 
 .delivery-date-container {
+    width: 80%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: #f9fbfc;
     box-shadow: none;
     font-size: 30px;
-
 }
 
 .delivery-date-label {
-    padding: 20px 40px;
+    padding: 25px 60px;
     background-color: #f5f5f5;
     border-radius: 10px;
-    font-size: 14px;
+    font-size: 25px;
     text-align: center;
     font-weight: bold;
 }
 
 .date {
     display: flex;
-    padding: 20px 50px;
+    padding: 25px 70px;
     border: 1px solid #ddd;
     border-left: none;
-    font-size: 14px;
+    font-size: 25px;
     text-align: center;
     cursor: pointer;
     background-color: #fff;
@@ -991,4 +1010,65 @@ footer {
 
 .footer-buttons button:hover {
     background-color: #bfc9d3;
+}
+
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 20px;
+    z-index: 1000;
+    width: 400px;
+    max-width: 90%;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal.hidden {
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+}
+
+.wrapper-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.wrapper-item {
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.wrapper-item:hover {
+    background-color: #f0f0f0;
+}
+
+.wrapper-item.selected {
+    background-color: #cce5ff;
+    border-color: #007bff;
+    font-weight: bold;
+}
+
+.close-btn {
+    margin-top: 20px;
+    padding: 5px 10px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.close-btn:hover {
+    background-color: #0056b3;
 }

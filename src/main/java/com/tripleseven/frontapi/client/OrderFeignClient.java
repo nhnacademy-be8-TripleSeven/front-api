@@ -7,9 +7,10 @@ import com.tripleseven.frontapi.dto.order.OrderManageResponseDTO;
 import com.tripleseven.frontapi.dto.order.OrderPayDetailDTO;
 import com.tripleseven.frontapi.dto.point.PointHistoryPageResponseDTO;
 import com.tripleseven.frontapi.dto.point.UserPointHistoryDTO;
-import com.tripleseven.frontapi.dto.policy.DefaultPolicyDTO;
-import com.tripleseven.frontapi.dto.policy.DeliveryPolicyDTO;
-import com.tripleseven.frontapi.dto.policy.PointPolicyDTO;
+import com.tripleseven.frontapi.dto.policy.*;
+import com.tripleseven.frontapi.dto.pay.PayInfoRequestDTO;
+import com.tripleseven.frontapi.dto.pay.PayInfoResponseDTO;
+import org.json.simple.JSONObject;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -80,5 +81,23 @@ public interface OrderFeignClient {
 
     @GetMapping("/admin/orders/default-policies")
     DefaultPolicyDTO getDefaultPolicies();
+
+
+    @PostMapping("/payments/order")
+    PayInfoResponseDTO getPayInfo(
+            @RequestHeader("X-USER") Long userId,
+            @CookieValue("GUEST-ID")String guestId,
+            @RequestBody PayInfoRequestDTO payInfoRequestDTO
+    );
+
+    @PostMapping("/confirm/payment")
+    JSONObject confirmPayment(String jsonBody);
+
+    @GetMapping("/orders/default-policy/delivery")
+    DefaultDeliveryPolicyDTO getDefaultDeliveryPolicy(@RequestParam DeliveryPolicyType type);
+
+    @GetMapping("/orders/wrappings")
+    List<WrappingResponseDTO> getAllWrappings();
+
 
 }

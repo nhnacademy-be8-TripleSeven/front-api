@@ -95,6 +95,9 @@ public interface BookFeignClient {
     @PostMapping("/admin/coupons/create-and-assign")
     List<CouponAssignResponseDTO> createAndAssignCoupons(@RequestBody CouponCreationAndAssignRequestDTO request);
 
+    @PostMapping("/admin/coupons/bulk")
+    BulkCouponCreationResponseDTO createCouponsInBulk(@RequestBody CouponBulkCreationRequestDTO request);
+
     @PostMapping("/admin/coupon-policies")
     CouponPolicyResponseDTO createCouponPolicy(@RequestBody CouponPolicyRequestDTO request);
 
@@ -126,7 +129,11 @@ public interface BookFeignClient {
                                           @RequestParam(required = false) String startDate,
                                           @RequestParam(required = false) String endDate);
 
-
+    @GetMapping("/api/coupons/unused")
+    List<CouponDetailsDTO> getUnusedCoupons(@RequestHeader("X-USER") Long userId,
+                                            @RequestParam(required = false)String keyword,
+                                            @RequestParam(required = false)String startDate,
+                                            @RequestParam(required = false)String endDate);
 
     @GetMapping("/api/reviews/{bookId}/paged")
     Page<ReviewResponseDTO> getPagedReviewsByBookId(
@@ -207,4 +214,15 @@ public interface BookFeignClient {
     @GetMapping("/admin/tags")
     Page<TagResponseDto> getAllTags();
 
+    @GetMapping("/admin/book-tags/{bookId}")
+    List<BookTagResponseDTO> getTagsByBookId(@PathVariable Long bookId);
+
+    @GetMapping("/books/orderDetail/{bookId}")
+    BookOrderDetailResponse getBookOrderDetail(@PathVariable Long bookId);
+
+    @GetMapping("/api/coupons/available")
+    List<AvailableCouponResponseDTO> getAvailableCouponByBookId(
+            @RequestHeader("X-USER") Long userId,
+            @RequestParam List<Long> bookId,
+            @RequestParam Long amount);
 }

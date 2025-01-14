@@ -2,16 +2,7 @@ package com.tripleseven.frontapi.service;
 
 import com.tripleseven.frontapi.client.BookFeignClient;
 import com.tripleseven.frontapi.client.OrderFeignClient;
-import com.tripleseven.frontapi.dto.book.BookAladinDTO;
-import com.tripleseven.frontapi.dto.book.BookApiDTO;
-import com.tripleseven.frontapi.dto.book.BookCreateDTO;
-import com.tripleseven.frontapi.dto.book.BookDTO;
-import com.tripleseven.frontapi.dto.book.BookDetailResponseDTO;
-import com.tripleseven.frontapi.dto.book.BookPageDTO;
-import com.tripleseven.frontapi.dto.book.BookPageResponseDTO;
-import com.tripleseven.frontapi.dto.book.BookSearchResponseDTO;
-import com.tripleseven.frontapi.dto.book.BookPageDetailResponseDTO;
-import com.tripleseven.frontapi.dto.book.BookUpdateDTO;
+import com.tripleseven.frontapi.dto.book.*;
 import com.tripleseven.frontapi.dto.book_creator.BookCreatorDTO;
 import com.tripleseven.frontapi.dto.category.CategoryDTO;
 import com.tripleseven.frontapi.dto.category.CategoryLevelDTO;
@@ -20,9 +11,10 @@ import com.tripleseven.frontapi.dto.category.CategorySearchDTO;
 import com.tripleseven.frontapi.dto.category.PageCategoryDTO;
 import java.util.List;
 
+import com.tripleseven.frontapi.dto.coupon.AvailableCouponResponseDTO;
+import com.tripleseven.frontapi.dto.coupon.CouponDetailsDTO;
 import com.tripleseven.frontapi.dto.review.ReviewRequestDTO;
 import com.tripleseven.frontapi.dto.review.ReviewResponseDTO;
-import com.tripleseven.frontapi.dto.book.BookDetailViewDTO;
 import com.tripleseven.frontapi.dto.tag.TagResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -161,4 +153,11 @@ public class BookService {
         return bookFeignClient.getAllTags().getContent();
     }
 
+    public List<BookTagResponseDTO> getTagsByBookId(Long bookId) {
+        return bookFeignClient.getTagsByBookId(bookId);
+    }
+
+    public BookOrderDetailResponse getBookOrderDetail(Long bookId) {return bookFeignClient.getBookOrderDetail(bookId);}
+
+    public List<AvailableCouponResponseDTO> getAvailableCoupon(Long userId, List<Long>bookId, Long amount) {return bookFeignClient.getAvailableCouponByBookId(userId, bookId, amount);}
 }

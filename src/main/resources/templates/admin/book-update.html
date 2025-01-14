@@ -39,10 +39,10 @@
           <!-- 레벨 1 -->
           <li>
             <label>1단계</label>
-            <select name="categories.level1">
+            <select name="categories.level1" id="categories-level1">
               <option value="" disabled selected>1단계</option>
               <option th:each="level1Category : ${categories.level1}"
-                      th:value="${level1Category.name}"
+                      th:value="${level1Category.id}"
                       th:text="${level1Category.name}"></option>
             </select>
           </li>
@@ -50,48 +50,37 @@
           <!-- 레벨 2 -->
           <li>
             <label>2단계</label>
-            <select name="categories.level2">
+            <select name="categories.level2" id="categories-level2" disabled>
               <option value="" disabled selected>2단계</option>
-              <option th:each="level2Category : ${categories.level2}"
-                      th:value="${level2Category.name}"
-                      th:text="${level2Category.name}"></option>
             </select>
           </li>
 
           <!-- 레벨 3 -->
           <li>
             <label>3단계</label>
-            <select name="categories.level3">
+            <select name="categories.level3" id="categories-level3" disabled>
               <option value="" disabled selected>3단계</option>
-              <option th:each="level3Category : ${categories.level3}"
-                      th:value="${level3Category.name}"
-                      th:text="${level3Category.name}"></option>
             </select>
           </li>
 
           <!-- 레벨 4 -->
           <li>
             <label>4단계</label>
-            <select name="categories.level4">
+            <select name="categories.level4" id="categories-level4" disabled>
               <option value="" disabled selected>4단계</option>
-              <option th:each="level4Category : ${categories.level4}"
-                      th:value="${level4Category.name}"
-                      th:text="${level4Category.name}"></option>
             </select>
           </li>
 
           <!-- 레벨 5 -->
           <li>
-            <label>5단계</label>
-            <select name="categories.level5">
+            <label>4단계</label>
+            <select name="categories.level5" id="categories-level5" disabled>
               <option value="" disabled selected>5단계</option>
-              <option th:each="level5Category : ${categories.level5}"
-                      th:value="${level5Category.name}"
-                      th:text="${level5Category.name}"></option>
             </select>
           </li>
         </ul>
       </div>
+
       <div>
         <label th:for="book-types">도서 타입</label>
         <ul id="typeList">
