@@ -62,30 +62,29 @@ public class OrderController {
         int defaultDeliveryPrice = orderService.getDeliveryPrice(DeliveryPolicyType.DEFAULT);
         int additionalAmount = finalAmount < defaultDeliveryPrice ? 5000 : 0; //30000은 임시, order-api에서 배송정책 조회해서 가져와야함
         int totalAmount = finalAmount + additionalAmount;
-
-        int availablePoint = 0; // 만약 회원이라면 order-api에서 조회와야함 회원 아니면 조회 x
+        int availablePoint = 1000; // 만약 회원이라면 order-api에서 조회와야함 회원 아니면 조회 x
         List<AvailableCouponResponseDTO> couponList = null;
 
         if(userId != null) {
-            availablePoint = orderService.getPoints(userId);    //포인트 조회
+//            availablePoint = orderService.getPoints(userId);    //포인트 조회
             List<Long> bookIds = products.stream()
                     .map(ProductDTO::getBookId) // ProductDTO에서 bookId 추출
                     .toList();
             couponList = bookService.getAvailableCoupon(userId,bookIds,(long)finalAmount);
         }
 
-//        List<CouponDetailsDTO> couponList = bookService.getUnusedCoupons(userId); //쿠폰 조회(미 구현) 로그인이 안됨
-        List<WrappingResponseDTO> wrappingList = orderService.getAllWrappings();
+            List<WrappingResponseDTO> wrappingList = orderService.getAllWrappings();
 
         model.addAttribute("products", products);
         model.addAttribute("productAmount", productAmount);
         model.addAttribute("discountAmount", discountAmount);
         model.addAttribute("finalAmount", finalAmount);
+//        model.addAttribute("totalAmount", totalAmount);
         model.addAttribute("defaultDeliveryPrice", defaultDeliveryPrice);
         model.addAttribute("additionalAmount", additionalAmount);
-        model.addAttribute("totalAmount", totalAmount);
         model.addAttribute("availablePoint", availablePoint);
         model.addAttribute("couponList", couponList);
+        model.addAttribute("wrappingList", wrappingList);
 
         return "order/pay-user";
     }
@@ -94,6 +93,7 @@ public class OrderController {
     public String getOrderSuccessPage(
             @RequestHeader(value = "X-USER", required = false)Long userId,
             @CookieValue(value = "GUEST-ID",required = false)String guestId,
+            @RequestParam Long orderId,
             Model model
     ){
         MemberDTO memberDTO = null;
@@ -104,6 +104,7 @@ public class OrderController {
             return "order/pay-success";
         }
         else{
+
             return "order/pay-success-guest";
         }
 

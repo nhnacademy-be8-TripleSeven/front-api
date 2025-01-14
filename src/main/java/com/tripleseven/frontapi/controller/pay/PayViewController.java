@@ -53,7 +53,7 @@ public class PayViewController {
         return "payment/success";
     }
 
-    @PostMapping("/confirm/payment")
+    @PostMapping("/frontend/confirm/payment")
     public ResponseEntity<JSONObject>confirmPayment(@RequestBody String jsonBody){
         JSONObject response = orderService.getPayment(jsonBody);
 
@@ -62,7 +62,7 @@ public class PayViewController {
         return ResponseEntity.status(statusCode).body(response);
     }
 
-    @RequestMapping(value = "frontend/payment/fail", method = RequestMethod.GET)
+    @RequestMapping(value = "/frontend/payment/fail", method = RequestMethod.GET)
     public String failPayment(HttpServletRequest request, Model model,
                               @RequestHeader(value = "X-USER",required = false)Long userId,
                               @CookieValue(value = "GUEST-ID")String guestId) {

@@ -308,8 +308,15 @@ section {
     background: linear-gradient(0deg, rgba(158, 174, 223, 0.26), rgba(158, 174, 223, 0.26)),
     linear-gradient(0deg, rgba(158, 174, 223, 0.26), rgba(158, 174, 223, 0.26));
     text-align: center;
-    padding: 20px;
+    display: grid;
+    align-items: center;
+    height: 100%;
     border: 1px solid #ddd;
+}
+
+.payment-total-title {
+    font-size: 20px;
+    font-weight: bold;
 }
 
 .final-amount {
@@ -1005,3 +1012,63 @@ footer {
     background-color: #bfc9d3;
 }
 
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 20px;
+    z-index: 1000;
+    width: 400px;
+    max-width: 90%;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal.hidden {
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+}
+
+.wrapper-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.wrapper-item {
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.wrapper-item:hover {
+    background-color: #f0f0f0;
+}
+
+.wrapper-item.selected {
+    background-color: #cce5ff;
+    border-color: #007bff;
+    font-weight: bold;
+}
+
+.close-btn {
+    margin-top: 20px;
+    padding: 5px 10px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.close-btn:hover {
+    background-color: #0056b3;
+}

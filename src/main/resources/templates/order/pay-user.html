@@ -12,7 +12,7 @@
 
 
 <!-- 메인 섹션 -->
-<main>
+[<main>
     <section class="step-container">
         <div class="step active">카트</div>
         <div class="step current">결제</div>
@@ -25,7 +25,7 @@
     <section class="shipping-info">
         <div class="flex-box progress-bar"></div>
         <span class="free-shipping-text">
-        <strong th:text="${#numbers.formatInteger(defaultDeliveryPrice, 0, 'COMMA') + '원'}">30,000원</strong>
+        <strong id = defaultDeliveryPrice th:text="${#numbers.formatInteger(defaultDeliveryPrice, 0, 'COMMA') + '원'}">30,000원</strong>
         이상 구매 시 <strong>무료배송</strong>
     </span>
         <button class="more-details-btn">더 담으러 가기</button>
@@ -198,21 +198,31 @@
         <div class="payment-grid">
             <div class="payment-item">상품 금액<br><strong
                     th:text="${#numbers.formatInteger(productAmount,0,'COMMA') + '원'}">21,000 원</strong></div>
-            <div class="payment-item">총 추가금액<br><strong
-                    th:text="${#numbers.formatInteger(additionalAmount,  0, 'COMMA') + ' 원'}">0 원</strong></div>
-            <div class="payment-item">할인금액<br><strong
-                    th:text="${#numbers.formatInteger(discountAmount,  0, 'COMMA') + ' 원'}">0 원</strong>
+
+            <!-- 총 추가금액 항목: 택배비와 포장비 구분 -->
+            <div class="payment-item">총 추가금액<br>
+                <div>
+                    <span>택배비: </span><strong id="delivery-fee" th:text="${#numbers.formatInteger(additionalAmount, 0, 'COMMA') + ' 원'}">5,000 원</strong>
+                </div>
+                <div>
+                    <span>포장비: </span><strong id="wrapper-price-detail">0 원</strong>
+                </div>
             </div>
+
+            <div class="payment-item">할인금액<br><strong
+                    th:text="${#numbers.formatInteger(discountAmount, 0, 'COMMA') + ' 원'}">0 원</strong>
+            </div>
+
             <div class="payment-total">
-                최종 결제금액<br>
-                <strong class="final-amount" th:text="${#numbers.formatInteger(totalAmount,0,'COMMA') + '원'}">18,900
-                    원</strong>
-                <p><strong>상품</strong> 1종 (1개) 21,000 원</p>
-                <p><span class="discount" th:text="'-> 즉시할인 ' + ${#numbers.formatInteger(discountAmount,  0, 'COMMA') + ' 원'}">-> 즉시할인 2,100 원</span></p>
+                <p class="payment-total-title">최종 결제금액<br></p>
+                <strong id="payment-info-final-amount" th:text="${#numbers.formatInteger(finalAmount,0,'COMMA') + '원'}">18,900 원</strong>
+
+                <p class="payment-total-title"><strong>상품</strong> 1종 (1개) 21,000 원</p>
+                <p><span class="discount" th:text="'-> 즉시할인 ' + ${#numbers.formatInteger(discountAmount, 0, 'COMMA') + ' 원'}">-> 즉시할인 2,100 원</span></p>
             </div>
 
             <div class="payment-item">쿠폰 적용<br><strong>0 원</strong></div>
-            <div class="payment-item">포인트 사용<br><strong id = "point-used">0 원</strong></div>
+            <div class="payment-item">포인트 사용<br><strong id="point-used">0 원</strong></div>
             <div class="payment-detail">
                 <ul>
                     <li>포인트 사용시 결제 금액: <span id="points-final-amount">0 원</span></li>
@@ -288,8 +298,8 @@
                         <option value="0">쿠폰 선택</option>
                         <!-- 쿠폰 리스트 렌더링 -->
                         <option th:each="coupon : ${couponList}"
-                                th:value="${coupon.id}"
-                                th:text="'[' + coupon.name + '] ' + (coupon.discountRate != null ? coupon.discountRate + '% 할인' : coupon.discountAmount + '원 할인') + ' - 유효기간: ' + coupon.expiryDate">
+                                th:value="${coupon.couponId}"
+                                th:text="'[' + coupon.couponname + '] ' + (coupon.discountRate != null ? coupon.discountRate + '% 할인' : coupon.discountAmount + '원 할인') + ' - 유효기간: ' + coupon.expiryDate">
                         </option>
                     </select>
                 </div>
@@ -298,202 +308,58 @@
     </section>
 
     <section class="payment-section">
-
         <div class="payment-right">
             <div class="gift-wrapping-section">
                 <div class="gift-option">
                     <p>선물포장</p>
                     <label>
-                        <input type="radio" name="gift-wrap" value="include"> 포함
+                        <input type="radio" name="gift-wrap" value="include" id="gift-wrap-include"> 포함
                     </label>
                     <label>
-                        <input type="radio" name="gift-wrap" value="exclude" checked> 포함 안함
+                        <input type="radio" name="gift-wrap" value="exclude" id="gift-wrap-exclude" checked> 포함 안함
                     </label>
-                    <a href="#" class="info-icon">ℹ️</a>
+                    <!-- 포장지 선택 링크 -->
+                    <a href="#" class="info-icon" id="select-gift-wrap">포장지 선택</a>
                 </div>
-<!--                <div class="receipt-option">-->
-<!--                    <p>영수증</p>-->
-<!--                    <label>-->
-<!--                        <input type="radio" name="receipt" value="show" checked> 가격 표시-->
-<!--                    </label>-->
-<!--                    <label>-->
-<!--                        <input type="radio" name="receipt" value="hide"> 가격 표시 안함-->
-<!--                    </label>-->
-<!--                </div>-->
             </div>
+
+            <!-- 숨겨진 포장지 아이디 필드 -->
+            <input type="hidden" id="wrapper-id" name="wrapperId" value="0">
+
             <div class="final-payment-info">
                 <div class="final-amountp">
-                    <p>최종 결제금액</p>
-                    <p><strong class="final-amount" th:text="${#numbers.formatInteger(totalAmount,0,'COMMA') + '원'}">18,900 원</strong></p>
+                    <p>최종 결제금액: <strong id="final-amount" th:text="${#numbers.formatInteger(finalAmount,0,'COMMA') + '원'}">18,900 원</strong></p>
+
                 </div>
                 <button id="pay-button">결제하기</button>
+            </div>
+
+            <!-- 포장지 선택 모달 (섹션 내부에 포함) -->
+            <div id="gift-wrap-modal" class="modal hidden">
+                <div class="modal-content">
+                    <h3>포장지 선택</h3>
+                    <div id="wrapper-list" class="wrapper-list">
+                        <!-- 포장지 리스트를 타임리프를 통해 동적으로 렌더링 -->
+                        <div th:each="wrapper : ${wrappingList}" class="wrapper-item"
+                             th:attr="data-id=${wrapper.id}, data-price=${wrapper.price}"
+                             th:text="${wrapper.name} + ' - ' + ${#numbers.formatInteger(wrapper.price, 0, 'COMMA') + '원'}">
+                        </div>
+                    </div>
+                    <button id="close-modal" class="close-btn">닫기</button>
+                </div>
             </div>
         </div>
     </section>
 </main>
 
-<footer>
-    <div class="footer-links">
-        <a href="#">회사소개</a>
-        <a href="#">이용약관</a>
-        <a href="#"><strong>개인정보처리방침</strong></a>
-        <a href="#">청소년 보호정책</a>
-    </div>
-    <div class="footer-container">
-        <div class="footer-info">
-            <p>대표이사 마르코 | 사업자등록번호 123-456-7890</p>
-            <p>통신판매업신고 2024-광주동구-01211</p>
-            <p>이메일: marco@nhn.com | 호스팅 제공자 NHN24</p>
-            <p>© NHN24. All Rights Reserved.</p>
-        </div>
-        <div class="customer-center">
-            <p><strong>고객센터 1544-8282 (발신자 부담)</strong></p>
-            <p>광주광역시 동구 서석동 조선대학교 1층 NHN아카데미</p>
-            <p>Fax 062-1234-5678</p>
-            <div class="footer-buttons">
-                <button>1:1 문의</button>
-                <button>FAQ</button>
-                <button>위치, 영업시간 안내</button>
-            </div>
-        </div>
-    </div>
-</footer>
+<div th:replace="footer :: footer"></div>
+
 <!--<script src="script.js"></script>-->
+<script src="/js/order-payment.js" defer></script>
+<script src="/js/order-common.js"></script>
+<script src="/js/order-wrapping.js"></script>
 </body>
 </html>
 
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-        // 1. 포인트 사용 여부 처리
-        const pointsYes = document.getElementById("use-points-yes");
-        const pointsNo = document.getElementById("use-points-no");
-        const finalAmountElems = document.querySelectorAll(".final-amount ");
-        const pointsFinalAmountElem = document.getElementById("points-final-amount");
-        const availablePointsElem = document.getElementById("available-points");
-        const pointUsedElem = document.getElementById("point-used");
 
-        let finalAmount = parseInt(finalAmountElems[0].textContent.replace(/[^0-9]/g, "")) || 0;
-        let availablePoints = parseInt(availablePointsElem.textContent.replace(/[^0-9]/g, "")) || 0;
-        let isUsingPoints = false;
-
-        const updateAmounts = () => {
-            const pointsUsed = isUsingPoints ? Math.min(finalAmount, availablePoints) : 0;
-            const pointsFinalAmount = Math.max(finalAmount - pointsUsed, 0);
-
-            pointUsedElem.textContent = `${pointsUsed.toLocaleString()} 원`;
-            pointsFinalAmountElem.textContent = `${pointsFinalAmount.toLocaleString()} 원`;
-            availablePointsElem.textContent = isUsingPoints
-                ? `${(availablePoints - pointsUsed).toLocaleString()} PT`
-                : `${availablePoints.toLocaleString()} PT`;
-
-            finalAmountElems.forEach((elem) => {
-                elem.textContent = `${pointsFinalAmount.toLocaleString()} 원`;
-            });
-        };
-
-        pointsYes.addEventListener("change", () => {
-            console.log("test")
-            isUsingPoints = true;
-            updateAmounts();
-        });
-
-        pointsNo.addEventListener("change", () => {
-            isUsingPoints = false;
-            updateAmounts();
-        });
-
-        updateAmounts();
-
-        // 2. 배송 날짜 선택 처리
-        const dateElements = document.querySelectorAll(".delivery-date-container .date");
-        const deliveryDateElements = document.querySelectorAll(".item-section .product-table tbody tr td:nth-child(4)");
-
-        dateElements.forEach((dateElement) => {
-            dateElement.addEventListener("click", () => {
-                dateElements.forEach((el) => el.classList.remove("active"));
-                dateElement.classList.add("active");
-                const selectedDate = dateElement.getAttribute("data-date");
-
-                if (selectedDate) {
-                    deliveryDateElements.forEach((deliveryElem) => {
-                        deliveryElem.textContent = selectedDate;
-                    });
-                } else {
-                    console.error("선택된 날짜를 가져올 수 없습니다.");
-                }
-            });
-        });
-
-        const payForm = document.getElementById("pay-button");
-        payForm.addEventListener("click", (event) => {
-            event.preventDefault(); // 기본 버튼 동작 방지
-
-            const form = document.createElement("form");
-            form.method = "post";
-            form.action = "/frontend/payment"; // 서버의 결제 요청 처리 엔드포인트
-            form.enctype = "application/x-www-form-urlencoded";
-
-            const addHiddenField = (name, value) => {
-                if (value !== null && value !== "") {
-                    const input = document.createElement("input");
-                    input.type = "hidden";
-                    input.name = name;
-                    input.value = value;
-                    form.appendChild(input);
-                }
-            };
-
-            // 책 주문 정보 수집 및 폼에 추가
-            document.querySelectorAll(".product-table tbody tr").forEach((row, index) => {
-                const bookId = parseInt(row.querySelector("a").getAttribute("href").split("/").pop());
-                const title = row.querySelector("a").textContent;
-                const price = parseInt(row.querySelector("td:nth-child(3)").textContent.replace(/[^0-9]/g, ""));
-                const quantity = parseInt(row.querySelector("td:nth-child(2)").textContent);
-                const couponSalePrice = parseInt(row.querySelector("td:nth-child(5) span").textContent.replace(/[^0-9]/g, ""));
-
-                addHiddenField(`bookOrderDetails[${index}].bookId`, bookId);
-                addHiddenField(`bookOrderDetails[${index}].title`, title);
-                addHiddenField(`bookOrderDetails[${index}].price`, price);
-                addHiddenField(`bookOrderDetails[${index}].quantity`, quantity);
-                addHiddenField(`bookOrderDetails[${index}].couponSalePrice`, couponSalePrice);
-            });
-
-            // 받는 사람 정보 폼에 추가
-            addHiddenField("recipientInfo.recipientName", document.getElementById("name").value);
-            addHiddenField("recipientInfo.recipientPhone", `${document.getElementById("mobile-phone1").value}-${document.getElementById("mobile-phone2").value}-${document.getElementById("mobile-phone3").value}`);
-            addHiddenField("recipientInfo.recipientLandline", `${document.getElementById("landline-phone1").value}-${document.getElementById("landline-phone2").value}-${document.getElementById("landline-phone3").value}`);
-
-            // 주소 정보 폼에 추가
-            addHiddenField("addressInfo.roadAddress", document.getElementById("road-address").value);
-            addHiddenField("addressInfo.zoneAddress", document.getElementById("zone-address").value);
-            addHiddenField("addressInfo.detailAddress", document.getElementById("detail-address").value);
-
-            // 기타 정보 폼에 추가
-            const wrapperId = parseInt(document.querySelector("input[name='gift-wrap']:checked").value) || 0;
-            const couponId = parseInt(document.getElementById("apply-coupon").value) || 0;
-            const point = parseInt(document.getElementById("point-used").textContent.replace(/[^0-9]/g, ""));
-            const totalAmount = parseInt(document.querySelector(".final-amount").textContent.replace(/[^0-9]/g, ""));
-
-            addHiddenField("wrapperId", wrapperId);
-            addHiddenField("couponId", couponId);
-            addHiddenField("point", point);
-            addHiddenField("totalAmount", totalAmount);
-
-            // 배송 날짜 폼에 추가
-            const selectedDateElement = document.querySelector(".delivery-date-container .date.active");
-            if (selectedDateElement) {
-                const rawDate = selectedDateElement.getAttribute("data-date");
-                const parts = rawDate.split(/[\/(]/);
-                const deliveryDate = `2025-${parts[0].padStart(2, '0')}-${parts[1].padStart(2, '0')}`;
-                addHiddenField("deliveryDate", deliveryDate);
-            } else {
-                alert("배송 날짜를 선택해주세요.");
-                return;
-            }
-
-            document.body.appendChild(form);
-            form.submit(); // 폼 제출
-        });
-    });
-</script>
 
