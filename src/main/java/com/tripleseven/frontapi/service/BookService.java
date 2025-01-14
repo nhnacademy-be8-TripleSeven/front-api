@@ -11,6 +11,7 @@ import com.tripleseven.frontapi.dto.category.CategorySearchDTO;
 import com.tripleseven.frontapi.dto.category.PageCategoryDTO;
 import java.util.List;
 
+import com.tripleseven.frontapi.dto.coupon.AvailableCouponResponseDTO;
 import com.tripleseven.frontapi.dto.coupon.CouponDetailsDTO;
 import com.tripleseven.frontapi.dto.review.ReviewRequestDTO;
 import com.tripleseven.frontapi.dto.review.ReviewResponseDTO;
@@ -157,4 +158,6 @@ public class BookService {
     }
 
     public BookOrderDetailResponse getBookOrderDetail(Long bookId) {return bookFeignClient.getBookOrderDetail(bookId);}
+
+    public List<AvailableCouponResponseDTO> getAvailableCoupon(Long userId, List<Long>bookId, Long amount) {return bookFeignClient.getAvailableCouponByBookId(userId, bookId, amount);}
 }

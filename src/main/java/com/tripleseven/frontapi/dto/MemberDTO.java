@@ -9,7 +9,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class MemberDTO {
 
-    private Long id;
+    private String id;
     private String email;
     private String phoneNumber;
     private String name;

@@ -1,8 +1,10 @@
 package com.tripleseven.frontapi.controller.order;
 
 import com.tripleseven.frontapi.dto.MemberDTO;
+import com.tripleseven.frontapi.dto.coupon.AvailableCouponResponseDTO;
 import com.tripleseven.frontapi.dto.coupon.CouponDetailsDTO;
 import com.tripleseven.frontapi.dto.order.ProductDTO;
+import com.tripleseven.frontapi.dto.order.WrappingResponseDTO;
 import com.tripleseven.frontapi.dto.policy.DeliveryPolicyType;
 import com.tripleseven.frontapi.service.BookService;
 import com.tripleseven.frontapi.service.MemberService;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 @RequiredArgsConstructor
 @Controller
@@ -45,7 +48,6 @@ public class OrderController {
             products = orderService.getProductInfoByCart();
         }
 
-
         // 총 상품 금액 및 할인 금액 계산
         int productAmount = products.stream()
                 .mapToInt(p -> p.getPrice() * p.getQuantity())
@@ -62,12 +64,18 @@ public class OrderController {
         int totalAmount = finalAmount + additionalAmount;
 
         int availablePoint = 0; // 만약 회원이라면 order-api에서 조회와야함 회원 아니면 조회 x
+        List<AvailableCouponResponseDTO> couponList = null;
 
         if(userId != null) {
-            availablePoint = orderService.getPoints(userId);
+            availablePoint = orderService.getPoints(userId);    //포인트 조회
+            List<Long> bookIds = products.stream()
+                    .map(ProductDTO::getBookId) // ProductDTO에서 bookId 추출
+                    .toList();
+            couponList = bookService.getAvailableCoupon(userId,bookIds,(long)finalAmount);
         }
 
-//        List<CouponDetailsDTO> couponList = bookService.getUnusedCoupons(userId);
+//        List<CouponDetailsDTO> couponList = bookService.getUnusedCoupons(userId); //쿠폰 조회(미 구현) 로그인이 안됨
+        List<WrappingResponseDTO> wrappingList = orderService.getAllWrappings();
 
         model.addAttribute("products", products);
         model.addAttribute("productAmount", productAmount);
@@ -77,7 +85,7 @@ public class OrderController {
         model.addAttribute("additionalAmount", additionalAmount);
         model.addAttribute("totalAmount", totalAmount);
         model.addAttribute("availablePoint", availablePoint);
-//        model.addAttribute("couponList", couponList);
+        model.addAttribute("couponList", couponList);
 
         return "order/pay-user";
     }
@@ -88,12 +96,16 @@ public class OrderController {
             @CookieValue(value = "GUEST-ID",required = false)String guestId,
             Model model
     ){
-//        MemberDTO memberDTO = memberService.getMemberInfo(userId);
-        MemberDTO memberDTO = new MemberDTO(1L,"nhn1234@gmail.com","010-1234-1234","마르코", Date.valueOf(LocalDate.now()),"man","gold");
-        model.addAttribute("user",memberDTO);
+        MemberDTO memberDTO = null;
 
-
-        return "order/pay-success";
+        if(Objects.nonNull(userId)) {
+            memberDTO = memberService.getMemberInfo(userId);
+            model.addAttribute("user",memberDTO);
+            return "order/pay-success";
+        }
+        else{
+            return "order/pay-success-guest";
+        }
 
     }
 }

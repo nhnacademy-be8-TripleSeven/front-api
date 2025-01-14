@@ -95,4 +95,9 @@ public class OrderService {
         DefaultDeliveryPolicyDTO defaultDeliveryPolicyDTO = orderFeignClient.getDefaultDeliveryPolicy(type);
         return defaultDeliveryPolicyDTO.getPrice();
     }
+
+    public List<WrappingResponseDTO> getAllWrappings(){
+        return orderFeignClient.getAllWrappings();
+    }
+
 }

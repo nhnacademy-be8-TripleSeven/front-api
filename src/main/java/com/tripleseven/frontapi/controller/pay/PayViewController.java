@@ -39,7 +39,7 @@ public class PayViewController {
         model.addAttribute("amount", responseDTO.getTotalAmount());
         model.addAttribute("orderName", "sample product");
         model.addAttribute("customerName", payInfoRequestDTO.getRecipientInfo().getRecipientName());
-        model.addAttribute("customerEmail", "nhn1234@gmail.com");
+        model.addAttribute("customerEmail", "");
 
         return "payment/checkout";
     }

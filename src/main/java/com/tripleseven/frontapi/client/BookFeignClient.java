@@ -219,4 +219,10 @@ public interface BookFeignClient {
 
     @GetMapping("/books/orderDetail/{bookId}")
     BookOrderDetailResponse getBookOrderDetail(@PathVariable Long bookId);
+
+    @GetMapping("/api/coupons/available")
+    List<AvailableCouponResponseDTO> getAvailableCouponByBookId(
+            @RequestHeader("X-USER") Long userId,
+            @RequestParam List<Long> bookId,
+            @RequestParam Long amount);
 }

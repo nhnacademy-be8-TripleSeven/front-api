@@ -11,6 +11,7 @@ public class MemberService {
     private final MemberFeignClient memberFeignClient;
 
     public MemberDTO getMemberInfo(Long userId){
+        MemberDTO memberDTO = memberFeignClient.getMemberInfo(userId);
         return memberFeignClient.getMemberInfo(userId);
     }
 }

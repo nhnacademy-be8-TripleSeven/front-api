@@ -96,5 +96,8 @@ public interface OrderFeignClient {
     @GetMapping("/orders/default-policy/delivery")
     DefaultDeliveryPolicyDTO getDefaultDeliveryPolicy(@RequestParam DeliveryPolicyType type);
 
+    @GetMapping("/wrappings")
+    List<WrappingResponseDTO> getAllWrappings();
+
 
 }
