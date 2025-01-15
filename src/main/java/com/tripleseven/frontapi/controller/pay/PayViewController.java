@@ -54,8 +54,11 @@ public class PayViewController {
     }
 
     @PostMapping("/frontend/confirm/payment")
-    public ResponseEntity<JSONObject>confirmPayment(@RequestBody String jsonBody){
-        JSONObject response = orderService.getPayment(jsonBody);
+    public ResponseEntity<JSONObject>confirmPayment(
+            @RequestBody String jsonBody,
+            @RequestHeader(value = "X-USER",required = false)Long userId,
+            @CookieValue(value = "GUEST-ID")String guestId){
+        JSONObject response = orderService.getPayment(userId, guestId,jsonBody);
 
         int statusCode = response.containsKey("error") ? 400 : 200;
 

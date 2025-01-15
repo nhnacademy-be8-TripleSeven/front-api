@@ -87,8 +87,8 @@ public class OrderService {
         return orderFeignClient.getPayInfo(userId,guestId,requestDTO);
     }
 
-    public JSONObject getPayment(String jsonBody){
-        return orderFeignClient.confirmPayment(jsonBody);
+    public JSONObject getPayment(Long userId, String guestId, String jsonBody){
+        return orderFeignClient.confirmPayment(jsonBody, userId, guestId);
     }
 
     public int getDeliveryPrice(DeliveryPolicyType type){
@@ -98,6 +98,10 @@ public class OrderService {
 
     public List<WrappingResponseDTO> getAllWrappings(){
         return orderFeignClient.getAllWrappings();
+    }
+
+    public OrderGroupResponseDTO getOrderGroup(Long orderId) {
+        return orderFeignClient.getOrderGroupById(orderId);
     }
 
 }

@@ -18,7 +18,7 @@
         <div class="p-grid-col text--left"><b>결제금액</b></div>
         <div class="p-grid-col text--right" id="amount"></div>
     </div>
-<!--    <a href="/frontend/order/success"><button>주문 완료 페이지</button></a>-->
+    <a href='/frontend/order/success?orderId=${urlParams.get("orderId")}'><button>주문 완료 페이지</button></a>
     <!-- 주문번호 및 paymentKey 부분은 제거 -->
 </div>
 
@@ -74,7 +74,8 @@
     confirm()
         .then(function (data) {
             // 결제 승인 성공 시 UI 처리 (response 데이터를 화면에 띄우지 않음)
-            window.location.href = `/frontend/order/success?orderId=${urlParams.get("orderId")}`;
+            // window.location.href = `/frontend/order/success?orderId=${urlParams.get("orderId")}`;
+
         })
         .catch((err) => {
             // 결제 승인 실패 시 UI 처리 (실패 페이지로 리디렉션)

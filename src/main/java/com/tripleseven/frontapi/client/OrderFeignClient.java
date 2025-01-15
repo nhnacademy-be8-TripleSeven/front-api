@@ -91,7 +91,9 @@ public interface OrderFeignClient {
     );
 
     @PostMapping("/confirm/payment")
-    JSONObject confirmPayment(String jsonBody);
+    JSONObject confirmPayment(String jsonBody,
+                              @RequestHeader("X-USER")Long userId,
+                              @CookieValue("GUEST-ID")String guestId);
 
     @GetMapping("/orders/default-policy/delivery")
     DefaultDeliveryPolicyDTO getDefaultDeliveryPolicy(@RequestParam DeliveryPolicyType type);
@@ -99,5 +101,7 @@ public interface OrderFeignClient {
     @GetMapping("/orders/wrappings")
     List<WrappingResponseDTO> getAllWrappings();
 
+    @GetMapping("/order-groups/{id}")
+    OrderGroupResponseDTO getOrderGroupById(@PathVariable("id") Long id);
 
 }
