@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
             { id: 'mobile-phone2', name: '휴대폰 중간자리' },
             { id: 'mobile-phone3', name: '휴대폰 끝자리' },
             { id: 'customer-name', name: '주문 고객 이름' }
+
         ];
 
         // 첫 번째로 입력되지 않은 필드 찾기
@@ -28,6 +29,14 @@ document.addEventListener('DOMContentLoaded', function () {
                 field.classList.remove('error'); // 에러 스타일 제거
             }
         }
+
+        // 결제 수단 선택 확인
+        const selectedPayment = document.querySelector('input[name="payment-method"]:checked');
+        if (!selectedPayment) {
+            alert("결제 방식을 선택해 주세요.");
+            return;
+        }
+
 
         // 모든 필드가 올바르게 입력된 경우 폼 제출 함수 호출
         submitOrderForm();

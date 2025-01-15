@@ -88,7 +88,7 @@ public class OrderService {
     }
 
     public JSONObject getPayment(Long userId, String guestId, String jsonBody){
-        return orderFeignClient.confirmPayment(jsonBody, userId, guestId);
+        return orderFeignClient.confirmPayment(userId, guestId,jsonBody);
     }
 
     public int getDeliveryPrice(DeliveryPolicyType type){

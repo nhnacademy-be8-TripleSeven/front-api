@@ -192,19 +192,17 @@
                     </label>
                 </div>
                 <div class="payment-buttons">
-                    <!-- Toss Pay (지원됨) -->
-                    <div class="button" onclick="selectPayment('Toss')">
-                        <img src="/image/logo/TossPay_Logo_Primary.png" alt="Toss Pay"/>
+                    <!-- Toss Pay 토스만 지원중임 -->
+                    <div class="button" data-pay-type="Toss" onclick="selectPayment('Toss')">
+                        <img src="/image/logo/TossPay_Logo_Primary.png" alt="Toss Pay" />
                     </div>
-                    <!-- 나머지 버튼은 지원되지 않음 -->
-                    <div class="button" onclick="showUnsupportedMessage()">
-                        <img src="/image/logo/naverpay-logo.jpg" alt="NPay"/>
+                    <!-- Naver Pay -->
+                    <div class="button" data-pay-type="NaverPay" onclick="showUnsupportedMessage()">
+                        <img src="/image/logo/naverpay-logo.jpg" alt="NPay" />
                     </div>
-                    <div class="button" onclick="showUnsupportedMessage()">
-                        <img src="/image/logo/kakaopay-logo.png" alt="KakaoPay"/>
-                    </div>
-                    <div class="button" onclick="showUnsupportedMessage()">
-                        <img src="/image/logo/payco-logo.jpg" alt="Payco"/>
+                    <!-- Kakao Pay -->
+                    <div class="button" data-pay-type="KakaoPay" onclick="showUnsupportedMessage()">
+                        <img src="/image/logo/kakaopay-logo.png" alt="KakaoPay" />
                     </div>
                     <div class="button" onclick="showUnsupportedMessage()">
                         <span>신용카드</span>
@@ -221,15 +219,7 @@
                 </div>
             </div>
         </div>
-            <script>
-                function selectPayment(method) {
-                    alert(`${method} 결제가 선택되었습니다.`);
-                }
 
-                function showUnsupportedMessage() {
-                    alert("현재는 토스 결제만 지원됩니다.");
-                }
-            </script>
 
             <!-- Right Side -->
             <div class="discount-options">
@@ -271,7 +261,7 @@
             </div>
 
             <!-- 숨겨진 포장지 아이디 필드 -->
-            <input type="hidden" id="wrapper-id" name="wrapperId" value="0">
+            <input type="hidden" id="wrapper-id" name="wrapperId" >
 
             <div class="final-payment-info">
                 <div class="final-amountp">

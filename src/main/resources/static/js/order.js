@@ -6,6 +6,8 @@ document.addEventListener("DOMContentLoaded", () => {
     let availablePoints = 0;
     let isUsingPoints = false;
     let defaultDeliveryPrice = 0;
+    let selectedPayType = null; // 선택된 결제 방식 저장
+
 
     const finalAmountElems = document.querySelectorAll("#final-amount, #payment-info-final-amount");
     const deliveryFeeElem = document.getElementById("delivery-fee");
@@ -43,6 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
         updateFinalAmount();
     });
 
+
     // 포장지 선택 처리
     giftWrapInclude.addEventListener("change", () => {
         if (giftWrapInclude.checked) {
@@ -53,7 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     giftWrapExclude.addEventListener("change", () => {
         currentWrapperPrice = 0;
-        wrapperIdInput.value = 0;
+        wrapperIdInput.value = null;
         console.log("포장지 선택 해제됨");
         updateFinalAmount();
     });
@@ -117,7 +120,9 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // 폼 제출 함수로 분리
+
+
+// 폼 제출 함수 수정
     function submitOrderForm() {
         const form = document.createElement("form");
         form.method = "post";
@@ -167,6 +172,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
         addHiddenField("ordererName", ordererNameInput.value);
 
+        // 선택된 결제 방식을 추가
+        if (!selectedPayType) {
+            alert("결제 방식을 선택해주세요.");
+            return;
+        }
+        addHiddenField("payType", selectedPayType); // payType 추가
+
         document.body.appendChild(form);
         form.submit();
     }
@@ -179,5 +191,17 @@ document.addEventListener("DOMContentLoaded", () => {
         return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
     }
     window.submitOrderForm = submitOrderForm;
+
+    // 결제 방식 선택 시 호출되는 함수
+    function selectPayment(method) {
+        alert(`${method} 결제가 선택되었습니다.`);
+        selectedPayType = method;
+    }
+    window.selectPayment = selectPayment; // 전역으로 노출
+
+    function showUnsupportedMessage() {
+        alert("현재는 토스 결제만 지원됩니다.");
+    }
+    window.showUnsupportedMessage = showUnsupportedMessage; // 전역으로 노출
 });
 

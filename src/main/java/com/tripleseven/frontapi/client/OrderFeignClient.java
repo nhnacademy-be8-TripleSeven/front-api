@@ -87,9 +87,9 @@ public interface OrderFeignClient {
     );
 
     @PostMapping("/confirm/payment")
-    JSONObject confirmPayment(String jsonBody,
-                              @RequestHeader("X-USER") Long userId,
-                              @CookieValue("GUEST-ID") String guestId);
+    JSONObject confirmPayment(@RequestHeader("X-USER") Long userId,
+                              @CookieValue("GUEST-ID") String guestId,
+                              String jsonBody);
 
     @GetMapping("/orders/default-policy/delivery")
     DefaultDeliveryPolicyDTO getDefaultDeliveryPolicy(@RequestParam DeliveryPolicyType type);
