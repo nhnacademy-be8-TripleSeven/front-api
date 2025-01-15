@@ -4,11 +4,13 @@ document.addEventListener("DOMContentLoaded", () => {
             const form = this.closest(".delivery-edit-form"); // 현재 버튼이 포함된 폼 선택
             const id = form.querySelector('input[name="id"]').value;
             const name = form.querySelector('input[name="name"]').value;
+            const minPrice = form.querySelector('input[name="minPrice"]').value;
             const price = form.querySelector('input[name="price"]').value;
 
             // Axios PUT 요청
             axios.put(`/admin/orders/delivery-policies/${id}`, {
                 name: name,
+                minPrice: minPrice,
                 price: price
             })
                 .then(response => {
