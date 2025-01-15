@@ -32,6 +32,7 @@
             <tr>
                 <th>아이디</th>
                 <th>정책 이름</th>
+                <th>무료 배송 가격</th>
                 <th>가격</th>
                 <th>수정</th>
             </tr>
@@ -43,6 +44,7 @@
             <tr th:each="delivery : ${deliveryPolicies}">
                 <td th:text="${delivery.getId()}">0</td>
                 <td th:text="${delivery.getName()}">정책 1</td>
+                <td th:text="${#numbers.formatInteger(delivery.getMinPrice(), 0, 'COMMA')} + '원'">0원</td>
                 <td th:text="${#numbers.formatInteger(delivery.getPrice(), 0, 'COMMA')} + '원'">0원</td>
                 <td>
                     <form class="delivery-edit-form">
@@ -51,6 +53,10 @@
                             <tr>
                                 <td>이름</td>
                                 <td><input type="text" name="name" th:value="${delivery.getName()}"/></td>
+                            </tr>
+                            <tr>
+                                <td>무료 배송 가격</td>
+                                <td><input type="number" name="minPrice" th:value="${delivery.getMinPrice()}"/></td>
                             </tr>
                             <tr>
                                 <td>가격</td>

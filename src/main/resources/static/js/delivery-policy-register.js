@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("delivery-register-btn").addEventListener("click", function () {
-        const name = document.getElementById("delivery-policy-name").value; // 정책 이름
+        const name = document.getElementById("delivery-policy-name").value;// 정책 이름
+        const minPrice = document.getElementById("delivery-value-min-price").value;
         const price = document.getElementById("delivery-value").value; // 입력된 값
 
         // 입력값 검증
@@ -12,6 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // 서버로 데이터 전송
         axios.post("/admin/orders/delivery-policies", {
             name: name,
+            minPrice: minPrice,
             price: price
         })
             .then(response => {
