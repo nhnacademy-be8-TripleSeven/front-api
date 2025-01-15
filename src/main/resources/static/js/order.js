@@ -117,10 +117,8 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // 폼 제출 처리
-    const payForm = document.getElementById("pay-button");
-    payForm.addEventListener("click", (event) => {
-        event.preventDefault();
+    // 폼 제출 함수로 분리
+    function submitOrderForm() {
         const form = document.createElement("form");
         form.method = "post";
         form.action = "/frontend/payment";
@@ -139,7 +137,7 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelectorAll(".product-table tbody tr").forEach((row, index) => {
             const bookId = parseInt(row.querySelector("a").getAttribute("href").split("/").pop());
             const title = row.querySelector("a").textContent;
-            const price = parseInt(row.querySelector("td:nth-child(5) span").textContent.replace(/[^0-9]/g, "")); // 쿠폰 할인 적용된 가격 사용
+            const price = parseInt(row.querySelector("td:nth-child(5) span").textContent.replace(/[^0-9]/g, ""));
             const quantity = parseInt(row.querySelector("td:nth-child(2)").textContent);
 
             addHiddenField(`bookOrderDetails[${index}].bookId`, bookId);
@@ -155,7 +153,6 @@ document.addEventListener("DOMContentLoaded", () => {
         addHiddenField("addressInfo.zoneAddress", document.getElementById("zone-address").value);
         addHiddenField("addressInfo.detailAddress", document.getElementById("detail-address").value);
         addHiddenField("wrapperId", wrapperIdInput.value);
-        // addHiddenField("couponId", couponSelectElem.value || 0);
         addHiddenField("point", pointsUsed);
         addHiddenField("totalAmount", parseInt(document.querySelector("#final-amount").textContent.replace(/[^0-9]/g, "")));
 
@@ -172,7 +169,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         document.body.appendChild(form);
         form.submit();
-    });
+    }
 
     // 날짜 형식 변환 함수 ("01/19(일)" -> "2025-01-19")
     function convertToDate(rawDate) {
@@ -181,4 +178,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const year = new Date().getFullYear();
         return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
     }
+    window.submitOrderForm = submitOrderForm;
 });
+
