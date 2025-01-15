@@ -31,7 +31,7 @@ public class PayViewController {
             @CookieValue(value = "GUEST-ID")String guestId) {
 
         // 주문 정보
-        PayInfoResponseDTO responseDTO = orderService.getPayInfo(userId,guestId,payInfoRequestDTO);
+            PayInfoResponseDTO responseDTO = orderService.getPayInfo(userId,guestId,payInfoRequestDTO);
 
         // 멤버 api호출해서 필요한 정보 보내기?
 
