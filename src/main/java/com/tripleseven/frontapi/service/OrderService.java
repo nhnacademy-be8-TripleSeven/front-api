@@ -72,6 +72,16 @@ public class OrderService {
     }
 
 
+    public List<ProductDTO> getProductsByType(String type, Long bookId, int quantity){
+        if("direct".equals(type)){
+            return List.of(getProductInfoByDirect(bookId, quantity));
+        } else if("cart".equals(type)){
+            return getProductInfoByCart();
+        }
+        else{
+            throw new IllegalArgumentException("Unsupported type: " + type);
+        }
+    }
 
     public ProductDTO getProductInfoByDirect(Long bookId, int quantity){
         BookOrderDetailResponse bookDetailDTO = bookService.getBookOrderDetail(bookId);
@@ -91,9 +101,8 @@ public class OrderService {
         return orderFeignClient.confirmPayment(userId, guestId,jsonBody);
     }
 
-    public int getDeliveryPrice(DeliveryPolicyType type){
-        DefaultDeliveryPolicyDTO defaultDeliveryPolicyDTO = orderFeignClient.getDefaultDeliveryPolicy(type);
-        return defaultDeliveryPolicyDTO.getPrice();
+    public DefaultDeliveryPolicyDTO getDeliveryPrice(DeliveryPolicyType type){
+        return orderFeignClient.getDefaultDeliveryPolicy(type);
     }
 
     public List<WrappingResponseDTO> getAllWrappings(){
