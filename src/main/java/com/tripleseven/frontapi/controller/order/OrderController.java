@@ -5,6 +5,7 @@ import com.tripleseven.frontapi.dto.coupon.AvailableCouponResponseDTO;
 import com.tripleseven.frontapi.dto.coupon.CouponDetailsDTO;
 import com.tripleseven.frontapi.dto.order.ProductDTO;
 import com.tripleseven.frontapi.dto.order.WrappingResponseDTO;
+import com.tripleseven.frontapi.dto.policy.DefaultDeliveryPolicyDTO;
 import com.tripleseven.frontapi.dto.policy.DeliveryPolicyType;
 import com.tripleseven.frontapi.service.BookService;
 import com.tripleseven.frontapi.service.MemberService;
@@ -59,14 +60,15 @@ public class OrderController {
                 .sum();
 
         int finalAmount = productAmount - discountAmount;
-        int defaultDeliveryPrice = orderService.getDeliveryPrice(DeliveryPolicyType.DEFAULT);
-        int additionalAmount = finalAmount < defaultDeliveryPrice ? 5000 : 0; //30000은 임시, order-api에서 배송정책 조회해서 가져와야함
-        int totalAmount = finalAmount + additionalAmount;
+        DefaultDeliveryPolicyDTO defaultDeliveryPolicyDTO = orderService.getDeliveryPrice(DeliveryPolicyType.DEFAULT);
+        int deliveryPrice = defaultDeliveryPolicyDTO.getPrice();
+        int deliveryMinPrice = defaultDeliveryPolicyDTO.getMinPrice();
+        int additionalAmount = finalAmount < deliveryMinPrice ? deliveryPrice : 0; //30000은 임시, order-api에서 배송정책 조회해서 가져와야함
         int availablePoint = 1000; // 만약 회원이라면 order-api에서 조회와야함 회원 아니면 조회 x
         List<AvailableCouponResponseDTO> couponList = null;
 
         if(userId != null) {
-//            availablePoint = orderService.getPoints(userId);    //포인트 조회
+            availablePoint = orderService.getPoints(userId);    //포인트 조회
             List<Long> bookIds = products.stream()
                     .map(ProductDTO::getBookId) // ProductDTO에서 bookId 추출
                     .toList();
@@ -79,8 +81,8 @@ public class OrderController {
         model.addAttribute("productAmount", productAmount);
         model.addAttribute("discountAmount", discountAmount);
         model.addAttribute("finalAmount", finalAmount);
-//        model.addAttribute("totalAmount", totalAmount);
-        model.addAttribute("defaultDeliveryPrice", defaultDeliveryPrice);
+        model.addAttribute("deliveryPrice", deliveryPrice);
+        model.addAttribute("deliveryMinPrice", deliveryMinPrice);
         model.addAttribute("additionalAmount", additionalAmount);
         model.addAttribute("availablePoint", availablePoint);
         model.addAttribute("couponList", couponList);

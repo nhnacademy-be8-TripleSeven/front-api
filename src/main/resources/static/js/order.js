@@ -1,12 +1,13 @@
 document.addEventListener("DOMContentLoaded", () => {
     let originalAmount = 0;
-    let deliveryFee = 5000;
+    let deliveryFee = 0;
     let currentWrapperPrice = 0;
     let pointsUsed = 0;
     let availablePoints = 0;
     let isUsingPoints = false;
     let defaultDeliveryPrice = 0;
     let selectedPayType = null; // 선택된 결제 방식 저장
+    let deliveryMinPrice = 0;
 
 
     const finalAmountElems = document.querySelectorAll("#final-amount, #payment-info-final-amount");
@@ -24,12 +25,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const closeModalButton = document.getElementById("close-modal");
     const deliveryDateCell = document.querySelector(".product-table tbody tr td:nth-child(4)");
     const ordererNameInput = document.getElementById("customer-name");
+    const deliveryMinPriceElem = document.getElementById("deliveryMinPrice");
 
     // 초기값 설정
     originalAmount = parseInt(finalAmountElems[0].textContent.replace(/[^0-9]/g, "")) || 0;
     availablePoints = parseInt(availablePointsElem.textContent.replace(/[^0-9]/g, "")) || 0;
     defaultDeliveryPrice = parseInt(defaultDeliveryPriceElem.textContent.replace(/[^0-9]/g, "")) || 0;
-
+    deliveryMinPrice = parseInt(deliveryMinPriceElem.textContent.replace(/[^0-9]/g, "")) || 0;
     updateFinalAmount();
 
     // 포인트 사용 여부 처리
@@ -100,8 +102,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // 최종 결제 금액 업데이트 함수
     function updateFinalAmount() {
         let tempAmount = originalAmount + currentWrapperPrice - pointsUsed;
-        if (tempAmount < defaultDeliveryPrice) {
-            deliveryFee = 5000;
+        if (tempAmount < deliveryMinPrice) {
+            deliveryFee = defaultDeliveryPrice;
         } else {
             deliveryFee = 0;
         }
@@ -204,4 +206,3 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     window.showUnsupportedMessage = showUnsupportedMessage; // 전역으로 노출
 });
-

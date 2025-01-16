@@ -3,18 +3,18 @@ let deliveryFee = 5000;   // 기본 택배비
 let currentWrapperPrice = 0; // 현재 선택된 포장지 가격
 let pointsUsed = 0;       // 현재 사용 중인 포인트
 let isUsingPoints = false;
-let defaultDeliveryPrice = 0;
+let deliveryMinPrice = 0;
 document.addEventListener("DOMContentLoaded", () => {
     const finalAmountElems = document.querySelectorAll("#final-amount, #payment-info-final-amount");
     const deliveryFeeElem = document.getElementById("delivery-fee");
     const wrapperPriceDetailElem = document.getElementById("wrapper-price-detail");
     const pointUsedElem = document.getElementById("point-used");
     const availablePointsElem = document.getElementById("available-points");
-    const defaultDeliveryPriceElem = document.getElementById("defaultDeliveryPrice");
+    const deliveryMinPriceElem = document.getElementById("deliveryMinPrice");
 
     originalAmount = parseInt(finalAmountElems[0].textContent.replace(/[^0-9]/g, "")) || 0;
     let availablePoints = parseInt(availablePointsElem.textContent.replace(/[^0-9]/g, "")) || 0;
-    defaultDeliveryPrice = parseInt(defaultDeliveryPriceElem.textContent.replace(/[^0-9]/g, "")) || 0;
+    deliveryMinPrice = parseInt(deliveryMinPriceElem.textContent.replace(/[^0-9]/g, "")) || 0;
     updateFinalAmount();
 
     // 포인트 사용 여부 처리
@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // 포인트와 포장지 가격을 적용한 총 금액 계산
         let tempAmount = originalAmount + currentWrapperPrice - pointsUsed;
         // 3만 원 미만일 경우 택배비 추가
-        if (tempAmount < defaultDeliveryPrice) {
+        if (tempAmount < deliveryMinPrice) {
             deliveryFee = 5000;
         } else {
             deliveryFee = 0;

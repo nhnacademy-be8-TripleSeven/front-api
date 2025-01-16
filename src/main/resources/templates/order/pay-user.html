@@ -20,13 +20,13 @@
     </section>
     <section class="delivery-section">
         <h2><img src="/image/emoji/ship.png" alt=""> NHN 24 배송</h2>
-        <h6>일반 배송: 5000원</h6>
+        <h5 id="defaultDeliveryPrice" th:text="'일반 배송: ' + ${#numbers.formatInteger(deliveryPrice, 0, 'COMMA') + '원'}">일반 배송: 5000원</h5>
     </section>
     <section class="shipping-info">
         <div class="flex-box progress-bar"></div>
         <span class="free-shipping-text">
-        <strong id = defaultDeliveryPrice th:text="${#numbers.formatInteger(defaultDeliveryPrice, 0, 'COMMA') + '원'}">30,000원</strong>
-        이상 구매 시 <strong>무료배송</strong>
+            <strong id="deliveryMinPrice"
+                    th:text="${#numbers.formatInteger(deliveryMinPrice, 0, 'COMMA') + '원'}">30,000원</strong>        이상 구매 시 <strong>무료배송</strong>
     </span>
         <button class="more-details-btn">더 담으러 가기</button>
     </section>
@@ -221,26 +221,26 @@
         </div>
 
 
-            <!-- Right Side -->
-            <div class="discount-options">
-                <div class="direct-point">
-                    <strong>· 적립 포인트 사용</strong>
-                    <label><input type="radio" name="use-points" value="use" id="use-points-yes"> 사용함</label>
-                    <label><input type="radio" name="use-points" value="not-use" id="use-points-no" checked>
-                        사용안함</label>
-                </div>
-                <div class="coupon">
-                    <strong>· 쿠폰사용</strong>
-                    <select id="apply-coupon">
-                        <option value="0">쿠폰 선택</option>
-                        <!-- 쿠폰 리스트 렌더링 -->
-                        <option th:each="coupon : ${couponList}"
-                                th:value="${coupon.couponId}"
-                                th:text="'[' + ${coupon.couponName} + '] ' + (${coupon.discountRate} != null ? ${coupon.discountRate} + '% 할인' : ${coupon.discountAmount} + '원 할인') + ' - 유효기간: ' + ${coupon.expiryDate}">
-                        </option>
-                    </select>
-                </div>
+        <!-- Right Side -->
+        <div class="discount-options">
+            <div class="direct-point">
+                <strong>· 적립 포인트 사용</strong>
+                <label><input type="radio" name="use-points" value="use" id="use-points-yes"> 사용함</label>
+                <label><input type="radio" name="use-points" value="not-use" id="use-points-no" checked>
+                    사용안함</label>
             </div>
+            <div class="coupon">
+                <strong>· 쿠폰사용</strong>
+                <select id="apply-coupon">
+                    <option value="0">쿠폰 선택</option>
+                    <!-- 쿠폰 리스트 렌더링 -->
+                    <option th:each="coupon : ${couponList}"
+                            th:value="${coupon.couponId}"
+                            th:text="'[' + ${coupon.couponName} + '] ' + (${coupon.discountRate} != null ? ${coupon.discountRate} + '% 할인' : ${coupon.discountAmount} + '원 할인') + ' - 유효기간: ' + ${coupon.expiryDate}">
+                    </option>
+                </select>
+            </div>
+        </div>
         </div>
     </section>
 
@@ -295,6 +295,3 @@
 <script src="/js/order-form.js"></script>
 </body>
 </html>
-
-
-

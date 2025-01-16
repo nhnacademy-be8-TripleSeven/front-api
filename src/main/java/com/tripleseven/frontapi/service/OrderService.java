@@ -91,9 +91,8 @@ public class OrderService {
         return orderFeignClient.confirmPayment(userId, guestId,jsonBody);
     }
 
-    public int getDeliveryPrice(DeliveryPolicyType type){
-        DefaultDeliveryPolicyDTO defaultDeliveryPolicyDTO = orderFeignClient.getDefaultDeliveryPolicy(type);
-        return defaultDeliveryPolicyDTO.getPrice();
+    public DefaultDeliveryPolicyDTO getDeliveryPrice(DeliveryPolicyType type){
+        return orderFeignClient.getDefaultDeliveryPolicy(type);
     }
 
     public List<WrappingResponseDTO> getAllWrappings(){
