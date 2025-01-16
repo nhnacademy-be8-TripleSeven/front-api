@@ -68,6 +68,7 @@ public class OrderController {
 
             List<WrappingResponseDTO> wrappingList = orderService.getAllWrappings();
 
+        model.addAttribute("products", products);
         model.addAttribute("productAmount", productAmount);
         model.addAttribute("discountAmount", discountAmount);
         model.addAttribute("finalAmount", finalAmount);
