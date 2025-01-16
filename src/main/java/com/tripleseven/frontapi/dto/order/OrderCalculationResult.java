@@ -1,10 +1,8 @@
 package com.tripleseven.frontapi.dto.order;
 
-import com.tripleseven.frontapi.dto.coupon.AvailableCouponResponseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.util.List;
 
 @Data
 @AllArgsConstructor
