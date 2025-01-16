@@ -162,7 +162,7 @@ document.addEventListener("DOMContentLoaded", () => {
         addHiddenField("wrapperId", wrapperIdInput.value);
         addHiddenField("point", pointsUsed);
         addHiddenField("totalAmount", parseInt(document.querySelector("#final-amount").textContent.replace(/[^0-9]/g, "")));
-
+        addHiddenField("deliveryFee", deliveryFee);
         const selectedDateElement = document.querySelector(".delivery-date-container .date.active");
         if (selectedDateElement) {
             const deliveryDate = convertToDate(selectedDateElement.getAttribute("data-date"));

@@ -38,29 +38,29 @@ public class OrderController {
             Model model) {
         List<ProductDTO>products = orderService.getProductsByType(type, bookId, quantity);
         // 총 상품 금액 및 할인 금액 계산
-        int productAmount = products.stream()
+        long productAmount = products.stream()
                 .mapToInt(p -> p.getPrice() * p.getQuantity())
                 .sum();
 
         // 할인 금액 (얼마가 할인되는지)
-        int discountAmount = products.stream()
+        long discountAmount = products.stream()
                 .mapToInt(p -> (p.getPrice() - p.getDiscountedPrice()) * p.getQuantity())
                 .sum();
 
-        int finalAmount = productAmount - discountAmount;
+        long finalAmount = productAmount - discountAmount;
         DefaultDeliveryPolicyDTO defaultDeliveryPolicyDTO = orderService.getDeliveryPrice(DeliveryPolicyType.DEFAULT);
-        int deliveryPrice = defaultDeliveryPolicyDTO.getPrice();
-        int deliveryMinPrice = defaultDeliveryPolicyDTO.getMinPrice();
-        int additionalAmount = finalAmount < deliveryMinPrice ? deliveryPrice : 0; //30000은 임시, order-api에서 배송정책 조회해서 가져와야함
-        int availablePoint = 1000; // 만약 회원이라면 order-api에서 조회와야함 회원 아니면 조회 x
+        long deliveryPrice = defaultDeliveryPolicyDTO.getPrice();
+        long deliveryMinPrice = defaultDeliveryPolicyDTO.getMinPrice();
+        long additionalAmount = finalAmount < deliveryMinPrice ? deliveryPrice : 0; //30000은 임시, order-api에서 배송정책 조회해서 가져와야함
+        long availablePoint = 1000; // 만약 회원이라면 order-api에서 조회와야함 회원 아니면 조회 x
         List<AvailableCouponResponseDTO> couponList = null;
 
-        if(userId != null) {
+        if(userId != null) {    //회원인 경우
             availablePoint = orderService.getPoints(userId);    //포인트 조회
             List<Long> bookIds = products.stream()
                     .map(ProductDTO::getBookId) // ProductDTO에서 bookId 추출
                     .toList();
-            couponList = bookService.getAvailableCoupon(userId,bookIds,(long)finalAmount);
+            couponList = bookService.getAvailableCoupon(userId,bookIds, finalAmount);  //쿠폰 조회
         }
 
             List<WrappingResponseDTO> wrappingList = orderService.getAllWrappings();
