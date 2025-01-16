@@ -12,7 +12,7 @@ public class OrderCalculationResult {
     private int productAmount;
     private int discountAmount;
     private int finalAmount;
-    private int deliveryPrice;
+    private int deliverxxyPrice;
     private int deliveryMinPrice;
     private int additionalAmount;
     private int availablePoint;

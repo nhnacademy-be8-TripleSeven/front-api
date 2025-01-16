@@ -23,7 +23,6 @@ import java.util.Objects;
 public class OrderController {
 
     private final OrderService orderService;
-    private final BookService bookService;
     private final MemberService memberService;
 
     @GetMapping("/frontend/order")
@@ -35,19 +34,12 @@ public class OrderController {
             @RequestParam(value = "quantity",defaultValue = "1")int quantity,
             Model model) {
         List<ProductDTO>products = orderService.getProductsByType(type, bookId, quantity);
-        OrderCalculationResult orderCalculationResult = orderService.calculateOrder(products,userId);
+        OrderCalculationResult orderInfo = orderService.calculateOrder(products,userId);
         List<WrappingResponseDTO> wrappingList = orderService.getAllWrappings();
 
         model.addAttribute("products", products);
-        model.addAttribute("productAmount", orderCalculationResult.getProductAmount());
-        model.addAttribute("discountAmount", orderCalculationResult.getDiscountAmount());
-        model.addAttribute("finalAmount", orderCalculationResult.getFinalAmount());
-        model.addAttribute("deliveryPrice", orderCalculationResult.getDeliveryPrice());
-        model.addAttribute("deliveryMinPrice", orderCalculationResult.getDeliveryMinPrice());
-        model.addAttribute("additionalAmount", orderCalculationResult.getAdditionalAmount());
-        model.addAttribute("availablePoint", orderCalculationResult.getAvailablePoint());
-        model.addAttribute("couponList", orderCalculationResult.getCouponList());
         model.addAttribute("wrappingList", wrappingList);
+        model.addAttribute("orderInfo", orderInfo);
 
         return "order/pay-user";
     }

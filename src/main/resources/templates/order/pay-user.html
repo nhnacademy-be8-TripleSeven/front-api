@@ -20,13 +20,13 @@
     </section>
     <section class="delivery-section">
         <h2><img src="/image/emoji/ship.png" alt=""> NHN 24 배송</h2>
-        <h5 id="defaultDeliveryPrice" th:text="'일반 배송: ' + ${#numbers.formatInteger(deliveryPrice, 0, 'COMMA') + '원'}">일반 배송: 5000원</h5>
+        <h5 id="defaultDeliveryPrice" th:text="'일반 배송: ' + ${#numbers.formatInteger(orderInfo.deliveryPrice, 0, 'COMMA') + '원'}">일반 배송: 5000원</h5>
     </section>
     <section class="shipping-info">
         <div class="flex-box progress-bar"></div>
         <span class="free-shipping-text">
             <strong id="deliveryMinPrice"
-                    th:text="${#numbers.formatInteger(deliveryMinPrice, 0, 'COMMA') + '원'}">30,000원</strong>        이상 구매 시 <strong>무료배송</strong>
+                    th:text="${#numbers.formatInteger(orderInfo.deliveryMinPrice, 0, 'COMMA') + '원'}">30,000원</strong>        이상 구매 시 <strong>무료배송</strong>
     </span>
         <button class="more-details-btn">더 담으러 가기</button>
     </section>
@@ -144,12 +144,12 @@
         <h3 class="payment-info-title"><img src="/image/emoji/card.png" alt=""> 결제 정보</h3>
         <div class="payment-grid">
             <div class="payment-item">상품 금액<br><strong
-                    th:text="${#numbers.formatInteger(productAmount,0,'COMMA') + '원'}">21,000 원</strong></div>
+                    th:text="${#numbers.formatInteger(orderInfo.productAmount,0,'COMMA') + '원'}">21,000 원</strong></div>
 
             <!-- 총 추가금액 항목: 택배비와 포장비 구분 -->
             <div class="payment-item">총 추가금액<br>
                 <div>
-                    <span>택배비: </span><strong id="delivery-fee" th:text="${#numbers.formatInteger(additionalAmount, 0, 'COMMA') + ' 원'}">5,000 원</strong>
+                    <span>택배비: </span><strong id="delivery-fee" th:text="${#numbers.formatInteger(orderInfo.additionalAmount, 0, 'COMMA') + ' 원'}">5,000 원</strong>
                 </div>
                 <div>
                     <span>포장비: </span><strong id="wrapper-price-detail">0 원</strong>
@@ -157,15 +157,15 @@
             </div>
 
             <div class="payment-item">할인금액<br><strong
-                    th:text="${#numbers.formatInteger(discountAmount, 0, 'COMMA') + ' 원'}">0 원</strong>
+                    th:text="${#numbers.formatInteger(orderInfo.discountAmount, 0, 'COMMA') + ' 원'}">0 원</strong>
             </div>
 
             <div class="payment-total">
                 <p class="payment-total-title">최종 결제금액<br></p>
-                <strong id="payment-info-final-amount" th:text="${#numbers.formatInteger(finalAmount,0,'COMMA') + '원'}">18,900 원</strong>
+                <strong id="payment-info-final-amount" th:text="${#numbers.formatInteger(orderInfo.finalAmount,0,'COMMA') + '원'}">18,900 원</strong>
 
                 <p class="payment-total-title"><strong>상품</strong> 1종 (1개) 21,000 원</p>
-                <p><span class="discount" th:text="'-> 즉시할인 ' + ${#numbers.formatInteger(discountAmount, 0, 'COMMA') + ' 원'}">-> 즉시할인 2,100 원</span></p>
+                <p><span class="discount" th:text="'-> 즉시할인 ' + ${#numbers.formatInteger(orderInfo.discountAmount, 0, 'COMMA') + ' 원'}">-> 즉시할인 2,100 원</span></p>
             </div>
 
             <div class="payment-item">쿠폰 적용<br><strong>0 원</strong></div>
@@ -174,7 +174,7 @@
                 <ul>
                     <li>포인트 사용시 결제 금액: <span id="points-final-amount">0 원</span></li>
                     <li>쿠폰 적용 후 결제 금액: <span id="coupon-final-amount">0 원</span></li>
-                    <li>사용 가능한 포인트: <span id="available-points" th:text="${availablePoint + ' PT'}">0 PT</span></li>
+                    <li>사용 가능한 포인트: <span id="available-points" th:text="${orderInfo.availablePoint + ' PT'}">0 PT</span></li>
                 </ul>
             </div>
         </div>
@@ -234,7 +234,7 @@
                 <select id="apply-coupon">
                     <option value="0">쿠폰 선택</option>
                     <!-- 쿠폰 리스트 렌더링 -->
-                    <option th:each="coupon : ${couponList}"
+                    <option th:each="coupon : ${orderInfo.couponList}"
                             th:value="${coupon.couponId}"
                             th:text="'[' + ${coupon.couponName} + '] ' + (${coupon.discountRate} != null ? ${coupon.discountRate} + '% 할인' : ${coupon.discountAmount} + '원 할인') + ' - 유효기간: ' + ${coupon.expiryDate}">
                     </option>
@@ -265,7 +265,7 @@
 
             <div class="final-payment-info">
                 <div class="final-amountp">
-                    <p>최종 결제금액: <strong id="final-amount" th:text="${#numbers.formatInteger(finalAmount,0,'COMMA') + '원'}">18,900 원</strong></p>
+                    <p>최종 결제금액: <strong id="final-amount" th:text="${#numbers.formatInteger(orderInfo.finalAmount,0,'COMMA') + '원'}">18,900 원</strong></p>
 
                 </div>
                 <button id="pay-button">결제하기</button>
