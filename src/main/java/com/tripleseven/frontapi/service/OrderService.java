@@ -3,6 +3,7 @@ package com.tripleseven.frontapi.service;
 import com.tripleseven.frontapi.client.OrderFeignClient;
 import com.tripleseven.frontapi.dto.FilterCriteriaDTO;
 import com.tripleseven.frontapi.dto.book.BookOrderDetailResponse;
+import com.tripleseven.frontapi.dto.coupon.AvailableCouponResponseDTO;
 import com.tripleseven.frontapi.dto.order.*;
 import com.tripleseven.frontapi.dto.point.PointHistoryPageResponseDTO;
 import com.tripleseven.frontapi.dto.point.UserPointHistoryDTO;
@@ -112,5 +113,47 @@ public class OrderService {
     public OrderGroupResponseDTO getOrderGroup(Long orderId) {
         return orderFeignClient.getOrderGroupById(orderId);
     }
+
+
+    public OrderCalculationResult calculateOrder(List<ProductDTO> products, Long userId) {
+        // 총 상품 금액 및 할인 금액 계산
+        int productAmount = products.stream()
+                .mapToInt(p -> p.getPrice() * p.getQuantity())
+                .sum();
+
+        int discountAmount = products.stream()
+                .mapToInt(p -> (p.getPrice() - p.getDiscountedPrice()) * p.getQuantity())
+                .sum();
+
+        int finalAmount = productAmount - discountAmount;
+
+        // 배송 정책 조회
+        DefaultDeliveryPolicyDTO deliveryPolicy = getDeliveryPrice(DeliveryPolicyType.DEFAULT);
+        int deliveryPrice = deliveryPolicy.getPrice();
+        int deliveryMinPrice = deliveryPolicy.getMinPrice();
+        int additionalAmount = finalAmount < deliveryMinPrice ? deliveryPrice : 0;
+
+        // 회원 포인트 및 쿠폰 조회
+        int availablePoint = userId != null ? getPoints(userId) : 0;
+        List<AvailableCouponResponseDTO> couponList = userId != null
+                ? getCouponsForUser(userId, products, finalAmount)
+                : List.of();
+
+        return new OrderCalculationResult(
+                productAmount, discountAmount, finalAmount,
+                deliveryPrice, deliveryMinPrice, additionalAmount,
+                availablePoint, couponList
+        );
+    }
+
+    private List<AvailableCouponResponseDTO> getCouponsForUser(Long userId, List<ProductDTO> products, int finalAmount) {
+        List<Long> bookIds = products.stream()
+                .map(ProductDTO::getBookId)
+                .toList();
+        return bookService.getAvailableCoupon(userId, bookIds, (long) finalAmount);
+    }
+
+
+
 
 }

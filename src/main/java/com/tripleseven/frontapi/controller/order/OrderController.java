@@ -1,11 +1,9 @@
 package com.tripleseven.frontapi.controller.order;
 
 import com.tripleseven.frontapi.dto.MemberDTO;
-import com.tripleseven.frontapi.dto.coupon.AvailableCouponResponseDTO;
+import com.tripleseven.frontapi.dto.order.OrderCalculationResult;
 import com.tripleseven.frontapi.dto.order.ProductDTO;
 import com.tripleseven.frontapi.dto.order.WrappingResponseDTO;
-import com.tripleseven.frontapi.dto.policy.DefaultDeliveryPolicyDTO;
-import com.tripleseven.frontapi.dto.policy.DeliveryPolicyType;
 import com.tripleseven.frontapi.service.BookService;
 import com.tripleseven.frontapi.service.MemberService;
 import com.tripleseven.frontapi.service.OrderService;
@@ -37,43 +35,18 @@ public class OrderController {
             @RequestParam(value = "quantity",defaultValue = "1")int quantity,
             Model model) {
         List<ProductDTO>products = orderService.getProductsByType(type, bookId, quantity);
-        // 총 상품 금액 및 할인 금액 계산
-        long productAmount = products.stream()
-                .mapToInt(p -> p.getPrice() * p.getQuantity())
-                .sum();
-
-        // 할인 금액 (얼마가 할인되는지)
-        long discountAmount = products.stream()
-                .mapToInt(p -> (p.getPrice() - p.getDiscountedPrice()) * p.getQuantity())
-                .sum();
-
-        long finalAmount = productAmount - discountAmount;
-        DefaultDeliveryPolicyDTO defaultDeliveryPolicyDTO = orderService.getDeliveryPrice(DeliveryPolicyType.DEFAULT);
-        long deliveryPrice = defaultDeliveryPolicyDTO.getPrice();
-        long deliveryMinPrice = defaultDeliveryPolicyDTO.getMinPrice();
-        long additionalAmount = finalAmount < deliveryMinPrice ? deliveryPrice : 0; //30000은 임시, order-api에서 배송정책 조회해서 가져와야함
-        long availablePoint = 1000; // 만약 회원이라면 order-api에서 조회와야함 회원 아니면 조회 x
-        List<AvailableCouponResponseDTO> couponList = null;
-
-        if(userId != null) {    //회원인 경우
-            availablePoint = orderService.getPoints(userId);    //포인트 조회
-            List<Long> bookIds = products.stream()
-                    .map(ProductDTO::getBookId) // ProductDTO에서 bookId 추출
-                    .toList();
-            couponList = bookService.getAvailableCoupon(userId,bookIds, finalAmount);  //쿠폰 조회
-        }
-
-            List<WrappingResponseDTO> wrappingList = orderService.getAllWrappings();
+        OrderCalculationResult orderCalculationResult = orderService.calculateOrder(products,userId);
+        List<WrappingResponseDTO> wrappingList = orderService.getAllWrappings();
 
         model.addAttribute("products", products);
-        model.addAttribute("productAmount", productAmount);
-        model.addAttribute("discountAmount", discountAmount);
-        model.addAttribute("finalAmount", finalAmount);
-        model.addAttribute("deliveryPrice", deliveryPrice);
-        model.addAttribute("deliveryMinPrice", deliveryMinPrice);
-        model.addAttribute("additionalAmount", additionalAmount);
-        model.addAttribute("availablePoint", availablePoint);
-        model.addAttribute("couponList", couponList);
+        model.addAttribute("productAmount", orderCalculationResult.getProductAmount());
+        model.addAttribute("discountAmount", orderCalculationResult.getDiscountAmount());
+        model.addAttribute("finalAmount", orderCalculationResult.getFinalAmount());
+        model.addAttribute("deliveryPrice", orderCalculationResult.getDeliveryPrice());
+        model.addAttribute("deliveryMinPrice", orderCalculationResult.getDeliveryMinPrice());
+        model.addAttribute("additionalAmount", orderCalculationResult.getAdditionalAmount());
+        model.addAttribute("availablePoint", orderCalculationResult.getAvailablePoint());
+        model.addAttribute("couponList", orderCalculationResult.getCouponList());
         model.addAttribute("wrappingList", wrappingList);
 
         return "order/pay-user";
@@ -94,7 +67,6 @@ public class OrderController {
             return "order/pay-success";
         }
         else{
-
 
             return "order/pay-success-guest";
         }
