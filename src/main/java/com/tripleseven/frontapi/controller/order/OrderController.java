@@ -37,11 +37,12 @@ public class OrderController {
             @CookieValue(value = "GUEST-ID")String guestId,
             @RequestParam("type")String type,
             @RequestParam(value = "bookId", required = false) Long bookId,
+            @RequestParam(value = "quantity",defaultValue = "1")int quantity,
             Model model) {
         List<ProductDTO>products = List.of();
         //도서 상세페이지에서 구매 버튼을 누른 경우
         if("direct".equals(type)) {
-            ProductDTO product = orderService.getProductInfoByDirect(bookId,1);
+            ProductDTO product = orderService.getProductInfoByDirect(bookId,quantity);
             products = List.of(product);
             model.addAttribute("products",product);
         }//장바구니 페이지에서 구매 버튼을 누른 경우
