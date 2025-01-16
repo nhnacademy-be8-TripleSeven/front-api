@@ -22,18 +22,4 @@ public enum OrderStatus {
         this.korean = korean;
     }
 
-    @JsonCreator
-    public static OrderStatus fromString(String str) {
-        for (OrderStatus orderStatus : OrderStatus.values()) {
-            if (orderStatus.name().equalsIgnoreCase(str)) {
-                return orderStatus;
-            }
-        }
-        return ERROR;
-    }
-
-    @JsonValue
-    public String toJson() {
-        return this.name().toLowerCase();
-    }
 }
