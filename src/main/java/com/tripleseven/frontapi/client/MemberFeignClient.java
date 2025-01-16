@@ -1,9 +1,11 @@
 package com.tripleseven.frontapi.client;
 
+import com.tripleseven.frontapi.dto.AddressDTO;
 import com.tripleseven.frontapi.dto.MemberDTO;
 import com.tripleseven.frontapi.dto.cart.CartDTO;
 import com.tripleseven.frontapi.dto.member.MemberAccountDto;
 import com.tripleseven.frontapi.dto.oauth2.payco.PaycoMemberDTO;
+import java.util.List;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -58,7 +60,20 @@ public interface MemberFeignClient {
                       @CookieValue("GUEST-ID") String guestId);
 
 
-
     @GetMapping("/api/members/info")
     MemberDTO getMemberInfo(@RequestHeader("X-USER") Long userId);
+
+    @PostMapping("/members/{userId}/addresses")
+    AddressDTO addAddress(@PathVariable Long userId, @RequestBody AddressDTO addressDTO);
+
+
+    @PostMapping("/members/pwd-check")
+    boolean checkPassword(@RequestParam String userId, @RequestParam String password);
+
+    @PutMapping("/members/{userId}")
+    MemberDTO updateMemberInfo(@PathVariable Long userId, @RequestBody MemberDTO memberDTO);
+
+    @GetMapping("/api/frontend/member/address-manage")
+    List<AddressDTO> getAddresses(@RequestHeader("X-USER") Long userId);
 }
+

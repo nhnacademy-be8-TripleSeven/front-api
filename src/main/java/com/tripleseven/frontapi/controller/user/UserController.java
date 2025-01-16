@@ -60,4 +60,22 @@ public class UserController {
     public String getCouponDetails() {
         return "/member/my-page/coupon/detail";
     }
+
+
+    @GetMapping("/frontend/member/pwd-check")
+    public String checkPasswordPage() {
+        return "/member/my-page/pwd-check";
+    }
+
+    @GetMapping("/frontend/user/member-edit")
+    public String getUserMemberEditPage() {
+        return "/member/my-page/member-edit";
+    }
+
+    @GetMapping("/frontend/user/address-manage")
+    public String getUserAddressManagePage() {
+        return "/member/my-page/address-manage";
+    }
+
+
 }
