@@ -2,7 +2,6 @@ package com.tripleseven.frontapi.controller.order;
 
 import com.tripleseven.frontapi.dto.MemberDTO;
 import com.tripleseven.frontapi.dto.coupon.AvailableCouponResponseDTO;
-import com.tripleseven.frontapi.dto.coupon.CouponDetailsDTO;
 import com.tripleseven.frontapi.dto.order.ProductDTO;
 import com.tripleseven.frontapi.dto.order.WrappingResponseDTO;
 import com.tripleseven.frontapi.dto.policy.DefaultDeliveryPolicyDTO;
@@ -18,8 +17,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.sql.Date;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
