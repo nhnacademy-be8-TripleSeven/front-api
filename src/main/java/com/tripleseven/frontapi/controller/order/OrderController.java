@@ -39,17 +39,7 @@ public class OrderController {
             @RequestParam(value = "bookId", required = false) Long bookId,
             @RequestParam(value = "quantity",defaultValue = "1")int quantity,
             Model model) {
-        List<ProductDTO>products = List.of();
-        //도서 상세페이지에서 구매 버튼을 누른 경우
-        if("direct".equals(type)) {
-            ProductDTO product = orderService.getProductInfoByDirect(bookId,quantity);
-            products = List.of(product);
-            model.addAttribute("products",product);
-        }//장바구니 페이지에서 구매 버튼을 누른 경우
-        else if("cart".equals(type)) {
-            products = orderService.getProductInfoByCart();
-        }
-
+        List<ProductDTO>products = orderService.getProductsByType(type, bookId, quantity);
         // 총 상품 금액 및 할인 금액 계산
         int productAmount = products.stream()
                 .mapToInt(p -> p.getPrice() * p.getQuantity())
@@ -78,7 +68,6 @@ public class OrderController {
 
             List<WrappingResponseDTO> wrappingList = orderService.getAllWrappings();
 
-        model.addAttribute("products", products);
         model.addAttribute("productAmount", productAmount);
         model.addAttribute("discountAmount", discountAmount);
         model.addAttribute("finalAmount", finalAmount);
