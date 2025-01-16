@@ -7,5 +7,6 @@ import lombok.Setter;
 public class DeliveryPolicyDTO {
     Long id;
     String name;
+    int minPrice;
     int price;
 }

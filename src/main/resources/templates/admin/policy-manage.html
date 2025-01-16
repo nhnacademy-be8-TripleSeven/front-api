@@ -31,6 +31,7 @@
                 <th>타입</th>
                 <th>아이디</th>
                 <th>이름</th>
+                <th>무료 배송 가격</th>
                 <th>가격</th>
             </tr>
             </thead>
@@ -42,6 +43,7 @@
                 <td th:text="${delivery.getType().korean}">오류</td>
                 <td th:text="${delivery.getId()}">0</td>
                 <td th:text="${delivery.getName()}">정책 1</td>
+                <td th:text="${#numbers.formatInteger(delivery.getMinPrice(), 0, 'COMMA')} + '원'">0원</td>
                 <td th:text="${#numbers.formatInteger(delivery.getPrice(), 0, 'COMMA')} + '원'">0원</td>
             </tr>
             </tbody>

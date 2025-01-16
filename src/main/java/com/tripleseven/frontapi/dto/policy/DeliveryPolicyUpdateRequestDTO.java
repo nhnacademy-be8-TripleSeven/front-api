@@ -5,5 +5,6 @@ import lombok.Value;
 @Value
 public class DeliveryPolicyUpdateRequestDTO {
     String name;
+    int minPrice;
     int price;
 }

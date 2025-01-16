@@ -1,15 +1,11 @@
 package com.tripleseven.frontapi.client;
 
 import com.tripleseven.frontapi.dto.order.*;
-import com.tripleseven.frontapi.dto.order.OrderDetailUpdateRequestDTO;
-import com.tripleseven.frontapi.dto.order.OrderManageRequestDTO;
-import com.tripleseven.frontapi.dto.order.OrderManageResponseDTO;
-import com.tripleseven.frontapi.dto.order.OrderPayDetailDTO;
+import com.tripleseven.frontapi.dto.pay.PayInfoRequestDTO;
+import com.tripleseven.frontapi.dto.pay.PayInfoResponseDTO;
 import com.tripleseven.frontapi.dto.point.PointHistoryPageResponseDTO;
 import com.tripleseven.frontapi.dto.point.UserPointHistoryDTO;
 import com.tripleseven.frontapi.dto.policy.*;
-import com.tripleseven.frontapi.dto.pay.PayInfoRequestDTO;
-import com.tripleseven.frontapi.dto.pay.PayInfoResponseDTO;
 import org.json.simple.JSONObject;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.data.domain.Page;
@@ -86,12 +82,14 @@ public interface OrderFeignClient {
     @PostMapping("/payments/order")
     PayInfoResponseDTO getPayInfo(
             @RequestHeader("X-USER") Long userId,
-            @CookieValue("GUEST-ID")String guestId,
+            @CookieValue("GUEST-ID") String guestId,
             @RequestBody PayInfoRequestDTO payInfoRequestDTO
     );
 
     @PostMapping("/confirm/payment")
-    JSONObject confirmPayment(String jsonBody);
+    JSONObject confirmPayment(@RequestHeader("X-USER") Long userId,
+                              @CookieValue("GUEST-ID") String guestId,
+                              String jsonBody);
 
     @GetMapping("/orders/default-policy/delivery")
     DefaultDeliveryPolicyDTO getDefaultDeliveryPolicy(@RequestParam DeliveryPolicyType type);
@@ -99,5 +97,7 @@ public interface OrderFeignClient {
     @GetMapping("/orders/wrappings")
     List<WrappingResponseDTO> getAllWrappings();
 
+    @GetMapping("/order-groups/{id}")
+    OrderGroupResponseDTO getOrderGroupById(@PathVariable("id") Long id);
 
 }

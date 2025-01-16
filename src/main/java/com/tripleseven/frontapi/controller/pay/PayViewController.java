@@ -31,7 +31,7 @@ public class PayViewController {
             @CookieValue(value = "GUEST-ID")String guestId) {
 
         // 주문 정보
-        PayInfoResponseDTO responseDTO = orderService.getPayInfo(userId,guestId,payInfoRequestDTO);
+            PayInfoResponseDTO responseDTO = orderService.getPayInfo(userId,guestId,payInfoRequestDTO);
 
         // 멤버 api호출해서 필요한 정보 보내기?
 
@@ -54,8 +54,11 @@ public class PayViewController {
     }
 
     @PostMapping("/frontend/confirm/payment")
-    public ResponseEntity<JSONObject>confirmPayment(@RequestBody String jsonBody){
-        JSONObject response = orderService.getPayment(jsonBody);
+    public ResponseEntity<JSONObject>confirmPayment(
+            @RequestBody String jsonBody,
+            @RequestHeader(value = "X-USER",required = false)Long userId,
+            @CookieValue(value = "GUEST-ID")String guestId){
+        JSONObject response = orderService.getPayment(userId, guestId,jsonBody);
 
         int statusCode = response.containsKey("error") ? 400 : 200;
 

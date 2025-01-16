@@ -25,8 +25,12 @@ public class PayInfoRequestDTO {
 
     private LocalDate deliveryDate;//배송 날짜
 
-    private long wrapperId; //포장지 아이디
-    private long couponId; //쿠폰 아이디
+    private String ordererName; //주문자 이름
+
+    private String payType;
+
+    private Long wrapperId; //포장지 아이디
+    private Long couponId; //쿠폰 아이디
 
     private long point; //사용하는 포인트
     private long totalAmount; //최종 결제 가격

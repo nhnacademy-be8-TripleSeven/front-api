@@ -82,38 +82,21 @@
         <div class="shipping-content">
             <!-- 왼쪽 섹션 -->
             <div class="shipping-left">
-                <!-- 배송 방법 -->
-                <div class="section shipping-method">
-                    <h4>배송 방법</h4>
-                    <div class="shipping-method-class">
-                        <label>
-                            <input type="radio" name="shipping" value="default" checked>
-                            <span>일반 택배</span>
-                        </label>
-                        <label>
-                            <input type="radio" name="shipping" value="world">
-                            <span>해외 배송</span>
-                        </label>
-                        <label>
-                            <input type="radio" name="shipping" value="convenient">
-                            <span>편의점 택배</span>
-                        </label>
-                    </div>
-                </div>
+
 
                 <!-- 이름 -->
                 <div class="section name">
                     <label for="name">이름 </label>
-                    <input type="text" id="name" placeholder="이름 입력">
+                    <input type="text" id="name" placeholder="이름 입력" required>
                 </div>
 
                 <!-- 배송 주소 -->
                 <div class="section address">
                     <label>배송주소</label>
                     <div>
-                        <input type="text" id="road-address" placeholder="도로명 주소">
-                        <input type="text" id="zone-address" placeholder="지번 주소">
-                        <input type="text" id="detail-address" placeholder="상세 주소">
+                        <input type="text" id="road-address" placeholder="도로명 주소" required>
+                        <input type="text" id="zone-address" placeholder="지번 주소" required>
+                        <input type="text" id="detail-address" placeholder="상세 주소" required>
                     </div>
                 </div>
 
@@ -121,9 +104,9 @@
                 <div class="section mobile-phone">
                     <label>휴대폰</label>
                     <div class="phone-group">
-                        <input type="text" id="mobile-phone1" maxlength="3"> -
-                        <input type="text" id="mobile-phone2" maxlength="4"> -
-                        <input type="text" id="mobile-phone3" maxlength="4">
+                        <input type="text" id="mobile-phone1" maxlength="3" required> -
+                        <input type="text" id="mobile-phone2" maxlength="4" required> -
+                        <input type="text" id="mobile-phone3" maxlength="4" required>
                     </div>
                 </div>
 
@@ -131,9 +114,9 @@
                 <div class="section landline-phone">
                     <label>일반 전화</label>
                     <div class="phone-group">
-                        <input type="text" id="landline-phone1" maxlength="3"> -
-                        <input type="text" id="landline-phone2" maxlength="4"> -
-                        <input type="text" id="landline-phone3" maxlength="4">
+                        <input type="text" id="landline-phone1" maxlength="3" required> -
+                        <input type="text" id="landline-phone2" maxlength="4" required> -
+                        <input type="text" id="landline-phone3" maxlength="4" required>
                     </div>
                 </div>
             </div>
@@ -147,48 +130,12 @@
                 <a href="/frontend/join">
                     <button class="signup-btn">회원가입하기</button>
                 </a>
+                <div class="section name">
+                    <label for="customer-name">이름</label>
+                    <input type="text" id="customer-name" placeholder="이름 입력" required>
+                </div>
 
-<!--                <form>-->
-<!--                    <div class="radio-group">-->
-<!--                        <label><input type="radio" name="customer-info" checked> 새로입력</label>-->
-<!--                        <label><input type="radio" name="customer-info"> 배송정보와 동일</label>-->
-<!--                    </div>-->
-<!--                    <div class="section name">-->
-<!--                        <label for="customer-name">이름</label>-->
-<!--                        <input type="text" id="customer-name" placeholder="이름 입력">-->
-<!--                    </div>-->
-<!--                    &lt;!&ndash; 휴대폰 &ndash;&gt;-->
-<!--                    <div class="section mobile-phone">-->
-<!--                        <label>휴대폰</label>-->
-<!--                        <div class="phone-group">-->
-<!--                            <input type="text" id="customer-mobile1" maxlength="3"> - -->
-<!--                            <input type="text" id="customer-mobile2" maxlength="4"> - -->
-<!--                            <input type="text" id="customer-mobile3" maxlength="4">-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    &lt;!&ndash; 일반 전화 &ndash;&gt;-->
-<!--                    <div class="section landline-phone">-->
-<!--                        <label>일반 전화</label>-->
-<!--                        <div class="phone-group">-->
-<!--                            <input type="text" id="customer-landline1" maxlength="3"> - -->
-<!--                            <input type="text" id="customer-landline2" maxlength="4"> - -->
-<!--                            <input type="text" id="customer-landline3" maxlength="4">-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    &lt;!&ndash; 이메일 &ndash;&gt;-->
-<!--                    <div class="section email">-->
-<!--                        <label for="customer-email">이메일</label>-->
-<!--                        <input type="email" id="customer-email" placeholder="이메일 입력">-->
-<!--                    </div>-->
 
-<!--                    &lt;!&ndash; 비밀번호 &ndash;&gt;-->
-<!--                    <div class="section password">-->
-<!--                        <label for="customer-password">비밀번호</label>-->
-<!--                        <input type="password" id="customer-password" placeholder="비밀번호 입력">-->
-<!--                    </div>-->
-<!--                </form>-->
-<!--                <p class="info-text">비밀번호는 "주문 확인"시 필수기재사항으로 반드시 기입하셔야 합니다.</p>-->
-<!--                <p class="info-text">비밀번호는 숫자 + 영문 조합하여 4자리 이상으로 입력해주세요.</p>-->
             </div>
         </div>
     </section>
@@ -245,19 +192,17 @@
                     </label>
                 </div>
                 <div class="payment-buttons">
-                    <!-- Toss Pay (지원됨) -->
-                    <div class="button" onclick="selectPayment('Toss')">
-                        <img src="/image/logo/TossPay_Logo_Primary.png" alt="Toss Pay"/>
+                    <!-- Toss Pay 토스만 지원중임 -->
+                    <div class="button" data-pay-type="Toss" onclick="selectPayment('Toss')">
+                        <img src="/image/logo/TossPay_Logo_Primary.png" alt="Toss Pay" />
                     </div>
-                    <!-- 나머지 버튼은 지원되지 않음 -->
-                    <div class="button" onclick="showUnsupportedMessage()">
-                        <img src="/image/logo/naverpay-logo.jpg" alt="NPay"/>
+                    <!-- Naver Pay -->
+                    <div class="button" data-pay-type="NaverPay" onclick="showUnsupportedMessage()">
+                        <img src="/image/logo/naverpay-logo.jpg" alt="NPay" />
                     </div>
-                    <div class="button" onclick="showUnsupportedMessage()">
-                        <img src="/image/logo/kakaopay-logo.png" alt="KakaoPay"/>
-                    </div>
-                    <div class="button" onclick="showUnsupportedMessage()">
-                        <img src="/image/logo/payco-logo.jpg" alt="Payco"/>
+                    <!-- Kakao Pay -->
+                    <div class="button" data-pay-type="KakaoPay" onclick="showUnsupportedMessage()">
+                        <img src="/image/logo/kakaopay-logo.png" alt="KakaoPay" />
                     </div>
                     <div class="button" onclick="showUnsupportedMessage()">
                         <span>신용카드</span>
@@ -274,15 +219,7 @@
                 </div>
             </div>
         </div>
-            <script>
-                function selectPayment(method) {
-                    alert(`${method} 결제가 선택되었습니다.`);
-                }
 
-                function showUnsupportedMessage() {
-                    alert("현재는 토스 결제만 지원됩니다.");
-                }
-            </script>
 
             <!-- Right Side -->
             <div class="discount-options">
@@ -299,7 +236,7 @@
                         <!-- 쿠폰 리스트 렌더링 -->
                         <option th:each="coupon : ${couponList}"
                                 th:value="${coupon.couponId}"
-                                th:text="'[' + coupon.couponname + '] ' + (coupon.discountRate != null ? coupon.discountRate + '% 할인' : coupon.discountAmount + '원 할인') + ' - 유효기간: ' + coupon.expiryDate">
+                                th:text="'[' + ${coupon.couponName} + '] ' + (${coupon.discountRate} != null ? ${coupon.discountRate} + '% 할인' : ${coupon.discountAmount} + '원 할인') + ' - 유효기간: ' + ${coupon.expiryDate}">
                         </option>
                     </select>
                 </div>
@@ -324,7 +261,7 @@
             </div>
 
             <!-- 숨겨진 포장지 아이디 필드 -->
-            <input type="hidden" id="wrapper-id" name="wrapperId" value="0">
+            <input type="hidden" id="wrapper-id" name="wrapperId" >
 
             <div class="final-payment-info">
                 <div class="final-amountp">
@@ -354,10 +291,8 @@
 
 <div th:replace="footer :: footer"></div>
 
-<!--<script src="script.js"></script>-->
-<script src="/js/order-payment.js" defer></script>
-<script src="/js/order-common.js"></script>
-<script src="/js/order-wrapping.js"></script>
+<script src="/js/order.js"></script>
+<script src="/js/order-form.js"></script>
 </body>
 </html>
 

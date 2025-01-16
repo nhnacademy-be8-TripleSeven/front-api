@@ -15,4 +15,6 @@ public class OrderBookInfoDTO {
     private int price; //판매가
     private int quantity;
     private int couponSalePrice; //쿠폰으로 할인된 가격
+    private Long couponId;
+
 }

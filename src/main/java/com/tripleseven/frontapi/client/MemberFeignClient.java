@@ -60,5 +60,5 @@ public interface MemberFeignClient {
 
 
     @GetMapping("/api/members/info")
-    MemberDTO getMemberInfo(@RequestHeader Long userId);
+    MemberDTO getMemberInfo(@RequestHeader("X-USER") Long userId);
 }

@@ -6,6 +6,7 @@ import lombok.Getter;
 public class DefaultDeliveryPolicyDTO {
     Long id;
     String name;
+    Integer minPrice;
     Integer price;
     DeliveryPolicyType type;
 }
