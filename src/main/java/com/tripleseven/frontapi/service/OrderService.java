@@ -135,23 +135,15 @@ public class OrderService {
 
         // 회원 포인트 및 쿠폰 조회
         int availablePoint = userId != null ? getPoints(userId) : 0;
-        List<AvailableCouponResponseDTO> couponList = userId != null
-                ? getCouponsForUser(userId, products, finalAmount)
-                : List.of();
+
 
         return new OrderCalculationResult(
                 productAmount, discountAmount, finalAmount,
                 deliveryPrice, deliveryMinPrice, additionalAmount,
-                availablePoint, couponList
+                availablePoint
         );
     }
 
-    private List<AvailableCouponResponseDTO> getCouponsForUser(Long userId, List<ProductDTO> products, int finalAmount) {
-        List<Long> bookIds = products.stream()
-                .map(ProductDTO::getBookId)
-                .toList();
-        return bookService.getAvailableCoupon(userId, bookIds, (long) finalAmount);
-    }
 
 
 

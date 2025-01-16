@@ -12,9 +12,8 @@ public class OrderCalculationResult {
     private int productAmount;
     private int discountAmount;
     private int finalAmount;
-    private int deliverxxyPrice;
+    private int deliveryPrice;
     private int deliveryMinPrice;
     private int additionalAmount;
     private int availablePoint;
-    private List<AvailableCouponResponseDTO> couponList;
 }
