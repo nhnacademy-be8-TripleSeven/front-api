@@ -3,7 +3,6 @@ package com.tripleseven.frontapi.service;
 import com.tripleseven.frontapi.client.OrderFeignClient;
 import com.tripleseven.frontapi.dto.FilterCriteriaDTO;
 import com.tripleseven.frontapi.dto.book.BookOrderDetailResponse;
-import com.tripleseven.frontapi.dto.coupon.AvailableCouponResponseDTO;
 import com.tripleseven.frontapi.dto.order.*;
 import com.tripleseven.frontapi.dto.point.PointHistoryPageResponseDTO;
 import com.tripleseven.frontapi.dto.point.UserPointHistoryDTO;

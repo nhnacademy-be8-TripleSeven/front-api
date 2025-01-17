@@ -118,7 +118,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             console.log(`📌 API 요청 URL: /api/coupons/available?bookId=${bookId}&amount=${totalAmount}`);
 
             const response = await axios.get("/api/coupons/available", {
-                headers: { "X-USER": userId },
                 params: {
                     bookId: bookId, // ✅ 배열이 아니라 단일 값 전달
                     amount: totalAmount

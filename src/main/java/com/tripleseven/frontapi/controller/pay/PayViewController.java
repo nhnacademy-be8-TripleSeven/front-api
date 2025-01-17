@@ -18,10 +18,6 @@ import org.springframework.web.bind.annotation.*;
 public class PayViewController {
 
     private final OrderService orderService;
-//    @GetMapping("/order")
-//    public String payTest(){
-//        return "pay-test";
-//    }
 
     @PostMapping("/frontend/payment")
     public String paymentPage(
