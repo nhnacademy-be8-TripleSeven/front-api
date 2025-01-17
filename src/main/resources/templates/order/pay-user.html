@@ -42,7 +42,7 @@
                 <thead>
                 <tr>
                     <th>상품정보</th>
-                    <th>쿠폰</th>
+                    <th th:if="${userId!=null}">쿠폰</th>
                     <th>수량</th>
                     <th>상품금액</th>
                     <th>배송일</th>
@@ -58,7 +58,7 @@
                             <a th:href="'/frontend/books/' + ${product.bookId}" th:text="${product.title}"></a>
                         </div>
                     </td>
-                    <td>
+                    <td th:if="${userId!=null}">
                         <button class="apply-coupon-btn"
                                 th:attr="data-book-id=${product.bookId}, data-index=${iterStat.index}">
                             쿠폰 적용
@@ -184,9 +184,9 @@
                 <p><span class="discount" th:text="'-> 즉시할인 ' + ${#numbers.formatInteger(orderInfo.discountAmount, 0, 'COMMA') + ' 원'}">-> 즉시할인 2,100 원</span></p>
             </div>
 
-            <div class="payment-item">쿠폰 적용<br><strong>0 원</strong></div>
-            <div class="payment-item">포인트 사용<br><strong id="point-used">0 원</strong></div>
-            <div class="payment-detail">
+            <div th:if="${userId!=null}" class="payment-item">쿠폰 적용<br><strong>0 원</strong></div>
+            <div th:if="${userId!=null}" class="payment-item">포인트 사용<br><strong id="point-used">0 원</strong></div>
+            <div th:if="${userId!=null}" class="payment-detail">
                 <ul>
                     <li>포인트 사용시 결제 금액: <span id="points-final-amount">0 원</span></li>
                     <li>쿠폰 적용 후 결제 금액: <span id="coupon-final-amount">0 원</span></li>
