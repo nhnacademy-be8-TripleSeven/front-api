@@ -32,7 +32,7 @@ public class OrderController {
             @RequestParam(value = "bookId", required = false) Long bookId,
             @RequestParam(value = "quantity",defaultValue = "1")int quantity,
             Model model) {
-        List<ProductDTO>products = orderService.getProductsByType(type, bookId, quantity);
+        List<ProductDTO>products = orderService.getProductsByType(type, bookId, quantity, userId, guestId);
         OrderCalculationResult orderInfo = orderService.calculateOrder(products,userId);
         List<WrappingResponseDTO> wrappingList = orderService.getAllWrappings();
 

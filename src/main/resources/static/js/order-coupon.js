@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", async () => {
     const userId = document.body.getAttribute("data-user-id");
 
-    console.log("📌 userId 확인:", userId);
 
     let selectedCoupon = null;
     let selectedBookId = null;
@@ -16,7 +15,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     const discountAmountElem = document.getElementById("coupon-final-amount");
     const finalAmountElem = document.getElementById("final-amount");
 
-    console.log("📌 applyCouponModalBtn 확인:", applyCouponModalBtn); // 요소 확인
 
     // ❌ 비회원이면 쿠폰 버튼 숨기기
     if (!userId || userId === "null" || userId.trim() === "") {
@@ -37,7 +35,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             button.addEventListener("click", async () => {
                 selectedBookId = button.getAttribute("data-book-id");
                 selectedIndex = button.getAttribute("data-index");
-
                 console.log(`📌 ${selectedBookId}번 책의 쿠폰 조회 시작...`);
 
                 let availableCoupons = await fetchCouponsForBook(selectedBookId); // ✅ 개별 조회

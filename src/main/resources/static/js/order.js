@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let selectedPayType = null; // 선택된 결제 방식 저장
     let deliveryMinPrice = 0;
 
-
+    const userId = document.body.getAttribute("data-user-id");
     const finalAmountElems = document.querySelectorAll("#final-amount, #payment-info-final-amount");
     const deliveryFeeElem = document.getElementById("delivery-fee");
     const wrapperPriceDetailElem = document.getElementById("wrapper-price-detail");
@@ -33,13 +33,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 초기값 설정
     originalAmount = parseInt(finalAmountElems[0].textContent.replace(/[^0-9]/g, "")) || 0;
-    availablePoints = parseInt(availablePointsElem.textContent.replace(/[^0-9]/g, "")) || 0;
+    if(userId!=null) {
+        availablePoints = parseInt(availablePointsElem.textContent.replace(/[^0-9]/g, "")) || 0;
+    }
     defaultDeliveryPrice = parseInt(defaultDeliveryPriceElem.textContent.replace(/[^0-9]/g, "")) || 0;
     deliveryMinPrice = parseInt(deliveryMinPriceElem.textContent.replace(/[^0-9]/g, "")) || 0;
     updateFinalAmount();
 
     // 포인트 사용 여부 처리
-    const userId = document.body.getAttribute("data-user-id");
     if(userId!=null) {
         document.getElementById("use-points-yes").addEventListener("change", () => {
             isUsingPoints = true;
@@ -93,7 +94,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    console.log("📌 배송 날짜 선택 가능한 요소:", deliveryDateOptions);
     // ✅ 배송 날짜 선택 이벤트 (회원/비회원 모두 가능)
     deliveryDateOptions.forEach(dateElement => {
         dateElement.addEventListener("click", () => {
@@ -126,9 +126,12 @@ document.addEventListener("DOMContentLoaded", () => {
         const remainingPoints = availablePoints - pointsUsed;
 
         wrapperPriceDetailElem.textContent = `${currentWrapperPrice.toLocaleString()} 원`;
-        pointUsedElem.textContent = `${pointsUsed.toLocaleString()} 원`;
-        pointsFinalAmountElem.textContent = `${(totalAmount + pointsUsed).toLocaleString()} 원`;
-        availablePointsElem.textContent = `${remainingPoints.toLocaleString()} PT`;
+        if(userId!=null) {
+            pointUsedElem.textContent = `${pointsUsed.toLocaleString()} 원`;
+            pointsFinalAmountElem.textContent = `${(totalAmount + pointsUsed).toLocaleString()} 원`;
+
+            availablePointsElem.textContent = `${remainingPoints.toLocaleString()} PT`;
+        }
         deliveryFeeElem.textContent = `${deliveryFee.toLocaleString()} 원`;
 
         finalAmountElems.forEach(elem => {

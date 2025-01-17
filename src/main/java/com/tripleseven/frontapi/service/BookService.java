@@ -157,6 +157,6 @@ public class BookService {
         return bookFeignClient.getTagsByBookId(bookId);
     }
 
-    public BookOrderDetailResponse getBookOrderDetail(Long bookId) {return bookFeignClient.getBookOrderDetail(bookId);}
+    public List<BookOrderDetailResponse> getBookOrderDetail(List<BookOrderRequestDTO> requestDTO) {return bookFeignClient.getBookOrderDetail(requestDTO);}
 
 }
