@@ -4,7 +4,6 @@ import com.tripleseven.frontapi.dto.MemberDTO;
 import com.tripleseven.frontapi.dto.order.OrderCalculationResult;
 import com.tripleseven.frontapi.dto.order.ProductDTO;
 import com.tripleseven.frontapi.dto.order.WrappingResponseDTO;
-import com.tripleseven.frontapi.service.BookService;
 import com.tripleseven.frontapi.service.MemberService;
 import com.tripleseven.frontapi.service.OrderService;
 import lombok.RequiredArgsConstructor;
@@ -40,6 +39,7 @@ public class OrderController {
         model.addAttribute("products", products);
         model.addAttribute("wrappingList", wrappingList);
         model.addAttribute("orderInfo", orderInfo);
+        model.addAttribute("userId", userId);
 
         return "order/pay-user";
     }

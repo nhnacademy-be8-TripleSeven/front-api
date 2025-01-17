@@ -159,5 +159,4 @@ public class BookService {
 
     public BookOrderDetailResponse getBookOrderDetail(Long bookId) {return bookFeignClient.getBookOrderDetail(bookId);}
 
-    public List<AvailableCouponResponseDTO> getAvailableCoupon(Long userId, List<Long>bookId, Long amount) {return bookFeignClient.getAvailableCouponByBookId(userId, bookId, amount);}
 }

@@ -5,8 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NHN 24</title>
     <link rel="stylesheet" href="/css/pay-user.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script th:src="@{/js/global.js}"></script>
+    <script src="/js/order.js"></script>
+    <script src="/js/order-alarm.js"></script>
+    <script src="/js/order-coupon.js"></script>
 </head>
-<body>
+<!-- ✅ 회원 정보(userId)를 data-user-id 속성으로 추가 -->
+<body th:data-user-id="${userId}">
 <div th:replace="header :: header"></div>
 
 
@@ -44,7 +50,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="product : ${products}">
+                <tr th:each="product, iterStat : ${products}">
                     <td class="product-info">
                         <img th:src="${product.coverUrl}" alt="책 이미지">
                         <div>
@@ -60,6 +66,13 @@
                               th:text="'(' + ${#numbers.formatInteger(product.discountPercentage,0)} + '% 할인)'">(10% 할인)</span>
                     </td>
                     <td th:text="${#numbers.formatInteger(product.totalPrice,  0, 'COMMA') + '원'}"></td>
+                    <td>
+                        <button class="apply-coupon-btn"
+                                th:attr="data-book-id=${product.bookId}, data-index=${iterStat.index}">
+                            쿠폰 적용
+                        </button>
+                        <span class="applied-coupon" id="applied-coupon-${iterStat.index}"></span>
+                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -222,14 +235,13 @@
 
 
         <!-- Right Side -->
-        <div class="discount-options">
+        <div class="discount-options" th:if="${userId != null}">
             <div class="direct-point">
                 <strong>· 적립 포인트 사용</strong>
                 <label><input type="radio" name="use-points" value="use" id="use-points-yes"> 사용함</label>
                 <label><input type="radio" name="use-points" value="not-use" id="use-points-no" checked>
                     사용안함</label>
             </div>
-
         </div>
     </section>
 
@@ -280,7 +292,7 @@
 
 <div th:replace="footer :: footer"></div>
 
-<script src="/js/order.js"></script>
-<script src="/js/order-form.js"></script>
+
 </body>
+
 </html>

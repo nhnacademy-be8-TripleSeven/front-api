@@ -223,6 +223,6 @@ public interface BookFeignClient {
     @GetMapping("/api/coupons/available")
     List<AvailableCouponResponseDTO> getAvailableCouponByBookId(
             @RequestHeader("X-USER") Long userId,
-            @RequestParam List<Long> bookId,
+            @RequestParam Long bookId,
             @RequestParam Long amount);
 }
