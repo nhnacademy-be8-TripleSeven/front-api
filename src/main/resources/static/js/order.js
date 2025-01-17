@@ -23,9 +23,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const selectGiftWrapLink = document.getElementById("select-gift-wrap");
     const giftWrapModal = document.getElementById("gift-wrap-modal");
     const closeModalButton = document.getElementById("close-modal");
-    const deliveryDateCell = document.querySelector(".product-table tbody tr td:nth-child(4)");
     const ordererNameInput = document.getElementById("customer-name");
     const deliveryMinPriceElem = document.getElementById("deliveryMinPrice");
+
+
+    // ✅ 배송 날짜 관련 요소 가져오기
+    const deliveryDateCells = document.querySelectorAll(".product-table tbody tr td:nth-child(4)");
+    const deliveryDateOptions = document.querySelectorAll(".delivery-date-container .date");
 
     // 초기값 설정
     originalAmount = parseInt(finalAmountElems[0].textContent.replace(/[^0-9]/g, "")) || 0;
@@ -35,17 +39,20 @@ document.addEventListener("DOMContentLoaded", () => {
     updateFinalAmount();
 
     // 포인트 사용 여부 처리
-    document.getElementById("use-points-yes").addEventListener("change", () => {
-        isUsingPoints = true;
-        pointsUsed = Math.min(originalAmount + currentWrapperPrice + deliveryFee, availablePoints);
-        updateFinalAmount();
-    });
+    const userId = document.body.getAttribute("data-user-id");
+    if(userId!=null) {
+        document.getElementById("use-points-yes").addEventListener("change", () => {
+            isUsingPoints = true;
+            pointsUsed = Math.min(originalAmount + currentWrapperPrice + deliveryFee, availablePoints);
+            updateFinalAmount();
+        });
 
-    document.getElementById("use-points-no").addEventListener("change", () => {
-        isUsingPoints = false;
-        pointsUsed = 0;
-        updateFinalAmount();
-    });
+        document.getElementById("use-points-no").addEventListener("change", () => {
+            isUsingPoints = false;
+            pointsUsed = 0;
+            updateFinalAmount();
+        });
+    }
 
 
     // 포장지 선택 처리
@@ -74,6 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
         giftWrapModal.classList.add("hidden");
     });
 
+
     document.querySelectorAll(".wrapper-item").forEach(item => {
         item.addEventListener("click", () => {
             const wrapperId = item.getAttribute("data-id");
@@ -85,17 +93,23 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // 배송 날짜 선택 이벤트
-    document.querySelectorAll(".delivery-date-container .date").forEach(dateElement => {
+    console.log("📌 배송 날짜 선택 가능한 요소:", deliveryDateOptions);
+    // ✅ 배송 날짜 선택 이벤트 (회원/비회원 모두 가능)
+    deliveryDateOptions.forEach(dateElement => {
         dateElement.addEventListener("click", () => {
-            document.querySelectorAll(".delivery-date-container .date").forEach(elem => {
-                elem.classList.remove("active");
-            });
+            // 기존 활성화 상태 제거
+            deliveryDateOptions.forEach(elem => elem.classList.remove("active"));
 
+            // 새로 선택한 날짜 활성화
             dateElement.classList.add("active");
 
+            // 선택한 날짜를 모든 상품의 배송일 셀에 적용
             const selectedDate = dateElement.getAttribute("data-date");
-            deliveryDateCell.textContent = selectedDate;
+            deliveryDateCells.forEach(cell => {
+                cell.textContent = `${selectedDate}`;
+            });
+
+            console.log(`📌 선택된 배송 날짜: ${selectedDate}`);
         });
     });
 

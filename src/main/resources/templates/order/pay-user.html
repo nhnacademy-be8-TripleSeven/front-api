@@ -42,6 +42,7 @@
                 <thead>
                 <tr>
                     <th>상품정보</th>
+                    <th>쿠폰</th>
                     <th>수량</th>
                     <th>상품금액</th>
                     <th>배송일</th>
@@ -57,6 +58,13 @@
                             <a th:href="'/frontend/books/' + ${product.bookId}" th:text="${product.title}"></a>
                         </div>
                     </td>
+                    <td>
+                        <button class="apply-coupon-btn"
+                                th:attr="data-book-id=${product.bookId}, data-index=${iterStat.index}">
+                            쿠폰 적용
+                        </button>
+                        <span class="applied-coupon" id="applied-coupon-${iterStat.index}"></span>
+                    </td>
                     <td th:text="${product.quantity}">1</td>
                     <td th:text="${#numbers.formatInteger(product.price, 0, 'COMMA') + '원'}">21,000원</td>
                     <td th:text="${product.deliveryDate[0]}">12/12(목)<br>도착(예정)</td>
@@ -66,18 +74,13 @@
                               th:text="'(' + ${#numbers.formatInteger(product.discountPercentage,0)} + '% 할인)'">(10% 할인)</span>
                     </td>
                     <td th:text="${#numbers.formatInteger(product.totalPrice,  0, 'COMMA') + '원'}"></td>
-                    <td>
-                        <button class="apply-coupon-btn"
-                                th:attr="data-book-id=${product.bookId}, data-index=${iterStat.index}">
-                            쿠폰 적용
-                        </button>
-                        <span class="applied-coupon" id="applied-coupon-${iterStat.index}"></span>
-                    </td>
+
                 </tr>
                 </tbody>
             </table>
         </div>
     </section>
+
     <section class="delivery-date-container">
         <div class="delivery-date-label">배송일</div>
         <div th:each="date, iterStat : ${products.getFirst().deliveryDate}"
