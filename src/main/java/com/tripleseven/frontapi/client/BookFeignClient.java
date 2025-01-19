@@ -217,12 +217,12 @@ public interface BookFeignClient {
     @GetMapping("/admin/book-tags/{bookId}")
     List<BookTagResponseDTO> getTagsByBookId(@PathVariable Long bookId);
 
-    @GetMapping("/books/orderDetail/{bookId}")
-    BookOrderDetailResponse getBookOrderDetail(@PathVariable Long bookId);
+    @PostMapping("/books/orderDetails")
+    List<BookOrderDetailResponse> getBookOrderDetail(@RequestBody List<BookOrderRequestDTO> requestDTOS);
 
     @GetMapping("/api/coupons/available")
     List<AvailableCouponResponseDTO> getAvailableCouponByBookId(
             @RequestHeader("X-USER") Long userId,
-            @RequestParam List<Long> bookId,
+            @RequestParam Long bookId,
             @RequestParam Long amount);
 }
