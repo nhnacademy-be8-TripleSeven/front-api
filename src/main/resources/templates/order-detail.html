@@ -14,7 +14,8 @@
     <script type="module" src="/js/reviews.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script type="module" src="/js/axios-config.js"></script>
-    <script th:src="@{/js/gloxbal.js}"></script>
+    <script type="module" src="/js/review-edit.js"></script>
+    <script th:src="@{/js/global.js}"></script>
 
 
 </head>
@@ -111,17 +112,56 @@
                 <img th:if="${userReview.imageUrl != null}" th:src="${userReview.imageUrl}" alt="리뷰 이미지"
                      class="review-image">
 
-                <div class="review-details">
-                    <p><strong>작성자:</strong> <span th:text="${userId}"></span></p>
+                <div class="review-details" th:if="${isLoggedIn && userReview != null}">
+                    <p><strong>작성자:</strong> <span id="currentUserId" th:text="${userId}"></span></p>
                     <p>
                         <strong>평점:</strong>
-                        <span class="rating-stars" th:text="${userReviewStars}"></span>
+                        <!-- 기존 평점을 문자 형태(별)로 노출하면서, data-rating 속성에 평점을 저장해 둡니다. -->
+                        <span class="rating-stars"
+                              id="currentReviewStars"
+                              th:text="${userReviewStars}"
+                              th:attr="data-rating=${userReview.rating}">★★★☆☆</span>
                     </p>
-                    <p><strong>내용:</strong> <span th:text="${userReview.text}"></span></p>
+                    <p><strong>내용:</strong>
+                        <span id="currentReviewText" th:text="${userReview.text}"></span>
+                    </p>
                     <p><strong>작성일:</strong>
                         <span th:text="${#temporals.format(userReview.createdAt, 'yyyy-MM-dd HH:mm:ss')}"></span>
                     </p>
+                    <button id="editReviewBtn" type="button">리뷰 수정</button>
                 </div>
+                <!-- 기존에 display:none;으로 숨겨둔 수정 폼 -->
+                <form id="editReviewForm" style="display: none; margin-top: 1rem;" enctype="multipart/form-data">
+                    <h3>리뷰 수정</h3>
+
+                    <label for="editRating">평점:</label>
+                    <select id="editRating">
+                        <option value="5">★★★★★</option>
+                        <option value="4">★★★★☆</option>
+                        <option value="3">★★★☆☆</option>
+                        <option value="2">★★☆☆☆</option>
+                        <option value="1">★☆☆☆☆</option>
+                    </select>
+
+                    <label for="editText">내용:</label>
+                    <textarea id="editText" rows="5"></textarea>
+
+                    <!-- 이미지 수정 -->
+                    <div>
+                        <label for="editFile">이미지 수정:</label>
+                        <input type="file" id="editFile" name="file" accept="image/*">
+                    </div>
+
+                    <!-- 기존 이미지를 삭제할 수 있는 체크박스 -->
+                    <div>
+                        <input type="checkbox" id="removeImage" name="removeImage">
+                        <label for="removeImage">기존 이미지 삭제</label>
+                    </div>
+
+                    <button id="updateReviewBtn" type="button">수정 완료</button>
+                    <button id="cancelEditBtn" type="button">취소</button>
+                </form>
+
             </div>
         </div>
 
