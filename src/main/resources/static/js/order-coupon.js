@@ -1,130 +1,124 @@
 document.addEventListener("DOMContentLoaded", async () => {
     const userId = document.body.getAttribute("data-user-id");
-
-
-    let selectedCoupon = null;
-    let selectedBookId = null;
-    let selectedIndex = null;
-    let discountAmount = 0;
-
-    const applyCouponBtns = document.querySelectorAll(".apply-coupon-btn");
-    const couponModal = document.getElementById("coupon-modal");
-    const couponSelect = document.getElementById("coupon-select");
-    const applyCouponModalBtn = document.getElementById("apply-coupon-modal-btn");
-    const closeCouponModal = document.getElementById("close-coupon-modal");
-    const discountAmountElem = document.getElementById("coupon-final-amount");
-    const finalAmountElem = document.getElementById("final-amount");
-
-
-    // ❌ 비회원이면 쿠폰 버튼 숨기기
+    const couponUsed = document.getElementById("coupon-used");
+    let appliedCoupons = {};
+    window.appliedCoupons = appliedCoupons;
     if (!userId || userId === "null" || userId.trim() === "") {
         console.warn("⚠️ 비회원이므로 쿠폰 기능을 숨깁니다.");
-
-        applyCouponBtns.forEach(btn => {
-            btn.style.display = "none"; // 버튼 숨기기
+        document.querySelectorAll(".coupon-select").forEach(select => {
+            select.style.display = "none"; // 비회원이면 드롭다운 숨김
         });
+        return;
+    }
+    let couponUsedAmount;
 
-        if (applyCouponModalBtn) {
-            applyCouponModalBtn.style.display = "none"; // 모달 적용 버튼 숨기기
-        }
-    } else {
-        console.log("✅ 회원입니다. 쿠폰 기능 활성화");
+    // ✅ 책별 쿠폰 저장 (한 번만 조회)
+    let couponData = {};
+    let selectedCoupon = null;  // 현재 적용된 쿠폰 정보
+    document.querySelectorAll(".product-table tbody tr").forEach((row, index) => {
+        const bookTitle = row.querySelector("a").textContent.trim(); // 책 제목
+        const bookId = row.querySelector("a").getAttribute("href").split("/").pop(); // 책 ID
+        const quantity = row.querySelector("td:nth-child(3)").textContent.trim(); // 수량
+        const price = row.querySelector("td:nth-child(4)").textContent.replace(/[^0-9]/g, ""); // 가격 숫자만 추출
+        const deliveryDate = row.querySelector("td:nth-child(5)").textContent.trim(); // 배송일
 
-        // ✅ 회원일 경우만 "쿠폰 적용" 버튼 이벤트 리스너 추가
-        applyCouponBtns.forEach(button => {
-            button.addEventListener("click", async () => {
-                selectedBookId = button.getAttribute("data-book-id");
-                selectedIndex = button.getAttribute("data-index");
-                console.log(`📌 ${selectedBookId}번 책의 쿠폰 조회 시작...`);
+        console.log(`📌 책 제목: ${bookTitle}`);
+        console.log(`📌 책 ID: ${bookId}`);
+        console.log(`📌 수량: ${quantity}`);
+        console.log(`📌 가격: ${price} 원`);
+        console.log(`📌 배송일: ${deliveryDate}`);
+    });
 
-                let availableCoupons = await fetchCouponsForBook(selectedBookId); // ✅ 개별 조회
+    // ✅ 페이지 로드 시 모든 책의 쿠폰 미리 조회
+    for (const select of document.querySelectorAll(".coupon-select")) {
+        const bookId = select.getAttribute("data-book-id");
+        const totalPrice = select.getAttribute("data-book-totalPrice");
 
-                // 📌 쿠폰 선택 옵션 업데이트
-                couponSelect.innerHTML = "<option value=''>쿠폰 선택</option>";
-                availableCoupons.forEach(coupon => {
-                    let option = document.createElement("option");
-                    option.value = coupon.couponId;
-                    option.setAttribute("data-discount", coupon.discountAmount);
-                    option.setAttribute("data-rate", coupon.discountRate);
-                    option.textContent = `[${coupon.couponName}] ${coupon.discountRate ? coupon.discountRate + "% 할인" : coupon.discountAmount + "원 할인"}`;
-                    couponSelect.appendChild(option);
-                });
-
-                couponModal.classList.remove("hidden");
-            });
-        });
+        couponData[bookId] = await fetchCouponsForBook(bookId, totalPrice);
+        // ✅ 쿠폰 옵션 업데이트
+        updateCouponDropdown(select, couponData[bookId]);
     }
 
-    console.log("📌 쿠폰 관련 UI 활성화 완료");
+    // ✅ 쿠폰 선택 이벤트 (쿠폰 적용 & 해제)
+    document.querySelectorAll(".coupon-select").forEach((select) => {
+        select.addEventListener("change", async (event) => {
+            const selectedOption = event.target.options[event.target.selectedIndex];
+            const bookId = event.target.getAttribute("data-book-id");
+            const totalPrice = event.target.getAttribute("data-book-totalPrice"); // ✅ totalPrice 가져오기
 
-    // ✅ applyCouponModalBtn이 존재하고, 회원일 경우만 이벤트 리스너 추가
-    if (applyCouponModalBtn && userId) {
-        applyCouponModalBtn.addEventListener("click", async () => {
-            console.log("✅ 쿠폰 적용 버튼 클릭됨");
-
-            const selectedOption = couponSelect.options[couponSelect.selectedIndex];
-
+            // ✅ "쿠폰 선택"을 다시 선택하면 적용 취소
             if (!selectedOption.value) {
-                alert("쿠폰을 선택해주세요.");
+                console.log(`📌 ${bookId}번 책의 쿠폰 취소됨`);
+                selectedCoupon = null;
+                couponUsed.textContent = "0원";
+                appliedCoupons[bookId] = null;
+                updateFinalAmount();  // 📌 `order.js`에 있는 가격 업데이트 함수 호출
                 return;
             }
-
+            Object.keys(appliedCoupons).forEach(key => delete appliedCoupons[key]); // 모든 쿠폰 초기화
+            appliedCoupons[bookId] = selectedOption.value;
+            console.log("appliedCoupons[bookId]",appliedCoupons[bookId]);
             selectedCoupon = {
                 id: selectedOption.value,
                 discount: parseInt(selectedOption.getAttribute("data-discount")) || 0,
-                rate: parseInt(selectedOption.getAttribute("data-rate")) || 0
+                rate: parseFloat(selectedOption.getAttribute("data-rate")) || 0 //할인률이어서 소수점 표현해야함
             };
+            console.log("bookId",bookId);
+            console.log("appliedCoupons",appliedCoupons);
+            couponUsedAmount = await fetchCouponPrice(totalPrice, (selectedCoupon.id))
 
-            discountAmount = selectedCoupon.discount;
+            couponUsed.textContent = `${couponUsedAmount.toLocaleString()} 원`;
+            console.log(`📌 ${bookId}번 책의 쿠폰 적용됨:`, selectedCoupon);
 
-            // 📌 UI 업데이트
-            document.getElementById(`applied-coupon-${selectedIndex}`).textContent = `쿠폰 적용: ${selectedOption.text}`;
-            discountAmountElem.textContent = `-${discountAmount.toLocaleString()} 원`;
-            updateFinalAmount();
-            couponModal.classList.add("hidden");
+            updateFinalAmount();  // 📌 `order.js`에 있는 가격 업데이트 함수 호출
         });
-    } else {
-        console.warn("⚠️ applyCouponModalBtn 요소가 없거나, 비회원입니다. 쿠폰 적용 기능은 실행되지 않습니다.");
-    }
-
-    // ✅ 모달 닫기 버튼은 회원/비회원 모두 이벤트 리스너 추가
-    if (closeCouponModal) {
-        closeCouponModal.addEventListener("click", () => {
-            couponModal.classList.add("hidden");
-        });
-    } else {
-        console.warn("⚠️ closeCouponModal 요소가 존재하지 않습니다.");
-    }
-
-    function updateFinalAmount() {
-        let originalAmount = parseInt(finalAmountElem.textContent.replace(/[^0-9]/g, ""));
-        let newFinalAmount = originalAmount - discountAmount;
-        finalAmountElem.textContent = `${newFinalAmount.toLocaleString()} 원`;
-    }
+    });
 
     // 📌 개별 책에 대한 쿠폰 조회 함수
-    async function fetchCouponsForBook(bookId) {
+    async function fetchCouponsForBook(bookId, totalPrice) {
         try {
             console.log(`📌 ${bookId}번 책의 쿠폰 조회 시작...`);
-
-            const totalAmount = parseInt(finalAmountElem.textContent.replace(/[^0-9]/g, ""), 10);
-
-            console.log("📌 userId:", userId);
-            console.log("📌 bookId:", bookId);
-            console.log("📌 totalAmount:", totalAmount);
-            console.log(`📌 API 요청 URL: /api/coupons/available?bookId=${bookId}&amount=${totalAmount}`);
-
             const response = await axios.get("/api/coupons/available", {
                 params: {
-                    bookId: bookId, // ✅ 배열이 아니라 단일 값 전달
-                    amount: totalAmount
+                    bookId: bookId,
+                    amount: totalPrice
                 }
             });
+            console.log(`📌 ${bookId}번 책의 쿠폰 조회 완료...`);
+
 
             return response.data;
         } catch (error) {
             console.error(`📌 ${bookId}번 책의 쿠폰 조회 실패:`, error);
             return [];
         }
+    }
+
+    async function fetchCouponPrice(totalPrice, couponId) {
+        try {
+            const response = await axios.get("/api/coupons/apply", {
+                params: {
+                    couponId: couponId,
+                    paymentAmount: totalPrice
+                }
+            });
+
+            return response.data;
+        } catch (error) {
+            console.error(`📌 ${totalPrice}원 에 대한 ${couponId}번 쿠폰의 할인량 조회 실패`,error)
+        }
+    }
+
+    // 📌 드롭다운 업데이트 함수 (쿠폰 옵션 추가)
+    function updateCouponDropdown(select, coupons) {
+        select.innerHTML = `<option value="">쿠폰 선택</option>`; // 기본값 추가
+        coupons.forEach(coupon => {
+            let option = document.createElement("option");
+            option.value = coupon.couponId;
+            option.setAttribute("data-discount", coupon.discountAmount);
+            option.setAttribute("data-rate", coupon.discountRate);
+            option.textContent = `[${coupon.couponName}] ${coupon.discountRate ? coupon.discountRate + "% 할인" : coupon.discountAmount + "원 할인"}`;
+            select.appendChild(option);
+        });
     }
 });

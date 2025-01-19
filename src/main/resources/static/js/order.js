@@ -8,12 +8,14 @@ document.addEventListener("DOMContentLoaded", () => {
     let defaultDeliveryPrice = 0;
     let selectedPayType = null; // 선택된 결제 방식 저장
     let deliveryMinPrice = 0;
+    let couponUsed = 0;
 
     const userId = document.body.getAttribute("data-user-id");
     const finalAmountElems = document.querySelectorAll("#final-amount, #payment-info-final-amount");
     const deliveryFeeElem = document.getElementById("delivery-fee");
     const wrapperPriceDetailElem = document.getElementById("wrapper-price-detail");
     const pointUsedElem = document.getElementById("point-used");
+    const couponUsedElem = document.getElementById("coupon-used");
     const pointsFinalAmountElem = document.getElementById("points-final-amount");
     const availablePointsElem = document.getElementById("available-points");
     const wrapperIdInput = document.getElementById("wrapper-id");
@@ -30,14 +32,18 @@ document.addEventListener("DOMContentLoaded", () => {
     // ✅ 배송 날짜 관련 요소 가져오기
     const deliveryDateCells = document.querySelectorAll(".product-table tbody tr td:nth-child(4)");
     const deliveryDateOptions = document.querySelectorAll(".delivery-date-container .date");
-
     // 초기값 설정
+
     originalAmount = parseInt(finalAmountElems[0].textContent.replace(/[^0-9]/g, "")) || 0;
+
     if(userId!=null) {
         availablePoints = parseInt(availablePointsElem.textContent.replace(/[^0-9]/g, "")) || 0;
+        couponUsed = parseInt(couponUsedElem.textContent.replace(/[^0-9]/g, "")) || 0;
     }
+
     defaultDeliveryPrice = parseInt(defaultDeliveryPriceElem.textContent.replace(/[^0-9]/g, "")) || 0;
     deliveryMinPrice = parseInt(deliveryMinPriceElem.textContent.replace(/[^0-9]/g, "")) || 0;
+
     updateFinalAmount();
 
     // 포인트 사용 여부 처리
@@ -82,7 +88,6 @@ document.addEventListener("DOMContentLoaded", () => {
         giftWrapModal.classList.add("hidden");
     });
 
-
     document.querySelectorAll(".wrapper-item").forEach(item => {
         item.addEventListener("click", () => {
             const wrapperId = item.getAttribute("data-id");
@@ -115,12 +120,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 최종 결제 금액 업데이트 함수
     function updateFinalAmount() {
-        let tempAmount = originalAmount + currentWrapperPrice - pointsUsed;
+
+        let tempAmount;
+        if(userId!=null) {
+            // const couponUsedElem = document.getElementById("coupon-used");
+            couponUsed = parseInt(couponUsedElem.textContent.replace(/[^0-9]/g, "")) || 0;
+            tempAmount = originalAmount + currentWrapperPrice - pointsUsed - couponUsed;
+        }
+        else{
+            tempAmount = originalAmount + currentWrapperPrice;
+
+        }
+        console.log("originalAmount",originalAmount);
+        console.log("currentWrapperPrice",currentWrapperPrice);
+        console.log("pointUsed",pointsUsed);
+        console.log("couponUsed",couponUsed);
+        console.log("tempAmount",tempAmount);
         if (tempAmount < deliveryMinPrice) {
             deliveryFee = defaultDeliveryPrice;
         } else {
             deliveryFee = 0;
         }
+        console.log("deliveryFee",deliveryFee);
 
         const totalAmount = tempAmount + deliveryFee;
         const remainingPoints = availablePoints - pointsUsed;
@@ -161,13 +182,28 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelectorAll(".product-table tbody tr").forEach((row, index) => {
             const bookId = parseInt(row.querySelector("a").getAttribute("href").split("/").pop());
             const title = row.querySelector("a").textContent;
-            const price = parseInt(row.querySelector("td:nth-child(5) span").textContent.replace(/[^0-9]/g, ""));
-            const quantity = parseInt(row.querySelector("td:nth-child(2)").textContent);
 
+            if(userId != null) {
+                const price = parseInt(row.querySelector("td:nth-child(6)").textContent.replace(/[^0-9]/g, ""));
+                addHiddenField(`bookOrderDetails[${index}].price`, price);
+                const quantity = parseInt(row.querySelector("td:nth-child(3)").textContent.trim());
+                addHiddenField(`bookOrderDetails[${index}].quantity`, quantity);
+                const couponSalePrice = parseInt(couponUsedElem.textContent.replace(/[^0-9]/g, "")) || 0;
+                addHiddenField(`bookOrderDetails[${index}].couponSalePrice`, couponSalePrice)
+                const couponId = appliedCoupons[bookId] ? appliedCoupons[bookId] : null;
+                addHiddenField(`bookOrderDetails[${index}].couponId`, couponId);
+            }
+            else{
+                const price = parseInt(row.querySelector("td:nth-child(5)").textContent.replace(/[^0-9]/g, ""));
+                addHiddenField(`bookOrderDetails[${index}].price`, price);
+                const quantity = parseInt(row.querySelector("td:nth-child(2)").textContent.trim());
+                addHiddenField(`bookOrderDetails[${index}].quantity`, quantity);
+
+            }
             addHiddenField(`bookOrderDetails[${index}].bookId`, bookId);
             addHiddenField(`bookOrderDetails[${index}].title`, title);
-            addHiddenField(`bookOrderDetails[${index}].price`, price);
-            addHiddenField(`bookOrderDetails[${index}].quantity`, quantity);
+
+
         });
 
         addHiddenField("recipientInfo.recipientName", document.getElementById("name").value);
@@ -209,17 +245,18 @@ document.addEventListener("DOMContentLoaded", () => {
         const year = new Date().getFullYear();
         return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
     }
-    window.submitOrderForm = submitOrderForm;
 
     // 결제 방식 선택 시 호출되는 함수
     function selectPayment(method) {
         alert(`${method} 결제가 선택되었습니다.`);
         selectedPayType = method;
     }
-    window.selectPayment = selectPayment; // 전역으로 노출
 
     function showUnsupportedMessage() {
         alert("현재는 토스 결제만 지원됩니다.");
     }
+    window.submitOrderForm = submitOrderForm;
+    window.selectPayment = selectPayment; // 전역으로 노출
+    window.updateFinalAmount = updateFinalAmount;
     window.showUnsupportedMessage = showUnsupportedMessage; // 전역으로 노출
 });
