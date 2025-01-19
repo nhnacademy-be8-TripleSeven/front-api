@@ -100,4 +100,12 @@ public interface OrderFeignClient {
     @GetMapping("/order-groups/{id}")
     OrderGroupResponseDTO getOrderGroupById(@PathVariable("id") Long id);
 
+    @GetMapping("/orders/delivery-info/{id}")
+    DeliveryInfoResponseDTO getDeliveryInfoById(@PathVariable("id") Long id);
+
+    @GetMapping("/orders/pay/{orderId}")
+    Long getPayPrice(@PathVariable Long orderId);
+
+    @GetMapping("/orders/wrappings/{wrappingId}")
+    WrappingResponseDTO getWrappingById(@PathVariable("wrappingId") Long wrappingId);
 }
