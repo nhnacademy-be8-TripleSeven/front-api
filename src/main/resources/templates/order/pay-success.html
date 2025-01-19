@@ -15,9 +15,9 @@
 
 <main>
     <section class="step-container">
-        <div class="step" th:classappend="${currentStep == 'cart' ? 'active' : ''}">카트</div>
-        <div class="step" th:classappend="${currentStep == 'payment' ? 'current' : ''}">결제</div>
-        <div class="step" th:classappend="${currentStep == 'complete' ? 'active' : ''}">완료</div>
+        <div class="step active">카트</div>
+        <div class="step current">결제</div>
+        <div class="step">완료</div>
     </section>
 
     <section class="order-completion">
@@ -47,24 +47,24 @@
         <div class="shipping-info-address">
             <div class="info-row">
                 <span class="info-label">받는 분:</span>
-                <span class="info-value" th:text="${order.receiverName}">마르코</span>
+                <span class="info-value" th:text="${order.recipientName}">마르코</span>
             </div>
             <div class="info-row">
                 <span class="info-label">주소:</span>
                 <div class="address">
                     <p class="address-item">
                         <span class="badge road-name">도로명</span>
-                        <span th:text="${order.roadAddress}">(62056) 광주광역시 동구 조선대학교</span>
+                        <span th:text="${order.address}">(62056) 광주광역시 동구 조선대학교</span>
                     </p>
                     <p class="address-item">
                         <span class="badge number">지번</span>
-                        <span th:text="${order.jibunAddress}">(62056) 광주광역시 동구 조선대학교</span>
+                        <span th:text="${order.address}">(62056) 광주광역시 동구 조선대학교</span>
                     </p>
                 </div>
             </div>
             <div class="info-row">
                 <span class="info-label">배송 예정일:</span>
-                <span class="info-value" th:text="${order.deliveryDate}">오늘 (12/13) 도착 예정</span>
+                <span class="info-value" th:text="${order.orderedAt}">오늘 (12/13) 도착 예정</span>
             </div>
         </div>
     </section>
@@ -82,19 +82,18 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="product : ${order.products}">
+                <tr th:each="product : ${totalOrder.orders}">
                     <td class="product-info">
-                        <img th:src="@{/image{product.image}(product.image=${product.image})}" alt="책 이미지">
+                        <img th:src="${product.image}" alt="책 이미지">
                         <div>
-                            <p><strong th:text="${product.name}">[국내 도서] 반 고흐, 인생의 그림들</strong></p>
-                            <p th:text="${product.description}">- 어둠을 지나 비로소 빛이 된 불멸의 작품 120</p>
+                            <p><strong th:text="${product.title}">[국내 도서] 반 고흐, 인생의 그림들</strong></p>
                         </div>
                     </td>
                     <td th:text="${product.quantity}">1</td>
-                    <td th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA') + '원'}">21,000원</td>
+                    <td th:text="${#numbers.formatInteger(product.price, 0, 'COMMA') + '원'}">21,000원</td>
                     <td th:text="${product.deliveryDate}">12/12(목)<br>도착(예정)</td>
                     <td>
-                        <span th:text="${#numbers.formatDecimal(product.discountedPrice, 0, 'COMMA') + '원'}">18,900원</span><br>
+                        <span th:text="${#numbers.formatInteger(product.discountedPrice, 0, 'COMMA') + '원'}">18,900원</span><br>
                         <span class="discount">(10% 할인)</span>
                     </td>
                 </tr>
@@ -108,11 +107,11 @@
         <table class="payment-table">
             <tbody>
             <tr>
-                <th>총 상품금액<br><strong th:text="${order.totalPrice + '원'}">18,900원</strong></th>
-                <th>총 추가금액<br><strong>0원</strong></th>
-                <th>총 할인금액<br><strong>0원</strong></th>
+                <th>총 상품금액<br><strong th:text="${#numbers.formatInteger(totalOrder.totalPrice,0,'COMMA') + '원'}">18,900원</strong></th>
+                <th>총 추가금액<br><strong th:text="${#numbers.formatInteger(order.deliveryPrice + totalOrder.wrappingPrice, 0, 'COMMA') + '원'}">0원</strong></th>
+                <th>총 할인금액<br><strong th:text="${#numbers.formatInteger(totalOrder.totalPrice +order.deliveryPrice + totalOrder.wrappingPrice - finalAmount,0,'COMMA') + '원'}">0원</strong></th>
                 <th rowspan="2" class="final-amount">최종 결제금액<br>
-                    <strong class="price" th:text="${order.finalAmount + '원'}">18,900원</strong></th>
+                    <strong class="price" th:text="${#numbers.formatInteger(finalAmount,0,'COMMA') + '원'}">18,900원</strong></th>
             </tr>
             <tr>
                 <td colspan="3" rowspan="2" class="payment-method">
@@ -122,7 +121,7 @@
                     </p>
                 </td>
                 <td rowspan="2" class="point-summary">
-                    <p>기본 적립 포인트: <span th:text="${order.basicPoints + '원'}">0원</span></p>
+<!--                    <p>기본 적립 포인트: <span th:text="${order.basicPoints + '원'}">0원</span></p>-->
                 </td>
             </tr>
             </tbody>

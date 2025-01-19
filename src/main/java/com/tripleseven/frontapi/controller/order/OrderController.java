@@ -1,9 +1,7 @@
 package com.tripleseven.frontapi.controller.order;
 
 import com.tripleseven.frontapi.dto.MemberDTO;
-import com.tripleseven.frontapi.dto.order.OrderCalculationResult;
-import com.tripleseven.frontapi.dto.order.ProductDTO;
-import com.tripleseven.frontapi.dto.order.WrappingResponseDTO;
+import com.tripleseven.frontapi.dto.order.*;
 import com.tripleseven.frontapi.service.MemberService;
 import com.tripleseven.frontapi.service.OrderService;
 import lombok.RequiredArgsConstructor;
@@ -51,15 +49,26 @@ public class OrderController {
             @RequestParam Long orderId,
             Model model
     ){
-        MemberDTO memberDTO = null;
 
         if(Objects.nonNull(userId)) {
-            memberDTO = memberService.getMemberInfo(userId);
+            MemberDTO memberDTO = memberService.getMemberInfo(userId);
+            OrderGroupResponseDTO order = orderService.getOrderGroup(orderId);
+            TotalOrderCompleteDTO totalOrder = orderService.getOrderCompleteDTO(order);
+
             model.addAttribute("user",memberDTO);
+            model.addAttribute("order",order);
+            model.addAttribute("totalOrder",totalOrder);
+            model.addAttribute("finalAmount", orderService.getPayPrice(orderId));
+
             return "order/pay-success";
         }
         else{
+            OrderGroupResponseDTO order = orderService.getOrderGroup(orderId);
+            TotalOrderCompleteDTO totalOrder = orderService.getOrderCompleteDTO(order);
 
+            model.addAttribute("order",order);
+            model.addAttribute("totalOrder", totalOrder);
+            model.addAttribute("finalAmount", orderService.getPayPrice(orderId));
             return "order/pay-success-guest";
         }
 

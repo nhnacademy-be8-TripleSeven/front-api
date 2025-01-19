@@ -3,6 +3,7 @@ package com.tripleseven.frontapi.service;
 import com.tripleseven.frontapi.client.MemberFeignClient;
 import com.tripleseven.frontapi.client.OrderFeignClient;
 import com.tripleseven.frontapi.dto.FilterCriteriaDTO;
+import com.tripleseven.frontapi.dto.book.BookDetailViewDTO;
 import com.tripleseven.frontapi.dto.book.BookOrderDetailResponse;
 import com.tripleseven.frontapi.dto.book.BookOrderRequestDTO;
 import com.tripleseven.frontapi.dto.cart.CartDTO;
@@ -133,6 +134,30 @@ public class OrderService {
         return orderFeignClient.getOrderGroupById(orderId);
     }
 
+    public List<OrderDetailResponseDTO> getOrderDetailsByOrderGroupId(Long orderGroupId){
+        return orderFeignClient.getOrderDetailsByOrderGroupId(orderGroupId);
+    }
+
+    public TotalOrderCompleteDTO getOrderCompleteDTO(OrderGroupResponseDTO orderGroup) {
+        List<OrderDetailResponseDTO> orderDetails = orderFeignClient.getOrderDetailsByOrderGroupId(orderGroup.getId()); //상세 주문 조회
+        List<BookDetailViewDTO> bookDetailViewDTOS = new ArrayList<>();
+
+        for (OrderDetailResponseDTO orderDetail : orderDetails) {
+            bookDetailViewDTOS.add(bookService.getBookDetail(orderDetail.getBookId()));
+        }
+        DeliveryInfoResponseDTO deliveryInfoResponseDTO = orderFeignClient.getDeliveryInfoById(orderGroup.getId());
+        List<OrderCompleteDTO> orderCompleteDTOS = new ArrayList<>();
+        for(int i = 0 ; i < orderDetails.size(); i++){
+            orderCompleteDTOS.add(new OrderCompleteDTO(orderDetails.get(i), bookDetailViewDTOS.get(i), deliveryInfoResponseDTO));
+        }
+        WrappingResponseDTO wrappingResponseDTO = orderFeignClient.getWrappingById(orderGroup.getWrappingId());
+
+        return new TotalOrderCompleteDTO(orderCompleteDTOS, wrappingResponseDTO);
+
+    }
+    public Long getPayPrice(Long orderId){
+        return orderFeignClient.getPayPrice(orderId);
+    }
 
     public OrderCalculationResult calculateOrder(List<ProductDTO> products, Long userId) {
         // 총 상품 금액 및 할인 금액 계산
