@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const numberBox = document.getElementById("number-box");
     const deleteBtn = document.getElementById("delete-button");
     const clearCartBtn = document.getElementById("clear-cart-btn");
-
     // 수량 변경 시 유효성 체크 및 서버에 요청
     numberBox.addEventListener("input", () => {
 
@@ -53,4 +52,5 @@ document.addEventListener("DOMContentLoaded", () => {
                 alert("장바구니를 비우는 데 실패했습니다.");
             });
     });
+
 });
