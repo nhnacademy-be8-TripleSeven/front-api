@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -149,6 +150,9 @@ public class OrderService {
         List<OrderCompleteDTO> orderCompleteDTOS = new ArrayList<>();
         for(int i = 0 ; i < orderDetails.size(); i++){
             orderCompleteDTOS.add(new OrderCompleteDTO(orderDetails.get(i), bookDetailViewDTOS.get(i), deliveryInfoResponseDTO));
+        }
+        if(Objects.isNull(orderGroup.getWrappingId())){
+            return new TotalOrderCompleteDTO(orderCompleteDTOS);
         }
         WrappingResponseDTO wrappingResponseDTO = orderFeignClient.getWrappingById(orderGroup.getWrappingId());
 

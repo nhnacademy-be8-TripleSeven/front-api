@@ -11,6 +11,12 @@ public class TotalOrderCompleteDTO {
     private long totalDiscountedPrice;
     private long wrappingPrice;
 
+    public TotalOrderCompleteDTO(List<OrderCompleteDTO> orders) {
+        this.orders = orders;
+        this.totalPrice = orders.stream().mapToLong(OrderCompleteDTO::getPrice).sum();
+        this.totalDiscountedPrice = orders.stream().mapToLong(OrderCompleteDTO::getDiscountedPrice).sum();
+        this.wrappingPrice = 0;
+    }
     public TotalOrderCompleteDTO(List<OrderCompleteDTO> orders, WrappingResponseDTO wrappingResponseDTO) {
         this.orders = orders;
         this.totalPrice = orders.stream().mapToLong(OrderCompleteDTO::getPrice).sum();
