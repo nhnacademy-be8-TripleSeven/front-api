@@ -52,7 +52,7 @@ public class OrderService {
         return orderFeignClient.getTotalPoint(userId);
     }
 
-    public void updateOrderHistories(Long userId, List<Long> ids, OrderStatus orderStatus){
+    public void updateOrderHistories(Long userId, List<Long> ids, OrderStatus orderStatus) {
         OrderDetailUpdateRequestDTO orderDetailUpdateRequest = new OrderDetailUpdateRequestDTO(ids, orderStatus);
         orderFeignClient.updateOrderDetails(userId, orderDetailUpdateRequest);
     }
@@ -79,55 +79,54 @@ public class OrderService {
     }
 
 
-    public List<ProductDTO> getProductsByType(String type, Long bookId, int quantity, Long userId,String guestId){
-        if("direct".equals(type)){
+    public List<ProductDTO> getProductsByType(String type, Long bookId, int quantity, Long userId, String guestId) {
+        if ("direct".equals(type)) {
             return List.of(getProductInfoByDirect(bookId, quantity));
-        } else if("cart".equals(type)){
-            return getProductInfoByCart(userId,guestId);
-        }
-        else{
+        } else if ("cart".equals(type)) {
+            return getProductInfoByCart(userId, guestId);
+        } else {
             throw new IllegalArgumentException("Unsupported type: " + type);
         }
     }
 
-    public ProductDTO getProductInfoByDirect(Long bookId, int quantity){
+    public ProductDTO getProductInfoByDirect(Long bookId, int quantity) {
         List<BookOrderRequestDTO> requestDTO = List.of(new BookOrderRequestDTO(bookId, quantity));
         List<BookOrderDetailResponse> bookDetailDTO = bookService.getBookOrderDetail(requestDTO);
         ProductDTO productDTO = new ProductDTO();
-        productDTO.ofCreate(bookDetailDTO.getFirst(),quantity);
+        productDTO.ofCreate(bookDetailDTO.getFirst(), quantity);
         return productDTO;
     }
 
-    public List<ProductDTO> getProductInfoByCart(Long userId, String guestId){
+    public List<ProductDTO> getProductInfoByCart(Long userId, String guestId) {
         CartDTO cartDTO = memberFeignClient.getCart(userId, guestId);
-        List<CartDTO.CartItem> cartItems= cartDTO.getCartItems();
-        List<BookOrderRequestDTO>requestDTOS = new ArrayList<>();
+        List<CartDTO.CartItem> cartItems = cartDTO.getCartItems();
+        List<BookOrderRequestDTO> requestDTOS = new ArrayList<>();
         for (CartDTO.CartItem cartItem : cartItems) {
             requestDTOS.add(new BookOrderRequestDTO(cartItem.getBookId(), cartItem.getQuantity()));
         }
         List<BookOrderDetailResponse> bookDetailDTO = bookService.getBookOrderDetail(requestDTOS);
         List<ProductDTO> productDTOS = new ArrayList<>();
-        for(int i = 0 ; i < bookDetailDTO.size(); i++){
+        for (int i = 0; i < bookDetailDTO.size(); i++) {
             ProductDTO productDTO = new ProductDTO();
-            productDTO.ofCreate(bookDetailDTO.get(i),cartItems.get(i).getQuantity());
+            productDTO.ofCreate(bookDetailDTO.get(i), cartItems.get(i).getQuantity());
             productDTOS.add(productDTO);
         }
         return productDTOS;
     }
 
-    public PayInfoResponseDTO getPayInfo(Long userId, String guestId,PayInfoRequestDTO requestDTO) {
-        return orderFeignClient.getPayInfo(userId,guestId,requestDTO);
+    public PayInfoResponseDTO getPayInfo(Long userId, String guestId, PayInfoRequestDTO requestDTO) {
+        return orderFeignClient.getPayInfo(userId, guestId, requestDTO);
     }
 
-    public JSONObject getPayment(Long userId, String guestId, String jsonBody){
-        return orderFeignClient.confirmPayment(userId, guestId,jsonBody);
+    public JSONObject getPayment(Long userId, String guestId, String jsonBody) {
+        return orderFeignClient.confirmPayment(userId, guestId, jsonBody);
     }
 
-    public DefaultDeliveryPolicyDTO getDeliveryPrice(DeliveryPolicyType type){
+    public DefaultDeliveryPolicyDTO getDeliveryPrice(DeliveryPolicyType type) {
         return orderFeignClient.getDefaultDeliveryPolicy(type);
     }
 
-    public List<WrappingResponseDTO> getAllWrappings(){
+    public List<WrappingResponseDTO> getAllWrappings() {
         return orderFeignClient.getAllWrappings();
     }
 
@@ -135,7 +134,7 @@ public class OrderService {
         return orderFeignClient.getOrderGroupById(orderId);
     }
 
-    public List<OrderDetailResponseDTO> getOrderDetailsByOrderGroupId(Long orderGroupId){
+    public List<OrderDetailResponseDTO> getOrderDetailsByOrderGroupId(Long orderGroupId) {
         return orderFeignClient.getOrderDetailsByOrderGroupId(orderGroupId);
     }
 
@@ -148,10 +147,10 @@ public class OrderService {
         }
         DeliveryInfoResponseDTO deliveryInfoResponseDTO = orderFeignClient.getDeliveryInfoById(orderGroup.getId());
         List<OrderCompleteDTO> orderCompleteDTOS = new ArrayList<>();
-        for(int i = 0 ; i < orderDetails.size(); i++){
+        for (int i = 0; i < orderDetails.size(); i++) {
             orderCompleteDTOS.add(new OrderCompleteDTO(orderDetails.get(i), bookDetailViewDTOS.get(i), deliveryInfoResponseDTO));
         }
-        if(Objects.isNull(orderGroup.getWrappingId())){
+        if (Objects.isNull(orderGroup.getWrappingId())) {
             return new TotalOrderCompleteDTO(orderCompleteDTOS, deliveryInfoResponseDTO);
         }
         WrappingResponseDTO wrappingResponseDTO = orderFeignClient.getWrappingById(orderGroup.getWrappingId());
@@ -159,7 +158,8 @@ public class OrderService {
         return new TotalOrderCompleteDTO(orderCompleteDTOS, wrappingResponseDTO, deliveryInfoResponseDTO);
 
     }
-    public Long getPayPrice(Long orderId){
+
+    public Long getPayPrice(Long orderId) {
         return orderFeignClient.getPayPrice(orderId);
     }
 
@@ -191,9 +191,6 @@ public class OrderService {
                 availablePoint
         );
     }
-
-
-
 
 
 }
