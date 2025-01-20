@@ -149,7 +149,7 @@ document.addEventListener("DOMContentLoaded", () => {
         wrapperPriceDetailElem.textContent = `${currentWrapperPrice.toLocaleString()} 원`;
         if(userId!=null) {
             pointUsedElem.textContent = `${pointsUsed.toLocaleString()} 원`;
-            pointsFinalAmountElem.textContent = `${(totalAmount + pointsUsed).toLocaleString()} 원`;
+            pointsFinalAmountElem.textContent = `${(totalAmount - remainingPoints).toLocaleString()} 원`;
 
             availablePointsElem.textContent = `${remainingPoints.toLocaleString()} PT`;
         }
@@ -184,7 +184,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const title = row.querySelector("a").textContent;
 
             if(userId != null) {
-                const price = parseInt(row.querySelector("td:nth-child(6)").textContent.replace(/[^0-9]/g, ""));
+                const price = document.getElementById("discountedPrice").textContent.replace(/[^0-9]/g, "") || 0;
                 addHiddenField(`bookOrderDetails[${index}].price`, price);
                 const quantity = parseInt(row.querySelector("td:nth-child(3)").textContent.trim());
                 addHiddenField(`bookOrderDetails[${index}].quantity`, quantity);

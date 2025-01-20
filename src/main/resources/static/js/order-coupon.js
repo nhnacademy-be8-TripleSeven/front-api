@@ -117,7 +117,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             option.value = coupon.couponId;
             option.setAttribute("data-discount", coupon.discountAmount);
             option.setAttribute("data-rate", coupon.discountRate);
-            option.textContent = `[${coupon.couponName}] ${coupon.discountRate ? coupon.discountRate + "% 할인" : coupon.discountAmount + "원 할인"}`;
+            option.textContent = `[${coupon.couponName}] ${coupon.discountRate ? coupon.discountRate * 100 + "% 할인" : coupon.discountAmount + "원 할인"}`;
             select.appendChild(option);
         });
     }
