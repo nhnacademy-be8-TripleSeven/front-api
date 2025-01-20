@@ -70,14 +70,41 @@ main {
     margin: 20px;
 }
 
+
+/* 검색 그룹 스타일 */
 .search-group {
-    display: flex;
-    align-items: center;
-    gap: 10px; /* 입력 필드와 버튼 사이 간격 */
-    margin-bottom: 15px;
+    display: flex; /* 가로로 정렬 */
+    align-items: center; /* 세로 정렬 */
+    gap: 10px; /* 입력 칸과 버튼 사이 간격 */
 }
 
-/* 사이드바 */
+/* 검색 입력 필드 */
+.search-group input {
+    flex: 1; /* 입력 칸이 가능한 공간을 차지하도록 설정 */
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+/* 검색 버튼 */
+.search-group button {
+    padding: 8px 12px;
+    background-color: #91b5f3;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.search-group button:hover {
+    background-color: #699ce2;
+}
+
+
+/* 사이드바 스타일 */
 .sidebar {
     width: 20%;
     padding: 20px;
@@ -85,12 +112,9 @@ main {
     border-right: 1px solid #ddd;
 }
 
-.sidebar h3 {
-    margin-bottom: 15px;
-}
-
 .sidebar ul {
     list-style: none;
+    margin-top: 10px;
 }
 
 .sidebar ul li {
