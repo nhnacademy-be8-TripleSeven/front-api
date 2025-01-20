@@ -149,7 +149,7 @@ document.addEventListener("DOMContentLoaded", () => {
         wrapperPriceDetailElem.textContent = `${currentWrapperPrice.toLocaleString()} 원`;
         if(userId!=null) {
             pointUsedElem.textContent = `${pointsUsed.toLocaleString()} 원`;
-            pointsFinalAmountElem.textContent = `${(totalAmount + pointsUsed).toLocaleString()} 원`;
+            pointsFinalAmountElem.textContent = `${(totalAmount - remainingPoints).toLocaleString()} 원`;
 
             availablePointsElem.textContent = `${remainingPoints.toLocaleString()} PT`;
         }

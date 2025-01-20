@@ -152,11 +152,11 @@ public class OrderService {
             orderCompleteDTOS.add(new OrderCompleteDTO(orderDetails.get(i), bookDetailViewDTOS.get(i), deliveryInfoResponseDTO));
         }
         if(Objects.isNull(orderGroup.getWrappingId())){
-            return new TotalOrderCompleteDTO(orderCompleteDTOS);
+            return new TotalOrderCompleteDTO(orderCompleteDTOS, deliveryInfoResponseDTO);
         }
         WrappingResponseDTO wrappingResponseDTO = orderFeignClient.getWrappingById(orderGroup.getWrappingId());
 
-        return new TotalOrderCompleteDTO(orderCompleteDTOS, wrappingResponseDTO);
+        return new TotalOrderCompleteDTO(orderCompleteDTOS, wrappingResponseDTO, deliveryInfoResponseDTO);
 
     }
     public Long getPayPrice(Long orderId){
