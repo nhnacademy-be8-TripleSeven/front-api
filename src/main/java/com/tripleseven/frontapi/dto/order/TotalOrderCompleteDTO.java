@@ -13,14 +13,15 @@ public class TotalOrderCompleteDTO {
 
     public TotalOrderCompleteDTO(List<OrderCompleteDTO> orders) {
         this.orders = orders;
-        this.totalPrice = orders.stream().mapToLong(OrderCompleteDTO::getPrice).sum();
-        this.totalDiscountedPrice = orders.stream().mapToLong(OrderCompleteDTO::getDiscountedPrice).sum();
+        this.totalPrice = orders.stream().mapToLong(order -> order.getPrice() * order.getQuantity()).sum();
+        this.totalDiscountedPrice = orders.stream().mapToLong(order -> order.getDiscountedPrice() * order.getQuantity()).sum();
         this.wrappingPrice = 0;
     }
+
     public TotalOrderCompleteDTO(List<OrderCompleteDTO> orders, WrappingResponseDTO wrappingResponseDTO) {
         this.orders = orders;
-        this.totalPrice = orders.stream().mapToLong(OrderCompleteDTO::getPrice).sum();
-        this.totalDiscountedPrice = orders.stream().mapToLong(OrderCompleteDTO::getDiscountedPrice).sum();
+        this.totalPrice = orders.stream().mapToLong(order -> order.getPrice() * order.getQuantity()).sum();
+        this.totalDiscountedPrice = orders.stream().mapToLong(order -> order.getDiscountedPrice() * order.getQuantity()).sum();
         this.wrappingPrice = wrappingResponseDTO.getPrice();
     }
 }
