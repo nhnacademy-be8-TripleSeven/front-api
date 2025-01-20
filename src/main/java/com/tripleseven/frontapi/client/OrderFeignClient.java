@@ -22,7 +22,7 @@ public interface OrderFeignClient {
             @RequestHeader("X-USER") Long userId,
             Pageable pageable);
 
-    @GetMapping("/order-details/check-purchase")
+    @GetMapping("/orders/order-details/check-purchase")
     boolean checkUserPurchase(@RequestParam("bookId") Long bookId,
                               @RequestParam("userId") Long userId);
 
@@ -42,8 +42,8 @@ public interface OrderFeignClient {
     List<OrderGroupResponseDTO> getGuestOrderGroups(@RequestParam("phone") String phone);
 
 
-    @GetMapping("/order-details/order-groups/{orderGroupId}")
-    List<OrderDetailResponseDTO> getOrderDetailsByOrderGroupId(@PathVariable("orderGroupId") Long orderGroupId);
+    @GetMapping("/orders/order-details/{order-group-id}")
+    List<OrderDetailResponseDTO> getOrderDetailsByOrderGroupId(@PathVariable("order-group-id") Long orderGroupId);
 
     @PostMapping("/api/orders/order-details/return")
     void updateOrderDetails(
@@ -51,7 +51,7 @@ public interface OrderFeignClient {
             @RequestBody OrderDetailUpdateRequestDTO orderDetailUpdateRequestDTO
     );
 
-    @GetMapping("/api/user/point-histories")
+    @GetMapping("/api/orders/point-histories")
     PointHistoryPageResponseDTO<UserPointHistoryDTO> getUserPointHistories(
             @RequestHeader("X-USER") Long memberId,
             @RequestParam("startDate") String startDate,
@@ -97,7 +97,7 @@ public interface OrderFeignClient {
     @GetMapping("/orders/wrappings")
     List<WrappingResponseDTO> getAllWrappings();
 
-    @GetMapping("/order-groups/{id}")
+    @GetMapping("/orders/order-groups/{id}")
     OrderGroupResponseDTO getOrderGroupById(@PathVariable("id") Long id);
 
     @GetMapping("/orders/delivery-info/{id}")
