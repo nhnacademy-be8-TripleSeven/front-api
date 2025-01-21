@@ -43,7 +43,7 @@
     <section class="shipping-info-section">
         <h2 class="section-title">
             <img th:src="@{/image/emoji/ship.png}" alt="배송 아이콘"> 배송 정보
-            <button class="change-address-btn">배송지 변경</button>
+<!--            <button class="change-address-btn">배송지 변경</button>-->
         </h2>
         <div class="shipping-info-address">
             <div class="info-row">
@@ -54,11 +54,6 @@
                 <span class="info-label">주소:</span>
                 <div class="address">
                     <p class="address-item">
-                        <span class="badge road-name">도로명</span>
-                        <span th:text="${order.address}">(62056) 광주광역시 동구 조선대학교</span>
-                    </p>
-                    <p class="address-item">
-                        <span class="badge number">지번</span>
                         <span th:text="${order.address}">(62056) 광주광역시 동구 조선대학교</span>
                     </p>
                 </div>

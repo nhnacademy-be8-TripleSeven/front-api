@@ -7,9 +7,8 @@ document.addEventListener('DOMContentLoaded', function () {
         // 필수 입력 필드 ID 및 이름 목록
         const requiredFields = [
             { id: 'name', name: '이름' },
-            { id: 'road-address', name: '도로명 주소' },
-            { id: 'zone-address', name: '지번 주소' },
-            { id: 'detail-address', name: '상세 주소' },
+            { id: 'roadAddress', name: '도로명 주소' },
+            { id: 'detailAddress', name: '상세 주소' },
             { id: 'mobile-phone1', name: '휴대폰 앞자리' },
             { id: 'mobile-phone2', name: '휴대폰 중간자리' },
             { id: 'mobile-phone3', name: '휴대폰 끝자리' },
@@ -20,6 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // 첫 번째로 입력되지 않은 필드 찾기
         for (let fieldInfo of requiredFields) {
             const field = document.getElementById(fieldInfo.id);
+            console.log("field",field);
             if (!field.value.trim()) {
                 alert(`"${fieldInfo.name}"를 입력해 주세요.`);
                 field.focus(); // 해당 필드에 포커스
