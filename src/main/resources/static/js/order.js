@@ -209,9 +209,9 @@ document.addEventListener("DOMContentLoaded", () => {
         addHiddenField("recipientInfo.recipientName", document.getElementById("name").value);
         addHiddenField("recipientInfo.recipientPhone", `${document.getElementById("mobile-phone1").value}${document.getElementById("mobile-phone2").value}${document.getElementById("mobile-phone3").value}`);
         addHiddenField("recipientInfo.recipientLandline", `${document.getElementById("landline-phone1").value}${document.getElementById("landline-phone2").value}${document.getElementById("landline-phone3").value}`);
-        addHiddenField("addressInfo.roadAddress", document.getElementById("road-address").value);
-        addHiddenField("addressInfo.zoneAddress", document.getElementById("zone-address").value);
-        addHiddenField("addressInfo.detailAddress", document.getElementById("detail-address").value);
+        addHiddenField("addressInfo.roadAddress", document.getElementById("roadAddress").value);
+        addHiddenField("addressInfo.zoneAddress", document.getElementById("jibunAddress").value);
+        addHiddenField("addressInfo.detailAddress", document.getElementById("detailAddress").value);
         addHiddenField("wrapperId", wrapperIdInput.value);
         addHiddenField("point", pointsUsed);
         addHiddenField("totalAmount", parseInt(document.querySelector("#final-amount").textContent.replace(/[^0-9]/g, "")));

@@ -6,10 +6,44 @@
     <title>NHN 24</title>
     <link rel="stylesheet" href="/css/pay-user.css">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script th:src="@{/js/global.js}"></script>
     <script src="/js/order.js"></script>
     <script src="/js/order-alarm.js"></script>
     <script src="/js/order-coupon.js"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script>
+        function sample6_execDaumPostcode() {
+            new daum.Postcode({
+                oncomplete: function(data) {
+                    let roadAddr = data.roadAddress;  // 도로명 주소
+                    let jibunAddr = data.jibunAddress; // 지번 주소
+                    let buildingName = data.buildingName;
+
+                    console.log("도로명 주소:", roadAddr);
+                    console.log("지번 주소:", jibunAddr);
+
+
+                    // 도로명 주소 필드 업데이트 (참고 주소 포함)
+                    if (roadAddr) {
+                        document.getElementById('roadAddress').value = roadAddr + " " + buildingName;
+                    } else {
+                        document.getElementById('roadAddress').value = '';
+                    }
+
+                    // 지번 주소 필드 업데이트
+                    if (jibunAddr) {
+                        document.getElementById('jibunAddress').value = jibunAddr + " " + buildingName;
+                    } else {
+                        document.getElementById('jibunAddress').value = '';
+                    }
+
+                    // 상세주소 입력 필드로 포커스 이동
+                    document.getElementById('detailAddress').focus();
+                }
+            }).open();
+        }
+    </script>
 </head>
 <!-- ✅ 회원 정보(userId)를 data-user-id 속성으로 추가 -->
 <body th:data-user-id="${userId}">
@@ -110,13 +144,16 @@
                     <input type="text" id="name" placeholder="이름 입력" required>
                 </div>
 
-                <!-- 배송 주소 -->
+                <!-- 주소 입력 -->
                 <div class="section address">
                     <label>배송주소</label>
                     <div>
-                        <input type="text" id="road-address" placeholder="도로명 주소" required>
-                        <input type="text" id="zone-address" placeholder="지번 주소" required>
-                        <input type="text" id="detail-address" placeholder="상세 주소" required>
+                        <input type="button" onclick="sample6_execDaumPostcode()" value="주소 찾기">
+                    </div>
+                    <div>
+                        <input type="text" id="roadAddress" placeholder="도로명 주소" readonly>
+                        <input type="text" id="jibunAddress" placeholder="지번 주소" readonly>
+                        <input type="text" id="detailAddress" placeholder="상세주소">
                     </div>
                 </div>
 
