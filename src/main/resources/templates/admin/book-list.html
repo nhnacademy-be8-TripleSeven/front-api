@@ -25,7 +25,7 @@
     <section class="content">
       <h2>도서 조회</h2>
       <div class="search-bar">
-        <form th:action="@{/admin/frontend/books/keyword}" method="get">
+        <form th:action="@{/admin/frontend/books/search}" method="get">
           <input type="text" id="keyword" name="keyword" placeholder="검색 조건을 입력하세요" class="search-input">
           <button type="submit" class="search-btn">조회</button>
         </form>
