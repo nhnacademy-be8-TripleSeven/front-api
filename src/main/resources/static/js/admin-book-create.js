@@ -52,7 +52,7 @@ function handleCreateBook(event) {
   }
 
   // Axios 요청
-  axios.post('/admin/books/createBook', formData, {
+  axios.post('/admin/books', formData, {
     headers: {
       'Content-Type': 'multipart/form-data'
     }
@@ -179,7 +179,7 @@ function resetCategoryLevels(startIndex, categorySelectors) {
 // 카테고리 데이터 요청 함수
 async function fetchCategoriesForLevel(parentCategoryId, level) {
   try {
-    const response = await axios.get(`/admin/books/categoriesParentList`, {
+    const response = await axios.get(`/admin/books/categories-parent`, {
       params: {
         parent: parentCategoryId,
         level: level

@@ -34,7 +34,7 @@ async function createCategory() {
   };
 
   try {
-    const response = await axios.post('/admin/books/categoryCreate', categoryData);
+    const response = await axios.post('/admin/books/category', categoryData);
     alert('카테고리가 성공적으로 생성되었습니다.');
     location.reload(); // 페이지 새로고침
   } catch (error) {
@@ -58,7 +58,7 @@ async function handleDeleteCategory() {
     return;
   }
 
-  axios.post('/admin/books/categoryDelete', null, {
+  axios.delete('/admin/books/category', {
     params: { id: categoryId }
   })
   .then(response => {
@@ -92,7 +92,7 @@ async function fetchCategoriesByLevel() {
 
   try {
     // 레벨에 따른 카테고리 리스트를 가져옴
-    const response = await axios.get('/admin/books/categoryLevelList');
+    const response = await axios.get('/admin/books/categories-level');
     const data = response.data;
 
     let categories = [];
