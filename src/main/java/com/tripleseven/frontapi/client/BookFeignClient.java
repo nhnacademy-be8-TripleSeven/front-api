@@ -55,7 +55,7 @@ public interface BookFeignClient {
     @GetMapping("/books/type/{type}")
     List<BookDetailResponseDTO> getBooksByType(@PathVariable("type") String type);
 
-    @GetMapping("/books/term/{term}")
+    @GetMapping("/books/search/{term}")
     BookPageResponseDTO getBooksByTerm(
         @PathVariable("term") String term,
         Pageable pageable
@@ -72,7 +72,7 @@ public interface BookFeignClient {
         @RequestParam int size
     );
 
-    @GetMapping("/books/typeSearch/{type}")
+    @GetMapping("/books/type-search/{type}")
     BookPageDetailResponseDTO getTypeSearchBooks(
         @PathVariable("type") String type,
         Pageable pageable
@@ -155,32 +155,32 @@ public interface BookFeignClient {
                                                @RequestParam(defaultValue = "10") int size);
 
 
-    @GetMapping("/admin/books/keyword/{keyword}")
+    @GetMapping("/admin/books/search/{keyword}")
     BookPageDTO getBooksByKeyword(@PathVariable("keyword") String keyword, Pageable pageable);
 
     @GetMapping("/admin/books/isbn/{isbn}")
     BookAladinDTO getAladinApiBookByIsbn(@PathVariable("isbn") String isbn);
 
-    @DeleteMapping("/admin/books/delete/{bookId}")
-    void deleteBook(@PathVariable Long bookId);
+    @DeleteMapping("/admin/books/{book-id}")
+    void deleteBook(@PathVariable(name = "book-id") Long bookId);
 
-    @PostMapping(value = "/admin/books/updateBook", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PutMapping(value = "/admin/books", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     void updateBook(@RequestPart BookUpdateDTO bookDTO);
 
-    @PostMapping(value = "/admin/books/createBook",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/admin/books",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     void createBook(@RequestPart BookCreateDTO bookCreatorDTOs);
 
     @GetMapping("/admin/books/{id}")
     BookDTO getBookById(@PathVariable Long id);
 
 
-    @PostMapping("/admin/books/categoryCreate")
+    @PostMapping("/admin/books/category")
     void createCategory(@RequestBody List<CategoryDTO> categoryDTO);
 
-    @GetMapping("/admin/books/categoryList")
+    @GetMapping("/admin/books/categories")
     PageCategoryDTO getCategoryList(@RequestParam int level, Pageable pageable);
 
-    @DeleteMapping("/admin/books/categoryDelete")
+    @DeleteMapping("/admin/books/category")
     void deleteCategory(@RequestParam Long id);
 
     @GetMapping("/api/likes/search")
@@ -201,13 +201,13 @@ public interface BookFeignClient {
 
 
 
-    @GetMapping("/books/categorySearch")
+    @GetMapping("/books/category-search")
     BookPageDetailResponseDTO getCategorySearch(@RequestParam long id, Pageable pageable);
 
     @GetMapping("/admin/books/categories/tree")
     List<CategoryResponseDTO> getCategoriesTree();
 
-    @GetMapping("/admin/books/categoryLevelList")
+    @GetMapping("/admin/books/categories-level-one")
     CategoryLevelDTO getCategoryLevelList();
 
 
