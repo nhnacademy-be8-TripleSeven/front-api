@@ -7,12 +7,11 @@
     <link rel="stylesheet" href="/css/pay-user.css">
     <link rel="stylesheet" href="/css/global.css">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script th:src="@{/js/global.js}"></script>
     <script src="/js/order.js"></script>
     <script src="/js/order-alarm.js"></script>
     <script src="/js/order-coupon.js"></script>
-    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script>
         function sample6_execDaumPostcode() {
             new daum.Postcode({
@@ -104,7 +103,9 @@
                     </td>
                     <td th:text="${product.quantity}">1</td>
                     <td th:text="${#numbers.formatInteger(product.price, 0, 'COMMA') + '원'}">21,000원</td>
-                    <td th:text="${product.deliveryDate[0]}">12/12(목)<br>도착(예정)</td>
+                    <td>
+                        <span id = "delivery-date" th:text="${product.deliveryDate[0]}">12/12(목)<br>도착(예정) </span>
+                    </td>
                     <td>
                         <span id = "discountedPrice" th:text="${#numbers.formatInteger(product.discountedPrice, 0, 'COMMA') + '원'}">18,900원</span><br>
                         <span class="discount"
