@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NHN 24 - 주소 관리</title>
+  <link rel="stylesheet" th:href="@{/css/address-manage.css}">
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script type="module" src="/js/axios-config.js"></script>
+</head>
+<body>
+<div th:replace="header :: header"></div>
+
+<div class="my-account-container">
+
+  <div th:replace="sidebar.html"></div>
+  <main>
+    <section class="account-info">
+    <h2>*주소 관리</h2>
+    <ul id="address-list"></ul>
+
+    <h2>도로명 주소 검색</h2>
+    <form id="add-address-form">
+      <input type="hidden" id="user-id" th:value="${userId}" />
+      <div class="form-group input-group">
+        <input type="text" id="sample6_postcode" name="postcode" placeholder="우편번호" readonly>
+        <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
+      </div>
+      <div class="form-group">
+        <label for="roadAddress">주소</label>
+        <input type="text" id="roadAddress" name="roadAddress" placeholder="도로명 주소" readonly>
+      </div>
+      <div class="form-group">
+        <label for="detailAddress">상세 주소</label>
+        <input type="text" id="detailAddress" name="detailAddress" placeholder="상세 주소">
+      </div>
+      <div class="form-group">
+        <label for="alias">주소 별칭</label>
+        <input type="text" id="alias" name="alias" placeholder="주소 별칭">
+      </div>
+      <button type="submit">저장</button>
+    </form>
+    </section>
+  </main>
+
+</div>
+
+<div th:replace="footer :: footer"></div>
+
+<script th:src="@{/js/global.js}"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    let userId = localStorage.getItem("X-USER");
+    const token = localStorage.getItem("jwt_token");
+    if (!userId) {
+      const hiddenUserIdField = document.getElementById("user-id");
+      userId = hiddenUserIdField ? hiddenUserIdField.value : null;
+    }
+
+    console.log("User ID:", userId);
+
+    /**
+     * 주소 목록 불러오기
+     */
+    async function loadAddresses() {
+      try {
+        const response = await axios.get(`/api/members/${userId}/addresses`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        });
+
+        const addressList = document.getElementById("address-list");
+        addressList.innerHTML = ""; // 기존 목록 초기화
+
+        if (!response.data.length) {
+          addressList.innerHTML = "<li>등록된 주소가 없습니다.</li>";
+          return;
+        }
+
+        response.data.forEach((address) => {
+          const li = document.createElement("li");
+          li.textContent = `${address.alias}: ${address.roadAddress}, ${address.detailAddress}`;
+
+          const editButton = document.createElement("button");
+          editButton.textContent = "수정";
+          editButton.onclick = () => editAddress(address);
+
+          const deleteButton = document.createElement("button");
+          deleteButton.textContent = "삭제";
+          deleteButton.onclick = () => deleteAddress(address.id);
+
+          li.appendChild(editButton);
+          li.appendChild(deleteButton);
+          addressList.appendChild(li);
+        });
+      } catch (error) {
+        console.error("주소 목록 로드 실패:", error);
+        alert("주소 목록을 불러오는 중 문제가 발생했습니다.");
+      }
+    }
+
+    /**
+     * 주소 수정
+     */
+    async function editAddress(address) {
+      const updatedAlias = prompt("새 별칭을 입력하세요:", address.alias);
+      const isDefault = confirm("이 주소를 기본 주소로 설정하시겠습니까?");
+      if (!updatedAlias) {
+        alert("별칭을 입력해야 합니다.");
+        return;
+      }
+
+      const payload = { alias: updatedAlias, isDefault };
+
+      try {
+        await axios.patch(`/api/members/${userId}/addresses/${address.id}`, payload, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        });
+
+        alert("주소가 성공적으로 수정되었습니다.");
+        loadAddresses(); // 수정 후 목록 다시 불러오기
+      } catch (error) {
+        console.error("주소 수정 실패:", error);
+        alert("주소 수정에 실패했습니다.");
+      }
+    }
+
+    /**
+     * 주소 삭제
+     */
+    async function deleteAddress(addressId) {
+      if (!confirm("주소를 삭제하시겠습니까?")) return;
+
+      try {
+        await axios.delete(`/api/members/${userId}/addresses/${addressId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        });
+
+        alert("주소가 삭제되었습니다.");
+        loadAddresses(); // 삭제 후 목록 다시 불러오기
+      } catch (error) {
+        console.error("주소 삭제 실패:", error);
+        alert("주소 삭제에 실패했습니다.");
+      }
+    }
+
+    /**
+     * 새 주소 추가
+     */
+    document.getElementById("add-address-form").addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const payload = {
+        postcode: document.getElementById("sample6_postcode").value.trim(),
+        roadAddress: document.getElementById("roadAddress").value.trim(),
+        detailAddress: document.getElementById("detailAddress").value.trim(),
+        alias: document.getElementById("alias").value.trim(),
+      };
+
+      if (!payload.postcode || !payload.roadAddress || !payload.detailAddress || !payload.alias) {
+        alert("모든 필드를 입력해주세요.");
+        return;
+      }
+
+      try {
+        await axios.post(`/api/members/${userId}/addresses/search/save`, payload, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        });
+
+        alert("주소가 성공적으로 추가되었습니다.");
+        loadAddresses(); // 추가 후 목록 다시 불러오기
+      } catch (error) {
+        console.error("주소 추가 실패:", error);
+        alert("주소 추가에 실패했습니다.");
+      }
+    });
+
+    // 초기 주소 목록 불러오기
+    loadAddresses();
+  });
+
+  function sample6_execDaumPostcode() {
+    new daum.Postcode({
+      oncomplete: function(data) {
+        // 선택한 주소 정보
+        const roadAddr = data.roadAddress; // 도로명 주소
+        const jibunAddr = data.jibunAddress; // 지번 주소
+
+        // HTML 요소에 주소 정보 반영
+        document.getElementById("sample6_postcode").value = data.zonecode; // 우편번호
+        document.getElementById("roadAddress").value = roadAddr || jibunAddr; // 도로명 주소 우선
+      },
+    }).open();
+  }
+</script>
+</body>
+</html>

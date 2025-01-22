@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NHN 24 - 회원 정보 수정</title>
+  <link rel="stylesheet" th:href="@{/css/address-manage.css}">
+  <link rel="stylesheet" th:href="@{/css/global.css}">
+  <script th:src="@{/js/global.js}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script type="module" src="/js/axios-config.js"></script>
+</head>
+<body>
+<div th:replace="header :: header"></div>
+
+<div class="my-account-container">
+
+  <div th:replace="sidebar.html"></div>
+  <main>
+
+
+    <section class="account-info">
+      <h1>회원 정보 수정</h1>
+      <form id="member-edit-form">
+        <div>
+          <input type="hidden" id="user-id" th:value="${userId}" />
+        </div>
+
+        <div class="form-group">
+          <label for="name">이름:</label>
+          <input type="text" id="name" name="name" th:value="${member.name}"><br>
+        </div>
+
+        <div class="form-group">
+          <label for="email">이메일:</label>
+          <input type="text" id="email" name="email" th:value="${member.email}"><br>
+        </div>
+
+        <div class="form-group">
+          <label for="phone">전화번호:</label>
+          <input type="text" id="phone" name="phone" th:value="${member.phoneNumber}"><br>
+        </div>
+
+        <div class="form-group">
+          <label for="new-password">새 비밀번호</label>
+          <input type="password" id="new-password" name="newPassword" placeholder="새 비밀번호">
+        </div>
+
+        <div class="form-group">
+          <label for="confirm-password">새 비밀번호 확인</label>
+          <input type="password" id="confirm-password" name="confirmPassword" placeholder="새 비밀번호 확인">
+        </div>
+        <button type="submit">수정</button>
+      </form>
+    </section>
+  </main>
+</div>
+
+
+
+  <div th:replace="footer :: footer"></div>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    let userId = localStorage.getItem("X-USER");
+    const token = localStorage.getItem("jwt_token");
+    if (!userId) {
+      const hiddenUserIdField = document.getElementById("user-id");
+      userId = hiddenUserIdField ? hiddenUserIdField.value : null;
+    }
+
+    console.log("User ID:", userId);
+
+    document.getElementById("member-edit-form").addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const payload = {
+        name: document.getElementById("name").value.trim(),
+        email: document.getElementById("email").value.trim(),
+        phoneNumber: document.getElementById("phone").value.trim(),
+        newPassword: document.getElementById("new-password").value.trim() || null,
+      };
+
+      console.log("Payload:", payload);
+      console.log("Request URL:", `/api/members/${userId}/edit`);
+
+      try {
+        const response = await axios.put(`/api/members/${userId}/edit`, payload, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        });
+
+        console.log("Response:", response.data);
+        alert("회원 정보가 성공적으로 수정되었습니다.");
+
+        document.getElementById("new-password").value = ""; // 비밀번호 초기화
+      } catch (error) {
+
+        console.error("Axios 요청 실패:", error);
+        if (error.response) {
+          console.error("HTTP 상태 코드:", error.response.status);
+          console.error("응답 데이터:", error.response.data);
+          alert(`수정 실패: ${error.response.data.message || "서버 오류"}`);
+        } else {
+          alert("서버와의 통신 중 문제가 발생했습니다.");
+        }
+      }
+    });
+  });
+</script>
+</body>
+</html>

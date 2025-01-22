@@ -2,6 +2,7 @@ package com.tripleseven.frontapi.controller.user;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 public class UserController {
@@ -59,22 +60,6 @@ public class UserController {
     @GetMapping("/frontend/member/my-page/coupons")
     public String getCouponDetails() {
         return "/member/my-page/coupon/detail";
-    }
-
-
-    @GetMapping("/frontend/member/pwd-check")
-    public String checkPasswordPage() {
-        return "/member/my-page/pwd-check";
-    }
-
-    @GetMapping("/frontend/user/member-edit")
-    public String getUserMemberEditPage() {
-        return "/member/my-page/member-edit";
-    }
-
-    @GetMapping("/frontend/user/address-manage")
-    public String getUserAddressManagePage() {
-        return "/member/my-page/address-manage";
     }
 
 

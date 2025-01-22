@@ -6,6 +6,7 @@ import com.tripleseven.frontapi.dto.cart.CartDTO;
 import com.tripleseven.frontapi.dto.member.MemberAccountDto;
 import com.tripleseven.frontapi.dto.oauth2.payco.PaycoMemberDTO;
 import java.util.List;
+import java.util.Map;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,6 +20,9 @@ import org.springframework.web.bind.annotation.*;
 
 @FeignClient(name = "member-api")
 public interface MemberFeignClient {
+
+    @GetMapping("/members/auth/login-id")
+    MemberDTO getMember(@RequestParam("loginId") String loginId);
 
     @PostMapping("/members/oauth2/payco")
     MemberAccountDto savePaycoMember(@RequestBody PaycoMemberDTO.Data.PaycoMember paycoMember);
@@ -40,9 +44,9 @@ public interface MemberFeignClient {
 
     @PostMapping("/cart")
     CartDTO addCart(@RequestHeader(value = "X-USER", required = false) Long userId,
-                           @CookieValue("GUEST-ID") String guestId,
-                           @RequestParam Long bookId,
-                           @RequestParam int quantity);
+                    @CookieValue("GUEST-ID") String guestId,
+                    @RequestParam Long bookId,
+                    @RequestParam int quantity);
 
     @PutMapping("/cart/book/quantity")
     CartDTO updateCartItemQuantity(@RequestHeader(value = "X-USER", required = false) Long userId,
@@ -63,17 +67,16 @@ public interface MemberFeignClient {
     @GetMapping("/api/members/info")
     MemberDTO getMemberInfo(@RequestHeader("X-USER") Long userId);
 
-    @PostMapping("/members/{userId}/addresses")
+    @PostMapping("/api/members/{userId}/addresses")
     AddressDTO addAddress(@PathVariable Long userId, @RequestBody AddressDTO addressDTO);
 
-
-    @PostMapping("/members/pwd-check")
-    boolean checkPassword(@RequestParam String userId, @RequestParam String password);
-
-    @PutMapping("/members/{userId}")
+    @PutMapping("/api/members/{userId}")
     MemberDTO updateMemberInfo(@PathVariable Long userId, @RequestBody MemberDTO memberDTO);
 
-    @GetMapping("/api/frontend/member/address-manage")
-    List<AddressDTO> getAddresses(@RequestHeader("X-USER") Long userId);
-}
 
+    @GetMapping("/api/members/{userId}/addresses")
+    List<AddressDTO> getAddresses(@PathVariable Long userId);
+
+    @PostMapping("/{userId}/verify-password")
+    boolean checkPassword(@PathVariable Long userId, @RequestBody Map<String, String> payload);
+}
