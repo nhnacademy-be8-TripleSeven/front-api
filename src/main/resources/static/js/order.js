@@ -191,31 +191,34 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         };
 
+        // ✅ 책별 개별 쿠폰 할인 금액 적용
         document.querySelectorAll(".product-table tbody tr").forEach((row, index) => {
             const bookId = parseInt(row.querySelector("a").getAttribute("href").split("/").pop());
             const title = row.querySelector("a").textContent;
+            const quantity = parseInt(row.querySelector("td:nth-child(3)").textContent.trim());
+            let price = parseInt(row.querySelector("td:nth-child(5)").textContent.replace(/[^0-9]/g, "")) || 0;
 
-            if (userId != null) {
-                const price = document.getElementById("discountedPrice").textContent.replace(/[^0-9]/g, "") || 0;
-                console.log("price = ",price);
-                addHiddenField(`bookOrderDetails[${index}].price`, price);
-                const quantity = parseInt(row.querySelector("td:nth-child(3)").textContent.trim());
-                addHiddenField(`bookOrderDetails[${index}].quantity`, quantity);
-                const couponSalePrice = parseInt(couponUsedElem.textContent.replace(/[^0-9]/g, "")) || 0;
-                addHiddenField(`bookOrderDetails[${index}].couponSalePrice`, couponSalePrice)
-                const couponId = appliedCoupons[bookId] ? appliedCoupons[bookId] : null;
-                addHiddenField(`bookOrderDetails[${index}].couponId`, couponId);
-            } else {
-                const price = parseInt(row.querySelector("td:nth-child(5)").textContent.replace(/[^0-9]/g, ""));
-                addHiddenField(`bookOrderDetails[${index}].price`, price);
-                const quantity = parseInt(row.querySelector("td:nth-child(2)").textContent.trim());
-                addHiddenField(`bookOrderDetails[${index}].quantity`, quantity);
+            let couponSalePrice = 0;
+            let couponId = null;
 
+            // ✅ 적용된 쿠폰이 있다면 할인 금액 조회
+            if (appliedCoupons[bookId]) {
+                couponId = appliedCoupons[bookId]; // 쿠폰 ID 가져오기
+                const couponElem = document.querySelector(`.coupon-select[data-book-id="${bookId}"]`);
+                if (couponElem) {
+                    const selectedOption = couponElem.selectedOptions[0];
+                    couponSalePrice = parseInt(selectedOption.getAttribute("data-discount")) || 0;
+                }
             }
+
+            console.log(`📌 책 ID: ${bookId}, 가격: ${price}, 수량: ${quantity}, 쿠폰 할인: ${couponSalePrice}`);
+
             addHiddenField(`bookOrderDetails[${index}].bookId`, bookId);
             addHiddenField(`bookOrderDetails[${index}].title`, title);
-
-
+            addHiddenField(`bookOrderDetails[${index}].price`, price);
+            addHiddenField(`bookOrderDetails[${index}].quantity`, quantity);
+            addHiddenField(`bookOrderDetails[${index}].couponSalePrice`, couponSalePrice);
+            addHiddenField(`bookOrderDetails[${index}].couponId`, couponId);
         });
 
         addHiddenField("recipientInfo.recipientName", document.getElementById("name").value);
@@ -228,6 +231,7 @@ document.addEventListener("DOMContentLoaded", () => {
         addHiddenField("point", pointsUsed);
         addHiddenField("totalAmount", parseInt(document.querySelector("#final-amount").textContent.replace(/[^0-9]/g, "")));
         addHiddenField("deliveryFee", deliveryFee);
+
         const selectedDateElement = document.querySelector(".delivery-date-container .date.active");
         if (selectedDateElement) {
             const deliveryDate = convertToDate(selectedDateElement.getAttribute("data-date"));
@@ -239,12 +243,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
         addHiddenField("ordererName", ordererNameInput.value);
 
-        // 선택된 결제 방식을 추가
         if (!selectedPayType) {
             alert("결제 방식을 선택해주세요.");
             return;
         }
-        addHiddenField("payType", selectedPayType); // payType 추가
+        addHiddenField("payType", selectedPayType);
 
         document.body.appendChild(form);
         form.submit();
