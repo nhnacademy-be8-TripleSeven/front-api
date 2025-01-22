@@ -185,6 +185,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (userId != null) {
                 const price = document.getElementById("discountedPrice").textContent.replace(/[^0-9]/g, "") || 0;
+                console.log("price = ",price);
                 addHiddenField(`bookOrderDetails[${index}].price`, price);
                 const quantity = parseInt(row.querySelector("td:nth-child(3)").textContent.trim());
                 addHiddenField(`bookOrderDetails[${index}].quantity`, quantity);
@@ -210,7 +211,7 @@ document.addEventListener("DOMContentLoaded", () => {
         addHiddenField("recipientInfo.recipientLandline", `${document.getElementById("landline-phone1").value}${document.getElementById("landline-phone2").value}${document.getElementById("landline-phone3").value}`);
         addHiddenField("addressInfo.roadAddress", document.getElementById("roadAddress").value);
         addHiddenField("addressInfo.zoneAddress", document.getElementById("jibunAddress").value);
-        addHiddenField("addressInfo.detailAddress", document.getElementById("detail-Address").value);
+        addHiddenField("addressInfo.detailAddress", document.getElementById("detailAddress").value);
         addHiddenField("wrapperId", wrapperIdInput.value);
         addHiddenField("point", pointsUsed);
         addHiddenField("totalAmount", parseInt(document.querySelector("#final-amount").textContent.replace(/[^0-9]/g, "")));
