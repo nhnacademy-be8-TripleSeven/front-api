@@ -506,35 +506,43 @@ section {
 }
 
 .delivery-date-container {
-    width: 80%;
+    width: 90%;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;  /* 📌 왼쪽 정렬 */
     align-items: center;
     background-color: #f9fbfc;
     box-shadow: none;
-    font-size: 30px;
+    font-size: 1.2vw; /* 📌 화면 크기에 비례하도록 설정 */
+    padding: 1.5vw;
+    gap: 2vw; /* 📌 라벨과 날짜 간격 조절 */
 }
 
 .delivery-date-label {
-    padding: 25px 60px;
+    padding: 1vw 2vw; /* 📌 크기를 비율로 조정 */
     background-color: #f5f5f5;
-    border-radius: 10px;
-    font-size: 25px;
+    border-radius: 0.5vw;
+    font-size: 1.2vw;
     text-align: center;
     font-weight: bold;
+    flex: 1; /* 📌 너비 비율 지정 */
+    max-width: 15%; /* 📌 최대 너비 제한 */
 }
 
 .date {
     display: flex;
-    padding: 25px 70px;
+    padding: 1vw 2vw;
     border: 1px solid #ddd;
     border-left: none;
-    font-size: 25px;
+    font-size: 1.2vw;
     text-align: center;
     cursor: pointer;
     background-color: #fff;
-    border-radius: 10px;
-    margin: 10px 10px;
+    border-radius: 0.5vw;
+    margin: 0.5vw 1vw;
+    flex: 2; /* 📌 라벨보다 더 큰 영역 차지 */
+    min-width: 10%;
+    justify-content: center;
+    align-items: center;
 }
 
 .date.active {
@@ -578,23 +586,47 @@ section {
     color: #336699; /* 완료된 단계 글자색 */
 }
 
-.progress-bar {
-    flex-grow: 1; /* 공간 차지 */
-    height: 4px; /* 높이 */
-    background-color: #D5E2F0; /* 비어 있는 진행바 색상 */
-    margin-left: 50px; /* 여백 */
-    margin-right: 50px;
-    border-radius: 2px; /* 둥근 모서리 */
-    position: relative;
+/*.progress-bar {*/
+/*    flex-grow: 1; !* 공간 차지 *!*/
+/*    height: 4px; !* 높이 *!*/
+/*    background-color: #D5E2F0; !* 비어 있는 진행바 색상 *!*/
+/*    margin-left: 50px; !* 여백 *!*/
+/*    margin-right: 50px;*/
+/*    border-radius: 2px; !* 둥근 모서리 *!*/
+/*    position: relative;*/
+/*}*/
+
+/*.progress-bar::before {*/
+/*    content: "";*/
+/*    display: block;*/
+/*    width: 50%; !* 진행률 (조정 가능) *!*/
+/*    height: 100%;*/
+/*    background-color: #6e8cba; !* 진행된 부분 색상 *!*/
+/*    border-radius: 2px; !* 둥근 모서리 *!*/
+/*}*/
+
+.progress-bar-container {
+    width: 85%;
+    padding: 10px;
 }
 
-.progress-bar::before {
-    content: "";
-    display: block;
-    width: 50%; /* 진행률 (조정 가능) */
+/* ✅ 전체 프로그레스 바 (비어 있는 부분도 보이도록 배경 설정) */
+.progress-bar {
+    flex-grow: 1;
+    height: 8px;
+    background-color: #D5E2F0; /* ✅ 비어 있는 진행 바 색상 */
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* ✅ 진행된 부분 (동적으로 채워짐) */
+.progress-fill {
     height: 100%;
-    background-color: #6e8cba; /* 진행된 부분 색상 */
-    border-radius: 2px; /* 둥근 모서리 */
+    width: 0%; /* ✅ 기본값 (JS에서 변경) */
+    background-color: #6e8cba; /* ✅ 기본 진행 바 색상 */
+    border-radius: 4px;
+    transition: width 0.5s ease-in-out;
 }
 
 .shipping-info {

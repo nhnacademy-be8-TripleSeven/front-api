@@ -10,7 +10,7 @@ public class OrderDetailResponseDTO {
 
     private final Long bookId;
 
-    private final int amount;
+    private final int quantity;
 
     private final OrderStatus orderStatus;
 

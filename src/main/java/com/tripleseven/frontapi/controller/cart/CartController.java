@@ -2,6 +2,9 @@ package com.tripleseven.frontapi.controller.cart;
 
 import com.tripleseven.frontapi.client.MemberFeignClient;
 import com.tripleseven.frontapi.dto.cart.CartDTO;
+import com.tripleseven.frontapi.dto.policy.DefaultDeliveryPolicyDTO;
+import com.tripleseven.frontapi.dto.policy.DeliveryPolicyType;
+import com.tripleseven.frontapi.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class CartController {
 
     private final MemberFeignClient memberFeignClient;
+    private final OrderService orderService;
 
     @GetMapping
     public ModelAndView getCartPage(@RequestHeader(value = "X-USER", required = false) Long userId,
@@ -57,9 +61,10 @@ public class CartController {
         return getCartModelAndView(modelAndView, cart);
     }
 
-    private static ModelAndView getCartModelAndView(ModelAndView modelAndView, CartDTO cart) {
+    private  ModelAndView getCartModelAndView(ModelAndView modelAndView, CartDTO cart) {
         modelAndView.addObject("cart", cart);
-
+        DefaultDeliveryPolicyDTO delivery = orderService.getDeliveryPrice(DeliveryPolicyType.DEFAULT);
+        modelAndView.addObject("delivery", delivery);
         if (cart.getCartItems().isEmpty()) {
             modelAndView.setViewName("cart/cart-fail");
         } else {

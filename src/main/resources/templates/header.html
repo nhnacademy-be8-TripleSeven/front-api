@@ -3,7 +3,7 @@
     <a th:href="@{/frontend/}"><img th:src="@{/image/logo/nhn24-logo.png}" alt="NHN 24 로고"></a>
   </div>
   <div class="header-center">
-    <form th:action="@{/frontend/searchBook}" method="get">
+    <form th:action="@{/frontend/search-book}" method="get">
       <div class="search-bar">
         <input type="text" name="search" placeholder="검색어 입력">
         <button type="submit">🔍</button>
@@ -11,11 +11,11 @@
     </form>
     <nav class="menu">
       <ul>
-        <li><a th:href="@{/frontend/typeBook?search=ItemEditorChoice}">추천 도서</a></li>
-        <li><a th:href="@{/frontend/typeBook?search=Book}">국내 도서</a></li>
-        <li><a th:href="@{/frontend/typeBook?search=Foreign}">외국 도서</a></li>
-        <li><a th:href="@{/frontend/typeBook?search=Bestseller}">베스트셀러</a></li>
-        <li><a th:href="@{/frontend/typeBook?search=ItemNewAll}">신간 소개</a></li>
+        <li><a th:href="@{/frontend/type-book?search=ItemEditorChoice}">추천 도서</a></li>
+        <li><a th:href="@{/frontend/type-book?search=Book}">국내 도서</a></li>
+        <li><a th:href="@{/frontend/type-book?search=Foreign}">외국 도서</a></li>
+        <li><a th:href="@{/frontend/type-book?search=Bestseller}">베스트셀러</a></li>
+        <li><a th:href="@{/frontend/type-book?search=ItemNewAll}">신간 소개</a></li>
       </ul>
     </nav>
   </div>

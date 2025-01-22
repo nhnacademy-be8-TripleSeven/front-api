@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // 도서 삭제 함수
 function handleDeleteBook(bookId) {
-  axios.delete(`/admin/books/delete?bookId=${bookId}`)
+  axios.delete(`/admin/books/${bookId}`)
   .then(response => {
     alert('도서가 성공적으로 삭제되었습니다.');
     window.location.reload(); // 삭제 후 페이지 새로고침

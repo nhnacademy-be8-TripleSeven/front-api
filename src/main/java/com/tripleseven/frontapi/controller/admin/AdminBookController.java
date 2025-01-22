@@ -39,7 +39,7 @@ public class AdminBookController {
         return "admin/book-list";
     }
 
-    @GetMapping("/frontend/books/keyword")
+    @GetMapping("/frontend/books/search")
     public String getBookSearchPage(@RequestParam String keyword, Pageable pageable, Model model) {
         BookPageDTO adminBooksByKeyword = bookService.getAdminBooksByKeyword(keyword, pageable);
 
@@ -57,17 +57,17 @@ public class AdminBookController {
         return "admin/book-update";
     }
 
-    @PostMapping("/books/updateBook")
-    public String updateBook(@ModelAttribute BookUpdateDTO bookDTO) {
-        bookService.updateBook(bookDTO);
-        return REDIRECT_BOOK_LIST;
-    }
-
-    @PostMapping("/books/createBook")
-    public String createBook(@ModelAttribute BookCreateDTO bookDTO) {
-        bookService.createBook(bookDTO);
-        return REDIRECT_BOOK_LIST;
-    }
+//    @PostMapping("/books/updateBook")
+//    public String updateBook(@ModelAttribute BookUpdateDTO bookDTO) {
+//        bookService.updateBook(bookDTO);
+//        return REDIRECT_BOOK_LIST;
+//    }
+//
+//    @PostMapping("/books/createBook")
+//    public String createBook(@ModelAttribute BookCreateDTO bookDTO) {
+//        bookService.createBook(bookDTO);
+//        return REDIRECT_BOOK_LIST;
+//    }
 
 
     @GetMapping("/frontend/books/create")
@@ -89,11 +89,11 @@ public class AdminBookController {
         return "admin/book-create";
     }
 
-    @DeleteMapping("/books/delete/{bookId}")
-    public String deleteBook(@PathVariable Long bookId) {
-        bookService.deleteBook(bookId);
-        return REDIRECT_BOOK_LIST;
-    }
+//    @DeleteMapping("/books/delete/{bookId}")
+//    public String deleteBook(@PathVariable Long bookId) {
+//        bookService.deleteBook(bookId);
+//        return REDIRECT_BOOK_LIST;
+//    }
 
 
 

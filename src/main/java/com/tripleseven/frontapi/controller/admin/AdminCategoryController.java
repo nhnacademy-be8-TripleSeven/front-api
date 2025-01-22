@@ -36,24 +36,24 @@ public class AdminCategoryController {
         return "admin/category-list";
     }
 
-    @PostMapping("/admin/books/categoryCreate")
-    public String adminCategoryCreate(@RequestBody List<CategoryDTO> categoryDTO) {
-        bookService.createCategory(categoryDTO);
-        return "redirect:/admin/frontend/books";
-    }
-
-    @DeleteMapping("/admin/books/categoryDelete")
-    public String adminCategoryDelete(@RequestParam("id") Long id) {
-        bookService.deleteCategory(id);
-        return "redirect:/admin/frontend/category";
-    }
+//    @PostMapping("/admin/books/categoryCreate")
+//    public String adminCategoryCreate(@RequestBody List<CategoryDTO> categoryDTO) {
+//        bookService.createCategory(categoryDTO);
+//        return "redirect:/admin/frontend/books";
+//    }
+//
+//    @DeleteMapping("/admin/books/categoryDelete")
+//    public String adminCategoryDelete(@RequestParam("id") Long id) {
+//        bookService.deleteCategory(id);
+//        return "redirect:/admin/frontend/category";
+//    }
 
     @GetMapping("/admin/frontend/category")
     public String categoryView(){
         return "admin/category";
     }
 
-    @GetMapping("/admin/frontend/categoryList")
+    @GetMapping("/admin/frontend/category-list")
     public String categoryListView(Model model) {
         model.addAttribute("categories", new CategoryDTO());
         model.addAttribute("page", 0);
