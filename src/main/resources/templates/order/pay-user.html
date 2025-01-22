@@ -64,12 +64,18 @@
             th:text="'일반 배송: ' + ${#numbers.formatInteger(orderInfo.deliveryPrice, 0, 'COMMA') + '원'}">일반 배송: 5000원</h5>
     </section>
     <section class="shipping-info">
-        <div class="flex-box progress-bar"></div>
+        <div class="flex-box progress-bar-container">
+            <div class="progress-bar">
+                <div class="progress-fill"></div> <!-- ✅ 동적으로 width 조절 -->
+            </div>
+        </div>
         <span class="free-shipping-text">
             <strong id="deliveryMinPrice"
-                    th:text="${#numbers.formatInteger(orderInfo.deliveryMinPrice, 0, 'COMMA') + '원'}">30,000원</strong>        이상 구매 시 <strong>무료배송</strong>
+                    th:text="${#numbers.formatInteger(orderInfo.deliveryMinPrice, 0, 'COMMA') + '원'}">30,000원</strong> 이상 구매 시 <strong>무료배송</strong>
     </span>
+        <a href="/frontend/main">
         <button class="more-details-btn">더 담으러 가기</button>
+        </a>
     </section>
     <section class="item-section">
         <div class="product-table">

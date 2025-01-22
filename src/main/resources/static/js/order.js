@@ -27,6 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const closeModalButton = document.getElementById("close-modal");
     const ordererNameInput = document.getElementById("customer-name");
     const deliveryMinPriceElem = document.getElementById("deliveryMinPrice");
+    const progressBarFill = document.querySelector(".progress-bar");
 
 
     // ✅ 배송 날짜 관련 요소 가져오기
@@ -62,6 +63,8 @@ document.addEventListener("DOMContentLoaded", () => {
             updateFinalAmount();
         });
     }
+
+
 
 
     // 포장지 선택 처리
@@ -159,6 +162,15 @@ document.addEventListener("DOMContentLoaded", () => {
         finalAmountElems.forEach(elem => {
             elem.textContent = `${totalAmount.toLocaleString()} 원`;
         });
+
+        let progressWidth = Math.min((tempAmount / deliveryMinPrice) * 100, 100);
+        progressBarFill.style.width = `${progressWidth}%`;
+        if (progressWidth >= 100) {
+            progressBarFill.style.backgroundColor = "#4CAF50"; // 무료 배송 도달 시 초록색
+        } else {
+            progressBarFill.style.backgroundColor = "#6e8cba"; // 기본 색상
+        }
+
     }
 
 
