@@ -30,13 +30,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // ✅ 배송 날짜 관련 요소 가져오기
-    const deliveryDateCells = document.querySelectorAll(".product-table tbody tr td:nth-child(4)");
+    const deliveryDateColumnIndex = userId != null ? 5 : 4; // userId 여부에 따라 컬럼 인덱스 결정
+    const deliveryDateCells = document.querySelectorAll(`.product-table tbody tr td:nth-child(${deliveryDateColumnIndex})`);
+
     const deliveryDateOptions = document.querySelectorAll(".delivery-date-container .date");
     // 초기값 설정
 
     originalAmount = parseInt(finalAmountElems[0].textContent.replace(/[^0-9]/g, "")) || 0;
 
-    if(userId!=null) {
+    if (userId != null) {
         availablePoints = parseInt(availablePointsElem.textContent.replace(/[^0-9]/g, "")) || 0;
         couponUsed = parseInt(couponUsedElem.textContent.replace(/[^0-9]/g, "")) || 0;
     }
@@ -47,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
     updateFinalAmount();
 
     // 포인트 사용 여부 처리
-    if(userId!=null) {
+    if (userId != null) {
         document.getElementById("use-points-yes").addEventListener("change", () => {
             isUsingPoints = true;
             pointsUsed = Math.min(originalAmount + currentWrapperPrice + deliveryFee, availablePoints);
@@ -122,32 +124,31 @@ document.addEventListener("DOMContentLoaded", () => {
     function updateFinalAmount() {
 
         let tempAmount;
-        if(userId!=null) {
+        if (userId != null) {
             // const couponUsedElem = document.getElementById("coupon-used");
             couponUsed = parseInt(couponUsedElem.textContent.replace(/[^0-9]/g, "")) || 0;
             tempAmount = originalAmount + currentWrapperPrice - pointsUsed - couponUsed;
-        }
-        else{
+        } else {
             tempAmount = originalAmount + currentWrapperPrice;
 
         }
-        console.log("originalAmount",originalAmount);
-        console.log("currentWrapperPrice",currentWrapperPrice);
-        console.log("pointUsed",pointsUsed);
-        console.log("couponUsed",couponUsed);
-        console.log("tempAmount",tempAmount);
+        console.log("originalAmount", originalAmount);
+        console.log("currentWrapperPrice", currentWrapperPrice);
+        console.log("pointUsed", pointsUsed);
+        console.log("couponUsed", couponUsed);
+        console.log("tempAmount", tempAmount);
         if (tempAmount < deliveryMinPrice) {
             deliveryFee = defaultDeliveryPrice;
         } else {
             deliveryFee = 0;
         }
-        console.log("deliveryFee",deliveryFee);
+        console.log("deliveryFee", deliveryFee);
 
         const totalAmount = tempAmount + deliveryFee;
         const remainingPoints = availablePoints - pointsUsed;
 
         wrapperPriceDetailElem.textContent = `${currentWrapperPrice.toLocaleString()} 원`;
-        if(userId!=null) {
+        if (userId != null) {
             pointUsedElem.textContent = `${pointsUsed.toLocaleString()} 원`;
             pointsFinalAmountElem.textContent = `${(totalAmount - remainingPoints).toLocaleString()} 원`;
 
@@ -159,7 +160,6 @@ document.addEventListener("DOMContentLoaded", () => {
             elem.textContent = `${totalAmount.toLocaleString()} 원`;
         });
     }
-
 
 
 // 폼 제출 함수 수정
@@ -183,7 +183,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const bookId = parseInt(row.querySelector("a").getAttribute("href").split("/").pop());
             const title = row.querySelector("a").textContent;
 
-            if(userId != null) {
+            if (userId != null) {
                 const price = document.getElementById("discountedPrice").textContent.replace(/[^0-9]/g, "") || 0;
                 addHiddenField(`bookOrderDetails[${index}].price`, price);
                 const quantity = parseInt(row.querySelector("td:nth-child(3)").textContent.trim());
@@ -192,8 +192,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 addHiddenField(`bookOrderDetails[${index}].couponSalePrice`, couponSalePrice)
                 const couponId = appliedCoupons[bookId] ? appliedCoupons[bookId] : null;
                 addHiddenField(`bookOrderDetails[${index}].couponId`, couponId);
-            }
-            else{
+            } else {
                 const price = parseInt(row.querySelector("td:nth-child(5)").textContent.replace(/[^0-9]/g, ""));
                 addHiddenField(`bookOrderDetails[${index}].price`, price);
                 const quantity = parseInt(row.querySelector("td:nth-child(2)").textContent.trim());
@@ -211,7 +210,7 @@ document.addEventListener("DOMContentLoaded", () => {
         addHiddenField("recipientInfo.recipientLandline", `${document.getElementById("landline-phone1").value}${document.getElementById("landline-phone2").value}${document.getElementById("landline-phone3").value}`);
         addHiddenField("addressInfo.roadAddress", document.getElementById("roadAddress").value);
         addHiddenField("addressInfo.zoneAddress", document.getElementById("jibunAddress").value);
-        addHiddenField("addressInfo.detailAddress", document.getElementById("detailAddress").value);
+        addHiddenField("addressInfo.detailAddress", document.getElementById("detail-Address").value);
         addHiddenField("wrapperId", wrapperIdInput.value);
         addHiddenField("point", pointsUsed);
         addHiddenField("totalAmount", parseInt(document.querySelector("#final-amount").textContent.replace(/[^0-9]/g, "")));
@@ -255,6 +254,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function showUnsupportedMessage() {
         alert("현재는 토스 결제만 지원됩니다.");
     }
+
     window.submitOrderForm = submitOrderForm;
     window.selectPayment = selectPayment; // 전역으로 노출
     window.updateFinalAmount = updateFinalAmount;

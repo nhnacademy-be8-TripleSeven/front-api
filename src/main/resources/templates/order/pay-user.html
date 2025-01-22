@@ -104,7 +104,9 @@
                     </td>
                     <td th:text="${product.quantity}">1</td>
                     <td th:text="${#numbers.formatInteger(product.price, 0, 'COMMA') + '원'}">21,000원</td>
-                    <td th:text="${product.deliveryDate[0]}">12/12(목)<br>도착(예정)</td>
+                    <td>
+                        <span id = "delivery-date" th:text="${product.deliveryDate[0]}">12/12(목)<br>도착(예정) </span>
+                    </td>
                     <td>
                         <span id = "discountedPrice" th:text="${#numbers.formatInteger(product.discountedPrice, 0, 'COMMA') + '원'}">18,900원</span><br>
                         <span class="discount"

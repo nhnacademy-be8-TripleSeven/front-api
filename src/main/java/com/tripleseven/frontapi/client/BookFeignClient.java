@@ -217,7 +217,7 @@ public interface BookFeignClient {
     @GetMapping("/admin/book-tags/{bookId}")
     List<BookTagResponseDTO> getTagsByBookId(@PathVariable Long bookId);
 
-    @PostMapping("/books/orderDetails")
+    @PostMapping("/books/order-details")
     List<BookOrderDetailResponse> getBookOrderDetail(@RequestBody List<BookOrderRequestDTO> requestDTOS);
 
     @GetMapping("/api/coupons/available")
