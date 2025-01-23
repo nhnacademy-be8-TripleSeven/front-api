@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 orderStatus: this.getAttribute("data-status") // 버튼의 상태 값
             };
 
-            axios.post("/admin/orders/order-details/status", requestData)
+            axios.put("/admin/orders/order-details/status", requestData)
                 .then(response => {
                     console.log("Update successful:", response.data); // 성공 시 메시지 출력
                     alert("요청이 성공적으로 처리되었습니다.");

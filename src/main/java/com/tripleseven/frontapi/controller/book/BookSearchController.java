@@ -6,17 +6,13 @@ import com.tripleseven.frontapi.dto.book.BookPageResponseDTO;
 import com.tripleseven.frontapi.dto.book.CategoryBookSearchViewDTO;
 import com.tripleseven.frontapi.dto.book.KeywordSearchBookViewDTO;
 import com.tripleseven.frontapi.dto.book.TypeBookSearchViewDTO;
-import com.tripleseven.frontapi.dto.category.CategoryDTO;
 import com.tripleseven.frontapi.dto.category.CategoryResponseDTO;
 import com.tripleseven.frontapi.service.BookService;
 import java.util.List;
-import lombok.Builder.Default;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
@@ -31,10 +27,10 @@ public class BookSearchController {
 
     private final BookService bookApiService;
 
-    @GetMapping("/frontend/searchBook")
+    @GetMapping("/frontend/search-book")
     public String bookSearch(
         @RequestParam(value = "search", defaultValue = " ") String search,
-        @PageableDefault(sort = "publishDate", direction = Direction.DESC) Pageable pageable,
+        @PageableDefault Pageable pageable,
         Model model) {
 
 
@@ -44,7 +40,7 @@ public class BookSearchController {
         int endPage = Math.min(startPage + 4, bookPageResponseDTO.getTotalPages() - 1);  // 종료 페이지
         KeywordSearchBookViewDTO searchBook = new KeywordSearchBookViewDTO(
             search,
-            "searchBook",
+            "search-book",
             new PageImpl<>(
                 bookPageResponseDTO.getContent(),
                 pageable,
@@ -58,7 +54,7 @@ public class BookSearchController {
     }
 
 
-    @GetMapping("/frontend/typeBook")
+    @GetMapping("/frontend/type-book")
     public String typeBookSearch(
         @RequestParam("search") String search,
         @PageableDefault(sort = "title", direction = Direction.DESC) Pageable pageable,
@@ -69,7 +65,7 @@ public class BookSearchController {
         int endPage = Math.min(startPage + 4, typeBookSearch.getTotalPages() - 1);  // 종료 페이지
 
         TypeBookSearchViewDTO typeBookSearchViewDTO = new TypeBookSearchViewDTO(search,
-            "typeBook",
+            "type-book",
             new PageImpl<>(typeBookSearch.getContent(), pageable, typeBookSearch.getTotalElements()),
             startPage,
             endPage);
@@ -84,7 +80,7 @@ public class BookSearchController {
 
 
 
-    @GetMapping("/frontend/categorySearch")
+    @GetMapping("/frontend/category-search")
     public String categorySearch(
         @RequestParam("search") Long search,
         @PageableDefault(sort = "title", direction = Direction.DESC) Pageable pageable,
@@ -98,7 +94,7 @@ public class BookSearchController {
 
         CategoryBookSearchViewDTO viewBook = new CategoryBookSearchViewDTO(
             search,
-            "categorySearch",
+            "category-search",
             new PageImpl<>(categorySearch.getContent(), pageable, categorySearch.getTotalElements()),
             startPage,
             endPage

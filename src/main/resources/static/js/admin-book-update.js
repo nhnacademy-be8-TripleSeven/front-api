@@ -24,7 +24,7 @@ function handleUpdateBook(event) {
   const bookData = collectBookData();
   const formData = prepareFormData(bookData);
 
-  axios.post('/admin/books/updateBook', formData, {
+  axios.put('/admin/books', formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
@@ -138,7 +138,7 @@ function resetCategoryLevels(startIndex, categorySelectors) {
 // 카테고리 데이터 요청
 async function fetchCategoriesForLevel(parentCategoryId, level) {
   try {
-    const response = await axios.get('/admin/books/categoriesParentList', {
+    const response = await axios.get('/admin/books/categories-parent', {
       params: { parent: parentCategoryId, level: level },
     });
     return response.data;

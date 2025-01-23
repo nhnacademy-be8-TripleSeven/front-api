@@ -20,10 +20,6 @@ import java.util.List;
 public class BookDetailController {
 
     private final BookService bookApiService;
-    private final ObjectStorageService objectStorageService;
-
-    private final LikesService likesService;
-
 
     @GetMapping("/frontend/books/{bookId}")
     public String bookDetail(
@@ -32,10 +28,6 @@ public class BookDetailController {
             Model model) {
         BookDetailViewDTO book = bookApiService.getBookDetail(bookId);
         List<ReviewResponseDTO> reviews = bookApiService.getAllReviewsByBookId(bookId);
-//        boolean isLiked = false;
-//        if (userId != null) {
-//            isLiked = likesService.isLiked(userId, bookId);
-//        }
         boolean isPurchased = false;
         if (userId != null) {
             isPurchased = bookApiService.checkUserPurchase(bookId, userId);
@@ -68,7 +60,6 @@ public class BookDetailController {
         book.setId(bookId);
         model.addAttribute("isPurchased", isPurchased);
         model.addAttribute("userId", userId);
-        //model.addAttribute("isLiked", isLiked);
         model.addAttribute("book", book);
         model.addAttribute("formattedPublishedDate",
                 book.getPublishedDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));

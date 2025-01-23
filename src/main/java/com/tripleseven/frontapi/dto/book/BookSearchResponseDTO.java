@@ -18,7 +18,7 @@ public class BookSearchResponseDTO {
 
     private String isbn13; // ISBN-13 번호
 
-    private LocalDateTime publishDate; // 발행일
+    private LocalDate publishDate; // 발행일
 
     private int regularPrice; // 정가
 
@@ -27,14 +27,6 @@ public class BookSearchResponseDTO {
     private int stock; // 재고
 
     private int page; // 페이지 수
-
-    private int bestSellerRank; // 베스트셀러 순위
-
-    private int clickCount; // 클릭 수
-
-    private int searchCount; // 검색 수
-
-    private int cartCount; // 장바구니 수
 
     private String coverUrl; // 책 커버 URL
 

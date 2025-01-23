@@ -2,12 +2,14 @@ package com.tripleseven.frontapi.controller.auth;
 
 import com.tripleseven.frontapi.annotations.secure.SecureKey;
 import com.tripleseven.frontapi.client.MemberFeignClient;
+import com.tripleseven.frontapi.dto.book.BookPageDTO;
 import com.tripleseven.frontapi.dto.member.MemberAccountDto;
 import com.tripleseven.frontapi.service.oauth2.AfterPaycoLoginService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -98,7 +100,12 @@ public class AuthController {
     }
 
     @GetMapping("/frontend/admin/login")
-    public String adminLogin() {
+    public String adminLogin(@RequestHeader(value = "X-USER",required = false)Long userId, Model model) {
+        if (userId != null) {
+            model.addAttribute("bookPageDTO", new BookPageDTO());
+            return "admin/book-list";
+        }
+
         return "admin/admin-login";
     }
 }

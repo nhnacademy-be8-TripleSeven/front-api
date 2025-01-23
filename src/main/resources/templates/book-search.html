@@ -61,7 +61,7 @@
         <li th:each="category : ${categories}">
           <span th:if="${!#lists.isEmpty(category.children)}" class="toggle-button">+</span>
           <span th:if="${#lists.isEmpty(category.children)}" style="display: inline-block; width: 12px;"></span>
-          <a th:href="@{/frontend/categorySearch(search=${category.id})}">
+          <a th:href="@{/frontend/category-search(search=${category.id})}">
             <span th:text="${category.name}"></span>
           </a>
           <!-- 재귀적 프래그먼트 포함 -->
@@ -93,12 +93,29 @@
         <label for="sort">정렬:</label>
         <select name="sort" id="sort" onchange="this.form.submit()">
           <option value="" disabled selected>정렬 선택</option>
-          <option value="title,asc" th:selected="${searchBook.content.pageable.sort == 'title,asc'}">제목 오름차순</option>
-          <option value="title,desc" th:selected="${searchBook.content.pageable.sort == 'title,desc'}">제목 내림차순</option>
-          <option value="salePrice,asc" th:selected="${searchBook.content.pageable.sort == 'salePrice,asc'}">가격 낮은순</option>
-          <option value="salePrice,desc" th:selected="${searchBook.content.pageable.sort == 'salePrice,desc'}">가격 높은순</option>
-          <option value="salePrice,asc" th:selected="${searchBook.content.pageable.sort == 'publishDate,asc'}">최신순</option>
-          <option value="salePrice,desc" th:selected="${searchBook.content.pageable.sort == 'publishDate,desc'}">오래된순</option>
+
+          <!-- 제목 오름차순 -->
+          <option value="title.keyword,asc"
+                  th:selected="${searchBook.content.pageable.sort.toString() == 'title.keyword: ASC'}"
+                  th:if="${searchBook.path == 'search-book'}">제목 오름차순</option>
+          <option value="title,asc"
+                  th:selected="${searchBook.content.pageable.sort.toString() == 'title: ASC'}"
+                  th:if="${searchBook.path != 'search-book'}">제목 오름차순</option>
+
+          <!-- 제목 내림차순 -->
+          <option value="title.keyword,desc"
+                  th:selected="${searchBook.content.pageable.sort.toString() == 'title.keyword: DESC'}"
+                  th:if="${searchBook.path == 'search-book'}">제목 내림차순</option>
+          <option value="title,desc"
+                  th:selected="${searchBook.content.pageable.sort.toString() == 'title: DESC'}"
+                  th:if="${searchBook.path != 'search-book'}">제목 내림차순</option>
+
+
+          <option value="salePrice,asc" th:selected="${searchBook.content.pageable.sort.toString() == 'salePrice: ASC'}">가격 낮은순</option>
+          <option value="salePrice,desc" th:selected="${searchBook.content.pageable.sort.toString() == 'salePrice: DESC'}">가격 높은순</option>
+          <option value="publishDate,asc" th:selected="${searchBook.content.pageable.sort.toString() == 'publishDate: ASC'}">최신순</option>
+          <option value="publishDate,desc" th:selected="${searchBook.content.pageable.sort.toString() == 'publishDate: DESC'}">오래된순</option>
+
         </select>
       </form>
 
@@ -107,6 +124,7 @@
         <p>검색 결과가 없습니다.</p>
         <a th:href="@{/frontend/}" class="back-to-home">홈으로 돌아가기</a> <!-- 필요 시 버튼 추가 -->
       </div>
+
 
       <!-- 검색 결과가 있는 경우 -->
       <div th:if="${searchBook.content.size > 0}">
@@ -125,11 +143,11 @@
 
       <div class="pagination">
 
-        <!-- 이전 페이지 -->
-        <button th:if="${searchBook.content.hasPrevious()}"
-                th:attr="onclick=|location.href='@{/admin/frontend/{path}(search=${searchBook.search},page=${searchBook.content.number - 1},size=${searchBook.content.size})(path=${searchBook.path})}'|">
-          이전
-        </button>
+<!--        &lt;!&ndash; 이전 페이지 &ndash;&gt;-->
+<!--        <button th:if="${searchBook.content.hasPrevious()}"-->
+<!--                th:attr="onclick=|location.href='@{/admin/frontend/{path}(search=${searchBook.search},page=${searchBook.content.number - 1},size=${searchBook.content.size})(path=${searchBook.path})}'|">-->
+<!--          이전-->
+<!--        </button>-->
 
         <span th:each="pageNum : ${#numbers.sequence(0, searchBook.content.totalPages - 1)}">
 
@@ -145,11 +163,11 @@
 
 </span>
 
-        <!-- 다음 페이지 -->
-        <button th:if="${searchBook.content.hasNext()}"
-                th:attr="onclick=|location.href='@{/admin/frontend/{path}(search=${searchBook.search},page=${searchBook.content.number + 1},size=${searchBook.content.size})(path=${searchBook.path})}'|">
-          다음
-        </button>
+<!--        &lt;!&ndash; 다음 페이지 &ndash;&gt;-->
+<!--        <button th:if="${searchBook.content.hasNext()}"-->
+<!--                th:attr="onclick=|location.href='@{/admin/frontend/{path}(search=${searchBook.search},page=${searchBook.content.number + 1},size=${searchBook.content.size})(path=${searchBook.path})}'|">-->
+<!--          다음-->
+<!--        </button>-->
 
 
 
