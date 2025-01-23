@@ -17,7 +17,7 @@
 
     <div class="main-container">
         <div class="form-container">
-            <h3>쿠폰 대량 생성</h3>
+            <h3>쿠폰 대량 생성 및 이벤트</h3>
 
             <!-- 이벤트 쿠폰 생성 가이드 -->
             <div class="policy-guide">
@@ -30,6 +30,12 @@
                     <li>쿠폰 이름은 반드시 <strong>‘회원가입 선착순 쿠폰’</strong>과 동일해야 합니다.</li>
                     <li>쿠폰 발급은 <strong>회원가입 순서</strong>에 따라 자동으로 처리됩니다.</li>
                     <li>생성한 수량 만큼 발급되면 더 이상 발급되지 않습니다.</li>
+                </ul>
+                <p>
+                    <strong>‘생일 쿠폰 수동 발급 버튼’</strong>을 누르면 이번 달, 생일인 멤버에게 쿠폰이 즉시 발급됩니다.
+                </p>
+                <ul>
+                    <li>발급 규칙은 쿠폰 정책 생성에 명시된 내용을 따릅니다.</li>
                 </ul>
             </div>
 
@@ -88,7 +94,11 @@
                 </table>
                 <button type="submit" class="register-btn">쿠폰 생성</button>
             </form>
+            <div class="bulk-creation-buttons">
+                <button id="assign-birthday-coupons-btn" class="register-btn">생일 쿠폰 수동 발급 버튼</button>
+            </div>
         </div>
+
     </div>
 </main>
 
