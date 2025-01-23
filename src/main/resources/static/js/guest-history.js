@@ -139,7 +139,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const koreanStatus = statusKoreanMap[detail.orderStatus.toLowerCase()] || "알 수 없음";
             row.innerHTML = `
                 <td>${detail.bookId}</td>
-                <td>${detail.amount}</td>
+                <td>${detail.quantity}</td>
                 <td>${koreanStatus}</td>
                 <td>${detail.primePrice.toLocaleString()}원</td>
                 <td>${detail.discountPrice.toLocaleString()}원</td>

@@ -231,8 +231,6 @@
                 <p class="payment-total-title">최종 결제금액<br></p>
                 <strong id="payment-info-final-amount"
                         th:text="${#numbers.formatInteger(orderInfo.finalAmount,0,'COMMA') + '원'}">18,900 원</strong>
-
-                <p class="payment-total-title"><strong>상품</strong> 1종 (1개) 21,000 원</p>
                 <p><span class="discount"
                          th:text="'-> 즉시할인 ' + ${#numbers.formatInteger(orderInfo.discountAmount, 0, 'COMMA') + ' 원'}">-> 즉시할인 2,100 원</span>
                 </p>

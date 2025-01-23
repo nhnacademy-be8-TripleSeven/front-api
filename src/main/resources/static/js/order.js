@@ -195,8 +195,19 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelectorAll(".product-table tbody tr").forEach((row, index) => {
             const bookId = parseInt(row.querySelector("a").getAttribute("href").split("/").pop());
             const title = row.querySelector("a").textContent;
-            const quantity = parseInt(row.querySelector("td:nth-child(3)").textContent.trim());
-            let price = parseInt(row.querySelector("td:nth-child(5)").textContent.replace(/[^0-9]/g, "")) || 0;
+            let quantity;
+            let price;
+            if(userId!=null) {
+                price = parseInt(row.querySelector("td:nth-child(4)").textContent.replace(/[^0-9]/g, "")) || 0;
+                quantity = parseInt(row.querySelector("td:nth-child(3)").textContent.trim());
+
+            }
+            else{
+                price = parseInt(row.querySelector("td:nth-child(3)").textContent.replace(/[^0-9]/g, "")) || 0;
+                quantity = parseInt(row.querySelector("td:nth-child(2)").textContent.trim());
+
+
+            }
 
             let couponSalePrice = 0;
             let couponId = null;
