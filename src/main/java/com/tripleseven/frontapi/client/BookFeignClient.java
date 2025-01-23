@@ -135,6 +135,9 @@ public interface BookFeignClient {
                                             @RequestParam(required = false)String startDate,
                                             @RequestParam(required = false)String endDate);
 
+    @GetMapping("/admin/coupons/assign-birthday-coupons")
+    BulkAssignResponseDTO assignBirthdayCoupons();
+
     @GetMapping("/api/reviews/{bookId}/paged")
     Page<ReviewResponseDTO> getPagedReviewsByBookId(
             @PathVariable Long bookId,

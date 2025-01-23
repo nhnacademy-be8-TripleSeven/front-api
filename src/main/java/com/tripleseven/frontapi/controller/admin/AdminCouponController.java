@@ -195,4 +195,15 @@ public class AdminCouponController {
         }
     }
 
+
+    @GetMapping("/coupons/assign-birthday")
+    @ResponseBody
+    public String assignBirthdayCoupons() {
+        try {
+            BulkAssignResponseDTO response = bookFeignClient.assignBirthdayCoupons();
+            return "생일 쿠폰 발급 성공: " + response.getIssuedCount() + "개의 쿠폰이 발급되었습니다.";
+        } catch (Exception e) {
+            return "생일 쿠폰 발급 실패: " + e.getMessage();
+        }
+    }
 }

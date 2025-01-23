@@ -82,4 +82,18 @@ document.addEventListener("DOMContentLoaded", () => {
                 alert("쿠폰 생성 중 오류가 발생했습니다.");
             });
     });
+
+    // 생일 쿠폰 발급 버튼 이벤트
+    const assignBirthdayCouponsButton = document.getElementById('assign-birthday-coupons-btn');
+
+    assignBirthdayCouponsButton.addEventListener('click', async () => {
+        try {
+            const response = await axios.get('/admin/frontend/coupons/assign-birthday');
+            alert(response.data);
+        } catch (error) {
+            console.error('생일 쿠폰 발급 중 오류 발생:', error);
+            alert('생일 쿠폰 발급 중 오류가 발생했습니다.');
+        }
+    });
+
 });
