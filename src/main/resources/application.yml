@@ -38,11 +38,4 @@ eureka:
     serviceUrl:
       defaultZone: http://admin:1234@eureka-server:8761/eureka
 
-secret:
-  url: https://api-keymanager.nhncloudservice.com
-  appKey: qTQNj7LyHhdAazH3
-  keys:
-    payco:
-      client-id: 9ae8d7047d614e2d8676715111dcb443
-      client-secret: 079b482168044c9abe902c578aae31a1
-  password: nhn24
+

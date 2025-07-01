@@ -20,13 +20,10 @@ public class BookMainController {
     private final String EBOOK = "ebook";
     private final String FOREIGN = "foreign";
 
-    @GetMapping("/")
-    public String redirectToFrontend() {
-        return "redirect:/frontend/";  // 내부적으로 /frontend로 포워드
-    }
 
 
-    @GetMapping({"/frontend", "/frontend/main", "/frontend/"})
+
+    @GetMapping({"/", "/frontend/main", "/frontend/"})
     public String getMonthlyBooks(HttpServletRequest request, Model model) {
         String ip = request.getHeader("x-forwarded-for");
         if (ip == null) {

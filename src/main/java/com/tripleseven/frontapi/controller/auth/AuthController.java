@@ -1,10 +1,8 @@
 package com.tripleseven.frontapi.controller.auth;
 
-import com.tripleseven.frontapi.annotations.secure.SecureKey;
 import com.tripleseven.frontapi.client.MemberFeignClient;
 import com.tripleseven.frontapi.dto.book.BookPageDTO;
 import com.tripleseven.frontapi.dto.member.MemberAccountDto;
-import com.tripleseven.frontapi.service.oauth2.AfterPaycoLoginService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -20,10 +18,8 @@ import java.net.URLEncoder;
 @RequiredArgsConstructor
 public class AuthController {
 
-    @SecureKey("secret.keys.payco.client-id")
-    private String paycoClientId;
 
-    private final AfterPaycoLoginService afterPaycoLoginService;
+
     private final MemberFeignClient memberFeignClient;
 
     @GetMapping("/frontend/join")
@@ -35,38 +31,37 @@ public class AuthController {
     @GetMapping("/frontend/login")
     public ModelAndView login(HttpServletRequest request, ModelAndView modelAndView) {
 
-        modelAndView.addObject("paycoClientId", paycoClientId);
         modelAndView.setViewName("auth/login");
         return modelAndView;
     }
 
-    @GetMapping("/frontend/oauth2/authorization/payco")
-    public String paycoLoginRedirect() {
-        String redirectUri = "https://nhn24.store/payco/callback";
-        String encodedRedirectUri;
-        try {
-            encodedRedirectUri = URLEncoder.encode(redirectUri, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException("Error encoding redirectUri", e);
-        }
-        String authorizationUri = "https://id.payco.com/oauth2.0/authorize"
-                + "?response_type=code"
-                + "&client_id=" + paycoClientId
-                + "&serviceProviderCode=FRIENDS"
-                + "&redirect_uri=" + encodedRedirectUri
-                + "&userLocale=ko_KR";
+//    @GetMapping("/frontend/oauth2/authorization/payco")
+//    public String paycoLoginRedirect() {
+//        String redirectUri = "https://nhn24.store/payco/callback";
+//        String encodedRedirectUri;
+//        try {
+//            encodedRedirectUri = URLEncoder.encode(redirectUri, "UTF-8");
+//        } catch (UnsupportedEncodingException e) {
+//            throw new RuntimeException("Error encoding redirectUri", e);
+//        }
+//        String authorizationUri = "https://id.payco.com/oauth2.0/authorize"
+//                + "?response_type=code"
+//                + "&client_id=" + paycoClientId
+//                + "&serviceProviderCode=FRIENDS"
+//                + "&redirect_uri=" + encodedRedirectUri
+//                + "&userLocale=ko_KR";
+//
+//        return "redirect:" + authorizationUri;
+//    }
 
-        return "redirect:" + authorizationUri;
-    }
-
-    @GetMapping("/frontend/payco/callback")
-    public ModelAndView callbackPaycoLogin(@RequestParam String code, ModelAndView modelAndView) {
-        MemberAccountDto memberAccountDto = afterPaycoLoginService.savePaycoMemberDetail(code);
-        modelAndView.addObject("loginId", memberAccountDto.getLoginId());
-        modelAndView.setViewName("auth/payco/callback");
-
-        return modelAndView;
-    }
+//    @GetMapping("/frontend/payco/callback")
+//    public ModelAndView callbackPaycoLogin(@RequestParam String code, ModelAndView modelAndView) {
+//        MemberAccountDto memberAccountDto = afterPaycoLoginService.savePaycoMemberDetail(code);
+//        modelAndView.addObject("loginId", memberAccountDto.getLoginId());
+//        modelAndView.setViewName("auth/payco/callback");
+//
+//        return modelAndView;
+//    }
 
     @GetMapping("/frontend/find-account")
     public String findAccount() {
