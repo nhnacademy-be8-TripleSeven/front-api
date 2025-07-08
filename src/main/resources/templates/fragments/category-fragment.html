@@ -4,7 +4,7 @@
     <li th:each="subCategory : ${category.children}" class="category-item">
       <span th:if="${!#lists.isEmpty(subCategory.children)}" class="toggle-button">+</span>
       <span th:if="${#lists.isEmpty(subCategory.children)}" style="display: inline-block; width: 12px;"></span>
-      <a th:href="@{/frontend/categorySearch(search=${subCategory.id})}">
+      <a th:href="@{/frontend/category-search(search=${subCategory.id})}">
         <span th:text="${subCategory.name}"></span>
       </a>
       <!-- 재귀 호출 -->
