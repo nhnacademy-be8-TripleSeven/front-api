@@ -101,7 +101,7 @@ public class BookSearchController {
         );
 
         List<CategoryResponseDTO> allCategories = bookApiService.getAllCategories();
-        categorySearch.addPath("categorySearch");
+        categorySearch.addPath("category-search");
         model.addAttribute("categories", allCategories);
         model.addAttribute("searchBook", viewBook);
         return "book-search";
